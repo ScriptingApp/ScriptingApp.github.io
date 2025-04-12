@@ -1,0 +1,26 @@
+{
+    "start": {
+        "en": "Getting Started",
+        "zh": "开始"
+    },
+    "docs": {
+        "en": "Documentation",
+        "zh": "文档"
+    },
+    "changelog": {
+        "en": "Changelog",
+        "zh": "更新日志"
+    },
+    "learnMore": {
+        "en": "Learn More",
+        "zh": "了解更多"
+    },
+    "features": {
+        "en": "Features",
+        "zh": "特性"
+    },
+    "overview": {
+        "en": "Overview",
+        "zh": "概览"
+    }
+}
