@@ -1,10 +1,8 @@
 [
     {
-        "type": "dir",
-        "name": "start",
-        "label": "start",
-        "collapsible": false,
-        "collapsed": false
+        "type": "file",
+        "name": "start/index",
+        "label": "start"
     },
     {
         "type": "dir",
@@ -12,5 +10,10 @@
         "label": "docs",
         "collapsible": true,
         "collapsed": false
+    },
+    {
+        "type": "file",
+        "name": "changelog",
+        "label": "changelog"
     }
 ]
