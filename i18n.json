@@ -22,5 +22,9 @@
     "overview": {
         "en": "Overview",
         "zh": "概览"
+    },
+    "example": {
+        "en": "Example",
+        "zh": "示例"
     }
 }

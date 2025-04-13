@@ -12,8 +12,16 @@ export default defineConfig({
         dark: "/scripting-icon.png",
     },
     logoText: "Scripting",
+    route: {
+        cleanUrls: true,
+        exclude: ["**/*.tsx"],
+    },
     search: {
         codeBlocks: true,
+    },
+    markdown: {
+        showLineNumbers: true,
+        defaultWrapCode: false,
     },
     themeConfig: {
         // enableScrollToTop: true,
@@ -62,13 +70,6 @@ export default defineConfig({
                 content: "https://x.com/thomfang",
             },
         ],
-    },
-    route: {
-        cleanUrls: true,
-    },
-    markdown: {
-        showLineNumbers: true,
-        defaultWrapCode: false,
     },
     lang: "zh",
     locales: [

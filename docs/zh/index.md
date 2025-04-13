@@ -8,10 +8,10 @@ hero:
     actions:
         - theme: brand
           text: 开始
-          link: /guide/start/index
+          link: /guide/start
         - theme: alt
-          text: 了解更多
-          link: /guide/start/more
+          text: Github
+          link: https://github.com/thomfang
     image:
         src: /scripting-icon.png
         alt: Logo

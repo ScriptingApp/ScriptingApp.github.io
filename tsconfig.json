@@ -13,7 +13,7 @@
     "useDefineForClassFields": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["docs", "theme", "rspress.config.ts"],
+  "include": ["docs", "theme", "rspress.config.ts", "docs/zh/guide/docs/contact/.example.tsx"],
   "mdx": {
     "checkMdx": true
   }

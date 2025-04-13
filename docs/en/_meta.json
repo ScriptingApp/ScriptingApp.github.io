@@ -1,12 +1,17 @@
 [
     {
+        "text": "start",
+        "link": "/guide/start",
+        "activeMatch": "/guide/start"
+    },
+    {
         "text": "docs",
         "link": "/guide/docs",
         "activeMatch": "/guide/docs"
     },
     {
         "text": "changelog",
-        "link": "/guide/start/changelog/",
-        "activeMatch": "/guide/start/changelog"
+        "link": "/guide/changelog/",
+        "activeMatch": "/guide/changelog"
     }
 ]
