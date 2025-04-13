@@ -18,11 +18,11 @@ hero:
 features:
     - title: 高性能编辑器
       details: <div class="text-center">可自定义的编辑器主题以<br>并拥有高级调试工具</div>
-      icon: <div class="img-center"><img src="/scripting-icon.png" alt="Surge"></div>
+      icon: <div class="img-center"><img src={normalizeImagePath('/scripting-icon.png')} alt="1"></div>
     - title: 高度集成 iOS 平台
       details: <div class="text-center">封装大量iOS原生API</div>
-      icon: <div class="img-center"><img src="/scripting-icon.png" alt="Surge"></div>
+      icon: <div class="img-center"><img src={normalizeImagePath('/scripting-icon.png')} alt="2"></div>
     - title: 更多使用技巧等你开发
       details: <div class="text-center">支持 App Intents 、丰富通知……</div>
-      icon: <div class="img-center"><img src="/scripting-icon.png" alt="Surge"></div>
+      icon: <div class="img-center"><img src={normalizeImagePath('/scripting-icon.png')} alt="3"></div>
 ---
