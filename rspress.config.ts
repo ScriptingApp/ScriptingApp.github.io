@@ -6,7 +6,7 @@ export default defineConfig({
     base: "/scripting-docs/",
     // outDir: "public",
     title: "Scripting",
-    icon: "/scripting-icon.png",
+    icon: "/icon-512.png",
     logo: {
         light: "/scripting-icon.png",
         dark: "/scripting-icon.png",

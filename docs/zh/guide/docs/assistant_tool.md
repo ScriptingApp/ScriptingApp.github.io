@@ -4,8 +4,6 @@ Assistant Tool 是 Scripting 应用中为智能助手（Assistant）提供系统
 
 本文以一个示例工具「Request Current Location」为基础，介绍 Assistant Tool 的完整实现流程，包括工具创建、配置文件说明、执行逻辑实现以及各类函数的详细说明。
 
----
-
 ## 一、工具创建流程
 
 1. 打开任意脚本项目，在文件管理界面点击“添加 Assistant Tool”按钮。
@@ -15,8 +13,6 @@ Assistant Tool 是 Scripting 应用中为智能助手（Assistant）提供系统
 
 -   `assistant_tool.json`：描述工具的元数据和参数信息。
 -   `assistant_tool.tsx`：实现工具的执行逻辑。
-
----
 
 ## 二、配置文件 assistant_tool.json
 
@@ -38,19 +34,17 @@ Assistant Tool 是 Scripting 应用中为智能助手（Assistant）提供系统
 
 ### 字段说明：
 
-| 字段               | 类型    | 说明                             |
-| ------------------ | ------- | -------------------------------- |
-| `displayName`      | string  | 工具在界面中显示的名称           |
-| `id`               | string  | 工具唯一标识符，不能重复         |
-| `description`      | string  | 工具功能描述                     |
-| `icon`             | string  | 使用的 SF Symbols 图标名         |
-| `color`            | string  | 工具主色调                       |
-| `parameters`       | array   | 工具需要的参数（为空表示无输入） |
-| `requireApproval`  | boolean | 是否需要用户批准                 |
-| `autoApprove`      | boolean | 是否支持 Assistant 自动批准      |
-| `scriptEditorOnly` | boolean | 工具是否仅能在脚本编辑器中使用   |
-
----
+| 字段 | 类型 | 说明 |
+| | - | -- |
+| `displayName` | string | 工具在界面中显示的名称 |
+| `id` | string | 工具唯一标识符，不能重复 |
+| `description` | string | 工具功能描述 |
+| `icon` | string | 使用的 SF Symbols 图标名 |
+| `color` | string | 工具主色调 |
+| `parameters` | array | 工具需要的参数（为空表示无输入） |
+| `requireApproval` | boolean | 是否需要用户批准 |
+| `autoApprove` | boolean | 是否支持 Assistant 自动批准 |
+| `scriptEditorOnly` | boolean | 工具是否仅能在脚本编辑器中使用 |
 
 ## 三、执行逻辑 assistant_tool.tsx 实现示例
 
@@ -111,8 +105,6 @@ testRequestLocationExecuteFn(
 );
 ```
 
----
-
 ## 四、AssistantTool 注册函数详解
 
 ### 1. `registerApprovalRequest`
@@ -134,8 +126,6 @@ function registerApprovalRequest<P>(
 **返回值说明**：
 
 返回的测试函数可用于在脚本编辑器中模拟触发批准请求。
-
----
 
 ### 2. `registerExecuteToolWithApproval`
 
@@ -175,8 +165,6 @@ type UserActionForApprovalRequest = {
 -   `success`: 是否执行成功。
 -   `message`: 返回给 Assistant 的执行成功或失败的信息。
 
----
-
 ### 3. `registerExecuteTool`
 
 注册一个不需要用户批准的工具逻辑。
@@ -186,8 +174,6 @@ function registerExecuteTool<P>(executeFn: AssistantToolExecuteFn<P>): Assistant
 ```
 
 **适用场景**：如操作无敏感性、不涉及设备权限时，可使用此方式。
-
----
 
 ### 4. 测试函数使用
 
@@ -205,8 +191,6 @@ testExecuteFn(
 testExecuteToolFn({ ...params });
 ```
 
----
-
 ## 五、脚本编辑器接口说明（ScriptEditorProvider）
 
 当工具设置为 `scriptEditorOnly: true` 时，系统提供 `ScriptEditorProvider` 接口，允许访问脚本项目的文件系统与语法信息。
@@ -220,8 +204,6 @@ testExecuteToolFn({ ...params });
 
 适用于如格式化脚本、批量修改内容等编辑类工具。
 
----
-
 ## 六、执行与用户体验流程
 
 1. Assistant 在会话中判断是否需要调用某个工具。
@@ -229,8 +211,6 @@ testExecuteToolFn({ ...params });
     - 显示由 `registerApprovalRequest` 返回的提示信息。
     - 用户点击“允许”后执行工具逻辑。
 3. 执行结果通过 `message` 字段返回给 Assistant，并可呈现给用户。
-
----
 
 ## 七、无需批准的工具实现方式
 
@@ -247,8 +227,6 @@ AssistantTool.registerExecuteTool<MyParams>(async (params) => {
 ```
 
 将 `assistant_tool.json` 中的 `requireApproval` 字段设置为 `false` 即可。
-
----
 
 ## 八、小结
 

@@ -30,8 +30,6 @@ function requestStructuredData<R>(prompt: string, schema: JSONSchemaArray | JSON
 
 返回解析为符合 `schema` 定义的结构化 JSON 数据的 `Promise`，数据类型为 `R`。
 
----
-
 ## JSON 结构模式定义
 
 在 `requestStructuredData` 方法中，`schema` 参数用于定义返回数据的 JSON 结构，其数据类型如下：
@@ -104,8 +102,6 @@ const schema: JSONSchemaObject = {
 };
 ```
 
----
-
 ## 示例用法
 
 ### 解析账单信息
@@ -136,8 +132,6 @@ console.log(data);
     "location": "市中心停车场"
 }
 ```
-
----
 
 ## 使用注意事项
 
