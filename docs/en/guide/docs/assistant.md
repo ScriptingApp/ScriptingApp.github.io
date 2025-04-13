@@ -1,3 +1,5 @@
+# Assistant
+
 The `Assistant` module provides a powerful API that allows users to request structured JSON data from the assistant. This functionality can be used for automation tasks such as extracting bill details, categorizing expenses, or parsing text data.
 
 ## `isAvailable` Variable
