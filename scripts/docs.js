@@ -17,42 +17,39 @@ const writeFile = (filePath, content) => {
 const processDocItem = (item, parentPath = "", language = "en") => {
     const { title, subtitle, keywords, example, readme, children } = item;
 
-    const folderName = title[language]; // 使用当前语言来选择标题
-    const basePath = path.join(docsPath, language, "guide", "docs", parentPath);
+    const folderName = title.en; // 使用语言来选择标题
+    const basePath = path.join(docsPath, language, "guide", "docs", parentPath, folderName);
 
-    // 如果有子文档，递归处理
     if (children && children.length > 0) {
-        writeFile(path.join(basePath, folderName + ".md"), `# ${folderName}`);
+        // 处理包含子文档的文件夹
+        writeFile(path.join(basePath, "index.md"), `# ${folderName}`);
         children.forEach((child) => processDocItem(child, path.join(parentPath, folderName), language));
     } else {
-        // 没有子文档的文件，处理 example 和 readme
+        // 处理没有子文档的文件
         if (example) {
-            // 处理 example，将其转换为 MD 文件
+            // 如果有example，将其转换为MD文件
             const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
             const exampleMd = `---
-title: ${language === "zh" ? "示例" : "Example"}
+title: ${language === "en" ? "Example" : "示例"}
 ---
 \`\`\`tsx
 ${tsxContent}
 \`\`\``;
-            // 写入 index.md，文件名固定为 index.md
-            writeFile(path.join(basePath, "example.md"), exampleMd);
+            writeFile(path.join(basePath, "example.md"), exampleMd); // 使用 index.md 作为文件名
         }
 
         if (readme) {
-            // 处理 readme 文件，直接用对应语言的 .md 文件内容
-            const readmePath = path.join(resourcePath, readme, language + ".md");
+            // 根据语言选择正确的 readme 文件，并保存为 index.md
+            const readmePath = path.join(resourcePath, readme, language + ".md"); // 选择对应语言的 .md 文件
             try {
                 const readmeContent = readFile(readmePath);
 
-                // 为 readme 添加 title 块
+                // 为 readme 文件添加 title 和 --- 块
                 const readmeMd = `---
-title: ${folderName}
----
-${readmeContent}`;
+title: ${title[language]}
+---\n${readmeContent}`;
 
-                // 生成固定路径的 index.md 文件
-                writeFile(path.join(basePath, "index.md"), readmeMd);
+                writeFile(path.join(basePath, "index.md"), readmeMd); // 使用 index.md 作为文件名
             } catch (err) {
                 console.error(`Error reading readme file at ${readmePath}:`, err);
             }
