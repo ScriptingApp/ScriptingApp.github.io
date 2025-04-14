@@ -1,0 +1,75 @@
+在scripts/docs.js写一个package.json脚本，用于读取resources/Scripting Documentation/doc.json并根据json定义：
+
+export type DocItem = {
+  title: Record<string, string>,
+  subtitle?: Record<string, string> // 忽略不用管
+  keywords?: string[] // 忽略不用管
+  example?: string
+  readme?: string
+  children?: DocItem[]
+}
+
+分为这几种处理方式：
+
+1、children存在时（不会有readme和children）：转换名为title: Record<string, string>的文件夹，然后对children?: DocItem[]的DocItem做同样的循环处理，除了处理本身的方法还有另外一种处理方式如下面方法2
+
+2、children不存在时
+
+	a. 若example存在：example均为tsx文件，你需要转为md文件，也就是用：
+
+—
+title: （title: Record<string, string>）
+—
+```tsx
+（tsx代码内容）
+```
+处理后就变成了md文件
+
+	b. 若readme存在：readme均为md文件直接使用
+
+然后对上述两种md文件均进行以下操作：
+
+一般title下面有zh和en两种语言，例如：
+[
+    "title": {
+      "en": "Quick Start",
+      "zh": "快速开始"
+    },
+]
+这时候要区分这两种语言放到对应文件夹，在这个例子中你应该：
+
+将  Quick Start  的md文件放到docs/en/guide/docs/Quick Start.md
+将  快速开始  的md文件放到docs/en/guide/docs/快速开始.md
+
+对于嵌套的你要这么处理：
+[
+    {
+        "title": {
+            "en": "Views",
+            "zh": "视图"
+        },
+        "children": [
+            {
+                "title": {
+                    "en": "Present views",
+                    "zh": "展示视图"
+                },
+                "children": [
+                    {
+                        "title": {
+                            "en": "Dismiss a view",
+                            "zh": "关闭一个视图"
+                        },
+                        "example": "views/present_views/dismiss_view"
+                    }
+                ]
+            }
+        ]
+    }
+]
+
+将  Dismiss a view  文件放到docs/en/guide/docs/Views/Present views/Dismiss a view.md
+将  关闭一个视图  文件放到docs/en/guide/docs/视图/展示视图/关闭一个视图.md
+
+
+
