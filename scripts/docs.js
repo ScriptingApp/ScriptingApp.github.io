@@ -18,24 +18,30 @@ const processDocItem = (item, parentPath = "", language = "en") => {
     const { title, subtitle, keywords, example, readme, children } = item;
 
     const folderName = title.en; // 使用语言来选择标题
-    const basePath = path.join(docsPath, language, "guide", "docs", parentPath, folderName);
+    const basePath = path.join(docsPath, language, "guide", "docs");
 
     if (children && children.length > 0) {
-        // 处理包含子文档的文件夹
-        writeFile(path.join(basePath, "index.md"), `# ${folderName}`);
         children.forEach((child) => processDocItem(child, path.join(parentPath, folderName), language));
     } else {
         // 处理没有子文档的文件
         if (example) {
             // 如果有example，将其转换为MD文件
             const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
+
+            const exampleName = example.split("/").pop();
+
+            let exampleTitle = language === "en" ? "Example" : "示例";
+            if (exampleName !== "index") {
+                exampleTitle += " - " + exampleName;
+            }
+
             const exampleMd = `---
-title: ${language === "en" ? "Example" : "示例"}
+title: ${exampleTitle}
 ---
 \`\`\`tsx
 ${tsxContent}
 \`\`\``;
-            writeFile(path.join(basePath, "example.md"), exampleMd); // 使用 index.md 作为文件名
+            writeFile(path.join(basePath, example + "_example.md"), exampleMd); // 使用 index.md 作为文件名
         }
 
         if (readme) {
@@ -49,12 +55,15 @@ ${tsxContent}
 title: ${title[language]}
 ---\n${readmeContent}`;
 
-                writeFile(path.join(basePath, "index.md"), readmeMd); // 使用 index.md 作为文件名
+                writeFile(path.join(basePath, readme, "index.md"), readmeMd); // 使用 index.md 作为文件名
             } catch (err) {
                 console.error(`Error reading readme file at ${readmePath}:`, err);
             }
         }
     }
+
+    // 处理 _meta.json
+    // const metaPath = path.join(basePath, parentPath, folderName, "_meta.json");
 };
 
 // 处理多语言

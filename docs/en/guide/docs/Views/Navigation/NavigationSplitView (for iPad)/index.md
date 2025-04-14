@@ -1,1 +1,0 @@
-# NavigationSplitView (for iPad)
