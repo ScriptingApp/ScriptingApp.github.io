@@ -1,0 +1,1733 @@
+[
+    {
+        "title": {
+            "en": "Quick Start",
+            "zh": "快速开始"
+        },
+        "subtitle": {
+            "en": "Quickly master the use of Scripting app.",
+            "zh": "快速掌握 Scripting 应用的使用。"
+        },
+        "readme": "quick_start/"
+    },
+    {
+        "title": {
+            "en": "Widget",
+            "zh": "小组件"
+        },
+        "subtitle": {
+            "en": "Create widgets to show your script’s content on the Home screen.",
+            "zh": "创建小组件，在主屏幕上显示脚本内容。"
+        },
+        "readme": "widget/"
+    },
+    {
+        "title": {
+            "en": "Intent",
+            "zh": "Intent"
+        },
+        "subtitle": {
+            "en": "An interface for providing an app-specific capability that people invoke from system experiences like Siri and the Shortcuts app.",
+            "zh": "提供特定于应用程序的功能接口，可通过 Siri 或快捷指令等系统体验来调用。"
+        },
+        "readme": "intent/"
+    },
+    {
+        "title": {
+            "en": "Views",
+            "zh": "视图"
+        },
+        "subtitle": {
+            "en": "Views are the building blocks that you use to declare the user interface.",
+            "zh": "视图是用于声明用户界面的基本构造块。"
+        },
+        "children": [
+            {
+                "title": {
+                    "en": "Present views",
+                    "zh": "展示视图"
+                },
+                "subtitle": {
+                    "en": "Present views by your script.",
+                    "zh": "通过脚本展示视图。"
+                },
+                "keywords": ["page", "navigation", "页面", "导航"],
+                "children": [
+                    {
+                        "title": {
+                            "en": "Present a simple view",
+                            "zh": "展示一个简单视图"
+                        },
+                        "subtitle": {
+                            "en": "Use Navigation.present to present a simple view.",
+                            "zh": "使用Navigation.present展示视图。"
+                        },
+                        "example": "views/present_views/simple_view"
+                    },
+                    {
+                        "title": {
+                            "en": "Dismiss a view",
+                            "zh": "关闭一个视图"
+                        },
+                        "subtitle": {
+                            "en": "Use Navigation.useDismiss to dismiss a view.",
+                            "zh": "使用Navigation.useDismiss关闭视图。"
+                        },
+                        "example": "views/present_views/dismiss_view"
+                    }
+                ]
+            },
+            {
+                "title": {
+                    "en": "Displaying text",
+                    "zh": "显示文本"
+                },
+                "subtitle": {
+                    "en": "Display formatted text.",
+                    "zh": "显示格式化文本。"
+                },
+                "keywords": [
+                    "text",
+                    "attributedstring",
+                    "richtext",
+                    "label",
+                    "文本",
+                    "富文本字符串",
+                    "富文本",
+                    "标签"
+                ],
+                "readme": "views/displaying_text/"
+            },
+            {
+                "title": {
+                    "en": "Image",
+                    "zh": "图像"
+                },
+                "subtitle": {
+                    "en": "Add images and symbols to your app’s user interface.",
+                    "zh": "在应用的用户界面中添加图像和符号。"
+                },
+                "keywords": ["image", "qrimage", "network", "图像", "二维码", "网络图片"],
+                "readme": "views/image/"
+            },
+            {
+                "title": {
+                    "en": "Button",
+                    "zh": "按钮"
+                },
+                "subtitle": {
+                    "en": "A control that initiates an action.",
+                    "zh": "一个用于触发点击操作的控件。"
+                },
+                "keywords": ["button", "gesture", "按钮", "手势"],
+                "readme": "views/button/"
+            },
+            {
+                "title": {
+                    "en": "Layout",
+                    "zh": "布局"
+                },
+                "subtitle": {
+                    "en": "Arrange views inside built-in layout containers like stacks and grids.",
+                    "zh": "在内置布局容器（如VStack和Grid）中排列视图。"
+                },
+                "children": [
+                    {
+                        "title": {
+                            "en": "HStack",
+                            "zh": "水平布局（HStack）"
+                        },
+                        "subtitle": {
+                            "en": "A view that arranges its subviews in a horizontal line.",
+                            "zh": "一个在水平方向排列子视图的视图。"
+                        },
+                        "example": "views/layout/hstack/index",
+                        "readme": "views/layout/hstack/"
+                    },
+                    {
+                        "title": {
+                            "en": "VStack",
+                            "zh": "垂直布局（VStack）"
+                        },
+                        "subtitle": {
+                            "en": "A view that arranges its subviews in a vertical line.",
+                            "zh": "一个在垂直方向排列子视图的视图。"
+                        },
+                        "example": "views/layout/vstack/index",
+                        "readme": "views/layout/vstack/"
+                    },
+                    {
+                        "title": {
+                            "en": "ZStack",
+                            "zh": "ZStack"
+                        },
+                        "subtitle": {
+                            "en": "A view that overlays its subviews, aligning them in both axes.",
+                            "zh": "一个在视觉上叠加子视图，并在两个轴上对齐的视图。"
+                        },
+                        "example": "views/layout/zstack/index",
+                        "readme": "views/layout/zstack/"
+                    },
+                    {
+                        "title": {
+                            "en": "Grid",
+                            "zh": "网格布局（Grid）"
+                        },
+                        "subtitle": {
+                            "en": "A container view that arranges other views in a two dimensional layout.",
+                            "zh": "一个将其他视图以二维布局排列的容器视图。"
+                        },
+                        "example": "views/layout/grid/index",
+                        "readme": "views/layout/grid/"
+                    },
+                    {
+                        "title": {
+                            "en": "LazyHStack",
+                            "zh": "惰性水平布局（LazyHStack）"
+                        },
+                        "subtitle": {
+                            "en": "A view that arranges its children in a line that grows horizontally, creating items only as needed.",
+                            "zh": "一个按照水平方向扩展，并在需要时才创建子视图的容器视图。"
+                        },
+                        "example": "views/layout/lazy_hstack/index",
+                        "readme": "views/layout/lazy_hstack/"
+                    },
+                    {
+                        "title": {
+                            "en": "LazyVStack",
+                            "zh": "惰性垂直布局（LazyVStack）"
+                        },
+                        "subtitle": {
+                            "en": "A view that arranges its children in a line that grows vertically, creating items only as needed.",
+                            "zh": "一个按照垂直方向扩展，并在需要时才创建子视图的容器视图。"
+                        },
+                        "example": "views/layout/lazy_vstack/index",
+                        "readme": "views/layout/lazy_vstack/"
+                    },
+                    {
+                        "title": {
+                            "en": "LazyHGrid",
+                            "zh": "惰性水平网格布局（LazyHGrid）"
+                        },
+                        "subtitle": {
+                            "en": "A container view that arranges its child views in a grid that grows horizontally, creating items only as needed.",
+                            "zh": "一个以水平方向扩展的网格视图，并仅在需要时创建子视图。"
+                        },
+                        "example": "views/layout/lazy_hgrid/index",
+                        "readme": "views/layout/lazy_hgrid/"
+                    },
+                    {
+                        "title": {
+                            "en": "LazyVGrid",
+                            "zh": "惰性垂直网格布局（LazyVGrid）"
+                        },
+                        "subtitle": {
+                            "en": "A container view that arranges its child views in a grid that grows vertically, creating items only as needed.",
+                            "zh": "一个以垂直方向扩展的网格视图，并仅在需要时创建子视图。"
+                        },
+                        "example": "views/layout/lazy_vgrid/index",
+                        "readme": "views/layout/lazy_vgrid/"
+                    }
+                ]
+            },
+            {
+                "title": {
+                    "en": "Text input",
+                    "zh": "文本输入"
+                },
+                "subtitle": {
+                    "en": "Get text input from the user.",
+                    "zh": "从用户获取文本输入。"
+                },
+                "keywords": [
+                    "textfield",
+                    "securefield",
+                    "form",
+                    "input",
+                    "hide keyboard",
+                    "文本字段",
+                    "安全文本字段",
+                    "表单",
+                    "输入",
+                    "隐藏键盘"
+                ],
+                "children": [
+                    {
+                        "title": {
+                            "en": "TextField",
+                            "zh": "文本输入框（TextField）"
+                        },
+                        "subtitle": {
+                            "en": "A control that displays an editable text interface.",
+                            "zh": "显示可编辑文本界面的控件。"
+                        },
+                        "example": "views/text_input/text_field"
+                    },
+                    {
+                        "title": {
+                            "en": "SecureField",
+                            "zh": "安全文本输入框（SecureField）"
+                        },
+                        "subtitle": {
+                            "en": "A control into which people securely enter private text.",
+                            "zh": "一种可供安全输入私人文本的控件。"
+                        },
+                        "example": "views/text_input/secure_field"
+                    },
+                    {
+                        "title": {
+                            "en": "Keyboard",
+                            "zh": "键盘"
+                        },
+                        "subtitle": {
+                            "en": "This interface allows you to interact with the software keyboard.",
+                            "zh": "通过这个接口与软件键盘交互。"
+                        },
+                        "readme": "keyboard/"
+                    }
+                ]
+            },
+            {
+                "title": {
+                    "en": "Controls",
+                    "zh": "控件"
+                },
+                "subtitle": {
+                    "en": "Display values and get user selections.",
+                    "zh": "显示数值并获取用户选择。"
+                },
+                "children": [
+                    {
+                        "title": {
+                            "en": "Toggle",
+                            "zh": "切换开关"
+                        },
+                        "subtitle": {
+                            "en": "A control that toggles between on and off states.",
+                            "zh": "一个在开启和关闭状态之间进行切换的控件。"
+                        },
+                        "keywords": ["switch"],
+                        "example": "views/controls/toggle/index",
+                        "readme": "views/controls/toggle/"
+                    },
+                    {
+                        "title": {
+                            "en": "Stepper",
+                            "zh": "步进器"
+                        },
+                        "subtitle": {
+                            "en": "A control that performs increment and decrement actions.",
+                            "zh": "一个执行递增和递减操作的控件。"
+                        },
+                        "keywords": ["plus", "minus", "加", "减"],
+                        "example": "views/controls/stepper/index",
+                        "readme": "views/controls/stepper/"
+                    },
+                    {
+                        "title": {
+                            "en": "Slider",
+                            "zh": "滑块控件"
+                        },
+                        "subtitle": {
+                            "en": "A control for selecting a value from a bounded linear range of values.",
+                            "zh": "一个在设定范围内选择数值的控件。"
+                        },
+                        "example": "views/controls/slider/index",
+                        "readme": "views/controls/slider/"
+                    },
+                    {
+                        "title": {
+                            "en": "ProgressView",
+                            "zh": "进度视图"
+                        },
+                        "subtitle": {
+                            "en": "A view that shows the progress toward completion of a task.",
+                            "zh": "一个显示任务完成进度的视图。"
+                        },
+                        "keywords": ["refresh", "indicator", "刷新", "指示器"],
+                        "example": "views/controls/progress_view/index",
+                        "readme": "views/controls/progress_view/"
+                    },
+                    {
+                        "title": {
+                            "en": "Picker",
+                            "zh": "选择器"
+                        },
+                        "subtitle": {
+                            "en": "A control for selecting from a set of mutually exclusive values.",
+                            "zh": "一个从一组选项值中进行选择的控件。"
+                        },
+                        "keywords": ["selector", "options", "选择器", "可选项"],
+                        "example": "views/controls/picker/index",
+                        "readme": "views/controls/picker/"
+                    },
+                    {
+                        "title": {
+                            "en": "DatePicker",
+                            "zh": "日期、时间选择器"
+                        },
+                        "subtitle": {
+                            "en": "A control for selecting an absolute date.",
+                            "zh": "一个用于选择具体日期的控件。"
+                        },
+                        "keywords": ["time", "calendar", "时间", "日历"],
+                        "example": "views/controls/date_picker/index",
+                        "readme": "views/controls/date_picker/"
+                    },
+                    {
+                        "title": {
+                            "en": "ColorPicker",
+                            "zh": "颜色选择器"
+                        },
+                        "subtitle": {
+                            "en": "A control used to select a color from the system color picker UI.",
+                            "zh": "一个从系统颜色选择器界面中选取颜色的控件。"
+                        },
+                        "example": "views/controls/color_picker/index",
+                        "readme": "views/controls/color_picker/"
+                    },
+                    {
+                        "title": {
+                            "en": "Gauge",
+                            "zh": "仪表盘"
+                        },
+                        "subtitle": {
+                            "en": "A view that shows a value within a range.",
+                            "zh": "一个在一定范围内显示数值的仪表盘样式的视图。"
+                        },
+                        "example": "views/controls/gauge/index",
+                        "readme": "views/controls/gauge/"
+                    },
+                    {
+                        "title": {
+                            "en": "ContentUnavailableView",
+                            "zh": "内容不可用视图"
+                        },
+                        "subtitle": {
+                            "en": "An interface, consisting of a label and additional content, that you display when the content of your app is unavailable to users.",
+                            "zh": "当应用的内容对用户不可用时，用于显示标签和其他内容的界面。"
+                        },
+                        "keywords": ["no data", "empty", "无数据", "空白"],
+                        "example": "views/controls/content_unavailable_view/index",
+                        "readme": "views/controls/content_unavailable_view/"
+                    }
+                ]
+            },
+            {
+                "title": {
+                    "en": "Menu",
+                    "zh": "菜单"
+                },
+                "subtitle": {
+                    "en": "Use a menu to provide people with easy access to common commands. ",
+                    "zh": "使用菜单为用户提供便捷的常用命令访问。"
+                },
+                "keywords": ["context menu", "上下文菜单"],
+                "example": "views/menu/index"
+            },
+            {
+                "title": {
+                    "en": "Shapes",
+                    "zh": "形状"
+                },
+                "subtitle": {
+                    "en": "Draw shapes like circles and rectangles, as well as custom paths that define shapes of your own design.",
+                    "zh": "绘制圆形、矩形等形状，并可使用自定义路径来定义自己设计的形状。"
+                },
+                "keywords": [
+                    "rect",
+                    "circle",
+                    "rounded rect",
+                    "ellipse",
+                    "UnevenRoundedRectangle",
+                    "Capsule",
+                    "矩形",
+                    "圆形",
+                    "圆角矩形",
+                    "椭圆",
+                    "不均匀圆角矩形",
+                    "胶囊"
+                ],
+                "example": "views/shapes/index"
+            },
+            {
+                "title": {
+                    "en": "List",
+                    "zh": "列表"
+                },
+                "subtitle": {
+                    "en": "Use a list to display a one-dimensional vertical collection of views.",
+                    "zh": "使用列表显示一维的垂直视图集合。"
+                },
+                "children": [
+                    {
+                        "title": {
+                            "en": "Display data inside a row",
+                            "zh": "在行中显示数据"
+                        },
+                        "example": "views/list/display_data_inside_a_row"
+                    },
+                    {
+                        "title": {
+                            "en": "Represent data hierarchy in sections",
+                            "zh": "以分区表示数据层级"
+                        },
+                        "keywords": ["section"],
+                        "example": "views/list/represent_data_hierarchy_in_sections"
+                    },
+                    {
+                        "title": {
+                            "en": "Use list for navigations",
+                            "zh": "使用列表进行导航"
+                        },
+                        "keywords": ["navigationlink"],
+                        "example": "views/list/use_list_for_navigations"
+                    },
+                    {
+                        "title": {
+                            "en": "DisclosureGroup",
+                            "zh": "展开组"
+                        },
+                        "subtitle": {
+                            "en": "A view that shows or hides another content view, based on the state of a disclosure control.",
+                            "zh": "一个根据展开控制状态来显示或隐藏其他内容视图的视图。"
+                        },
+                        "keywords": ["collapse", "折叠"],
+                        "example": "views/list/disclosure_group"
+                    },
+                    {
+                        "title": {
+                            "en": "List style",
+                            "zh": "列表样式"
+                        },
+                        "subtitle": {
+                            "en": "Sets the style for lists within this view.",
+                            "zh": "设置此视图中列表的样式。"
+                        },
+                        "keywords": ["listStyle", "列表样式"],
+                        "example": "views/list/list_style"
+                    },
+                    {
+                        "title": {
+                            "en": "List interaction",
+                            "zh": "列表交互"
+                        },
+                        "subtitle": {
+                            "en": "Adds custom swipe actions to a row in a list.",
+                            "zh": "为列表中的行添加自定义滑动操作。"
+                        },
+                        "keywords": ["swipeActions", "滑动操作"],
+                        "example": "views/list/list_interaction"
+                    },
+                    {
+                        "title": {
+                            "en": "Refresable List",
+                            "zh": "可刷新列表"
+                        },
+                        "subtitle": {
+                            "en": "Pull down to refresh on a list view.",
+                            "zh": "为列表中的行添加下拉刷新"
+                        },
+                        "keywords": ["refresh", "pull down refresh", "刷新", "下拉刷新"],
+                        "example": "views/list/refreshable_list"
+                    },
+                    {
+                        "title": {
+                            "en": "Editable List",
+                            "zh": "可编辑列表"
+                        },
+                        "subtitle": {
+                            "en": "Move and delete list item.",
+                            "zh": "移动和删除列表项。"
+                        },
+                        "keywords": [
+                            "swipe left",
+                            "swipe right",
+                            "drag",
+                            "move",
+                            "delete",
+                            "remove",
+                            "左滑",
+                            "右滑",
+                            "拖拽",
+                            "移动",
+                            "删除",
+                            "移除"
+                        ],
+                        "example": "views/list/editable_list"
+                    }
+                ]
+            },
+            {
+                "title": {
+                    "en": "View groupings",
+                    "zh": "视图分组"
+                },
+                "subtitle": {
+                    "en": "Present views in different kinds of purpose-driven containers, like forms or control groups.",
+                    "zh": "在不同用途的容器（如表单或控件组）中呈现视图。"
+                },
+                "children": [
+                    {
+                        "title": {
+                            "en": "Group",
+                            "zh": "Group"
+                        },
+                        "subtitle": {
+                            "en": "Grouping views into a container",
+                            "zh": "将视图分组到容器中"
+                        },
+                        "keywords": ["group", "分组"],
+                        "example": "views/view_groupings/group"
+                    },
+                    {
+                        "title": {
+                            "en": "Section",
+                            "zh": "Section"
+                        },
+                        "subtitle": {
+                            "en": "Organizing views into sections",
+                            "zh": "将视图分区组织"
+                        },
+                        "keywords": ["section", "分区"],
+                        "example": "views/view_groupings/section"
+                    },
+                    {
+                        "title": {
+                            "en": "ForEach",
+                            "zh": "ForEach"
+                        },
+                        "subtitle": {
+                            "en": "Iterating over dynamic data",
+                            "zh": "迭代动态数据"
+                        },
+                        "example": "views/view_groupings/iterating"
+                    },
+                    {
+                        "title": {
+                            "en": "GroupBox",
+                            "zh": "GroupBox"
+                        },
+                        "subtitle": {
+                            "en": "Grouping views into a box",
+                            "zh": "将视图分组到一个方框中"
+                        },
+                        "example": "views/view_groupings/group_box"
+                    },
+                    {
+                        "title": {
+                            "en": "Form",
+                            "zh": "表单"
+                        },
+                        "subtitle": {
+                            "en": "A container for grouping controls used for data entry, such as in settings or inspectors.",
+                            "zh": "一个用于分组输入控件的容器，可用于设置或检查器等场景。"
+                        },
+                        "example": "views/view_groupings/form"
+                    },
+                    {
+                        "title": {
+                            "en": "ControlGroup",
+                            "zh": "控件组"
+                        },
+                        "subtitle": {
+                            "en": "A container view that displays semantically-related controls in a visually-appropriate manner for the context.",
+                            "zh": "一个在语义相关的上下文中，以合适的视觉方式显示控件的容器视图。"
+                        },
+                        "example": "views/view_groupings/control_group"
+                    }
+                ]
+            },
+            {
+                "title": {
+                    "en": "Scroll views",
+                    "zh": "可滚动视图"
+                },
+                "subtitle": {
+                    "en": "Enable people to scroll to content that doesn’t fit in the current display.",
+                    "zh": "允许用户滚动查看当前显示区域无法容纳的内容。"
+                },
+                "example": "views/scrollview/index"
+            },
+            {
+                "title": {
+                    "en": "Gestures",
+                    "zh": "手势"
+                },
+                "subtitle": {
+                    "en": "Define interactions from taps, clicks, and swipes to fine-grained gestures.",
+                    "zh": "定义从轻点、点击、滑动到更精细手势的交互方式。"
+                },
+                "keywords": [
+                    "tap",
+                    "onTapGesture",
+                    "doubleTap",
+                    "long press",
+                    "轻点",
+                    "轻点手势",
+                    "双击",
+                    "长按"
+                ],
+                "example": "views/gestures/index"
+            },
+            {
+                "title": {
+                    "en": "Navigation",
+                    "zh": "导航"
+                },
+                "subtitle": {
+                    "en": "Enable people to move between different parts of your app’s view hierarchy within a scene.",
+                    "zh": "允许用户在应用的视图层级中各个部分之间进行导航。"
+                },
+                "children": [
+                    {
+                        "title": {
+                            "en": "NavigationStack",
+                            "zh": "NavigationStack"
+                        },
+                        "subtitle": {
+                            "en": "A view that displays a root view and enables you to present additional views over the root view.",
+                            "zh": "一个显示根视图并允许在根视图上呈现其他视图的视图。"
+                        },
+                        "children": [
+                            {
+                                "title": {
+                                    "en": "Use with NavigationLink",
+                                    "zh": "与 NavigationLink 一起使用"
+                                },
+                                "example": "views/navigation/navigation_stack/with_navigation_link"
+                            },
+                            {
+                                "title": {
+                                    "en": "Use with navigationDestination",
+                                    "zh": "与 navigationDestination 一起使用"
+                                },
+                                "example": "views/navigation/navigation_stack/with_navigation_destination"
+                            }
+                        ]
+                    },
+                    {
+                        "title": {
+                            "en": "TabView",
+                            "zh": "TabView"
+                        },
+                        "subtitle": {
+                            "en": "A view that switches between multiple child views using interactive user interface elements.",
+                            "zh": "一个通过交互式界面元素在多个子视图之间切换的视图。"
+                        },
+                        "children": [
+                            {
+                                "title": {
+                                    "en": "TabView with badge",
+                                    "zh": "带徽章的 TabView"
+                                },
+                                "example": "views/navigation/tab_view/with_badge"
+                            },
+                            {
+                                "title": {
+                                    "en": "TabView with multiple scrolling pages",
+                                    "zh": "包含多个可滚动页面的 TabView"
+                                },
+                                "keywords": ["swiper"],
+                                "example": "views/navigation/tab_view/with_multiple_scrolling_pages"
+                            }
+                        ]
+                    },
+                    {
+                        "title": {
+                            "en": "NavigationSplitView (for iPad)",
+                            "zh": "分栏导航视图（适用于 iPad）"
+                        },
+                        "subtitle": {
+                            "en": "A view that presents views in two or three columns, where selections in leading columns control presentations in subsequent columns.",
+                            "zh": "一个在两个或三个栏中展示视图的视图，前置栏的选择会控制后续栏的展示。"
+                        },
+                        "children": [
+                            {
+                                "title": {
+                                    "en": "Two-column",
+                                    "zh": "两栏"
+                                },
+                                "example": "views/navigation/navigation_split_view/two_column"
+                            },
+                            {
+                                "title": {
+                                    "en": "Three-column",
+                                    "zh": "三栏"
+                                },
+                                "example": "views/navigation/navigation_split_view/three_column"
+                            },
+                            {
+                                "title": {
+                                    "en": "Control column visibility",
+                                    "zh": "控制栏的可见性"
+                                },
+                                "example": "views/navigation/navigation_split_view/control_column_visibility"
+                            },
+                            {
+                                "title": {
+                                    "en": "Collapsed split views",
+                                    "zh": "折叠分栏视图"
+                                },
+                                "example": "views/navigation/navigation_split_view/collapsed_split_views"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": {
+                    "zh": "在小组件和灵动岛中使用动画",
+                    "en": "Animation for Widget and LiveActivity"
+                },
+                "subtitle": {
+                    "en": "The views and view modifiers for displaying animation in widget and LiveActivity",
+                    "zh": "在小组件和灵动岛中播放动画的视图或者视图属性"
+                },
+                "readme": "views/animation_for_widget/"
+            },
+            {
+                "title": {
+                    "en": "WebView",
+                    "zh": "网页视图"
+                },
+                "subtitle": {
+                    "en": "An view that displays interactive web content.",
+                    "zh": "一个用于显示交互式网页内容的视图。"
+                },
+                "keywords": [
+                    "WebViewController",
+                    "evaluateJavaScript",
+                    "load website",
+                    "网页视图控制器",
+                    "执行JavaScript",
+                    "加载网站"
+                ],
+                "example": "views/webview/index"
+            },
+            {
+                "title": {
+                    "en": "Dialog",
+                    "zh": "对话框"
+                },
+                "subtitle": {
+                    "en": "This interface provides some shortcut methods for displaying dialog boxes.",
+                    "zh": "该接口提供了一些用于显示对话框的快捷方法。"
+                },
+                "keywords": ["alert", "confirm", "prompt", "actionsheet", "警告", "确认", "提示", "操作表"],
+                "example": "views/dialog/index"
+            },
+            {
+                "title": {
+                    "en": "Modal presentaions",
+                    "zh": "模态展示"
+                },
+                "subtitle": {
+                    "en": "Present content in a separate view that offers focused interaction.",
+                    "zh": "在单独的视图中呈现内容，以提供更专注的交互。"
+                },
+                "keywords": ["sheet", "popover", "fullscreencover", "弹窗", "弹出框", "全屏覆盖"],
+                "example": "views/modal_presentations/index"
+            },
+            {
+                "title": {
+                    "en": "Toolbars",
+                    "zh": "工具栏"
+                },
+                "subtitle": {
+                    "en": "Provide immediate access to frequently used commands and controls.",
+                    "zh": "为用户提供快速访问常用命令和控件。"
+                },
+                "keywords": ["navigationbar", "bottombar", "keyboard", "导航栏", "底部栏", "键盘"],
+                "example": "views/toolbars/index"
+            },
+            {
+                "title": {
+                    "en": "Search",
+                    "zh": "搜索"
+                },
+                "subtitle": {
+                    "en": "Enable people to search for text or other content within your script UI.",
+                    "zh": "允许用户在脚本界面内搜索文本或其他内容。"
+                },
+                "keywords": ["searchbar", "搜索栏"],
+                "example": "views/search/index"
+            },
+            {
+                "title": {
+                    "en": "Charts",
+                    "zh": "图表"
+                },
+                "subtitle": {
+                    "en": "Transform your data into informative visualizations.",
+                    "zh": "将您的数据转换为信息丰富的可视化图表。"
+                },
+                "readme": "/views/charts/",
+                "children": [
+                    {
+                        "title": {
+                            "en": "LineChart",
+                            "zh": "折线图（LineChart）"
+                        },
+                        "example": "views/charts/line"
+                    },
+                    {
+                        "title": {
+                            "en": "BarChart",
+                            "zh": "柱状图（BarChart）"
+                        },
+                        "example": "views/charts/bar"
+                    },
+                    {
+                        "title": {
+                            "en": "RectChart",
+                            "zh": "矩形图（RectChart）"
+                        },
+                        "example": "views/charts/rect"
+                    },
+                    {
+                        "title": {
+                            "en": "RuleChart",
+                            "zh": "标尺图（RuleChart）"
+                        },
+                        "example": "views/charts/rule"
+                    },
+                    {
+                        "title": {
+                            "en": "LineCategoryChart",
+                            "zh": "分类折线图（LineCategoryChart）"
+                        },
+                        "example": "views/charts/line_category"
+                    },
+                    {
+                        "title": {
+                            "en": "BarStackChart",
+                            "zh": "堆叠柱状图（BarStackChart）"
+                        },
+                        "example": "views/charts/bar_stack"
+                    },
+                    {
+                        "title": {
+                            "en": "AreaStackChart",
+                            "zh": "堆叠面积图（AreaStackChart）"
+                        },
+                        "example": "views/charts/area_stack"
+                    },
+                    {
+                        "title": {
+                            "en": "BarGanttChart",
+                            "zh": "甘特柱状图（BarGanttChart）"
+                        },
+                        "example": "views/charts/bar_gantt"
+                    },
+                    {
+                        "title": {
+                            "en": "RangeAreaChart",
+                            "zh": "范围面积图（RangeAreaChart）"
+                        },
+                        "example": "views/charts/range_area"
+                    },
+                    {
+                        "title": {
+                            "en": "Bar1DChart",
+                            "zh": "一维柱状图（Bar1DChart）"
+                        },
+                        "example": "views/charts/bar_1d"
+                    },
+                    {
+                        "title": {
+                            "en": "PointChart",
+                            "zh": "点状图（PointChart）"
+                        },
+                        "example": "views/charts/point"
+                    },
+                    {
+                        "title": {
+                            "en": "PointCategoryChart",
+                            "zh": "分类点状图（PointCategoryChart）"
+                        },
+                        "example": "views/charts/point_category"
+                    },
+                    {
+                        "title": {
+                            "en": "HeatMapChart",
+                            "zh": "热力图（HeatMapChart）"
+                        },
+                        "example": "views/charts/heat_map"
+                    },
+                    {
+                        "title": {
+                            "en": "RectAreaChart",
+                            "zh": "矩形面积图（RectAreaChart）"
+                        },
+                        "example": "views/charts/rect_area"
+                    },
+                    {
+                        "title": {
+                            "en": "PieChart",
+                            "zh": "饼图（PieChart）"
+                        },
+                        "example": "views/charts/pie"
+                    },
+                    {
+                        "title": {
+                            "en": "DonutChart",
+                            "zh": "环形图（DonutChart）"
+                        },
+                        "example": "views/charts/donut"
+                    },
+                    {
+                        "title": {
+                            "en": "Multiple Charts",
+                            "zh": "多个图表"
+                        },
+                        "example": "views/charts/multiple_charts"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": {
+            "en": "Types",
+            "zh": "类型"
+        },
+        "subtitle": {
+            "en": "The type declarations of Scripting APIs.",
+            "zh": "Scripting API 的类型声明。"
+        },
+        "children": [
+            {
+                "title": {
+                    "en": "Color",
+                    "zh": "颜色"
+                },
+                "subtitle": {
+                    "en": "The Color API supports various color formats, including HEX strings, RGBA strings, and predefined color keywords",
+                    "zh": "Color API 支持多种颜色格式，包括 HEX 字符串、RGBA 字符串以及预定义的颜色关键字。"
+                },
+                "readme": "types/color/"
+            },
+            {
+                "title": {
+                    "en": "ShapeStyle",
+                    "zh": "形状样式"
+                },
+                "subtitle": {
+                    "en": "This type defines how colors, gradients, and materials can be applied to a view’s foreground or background, mirroring the styling capabilities found in SwiftUI.",
+                    "zh": "该类型定义了如何将颜色、渐变和材质应用于视图的前景或背景，类似于 SwiftUI 中的样式功能。"
+                },
+                "readme": "types/shape_style/",
+                "keywords": [
+                    "color",
+                    "gradient",
+                    "lineargradient",
+                    "RadialGradient",
+                    "ColorWithGradientOrOpacity",
+                    "颜色",
+                    "渐变",
+                    "线性渐变",
+                    "径向渐变",
+                    "带渐变或不透明度的颜色"
+                ]
+            },
+            {
+                "title": {
+                    "en": "DynamicShapeStyle",
+                    "zh": "DynamicShapeStyle"
+                },
+                "subtitle": {
+                    "en": "This type allows you to define two distinct styles for a shape—one for light mode and another for dark mode. The system automatically applies the appropriate style based on the current color scheme (light or dark) of the user’s device.",
+                    "zh": "这个类型允许为一个形状定义两种不同的样式——一种用于浅色模式，另一种用于深色模式。系统会根据用户设备的当前配色方案（浅色或深色）自动应用适合的样式。"
+                },
+                "readme": "types/dynamic_shape_style/"
+            },
+            {
+                "title": {
+                    "en": "Alignment",
+                    "zh": "对齐"
+                },
+                "subtitle": {
+                    "en": "The Alignment type defines how to position content within a view’s frame, mirroring the behavior of SwiftUI’s built-in alignments.",
+                    "zh": "Alignment 类型定义了如何在视图的框架内定位内容，类似于 SwiftUI 内置对齐方式的行为。"
+                },
+                "readme": "types/alignment/"
+            }
+        ]
+    },
+    {
+        "title": {
+            "en": "View Modifiers",
+            "zh": "视图修饰器"
+        },
+        "subtitle": {
+            "en": "View modifiers allows you to customize the behavior and appearance of views.",
+            "zh": "视图修饰器允许您自定义视图的行为和外观。"
+        },
+        "children": [
+            {
+                "title": {
+                    "en": "Text Style",
+                    "zh": "文本样式"
+                },
+                "subtitle": {
+                    "en": "The properties allows you to customize the appearance of a text or label view.",
+                    "zh": "这些属性允许您自定义文本或标签视图的外观。"
+                },
+                "keywords": [
+                    "font",
+                    "fontSize",
+                    "fontWeight",
+                    "fontDesign",
+                    "underline",
+                    "strikethrough",
+                    "monospaced",
+                    "minScaleFactor",
+                    "lineLimit",
+                    "textAlignment",
+                    "字体",
+                    "字号",
+                    "字体粗细",
+                    "字体设计",
+                    "下划线",
+                    "删除线",
+                    "等宽字体",
+                    "最小缩放因子",
+                    "行数限制",
+                    "文本对齐"
+                ],
+                "readme": "view_modifiers/text_style/"
+            },
+            {
+                "title": {
+                    "en": "buttonStyle",
+                    "zh": "按钮样式"
+                },
+                "subtitle": {
+                    "en": "The buttonStyle property allows you to customize the interaction behavior and appearance of buttons within a view hierarchy.",
+                    "zh": "这个属性允许您自定义视图层级中按钮的交互行为和外观。"
+                },
+                "readme": "view_modifiers/button_style/"
+            },
+            {
+                "title": {
+                    "en": "controlGroupStyle",
+                    "zh": "控件组样式"
+                },
+                "subtitle": {
+                    "en": "The controlGroupStyle property allows you to set the visual and interactive style for control groups within your view, reflecting the look and feel found in SwiftUI.",
+                    "zh": "controlGroupStyle 属性允许您为视图中的控件组设置视觉和交互样式，类似于 SwiftUI 中的外观。"
+                },
+                "readme": "view_modifiers/control_group_style/"
+            },
+            {
+                "title": {
+                    "en": "listStyle",
+                    "zh": "列表样式"
+                },
+                "subtitle": {
+                    "en": "The listStyle property allows you to customize the behavior and appearance of a list in your UI when using the List view.",
+                    "zh": "listStyle 属性允许您在使用 List 视图时自定义列表的行为和外观。"
+                },
+                "readme": "view_modifiers/list_style/"
+            },
+            {
+                "title": {
+                    "en": "pickerStyle",
+                    "zh": "选择器样式"
+                },
+                "subtitle": {
+                    "en": "The pickerStyle property allows you to customize the appearance and behavior of pickers within a view hierarchy.",
+                    "zh": "pickerStyle 属性允许您自定义视图层级中选择器的外观和行为。"
+                },
+                "readme": "view_modifiers/picker_style/"
+            },
+            {
+                "title": {
+                    "en": "progressViewStyle",
+                    "zh": "进度视图样式"
+                },
+                "subtitle": {
+                    "en": "The progressViewStyle property allows you to customize the appearance of a progress view.",
+                    "zh": "progressViewStyle 属性允许您自定义进度视图的外观。"
+                },
+                "readme": "view_modifiers/progress_view_style/"
+            },
+            {
+                "title": {
+                    "en": "datePickerStyle",
+                    "zh": "日期选择器样式"
+                },
+                "subtitle": {
+                    "en": "The datePickerStyle property allows you to customize the appearance and interaction of the DatePicker view.",
+                    "zh": "datePickerStyle 属性允许您自定义 DatePicker 视图的外观和交互。"
+                },
+                "readme": "view_modifiers/date_picker_style/"
+            },
+            {
+                "title": {
+                    "en": "formStyle",
+                    "zh": "表单样式"
+                },
+                "subtitle": {
+                    "en": "The formStyle property allows you to customize the appearance and interaction of the Form view.",
+                    "zh": "formStyle 属性允许您自定义 Form 视图的外观和交互。"
+                },
+                "readme": "view_modifiers/form_style/"
+            },
+            {
+                "title": {
+                    "en": "textFieldStyle",
+                    "zh": "文本输入框样式"
+                },
+                "subtitle": {
+                    "en": "The textFieldStyle property allows you to customize the appearance and interaction of the TextField view.",
+                    "zh": "textFieldStyle 属性允许您自定义 TextField 视图的外观和交互。"
+                },
+                "readme": "view_modifiers/text_field_style/"
+            },
+            {
+                "title": {
+                    "en": "toggleStyle",
+                    "zh": "切换开关样式"
+                },
+                "subtitle": {
+                    "en": "The toggleStyle property allows you to customize the appearance and interaction of the Toggle view.",
+                    "zh": "toggleStyle 属性允许您自定义 Toggle 视图的外观和交互。"
+                },
+                "readme": "view_modifiers/toggle_style/"
+            },
+            {
+                "title": {
+                    "en": "gaugeStyle",
+                    "zh": "仪表盘样式"
+                },
+                "subtitle": {
+                    "en": "The gaugeStyle property allows you to customize the appearance and interaction of the Gauge view.",
+                    "zh": "gaugeStyle 属性允许您自定义 Gauge 视图的外观和交互。"
+                },
+                "readme": "view_modifiers/gauge_style/"
+            },
+            {
+                "title": {
+                    "en": "toolbar",
+                    "zh": "工具栏"
+                },
+                "subtitle": {
+                    "en": "The toolbar property allows you to populate a view’s navigation or toolbar area with various items",
+                    "zh": "toolbar 属性允许您在视图的导航栏或工具栏区域中添加各种项目。"
+                },
+                "readme": "view_modifiers/toolbar/"
+            },
+            {
+                "title": {
+                    "en": "Charts Style",
+                    "zh": "图表样式"
+                },
+                "subtitle": {
+                    "en": "The properties allows you to customize the appearance of the chart view.",
+                    "zh": "这些属性允许您自定义图表视图的外观。"
+                },
+                "readme": "view_modifiers/charts_style/"
+            }
+        ]
+    },
+    {
+        "title": {
+            "en": "Device",
+            "zh": "设备"
+        },
+        "subtitle": {
+            "en": "Provides the information abouts the device, also some methods to use the capabilities of the device.",
+            "zh": "提供设备相关信息，以及使用设备功能的一些方法。"
+        },
+        "keywords": [
+            "isiphone",
+            "isIpad",
+            "system",
+            "orientation",
+            "battery",
+            "portrait",
+            "landscape",
+            "locale",
+            "timezone",
+            "iPhone",
+            "iPad",
+            "系统",
+            "方向",
+            "电池",
+            "竖屏",
+            "横屏",
+            "区域设置",
+            "时区"
+        ],
+        "readme": "device/",
+        "example": "device/index"
+    },
+    {
+        "title": {
+            "en": "Data and UIImage",
+            "zh": "Data 与 UIImage"
+        },
+        "subtitle": {
+            "en": "These interfaces simplify working with binary data and images, allowing you to handle common scenarios easily in your scripts.",
+            "zh": "这些接口简化了对二进制数据和图像的处理，使您能够在脚本中轻松处理常见场景。"
+        },
+        "readme": "data_and_uiimage/"
+    },
+    {
+        "title": {
+            "en": "LiveActivity",
+            "zh": "实时活动（灵动岛）"
+        },
+        "subtitle": {
+            "en": "Display your Script’s data in the Dynamic Island and on the Lock Screen and offer quick interactions.",
+            "zh": "在动态岛和锁屏上展示脚本的数据，并提供快速交互方式。"
+        },
+        "readme": "live_activity/",
+        "example": "live_activity/index"
+    },
+    {
+        "title": {
+            "en": "Interactive Widget and LiveActivity",
+            "zh": "可互动的小组件和灵动岛"
+        },
+        "subtitle": {
+            "en": "To create dynamic and interactive UIs using Button and Toggle views.",
+            "zh": "通过 Button 和 Toggle 组件创建动态、交互式的 UI。"
+        },
+        "readme": "interactive_widget_and_liveactivity/"
+    },
+    {
+        "title": {
+            "en": "Assistant",
+            "zh": "智能助手"
+        },
+        "subtitle": {
+            "en": "Request structured JSON data from the assistant.",
+            "zh": "从智能助手请求结构化的 JSON 数据。"
+        },
+        "readme": "assistant/"
+    },
+    {
+        "title": {
+            "en": "AssistantTool",
+            "zh": "智能助手工具"
+        },
+        "subtitle": {
+            "en": "Custom tools for the assistant.",
+            "zh": "自定义提供给智能助手使用的工具。"
+        },
+        "readme": "assistant_tool/"
+    },
+    {
+        "title": {
+            "en": "Safari",
+            "zh": "Safari"
+        },
+        "subtitle": {
+            "en": "Present a website either in-app or leaving the app and opening the system default browser.",
+            "zh": "在应用内或跳转至系统默认浏览器来展示网站。"
+        },
+        "keywords": ["openURL", "in-app browser", "urlscheme", "打开URL", "应用内浏览器", "URL协议"],
+        "example": "safari/index"
+    },
+    {
+        "title": {
+            "en": "Clipboard",
+            "zh": "剪贴板"
+        },
+        "subtitle": {
+            "en": "Read and set the clipboard.",
+            "zh": "读取并设置剪贴板内容。"
+        },
+        "keywords": ["copy", "pasteboard", "复制", "粘贴板"],
+        "example": "clipboard/index"
+    },
+    {
+        "title": {
+            "en": "Storage",
+            "zh": "本地存储"
+        },
+        "subtitle": {
+            "en": "Providing a persistent store for simple data.",
+            "zh": "为简单数据提供持久化存储。"
+        },
+        "keywords": ["save cache", "set storage", "localstorage", "缓存保存", "设置存储", "本地存储"],
+        "readme": "storage/"
+    },
+    {
+        "title": {
+            "en": "DocumentPicker",
+            "zh": "文档选择器"
+        },
+        "subtitle": {
+            "en": "Pick files from Files app.",
+            "zh": "从文件应用中选择文件。"
+        },
+        "keywords": [
+            "document",
+            "export files",
+            "pick files",
+            "pick directory",
+            "文档",
+            "导出文件",
+            "选择文件",
+            "选择文件夹"
+        ],
+        "readme": "document_picker/"
+    },
+    {
+        "title": {
+            "en": "Path",
+            "zh": "文件路径工具"
+        },
+        "subtitle": {
+            "en": "The interface provides utilities for working with file and directory paths.",
+            "zh": "该接口提供与文件和目录路径相关的实用工具。"
+        },
+        "readme": "path/"
+    },
+    {
+        "title": {
+            "en": "FileManager",
+            "zh": "文件管理器"
+        },
+        "subtitle": {
+            "en": "A convenient interface to the contents of the file system, and the primary means of interacting with it.",
+            "zh": "一个与文件系统内容进行交互的便捷接口，也是与其进行交互的主要方式。"
+        },
+        "readme": "file_manager/",
+        "keywords": ["bookmark", "folder", "目录", "书签"]
+    },
+    {
+        "title": {
+            "en": "HapticFeedback",
+            "zh": "触觉反馈"
+        },
+        "subtitle": {
+            "en": "Haptic feedback provides a tactile response, such as a tap, that draws attention and reinforces both actions and events.",
+            "zh": "触觉反馈提供了触感响应，例如轻点，以引起注意并强化动作或事件。"
+        },
+        "example": "haptic_feedback/index"
+    },
+    {
+        "title": {
+            "en": "Keychain",
+            "zh": "钥匙串"
+        },
+        "subtitle": {
+            "en": "The interface to store data in Keychain.",
+            "zh": "存储数据到钥匙串的接口。"
+        },
+        "keywords": ["securestorage", "安全存储"],
+        "readme": "keychain/"
+    },
+    {
+        "title": {
+            "en": "LocalAuth",
+            "zh": "本地认证"
+        },
+        "subtitle": {
+            "en": "This interface provides authentication with biometrics such as fingerprint or facial recognition.",
+            "zh": "该接口提供使用指纹或面部识别等生物特征进行认证的功能。"
+        },
+        "keywords": ["faceID", "fingerprint", "touchID", "passCode", "面容ID", "指纹", "触控ID", "密码"],
+        "readme": "local_auth/"
+    },
+    {
+        "title": {
+            "en": "Contact",
+            "zh": "通讯录"
+        },
+        "subtitle": {
+            "en": "This interface allows you to access and manage contacts on the device. You can create, query, update, and delete contacts, as well as manage contact groups and containers.",
+            "zh": "该接口允许在脚本中访问和管理设备上的联系人数据，包括创建、查询、更新、删除联系人，以及操作联系人组和容器。"
+        },
+        "readme": "contact/",
+        "example": "contact/index"
+    },
+    {
+        "title": {
+            "en": "Calendar",
+            "zh": "日历"
+        },
+        "subtitle": {
+            "en": "This interface allows you to interact with iOS calendars, enabling operations like retrieving default calendars, creating custom calendars, and managing calendar settings and events.",
+            "zh": "该接口允许您与 iOS 日历进行交互，例如获取默认日历、创建自定义日历以及管理日历设置和事件。"
+        },
+        "readme": "calendar/"
+    },
+    {
+        "title": {
+            "en": "CalendarEvent",
+            "zh": "日历事件"
+        },
+        "subtitle": {
+            "en": "This interface enables you to create and manage events in iOS calendars, with properties like title, location, dates, attendees, and recurrence.",
+            "zh": "该接口允许您在 iOS 日历中创建和管理事件，设置标题、位置、日期、参与者和重复规则等属性。"
+        },
+        "readme": "calendar_event/"
+    },
+    {
+        "title": {
+            "en": "Reminder",
+            "zh": "提醒事项"
+        },
+        "subtitle": {
+            "en": "This interface allows you to create, edit, and manage reminders in a calendar. This includes setting titles, due dates, priorities, and recurrence rules.",
+            "zh": "该接口允许您在日历中创建、编辑和管理提醒事项，包括设置标题、到期日、优先级和重复规则。"
+        },
+        "readme": "reminder/"
+    },
+    {
+        "title": {
+            "en": "Recurrence",
+            "zh": "重复规则"
+        },
+        "subtitle": {
+            "en": "The recurrence-related types and classes allow you to define and manage recurring patterns for events and reminders.",
+            "zh": "与重复相关的类型和类允许您为事件和提醒事项定义并管理重复模式。"
+        },
+        "readme": "recurrence/"
+    },
+    {
+        "title": {
+            "en": "Location",
+            "zh": "定位"
+        },
+        "subtitle": {
+            "en": "Getting the current location of your device.",
+            "zh": "获取设备的当前位置。"
+        },
+        "keywords": ["get current location", "reverse geocode", "获取当前位置", "逆地理编码"],
+        "readme": "location/"
+    },
+    {
+        "title": {
+            "en": "Notification",
+            "zh": "通知"
+        },
+        "subtitle": {
+            "en": "The interface for managing local notification-related activities.",
+            "zh": "用于管理本地通知相关活动的接口。"
+        },
+        "readme": "notification/",
+        "example": "notification/index"
+    },
+    {
+        "title": {
+            "en": "Photos",
+            "zh": "照片"
+        },
+        "subtitle": {
+            "en": "The interface that manages access and changes to the user’s photo library.",
+            "zh": "用于管理用户照片库的访问和变更的接口。"
+        },
+        "keywords": [
+            "save photo",
+            "pick photos",
+            "take photo",
+            "get latest photos",
+            "保存照片",
+            "选择照片",
+            "拍照",
+            "获取最新照片"
+        ],
+        "readme": "photos/",
+        "example": "photos/index"
+    },
+    {
+        "title": {
+            "en": "QRCode",
+            "zh": "二维码"
+        },
+        "subtitle": {
+            "en": "Parse the QR code image file, or open the scan code page to scan.",
+            "zh": "解析二维码图像文件，或打开扫码页面进行扫描。"
+        },
+        "example": "qrcode/index"
+    },
+    {
+        "title": {
+            "en": "Request",
+            "zh": "请求"
+        },
+        "subtitle": {
+            "en": "Send network requests.",
+            "zh": "发送网络请求。"
+        },
+        "keywords": [
+            "fetch",
+            "send request",
+            "form data",
+            "cancel request",
+            "获取",
+            "发送请求",
+            "表单数据",
+            "取消请求"
+        ],
+        "example": "request/index"
+    },
+    {
+        "title": {
+            "en": "Script and Intent",
+            "zh": "Script 和 Intent"
+        },
+        "subtitle": {
+            "en": "Script is used to access information about the script, and provides convenient methods to control the scripts. Intent is used to handle user requests through Shortcuts app intent actions or share sheet inputs.",
+            "zh": "Script用于访问当前运行脚本信息，并提供用于控制脚本的便捷方法。Intent用于处理脚本执行及快捷指令（Shortcuts）操作。"
+        },
+        "readme": "script_and_intent/"
+    },
+    {
+        "title": {
+            "en": "ShareSheet",
+            "zh": "分享内容"
+        },
+        "subtitle": {
+            "en": "You can share data from your script using this interface.",
+            "zh": "您可以通过此接口从脚本中共享数据。"
+        },
+        "example": "share_sheet/index"
+    },
+    {
+        "title": {
+            "en": "QuickLook",
+            "zh": "快速查看"
+        },
+        "subtitle": {
+            "en": "A simple way to preview text, images, or files within your scripts",
+            "zh": "用于在脚本中预览文本、图片或文件。"
+        },
+        "keywords": ["preview text", "preview image", "preview files", "预览文本", "预览图片", "预览文件"],
+        "readme": "quick_look/"
+    },
+    {
+        "title": {
+            "en": "SharedAudioSession",
+            "zh": "SharedAudioSession"
+        },
+        "subtitle": {
+            "en": "The shared audio session instance. An audio session acts as an intermediary between your app and the operating system — and, in turn, the underlying audio hardware.",
+            "zh": "共享音频会话实例。音频会话充当应用与操作系统以及底层音频硬件之间的中介。"
+        },
+        "readme": "shared_audio_session/"
+    },
+    {
+        "title": {
+            "en": "Speech",
+            "zh": "语音合成"
+        },
+        "subtitle": {
+            "en": "Text To Speech.",
+            "zh": "将文字转换为语音。"
+        },
+        "readme": "speech/",
+        "example": "speech/index"
+    },
+    {
+        "title": {
+            "en": "SpeechRecognition",
+            "zh": "语音识别"
+        },
+        "subtitle": {
+            "en": "The interface for managing the speech recognizer process.",
+            "zh": "用于管理语音识别过程的接口。"
+        },
+        "readme": "speech_recognition/",
+        "example": "speech_recognition/index"
+    },
+    {
+        "title": {
+            "en": "AudioRecorder",
+            "zh": "录音"
+        },
+        "subtitle": {
+            "en": "The interface allows you to record audio data to a file. It provides functionalities to start, stop, pause, and manage audio recordings, with configurable settings for audio quality, sample rate, format, and more.",
+            "zh": "该接口允许您将音频数据录制到文件中，提供开始、停止、暂停和管理音频录制的功能，并可配置音频质量、采样率、格式等设置。"
+        },
+        "readme": "audio_recorder/"
+    },
+    {
+        "title": {
+            "en": "Audio Player",
+            "zh": "音频播放器"
+        },
+        "subtitle": {
+            "en": "The interface allows for playback of both local and network audio sources, and offers controls such as play, pause, stop, volume, and more. Below is a sample usage along with detailed explanations of each part of the code.",
+            "zh": "该接口允许播放本地和网络音源，并提供播放、暂停、停止、音量控制等功能。下面是一个示例用法以及每个部分的详细说明。"
+        },
+        "keywords": ["AVPlayer"],
+        "readme": "audio_player/"
+    },
+    {
+        "title": {
+            "en": "VideoPlayer",
+            "zh": "视频播放器"
+        },
+        "subtitle": {
+            "en": "VideoPlayer view lets you playback movies from any URL, local or remote.",
+            "zh": "VideoPlayer 视图允许您播放来自任意 URL（本地或远程）的影片。"
+        },
+        "keywords": ["AVPlayer"],
+        "readme": "video_player/",
+        "example": "video_player/index"
+    },
+    {
+        "title": {
+            "en": "Mail",
+            "zh": "邮件"
+        },
+        "subtitle": {
+            "en": "This interface allows you to present a mail compose view within your app. You can specify recipients, subject, body, and attachments.",
+            "zh": "该接口提供了在应用内直接唤起邮件撰写视图的能力，支持添加收件人、抄送、密送、主题、正文以及附件。"
+        },
+        "readme": "mail/"
+    },
+    {
+        "title": {
+            "en": "MediaPlayer",
+            "zh": "媒体播放器"
+        },
+        "subtitle": {
+            "en": "This interface allows you to interact with the Now Playing Center, manage Now Playing Info, and respond to remote control events.",
+            "zh": "该接口允许与 Now Playing Center 交互，管理 Now Playing Info，并响应远程控制事件。"
+        },
+        "readme": "media_player/"
+    },
+    {
+        "title": {
+            "en": "Weather",
+            "zh": "天气"
+        },
+        "subtitle": {
+            "en": "This interface provides access to real-time and forecast weather data.",
+            "zh": "该接口提供对实时天气和天气预报数据的访问。"
+        },
+        "readme": "weather/",
+        "example": "weather/index"
+    },
+    {
+        "title": {
+            "en": "WebScoket",
+            "zh": "WebScoket"
+        },
+        "subtitle": {
+            "en": "This interface allows you to create and manage WebSocket connections, allowing for real-time communication with a server.",
+            "zh": "该接口允许你创建和管理 WebSocket 连接的接口，与服务器进行实时通信。"
+        },
+        "readme": "websocket/"
+    },
+    {
+        "title": {
+            "en": "socket.io",
+            "zh": "socket.io"
+        },
+        "subtitle": {
+            "en": "This interface allows you to manage real-time, bidirectional communication between clients and servers with socket.io library.",
+            "zh": "该接口允许你通过socket.io库管理客户端与服务器之间的实时双向通信。"
+        },
+        "readme": "socket_io/"
+    }
+]

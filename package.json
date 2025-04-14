@@ -6,7 +6,7 @@
         "build": "rspress build",
         "dev": "rspress dev",
         "preview": "rspress preview",
-        "gen-example": "bun scripts/gen-example.js"
+        "gen-docs": "bun scripts/docs.js"
     },
     "dependencies": {
         "rspress": "^1.40.2"
