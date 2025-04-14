@@ -9,41 +9,58 @@ async function generateDocs(docEntries, basePath) {
 }
 
 // 处理单个文档条目
+// 修改 processEntry 函数中的路径逻辑
 async function processEntry(entry, currentPath) {
     const hasContent = entry.readme || entry.example;
     const hasChildren = entry.children?.length > 0;
 
-    // 生成两种语言的文档
-    await generateForLanguage("zh", entry, currentPath, hasContent, hasChildren);
-    await generateForLanguage("en", entry, currentPath, hasContent, hasChildren);
+    // 修改：所有包含children的条目都使用其title作为子目录
+    const newPath = hasChildren ? join(currentPath, entry.title.zh || entry.title.en) : currentPath;
 
-    // 递归处理子条目（修复路径生成逻辑）
+    await generateForLanguage("zh", entry, newPath, hasContent, hasChildren);
+    await generateForLanguage("en", entry, newPath, hasContent, hasChildren);
+
     if (hasChildren) {
         for (const child of entry.children) {
-            // 仅在父级没有内容时才创建子目录
-            const childPath = hasContent
-                ? currentPath // 保持当前路径
-                : join(currentPath, entry.title.zh || entry.title.en);
-            await processEntry(child, childPath);
+            // 子条目继续在当前路径下生成
+            await processEntry(child, newPath);
         }
     }
 }
 
+// 修改 generateForLanguage 中的路径生成逻辑
 async function generateForLanguage(lang, entry, path, hasContent, hasChildren) {
-    // 修复路径生成逻辑：移除多余的 "guide/docs" 拼接
-    const langPath =
-        hasChildren && !hasContent
-            ? join(path, lang, "guide/docs", entry.title[lang] || entry.title.en)
-            : join(path, lang, "guide/docs");
-
+    // 保持路径生成逻辑不变
+    const langPath = join(path, lang, "guide/docs");
     const title = entry.title[lang] || entry.title.en;
 
-    if (hasContent) {
-        // 生成 .mdx 文件（文件扩展名需从 .md 改为 .mdx）
-        const mdContent = await generateMarkdown(entry, lang);
-        await writeFileWithDir(join(langPath, `${title}.mdx`), mdContent);
+    if (!hasContent && hasChildren) {
+        const dirMetaPath = join(langPath, "_meta.json");
+        const existingDirMeta = (await safeReadJson(dirMetaPath)) || [];
 
-        // 更新 _meta.json
+        // 添加目录类型元数据
+        const newDirMeta = existingDirMeta.concat({
+            type: "dir",
+            name: title,
+            label: title,
+            children: entry.children.map((c) => ({
+                type: "file",
+                name: c.title[lang] || c.title.en,
+                label: c.title[lang] || c.title.en,
+            })),
+        });
+        await writeFileWithDir(dirMetaPath, JSON.stringify(newDirMeta, null, 2));
+    }
+
+    if (hasContent) {
+        // 只有当 entry.readme 存在时才复制 Markdown 文件
+        if (entry.readme) {
+            const sourcePath = join("Scripting Documentation", entry.readme, `${lang}.md`);
+            const targetPath = join(langPath, `${title}.md`);
+            await copyMarkdownFile(sourcePath, targetPath);
+        }
+
+        // 更新父级元数据
         const metaPath = join(langPath, "_meta.json");
         const existingMeta = (await safeReadJson(metaPath)) || [];
 
@@ -52,14 +69,7 @@ async function generateForLanguage(lang, entry, path, hasContent, hasChildren) {
             name: title,
             label: title,
         });
-
         await writeFileWithDir(metaPath, JSON.stringify(newMeta, null, 2));
-    }
-
-    // 处理子目录元数据
-    if (!hasContent && hasChildren) {
-        // 确保目录存在
-        await writeFileWithDir(join(langPath, "_placeholder"), "");
     }
 }
 
@@ -73,6 +83,7 @@ async function safeReadJson(path) {
 }
 
 // 生成 Markdown 内容
+// 修改生成 Markdown 内容中的导入路径
 async function generateMarkdown(entry, lang) {
     let content = "---\n";
     content += `title: ${entry.title[lang]}\n`;
@@ -80,8 +91,8 @@ async function generateMarkdown(entry, lang) {
     content += "---\n\n";
 
     if (entry.readme) {
-        // 生成 MDX 导入语句
-        const importPath = join("Scripting Documentation", entry.readme, `${lang}.mdx`);
+        // 修改为相对路径引用
+        const importPath = `./${entry.title[lang] || entry.title.en}.md`;
         content += `import Content from '${importPath}';\n\n`;
         content += "<Content />\n";
     }
@@ -98,6 +109,16 @@ async function generateMarkdown(entry, lang) {
 async function writeFileWithDir(path, content) {
     await mkdir(dirname(path), { recursive: true });
     await writeFile(path, content);
+}
+
+// 辅助函数：复制 Markdown 文件
+async function copyMarkdownFile(sourcePath, targetPath) {
+    try {
+        const content = await Bun.file(sourcePath).text();
+        await writeFileWithDir(targetPath, content);
+    } catch (error) {
+        console.error(`Error copying file: ${sourcePath}`, error);
+    }
 }
 
 // 主执行流程
