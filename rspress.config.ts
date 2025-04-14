@@ -13,7 +13,7 @@ export default defineConfig({
     logoText: "Scripting",
     route: {
         cleanUrls: true,
-        exclude: ["**/*.tsx"],
+        extensions: [".md", ".mdx"],
     },
     search: {
         codeBlocks: true,
