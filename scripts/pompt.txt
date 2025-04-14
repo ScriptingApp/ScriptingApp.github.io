@@ -27,21 +27,43 @@ title: （title: Record<string, string>）
 
 	b. 若readme存在：readme均为md文件直接使用
 
-然后对上述两种md文件均进行以下操作：
+然后对上述两种md文件均进行以下几类操作：
 
-一般title下面有zh和en两种语言，例如：
+一、对于 readme 一般 title 下面有zh和en两种语言，例如：
 [
     "title": {
       "en": "Quick Start",
       "zh": "快速开始"
     },
+    "readme": "quick_look/"
 ]
 这时候要区分这两种语言放到对应文件夹，在这个例子中你应该：
 
-将  Quick Start  的md文件放到docs/en/guide/docs/Quick Start.md
-将  快速开始  的md文件放到docs/en/guide/docs/快速开始.md
+将 Quick Start 的md文件(resources/Scripting Documentation/quick_start/en.md)放到docs/en/guide/docs/Quick Start.md
+将 快速开始 的md文件(resources/Scripting Documentation/quick_start/zh.md)放到docs/en/guide/docs/快速开始.md
 
-对于嵌套的你要这么处理：
+二、对于 example 例如：
+[
+    {
+        "title": {
+            "en": "Photos",
+            "zh": "照片"
+        },
+        "readme": "photos/",
+        "example": "photos/index"
+    }
+]
+
+在这个例子中你应该将 readme 同方法一处理：
+
+将 Photos 的md文件(resources/Scripting Documentation/photos/en.md)放到docs/en/guide/docs/Photos.md
+将 照片 的md文件(resources/Scripting Documentation/photos/zh.md)放到docs/en/guide/docs/照片.md
+
+并把 example 处理为：
+
+将 photos 的 example 的tsx文件(resources/Scripting Documentation/photos/index.tsx)放到：docs/en/guide/docs/Photos/Example.md 和 docs/en/guide/docs/Photos/示例.md
+
+三、对于 children 嵌套文件 你要这么处理：
 [
     {
         "title": {
@@ -67,9 +89,8 @@ title: （title: Record<string, string>）
         ]
     }
 ]
+将 Dismiss a view 文件（resources/Scripting Documentation/views/present_views/dismiss_view.tsx）放到docs/en/guide/docs/Views/Present views/Dismiss a view.md
+将 关闭一个视图 文件（）放到docs/en/guide/docs/视图/展示视图/关闭一个视图.md
 
-将  Dismiss a view  文件放到docs/en/guide/docs/Views/Present views/Dismiss a view.md
-将  关闭一个视图  文件放到docs/en/guide/docs/视图/展示视图/关闭一个视图.md
-
-
-
+(docs/en/guide/docs/ 为英文文件路径，docs/zh/guide/docs/ 为中文文件路径，example代码要同时放到这两个中英文路径)
+(resources/Scripting Documentation/ 为固定资源路径，所有的md或者tsx都在这里)
