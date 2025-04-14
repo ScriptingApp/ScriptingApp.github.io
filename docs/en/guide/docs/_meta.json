@@ -1,0 +1,37 @@
+[
+    {
+        "type": "dir",
+        "name": "api",
+        "label": "api",
+        "collapsible": true,
+        "collapsed": true
+    },
+    {
+        "type": "dir",
+        "name": "layout",
+        "label": "layout",
+        "collapsible": true,
+        "collapsed": true
+    },
+    {
+        "type": "dir",
+        "name": "types",
+        "label": "types",
+        "collapsible": true,
+        "collapsed": true
+    },
+    {
+        "type": "dir",
+        "name": "views",
+        "label": "views",
+        "collapsible": true,
+        "collapsed": true
+    },
+    {
+        "type": "dir",
+        "name": "view_modifiers",
+        "label": "view_modifiers",
+        "collapsible": true,
+        "collapsed": true
+    }
+]

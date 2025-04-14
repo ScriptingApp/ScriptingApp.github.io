@@ -10,8 +10,8 @@ hero:
           text: Start
           link: /guide/start
         - theme: alt
-          text: Github
-          link: https://github.com/thomfang
+          text: Download
+          link: https://apps.apple.com/app/apple-store/id6479691128
     image:
         src: /scripting-icon.png
         alt: Logo

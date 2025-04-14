@@ -26,5 +26,25 @@
     "example": {
         "en": "Example",
         "zh": "示例"
+    },
+    "types": {
+        "en": "Types",
+        "zh": "类型"
+    },
+    "api": {
+        "en": "API",
+        "zh": "API"
+    },
+    "layout": {
+        "en": "Layout",
+        "zh": "布局"
+    },
+    "views": {
+        "en": "View",
+        "zh": "视图"
+    },
+    "view_modifiers": {
+        "en": "View Modifiers",
+        "zh": "视图修饰器"
     }
 }
