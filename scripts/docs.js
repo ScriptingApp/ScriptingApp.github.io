@@ -17,53 +17,87 @@ const writeFile = (filePath, content) => {
 const processDocItem = (item, parentPath = "", language = "en") => {
     const { title, subtitle, keywords, example, readme, children } = item;
 
-    const folderName = title.en; // 使用语言来选择标题
-    const basePath = path.join(docsPath, language, "guide", "docs");
+    const folderName = title.en;
+    const basePath = path.join(docsPath, language, "guide", "docs", parentPath, folderName);
 
+    // 生成 _meta.json
+    const metaPath = path.join(path.join(docsPath, language, "guide", "docs", parentPath), "_meta.json");
+    if (!fs.existsSync(metaPath)) {
+        writeFile(metaPath, JSON.stringify([], null, 2));
+    }
+    const metaJson = JSON.parse(readFile(metaPath));
+
+    if (children) {
+        metaJson.push({
+            type: "dir",
+            name: folderName,
+            label: title[language],
+            collapsible: true,
+            collapsed: true,
+        });
+        writeFile(metaPath, JSON.stringify(metaJson, null, 2));
+    } else {
+        metaJson.push({
+            type: "file",
+            name: folderName,
+            label: title[language],
+        });
+        writeFile(metaPath, JSON.stringify(metaJson, null, 2));
+    }
+
+    // 生成文档
     if (children && children.length > 0) {
         children.forEach((child) => processDocItem(child, path.join(parentPath, folderName), language));
     } else {
-        // 处理没有子文档的文件
-        if (example) {
-            // 如果有example，将其转换为MD文件
-            const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
+        if (readme) {
+            if (!example) {
+                const readmePath = path.join(resourcePath, readme, language + ".md");
+                const readmeContent = readFile(readmePath);
+                const readmeMd = `---
+title: ${title[language]}
+---\n${readmeContent}`;
+                const cleanBasePath = basePath.endsWith(path.sep) ? basePath.slice(0, -1) : basePath;
+                writeFile(cleanBasePath + ".md", readmeMd);
+            } else {
+                const readmePath = path.join(resourcePath, readme, language + ".md");
+                const readmeContent = readFile(readmePath);
+                const readmeMd = `---
+title: ${title[language]}
+---\n${readmeContent}`;
 
-            const exampleName = example.split("/").pop();
-
-            let exampleTitle = language === "en" ? "Example" : "示例";
-            if (exampleName !== "index") {
-                exampleTitle += " - " + exampleName;
+                writeFile(path.join(basePath, "index.md"), readmeMd);
             }
+        }
 
-            const exampleMd = `---
+        if (example) {
+            if (!readme) {
+                const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
+                const exampleMd = `---
+title: ${title[language]}
+---
+\`\`\`tsx
+${tsxContent}
+\`\`\``;
+
+                const cleanBasePath = basePath.endsWith(path.sep) ? basePath.slice(0, -1) : basePath;
+                writeFile(cleanBasePath + ".md", exampleMd);
+            } else {
+                const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
+                let exampleName = example.split("/").pop();
+                let exampleTitle = language === "en" ? "Example" : "示例";
+
+                const exampleMd = `---
 title: ${exampleTitle}
 ---
 \`\`\`tsx
 ${tsxContent}
 \`\`\``;
-            writeFile(path.join(basePath, example + "_example.md"), exampleMd); // 使用 index.md 作为文件名
-        }
 
-        if (readme) {
-            // 根据语言选择正确的 readme 文件，并保存为 index.md
-            const readmePath = path.join(resourcePath, readme, language + ".md"); // 选择对应语言的 .md 文件
-            try {
-                const readmeContent = readFile(readmePath);
-
-                // 为 readme 文件添加 title 和 --- 块
-                const readmeMd = `---
-title: ${title[language]}
----\n${readmeContent}`;
-
-                writeFile(path.join(basePath, readme, "index.md"), readmeMd); // 使用 index.md 作为文件名
-            } catch (err) {
-                console.error(`Error reading readme file at ${readmePath}:`, err);
+                const fileSuffix = exampleName === "index" ? "_example" : "";
+                writeFile(path.join(basePath, exampleName + fileSuffix + ".md"), exampleMd);
             }
         }
     }
-
-    // 处理 _meta.json
-    // const metaPath = path.join(basePath, parentPath, folderName, "_meta.json");
 };
 
 // 处理多语言
@@ -74,9 +108,7 @@ const processLanguages = (docItem) => {
 
 // 读取 JSON 配置并开始处理
 const processDocs = () => {
-    const docJsonPath = path.join(resourcePath, "doc.json");
-    const docJson = JSON.parse(readFile(docJsonPath));
-
+    const docJson = JSON.parse(readFile(path.join(resourcePath, "doc.json")));
     docJson.forEach((item) => processLanguages(item));
 };
 

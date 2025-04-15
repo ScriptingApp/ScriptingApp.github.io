@@ -6,8 +6,7 @@
         "build": "rspress build",
         "dev": "rspress dev",
         "preview": "rspress preview",
-        "gen-docs": "rm -rf docs/en/guide/docs/* && rm -rf docs/zh/guide/docs/* && bun scripts/docs.js",
-        "docs-beta": "rm -rf docs/en/guide/docs/* && rm -rf docs/zh/guide/docs/* && bun scripts/docs-beta.js"
+        "docs": "rm -rf docs/en/guide/docs/* && rm -rf docs/zh/guide/docs/* && bun scripts/docs.js"
     },
     "dependencies": {
         "rspress": "^1.40.2"

@@ -1,29 +1,14 @@
-# Rspress website
+# Scripting 官方文档项目
 
-## Setup
+## 项目简介
 
-Install the dependencies:
+通过 `Scripting Documentation` (Scripting App 默认脚本) 生成官网的工程
 
-```bash
-npm install
-```
+## 快速开始
 
-## Get started
-
-Start the dev server:
+1. 将 `Scripting Documentation` (Scripting App 默认脚本) 放入 `resources` 文件夹
+2. 运行文档生成命令：
 
 ```bash
-npm run dev
-```
-
-Build the website for production:
-
-```bash
-npm run build
-```
-
-Preview the production build locally:
-
-```bash
-npm run preview
+bun run docs
 ```
