@@ -7,7 +7,7 @@
     {
         "type": "dir",
         "name": "docs",
-        "link": "/guide/Quick Start",
+        "label": "docs",
         "collapsible": true,
         "collapsed": true
     },
