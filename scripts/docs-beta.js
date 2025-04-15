@@ -21,14 +21,13 @@ const processDocItem = (item, parentPath = "", language = "en") => {
     const basePath = path.join(docsPath, language, "guide", "docs", parentPath, folderName);
 
     // 生成 _meta.json
-    if (children && children.length > 0) {
-        const metaPath = path.join(path.join(docsPath, language, "guide", "docs", parentPath), "_meta.json");
-        if (!fs.existsSync(metaPath)) {
-            writeFile(metaPath, JSON.stringify([], null, 2));
-        }
+    const metaPath = path.join(path.join(docsPath, language, "guide", "docs", parentPath), "_meta.json");
+    if (!fs.existsSync(metaPath)) {
+        writeFile(metaPath, JSON.stringify([], null, 2));
+    }
+    const metaJson = JSON.parse(readFile(metaPath));
 
-        const metaJson = JSON.parse(readFile(metaPath));
-
+    if (children) {
         metaJson.push({
             type: "dir",
             name: folderName,
@@ -38,13 +37,6 @@ const processDocItem = (item, parentPath = "", language = "en") => {
         });
         writeFile(metaPath, JSON.stringify(metaJson, null, 2));
     } else {
-        const metaPath = path.join(path.join(docsPath, language, "guide", "docs", parentPath), "_meta.json");
-        if (!fs.existsSync(metaPath)) {
-            writeFile(metaPath, JSON.stringify([], null, 2));
-        }
-
-        const metaJson = JSON.parse(readFile(metaPath));
-
         metaJson.push({
             type: "file",
             name: folderName,

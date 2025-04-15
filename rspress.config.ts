@@ -5,11 +5,8 @@ export default defineConfig({
     root: path.join(__dirname, "docs"),
     // outDir: "public",
     title: "Scripting",
-    icon: "/icon-512.png",
-    logo: {
-        light: "/scripting-icon.png",
-        dark: "/scripting-icon.png",
-    },
+    icon: "/icon.png",
+    logo: "/logo.png",
     logoText: "Scripting",
     route: {
         cleanUrls: true,

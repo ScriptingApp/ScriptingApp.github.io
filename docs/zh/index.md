@@ -13,7 +13,7 @@ hero:
           text: 下载
           link: https://apps.apple.com/app/apple-store/id6479691128
     image:
-        src: /scripting-icon.png
+        src: /logo.png
         alt: Logo
 features:
     - title: 高性能编辑器
