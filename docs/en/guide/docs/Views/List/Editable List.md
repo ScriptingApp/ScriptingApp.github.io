@@ -1,5 +1,5 @@
 ---
-title: Example - Editable List
+title: Editable List
 ---
 ```tsx
 import { Color, EditButton, ForEach, List, Navigation, NavigationStack, Script, Text, useState } from "scripting"

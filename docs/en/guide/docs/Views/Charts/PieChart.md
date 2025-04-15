@@ -1,5 +1,5 @@
 ---
-title: Example - PieChart
+title: PieChart
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, PieChart, Script, VStack } from "scripting"

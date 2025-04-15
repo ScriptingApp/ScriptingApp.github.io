@@ -1,5 +1,5 @@
 ---
-title: Example - RectChart
+title: RectChart
 ---
 ```tsx
 import { Chart, List, Navigation, NavigationStack, RectChart, Script, Section, Toggle, useState } from "scripting"

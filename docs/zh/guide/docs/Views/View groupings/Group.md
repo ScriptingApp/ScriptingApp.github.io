@@ -1,5 +1,5 @@
 ---
-title: 示例 - Group
+title: Group
 ---
 ```tsx
 import { Button, Group, List, Navigation, NavigationStack, Script, Section, Text, VStack } from "scripting"

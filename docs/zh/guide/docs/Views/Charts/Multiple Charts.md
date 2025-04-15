@@ -1,5 +1,5 @@
 ---
-title: 示例 - 多个图表
+title: 多个图表
 ---
 ```tsx
 import { AreaChart, Chart, LineChart, Navigation, NavigationStack, RoundedRectangle, RuleLineForLabelChart, Script, Text, useMemo, useState, VStack, ZStack } from "scripting"

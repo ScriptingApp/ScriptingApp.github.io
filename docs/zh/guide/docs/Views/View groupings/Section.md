@@ -1,5 +1,5 @@
 ---
-title: 示例 - Section
+title: Section
 ---
 ```tsx
 import { Button, List, Navigation, NavigationStack, Script, Section, Text, useState } from "scripting"

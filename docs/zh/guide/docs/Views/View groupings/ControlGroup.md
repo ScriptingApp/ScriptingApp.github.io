@@ -1,5 +1,5 @@
 ---
-title: 示例 - 控件组
+title: 控件组
 ---
 ```tsx
 import { Button, ControlGroup, ControlGroupStyle, Label, List, Navigation, NavigationStack, Picker, Script, Text, useMemo, useState } from "scripting"

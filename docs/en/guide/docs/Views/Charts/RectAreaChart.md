@@ -1,5 +1,5 @@
 ---
-title: Example - RectAreaChart
+title: RectAreaChart
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, PointChart, RectAreaChart, Script, VStack } from "scripting"

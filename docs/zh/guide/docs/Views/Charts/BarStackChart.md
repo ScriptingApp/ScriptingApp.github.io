@@ -1,5 +1,5 @@
 ---
-title: 示例 - 堆叠柱状图（BarStackChart）
+title: 堆叠柱状图（BarStackChart）
 ---
 ```tsx
 import { BarStackChart, Chart, List, Navigation, NavigationStack, Script, Section, Toggle, useState, } from "scripting"

@@ -1,5 +1,5 @@
 ---
-title: Example - TabView with multiple scrolling pages
+title: TabView with multiple scrolling pages
 ---
 ```tsx
 import { Color, Navigation, NavigationStack, Script, TabView, Text, VStack } from "scripting"

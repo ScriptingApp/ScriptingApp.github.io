@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "name": "Two-column",
+    "label": "Two-column"
+  },
+  {
+    "type": "file",
+    "name": "Three-column",
+    "label": "Three-column"
+  },
+  {
+    "type": "file",
+    "name": "Control column visibility",
+    "label": "Control column visibility"
+  },
+  {
+    "type": "file",
+    "name": "Collapsed split views",
+    "label": "Collapsed split views"
+  }
+]

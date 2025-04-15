@@ -1,5 +1,5 @@
 ---
-title: Example - Display data inside a row
+title: Display data inside a row
 ---
 ```tsx
 import { HStack, Label, List, Navigation, NavigationStack, Script, Text, VStack } from "scripting"

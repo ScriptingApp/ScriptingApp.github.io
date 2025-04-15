@@ -1,5 +1,5 @@
 ---
-title: Example - Collapsed split views
+title: Collapsed split views
 ---
 ```tsx
 import { Navigation, NavigationSplitView, NavigationSplitViewColumn, Script, Text, useState, VStack } from "scripting"

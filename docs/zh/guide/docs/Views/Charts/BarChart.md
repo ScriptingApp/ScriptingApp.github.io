@@ -1,5 +1,5 @@
 ---
-title: 示例 - 柱状图（BarChart）
+title: 柱状图（BarChart）
 ---
 ```tsx
 import { BarChart, Chart, List, Navigation, NavigationStack, Script, Section, Toggle, useState, } from "scripting"

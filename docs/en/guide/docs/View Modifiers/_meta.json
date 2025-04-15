@@ -1,0 +1,67 @@
+[
+  {
+    "type": "file",
+    "name": "Text Style",
+    "label": "Text Style"
+  },
+  {
+    "type": "file",
+    "name": "buttonStyle",
+    "label": "buttonStyle"
+  },
+  {
+    "type": "file",
+    "name": "controlGroupStyle",
+    "label": "controlGroupStyle"
+  },
+  {
+    "type": "file",
+    "name": "listStyle",
+    "label": "listStyle"
+  },
+  {
+    "type": "file",
+    "name": "pickerStyle",
+    "label": "pickerStyle"
+  },
+  {
+    "type": "file",
+    "name": "progressViewStyle",
+    "label": "progressViewStyle"
+  },
+  {
+    "type": "file",
+    "name": "datePickerStyle",
+    "label": "datePickerStyle"
+  },
+  {
+    "type": "file",
+    "name": "formStyle",
+    "label": "formStyle"
+  },
+  {
+    "type": "file",
+    "name": "textFieldStyle",
+    "label": "textFieldStyle"
+  },
+  {
+    "type": "file",
+    "name": "toggleStyle",
+    "label": "toggleStyle"
+  },
+  {
+    "type": "file",
+    "name": "gaugeStyle",
+    "label": "gaugeStyle"
+  },
+  {
+    "type": "file",
+    "name": "toolbar",
+    "label": "toolbar"
+  },
+  {
+    "type": "file",
+    "name": "Charts Style",
+    "label": "Charts Style"
+  }
+]

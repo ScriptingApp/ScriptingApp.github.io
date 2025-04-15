@@ -1,5 +1,5 @@
 ---
-title: 示例 - 点状图（PointChart）
+title: 点状图（PointChart）
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, PointChart, Script, VStack } from "scripting"

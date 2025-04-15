@@ -1,5 +1,5 @@
 ---
-title: Example - RuleChart
+title: RuleChart
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, RuleChart, Script, VStack } from "scripting"

@@ -1,0 +1,233 @@
+[
+  {
+    "type": "file",
+    "name": "Quick Start",
+    "label": "Quick Start"
+  },
+  {
+    "type": "file",
+    "name": "Widget",
+    "label": "Widget"
+  },
+  {
+    "type": "file",
+    "name": "Intent",
+    "label": "Intent"
+  },
+  {
+    "type": "dir",
+    "name": "Views",
+    "label": "Views",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Types",
+    "label": "Types",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "View Modifiers",
+    "label": "View Modifiers",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Device",
+    "label": "Device"
+  },
+  {
+    "type": "file",
+    "name": "Data and UIImage",
+    "label": "Data and UIImage"
+  },
+  {
+    "type": "file",
+    "name": "LiveActivity",
+    "label": "LiveActivity"
+  },
+  {
+    "type": "file",
+    "name": "Interactive Widget and LiveActivity",
+    "label": "Interactive Widget and LiveActivity"
+  },
+  {
+    "type": "file",
+    "name": "Assistant",
+    "label": "Assistant"
+  },
+  {
+    "type": "file",
+    "name": "AssistantTool",
+    "label": "AssistantTool"
+  },
+  {
+    "type": "file",
+    "name": "Safari",
+    "label": "Safari"
+  },
+  {
+    "type": "file",
+    "name": "Clipboard",
+    "label": "Clipboard"
+  },
+  {
+    "type": "file",
+    "name": "Storage",
+    "label": "Storage"
+  },
+  {
+    "type": "file",
+    "name": "DocumentPicker",
+    "label": "DocumentPicker"
+  },
+  {
+    "type": "file",
+    "name": "Path",
+    "label": "Path"
+  },
+  {
+    "type": "file",
+    "name": "FileManager",
+    "label": "FileManager"
+  },
+  {
+    "type": "file",
+    "name": "HapticFeedback",
+    "label": "HapticFeedback"
+  },
+  {
+    "type": "file",
+    "name": "Keychain",
+    "label": "Keychain"
+  },
+  {
+    "type": "file",
+    "name": "LocalAuth",
+    "label": "LocalAuth"
+  },
+  {
+    "type": "file",
+    "name": "Contact",
+    "label": "Contact"
+  },
+  {
+    "type": "file",
+    "name": "Calendar",
+    "label": "Calendar"
+  },
+  {
+    "type": "file",
+    "name": "CalendarEvent",
+    "label": "CalendarEvent"
+  },
+  {
+    "type": "file",
+    "name": "Reminder",
+    "label": "Reminder"
+  },
+  {
+    "type": "file",
+    "name": "Recurrence",
+    "label": "Recurrence"
+  },
+  {
+    "type": "file",
+    "name": "Location",
+    "label": "Location"
+  },
+  {
+    "type": "file",
+    "name": "Notification",
+    "label": "Notification"
+  },
+  {
+    "type": "file",
+    "name": "Photos",
+    "label": "Photos"
+  },
+  {
+    "type": "file",
+    "name": "QRCode",
+    "label": "QRCode"
+  },
+  {
+    "type": "file",
+    "name": "Request",
+    "label": "Request"
+  },
+  {
+    "type": "file",
+    "name": "Script and Intent",
+    "label": "Script and Intent"
+  },
+  {
+    "type": "file",
+    "name": "ShareSheet",
+    "label": "ShareSheet"
+  },
+  {
+    "type": "file",
+    "name": "QuickLook",
+    "label": "QuickLook"
+  },
+  {
+    "type": "file",
+    "name": "SharedAudioSession",
+    "label": "SharedAudioSession"
+  },
+  {
+    "type": "file",
+    "name": "Speech",
+    "label": "Speech"
+  },
+  {
+    "type": "file",
+    "name": "SpeechRecognition",
+    "label": "SpeechRecognition"
+  },
+  {
+    "type": "file",
+    "name": "AudioRecorder",
+    "label": "AudioRecorder"
+  },
+  {
+    "type": "file",
+    "name": "Audio Player",
+    "label": "Audio Player"
+  },
+  {
+    "type": "file",
+    "name": "VideoPlayer",
+    "label": "VideoPlayer"
+  },
+  {
+    "type": "file",
+    "name": "Mail",
+    "label": "Mail"
+  },
+  {
+    "type": "file",
+    "name": "MediaPlayer",
+    "label": "MediaPlayer"
+  },
+  {
+    "type": "file",
+    "name": "Weather",
+    "label": "Weather"
+  },
+  {
+    "type": "file",
+    "name": "WebScoket",
+    "label": "WebScoket"
+  },
+  {
+    "type": "file",
+    "name": "socket.io",
+    "label": "socket.io"
+  }
+]

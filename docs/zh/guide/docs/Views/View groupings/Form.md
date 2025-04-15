@@ -1,5 +1,5 @@
 ---
-title: 示例 - 表单
+title: 表单
 ---
 ```tsx
 import { Button, Form, Navigation, NavigationStack, Picker, Script, Section, Text, Toggle, useState } from "scripting"

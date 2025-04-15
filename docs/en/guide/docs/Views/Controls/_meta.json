@@ -1,0 +1,47 @@
+[
+  {
+    "type": "file",
+    "name": "Toggle",
+    "label": "Toggle"
+  },
+  {
+    "type": "file",
+    "name": "Stepper",
+    "label": "Stepper"
+  },
+  {
+    "type": "file",
+    "name": "Slider",
+    "label": "Slider"
+  },
+  {
+    "type": "file",
+    "name": "ProgressView",
+    "label": "ProgressView"
+  },
+  {
+    "type": "file",
+    "name": "Picker",
+    "label": "Picker"
+  },
+  {
+    "type": "file",
+    "name": "DatePicker",
+    "label": "DatePicker"
+  },
+  {
+    "type": "file",
+    "name": "ColorPicker",
+    "label": "ColorPicker"
+  },
+  {
+    "type": "file",
+    "name": "Gauge",
+    "label": "Gauge"
+  },
+  {
+    "type": "file",
+    "name": "ContentUnavailableView",
+    "label": "ContentUnavailableView"
+  }
+]

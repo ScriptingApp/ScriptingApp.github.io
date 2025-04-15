@@ -1,5 +1,5 @@
 ---
-title: 示例 - 饼图（PieChart）
+title: 饼图（PieChart）
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, PieChart, Script, VStack } from "scripting"

@@ -1,5 +1,5 @@
 ---
-title: Example - Control column visibility
+title: Control column visibility
 ---
 ```tsx
 import { HStack, Label, List, Navigation, NavigationSplitView, NavigationSplitViewVisibility, Script, Text, useState, VStack } from "scripting"

@@ -1,5 +1,5 @@
 ---
-title: Example - ControlGroup
+title: ControlGroup
 ---
 ```tsx
 import { Button, ControlGroup, ControlGroupStyle, Label, List, Navigation, NavigationStack, Picker, Script, Text, useMemo, useState } from "scripting"

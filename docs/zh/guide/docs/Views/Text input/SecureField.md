@@ -1,5 +1,5 @@
 ---
-title: 示例 - 安全文本输入框（SecureField）
+title: 安全文本输入框（SecureField）
 ---
 ```tsx
 import { useState, SecureField, VStack, Text, NavigationStack, Navigation, Script } from "scripting"

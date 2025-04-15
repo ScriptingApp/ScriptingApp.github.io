@@ -1,5 +1,5 @@
 ---
-title: Example - Dismiss a view
+title: Dismiss a view
 ---
 ```tsx
 import { Navigation, NavigationStack, Script, Text, VStack } from "scripting"

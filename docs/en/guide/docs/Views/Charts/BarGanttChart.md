@@ -1,5 +1,5 @@
 ---
-title: Example - BarGanttChart
+title: BarGanttChart
 ---
 ```tsx
 import { BarGanttChart, Chart, Navigation, NavigationStack, Script, VStack } from "scripting"

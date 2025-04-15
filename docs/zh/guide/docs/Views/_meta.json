@@ -1,0 +1,123 @@
+[
+  {
+    "type": "dir",
+    "name": "Present views",
+    "label": "展示视图",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Displaying text",
+    "label": "显示文本"
+  },
+  {
+    "type": "file",
+    "name": "Image",
+    "label": "图像"
+  },
+  {
+    "type": "file",
+    "name": "Button",
+    "label": "按钮"
+  },
+  {
+    "type": "dir",
+    "name": "Layout",
+    "label": "布局",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Text input",
+    "label": "文本输入",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Controls",
+    "label": "控件",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Menu",
+    "label": "菜单"
+  },
+  {
+    "type": "file",
+    "name": "Shapes",
+    "label": "形状"
+  },
+  {
+    "type": "dir",
+    "name": "List",
+    "label": "列表",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "View groupings",
+    "label": "视图分组",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Scroll views",
+    "label": "可滚动视图"
+  },
+  {
+    "type": "file",
+    "name": "Gestures",
+    "label": "手势"
+  },
+  {
+    "type": "dir",
+    "name": "Navigation",
+    "label": "导航",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Animation for Widget and LiveActivity",
+    "label": "在小组件和灵动岛中使用动画"
+  },
+  {
+    "type": "file",
+    "name": "WebView",
+    "label": "网页视图"
+  },
+  {
+    "type": "file",
+    "name": "Dialog",
+    "label": "对话框"
+  },
+  {
+    "type": "file",
+    "name": "Modal presentaions",
+    "label": "模态展示"
+  },
+  {
+    "type": "file",
+    "name": "Toolbars",
+    "label": "工具栏"
+  },
+  {
+    "type": "file",
+    "name": "Search",
+    "label": "搜索"
+  },
+  {
+    "type": "dir",
+    "name": "Charts",
+    "label": "图表",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

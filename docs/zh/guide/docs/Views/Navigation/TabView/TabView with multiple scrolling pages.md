@@ -1,5 +1,5 @@
 ---
-title: 示例 - 包含多个可滚动页面的 TabView
+title: 包含多个可滚动页面的 TabView
 ---
 ```tsx
 import { Color, Navigation, NavigationStack, Script, TabView, Text, VStack } from "scripting"

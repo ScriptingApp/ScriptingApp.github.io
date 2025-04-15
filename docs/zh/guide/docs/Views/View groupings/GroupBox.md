@@ -1,5 +1,5 @@
 ---
-title: 示例 - GroupBox
+title: GroupBox
 ---
 ```tsx
 import { Button, GroupBox, Label, Navigation, NavigationStack, Script, ScrollView, Text, Toggle, useState, VStack } from "scripting"

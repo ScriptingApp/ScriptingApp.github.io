@@ -1,5 +1,5 @@
 ---
-title: Example - Represent data hierarchy in sections
+title: Represent data hierarchy in sections
 ---
 ```tsx
 import { HStack, Label, List, Navigation, NavigationStack, Script, Section, Text, VStack } from "scripting"

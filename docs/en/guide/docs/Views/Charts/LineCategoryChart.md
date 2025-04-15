@@ -1,5 +1,5 @@
 ---
-title: Example - LineCategoryChart
+title: LineCategoryChart
 ---
 ```tsx
 import { Chart, LineCategoryChart, List, Navigation, NavigationStack, Script, Section, Toggle, useState } from "scripting"

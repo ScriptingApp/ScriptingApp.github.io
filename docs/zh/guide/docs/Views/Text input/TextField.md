@@ -1,5 +1,5 @@
 ---
-title: 示例 - 文本输入框（TextField）
+title: 文本输入框（TextField）
 ---
 ```tsx
 import { useState, TextField, VStack, Text, NavigationStack, Navigation, Script } from "scripting"

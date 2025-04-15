@@ -1,5 +1,5 @@
 ---
-title: Example - DisclosureGroup
+title: DisclosureGroup
 ---
 ```tsx
 import { Button, DisclosureGroup, List, Navigation, NavigationStack, Script, Text, Toggle, useState } from "scripting"

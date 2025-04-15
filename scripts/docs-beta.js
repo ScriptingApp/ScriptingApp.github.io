@@ -14,16 +14,48 @@ const writeFile = (filePath, content) => {
 };
 
 // 处理文件
-const processDocItem = (item, parentPath = "", language = "en", length = 0) => {
+const processDocItem = (item, parentPath = "", language = "en") => {
     const { title, subtitle, keywords, example, readme, children } = item;
 
     const folderName = title.en;
     const basePath = path.join(docsPath, language, "guide", "docs", parentPath, folderName);
 
+    // 生成 _meta.json
     if (children && children.length > 0) {
-        children.forEach((child) =>
-            processDocItem(child, path.join(parentPath, folderName), language, children.length)
-        );
+        const metaPath = path.join(path.join(docsPath, language, "guide", "docs", parentPath), "_meta.json");
+        if (!fs.existsSync(metaPath)) {
+            writeFile(metaPath, JSON.stringify([], null, 2));
+        }
+
+        const metaJson = JSON.parse(readFile(metaPath));
+
+        metaJson.push({
+            type: "dir",
+            name: folderName,
+            label: title[language],
+            collapsible: true,
+            collapsed: true,
+        });
+        writeFile(metaPath, JSON.stringify(metaJson, null, 2));
+    } else {
+        const metaPath = path.join(path.join(docsPath, language, "guide", "docs", parentPath), "_meta.json");
+        if (!fs.existsSync(metaPath)) {
+            writeFile(metaPath, JSON.stringify([], null, 2));
+        }
+
+        const metaJson = JSON.parse(readFile(metaPath));
+
+        metaJson.push({
+            type: "file",
+            name: folderName,
+            label: title[language],
+        });
+        writeFile(metaPath, JSON.stringify(metaJson, null, 2));
+    }
+
+    // 生成文档
+    if (children && children.length > 0) {
+        children.forEach((child) => processDocItem(child, path.join(parentPath, folderName), language));
     } else {
         if (readme) {
             if (!example) {
@@ -32,16 +64,11 @@ const processDocItem = (item, parentPath = "", language = "en", length = 0) => {
                 const readmeMd = `---
 title: ${title[language]}
 ---\n${readmeContent}`;
-
                 const cleanBasePath = basePath.endsWith(path.sep) ? basePath.slice(0, -1) : basePath;
-
                 writeFile(cleanBasePath + ".md", readmeMd);
             } else {
-                // 根据语言选择正确的 readme 文件，并保存为 index.md
-                const readmePath = path.join(resourcePath, readme, language + ".md"); // 选择对应语言的 .md 文件
+                const readmePath = path.join(resourcePath, readme, language + ".md");
                 const readmeContent = readFile(readmePath);
-
-                // 为 readme 文件添加 title 和 --- 块
                 const readmeMd = `---
 title: ${title[language]}
 ---\n${readmeContent}`;
@@ -53,21 +80,15 @@ title: ${title[language]}
         if (example) {
             if (!readme) {
                 const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
-                let exampleName = example.split("/").pop();
-                let exampleTitle = language === "en" ? "Example" : "示例";
-
                 const exampleMd = `---
-title: ${exampleTitle + " - " + title[language]}
+title: ${title[language]}
 ---
 \`\`\`tsx
 ${tsxContent}
 \`\`\``;
 
                 const cleanBasePath = basePath.endsWith(path.sep) ? basePath.slice(0, -1) : basePath;
-
-                const fileSuffix = exampleName === "index" ? "_example" : "";
-
-                writeFile(cleanBasePath + fileSuffix + ".md", exampleMd);
+                writeFile(cleanBasePath + ".md", exampleMd);
             } else {
                 const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
                 let exampleName = example.split("/").pop();
@@ -81,7 +102,6 @@ ${tsxContent}
 \`\`\``;
 
                 const fileSuffix = exampleName === "index" ? "_example" : "";
-
                 writeFile(path.join(basePath, exampleName + fileSuffix + ".md"), exampleMd);
             }
         }
@@ -96,9 +116,7 @@ const processLanguages = (docItem) => {
 
 // 读取 JSON 配置并开始处理
 const processDocs = () => {
-    const docJsonPath = path.join(resourcePath, "doc.json");
-    const docJson = JSON.parse(readFile(docJsonPath));
-
+    const docJson = JSON.parse(readFile(path.join(resourcePath, "doc.json")));
     docJson.forEach((item) => processLanguages(item));
 };
 

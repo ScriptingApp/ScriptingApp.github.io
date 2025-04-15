@@ -1,5 +1,5 @@
 ---
-title: Example - Present a simple view
+title: Present a simple view
 ---
 ```tsx
 import { Navigation, NavigationStack, Script, Text, VStack } from "scripting"

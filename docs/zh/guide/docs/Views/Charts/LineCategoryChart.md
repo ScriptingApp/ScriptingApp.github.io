@@ -1,5 +1,5 @@
 ---
-title: 示例 - 分类折线图（LineCategoryChart）
+title: 分类折线图（LineCategoryChart）
 ---
 ```tsx
 import { Chart, LineCategoryChart, List, Navigation, NavigationStack, Script, Section, Toggle, useState } from "scripting"

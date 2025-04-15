@@ -1,0 +1,233 @@
+[
+  {
+    "type": "file",
+    "name": "Quick Start",
+    "label": "快速开始"
+  },
+  {
+    "type": "file",
+    "name": "Widget",
+    "label": "小组件"
+  },
+  {
+    "type": "file",
+    "name": "Intent",
+    "label": "Intent"
+  },
+  {
+    "type": "dir",
+    "name": "Views",
+    "label": "视图",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Types",
+    "label": "类型",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "View Modifiers",
+    "label": "视图修饰器",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Device",
+    "label": "设备"
+  },
+  {
+    "type": "file",
+    "name": "Data and UIImage",
+    "label": "Data 与 UIImage"
+  },
+  {
+    "type": "file",
+    "name": "LiveActivity",
+    "label": "实时活动（灵动岛）"
+  },
+  {
+    "type": "file",
+    "name": "Interactive Widget and LiveActivity",
+    "label": "可互动的小组件和灵动岛"
+  },
+  {
+    "type": "file",
+    "name": "Assistant",
+    "label": "智能助手"
+  },
+  {
+    "type": "file",
+    "name": "AssistantTool",
+    "label": "智能助手工具"
+  },
+  {
+    "type": "file",
+    "name": "Safari",
+    "label": "Safari"
+  },
+  {
+    "type": "file",
+    "name": "Clipboard",
+    "label": "剪贴板"
+  },
+  {
+    "type": "file",
+    "name": "Storage",
+    "label": "本地存储"
+  },
+  {
+    "type": "file",
+    "name": "DocumentPicker",
+    "label": "文档选择器"
+  },
+  {
+    "type": "file",
+    "name": "Path",
+    "label": "文件路径工具"
+  },
+  {
+    "type": "file",
+    "name": "FileManager",
+    "label": "文件管理器"
+  },
+  {
+    "type": "file",
+    "name": "HapticFeedback",
+    "label": "触觉反馈"
+  },
+  {
+    "type": "file",
+    "name": "Keychain",
+    "label": "钥匙串"
+  },
+  {
+    "type": "file",
+    "name": "LocalAuth",
+    "label": "本地认证"
+  },
+  {
+    "type": "file",
+    "name": "Contact",
+    "label": "通讯录"
+  },
+  {
+    "type": "file",
+    "name": "Calendar",
+    "label": "日历"
+  },
+  {
+    "type": "file",
+    "name": "CalendarEvent",
+    "label": "日历事件"
+  },
+  {
+    "type": "file",
+    "name": "Reminder",
+    "label": "提醒事项"
+  },
+  {
+    "type": "file",
+    "name": "Recurrence",
+    "label": "重复规则"
+  },
+  {
+    "type": "file",
+    "name": "Location",
+    "label": "定位"
+  },
+  {
+    "type": "file",
+    "name": "Notification",
+    "label": "通知"
+  },
+  {
+    "type": "file",
+    "name": "Photos",
+    "label": "照片"
+  },
+  {
+    "type": "file",
+    "name": "QRCode",
+    "label": "二维码"
+  },
+  {
+    "type": "file",
+    "name": "Request",
+    "label": "请求"
+  },
+  {
+    "type": "file",
+    "name": "Script and Intent",
+    "label": "Script 和 Intent"
+  },
+  {
+    "type": "file",
+    "name": "ShareSheet",
+    "label": "分享内容"
+  },
+  {
+    "type": "file",
+    "name": "QuickLook",
+    "label": "快速查看"
+  },
+  {
+    "type": "file",
+    "name": "SharedAudioSession",
+    "label": "SharedAudioSession"
+  },
+  {
+    "type": "file",
+    "name": "Speech",
+    "label": "语音合成"
+  },
+  {
+    "type": "file",
+    "name": "SpeechRecognition",
+    "label": "语音识别"
+  },
+  {
+    "type": "file",
+    "name": "AudioRecorder",
+    "label": "录音"
+  },
+  {
+    "type": "file",
+    "name": "Audio Player",
+    "label": "音频播放器"
+  },
+  {
+    "type": "file",
+    "name": "VideoPlayer",
+    "label": "视频播放器"
+  },
+  {
+    "type": "file",
+    "name": "Mail",
+    "label": "邮件"
+  },
+  {
+    "type": "file",
+    "name": "MediaPlayer",
+    "label": "媒体播放器"
+  },
+  {
+    "type": "file",
+    "name": "Weather",
+    "label": "天气"
+  },
+  {
+    "type": "file",
+    "name": "WebScoket",
+    "label": "WebScoket"
+  },
+  {
+    "type": "file",
+    "name": "socket.io",
+    "label": "socket.io"
+  }
+]

@@ -1,5 +1,5 @@
 ---
-title: 示例 - 列表交互
+title: 列表交互
 ---
 ```tsx
 import { Button, Circle, HStack, Label, List, Navigation, NavigationStack, Script, Text, useState, VStack } from "scripting"

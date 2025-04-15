@@ -1,5 +1,5 @@
 ---
-title: Example - TextField
+title: TextField
 ---
 ```tsx
 import { useState, TextField, VStack, Text, NavigationStack, Navigation, Script } from "scripting"

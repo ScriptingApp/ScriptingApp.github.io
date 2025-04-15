@@ -1,0 +1,67 @@
+[
+  {
+    "type": "file",
+    "name": "Text Style",
+    "label": "文本样式"
+  },
+  {
+    "type": "file",
+    "name": "buttonStyle",
+    "label": "按钮样式"
+  },
+  {
+    "type": "file",
+    "name": "controlGroupStyle",
+    "label": "控件组样式"
+  },
+  {
+    "type": "file",
+    "name": "listStyle",
+    "label": "列表样式"
+  },
+  {
+    "type": "file",
+    "name": "pickerStyle",
+    "label": "选择器样式"
+  },
+  {
+    "type": "file",
+    "name": "progressViewStyle",
+    "label": "进度视图样式"
+  },
+  {
+    "type": "file",
+    "name": "datePickerStyle",
+    "label": "日期选择器样式"
+  },
+  {
+    "type": "file",
+    "name": "formStyle",
+    "label": "表单样式"
+  },
+  {
+    "type": "file",
+    "name": "textFieldStyle",
+    "label": "文本输入框样式"
+  },
+  {
+    "type": "file",
+    "name": "toggleStyle",
+    "label": "切换开关样式"
+  },
+  {
+    "type": "file",
+    "name": "gaugeStyle",
+    "label": "仪表盘样式"
+  },
+  {
+    "type": "file",
+    "name": "toolbar",
+    "label": "工具栏"
+  },
+  {
+    "type": "file",
+    "name": "Charts Style",
+    "label": "图表样式"
+  }
+]

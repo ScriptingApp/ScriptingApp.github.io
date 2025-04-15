@@ -1,5 +1,5 @@
 ---
-title: Example - HeatMapChart
+title: HeatMapChart
 ---
 ```tsx
 import { Chart, HeatMapChart, Navigation, NavigationStack, Script, VStack } from "scripting"

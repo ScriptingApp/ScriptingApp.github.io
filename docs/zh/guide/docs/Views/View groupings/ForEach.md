@@ -1,5 +1,5 @@
 ---
-title: 示例 - ForEach
+title: ForEach
 ---
 ```tsx
 import { Button, Font, ForEach, List, Navigation, NavigationStack, Script, Section, Text, VStack } from "scripting"

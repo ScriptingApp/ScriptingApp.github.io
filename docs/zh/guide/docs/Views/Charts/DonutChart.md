@@ -1,5 +1,5 @@
 ---
-title: 示例 - 环形图（DonutChart）
+title: 环形图（DonutChart）
 ---
 ```tsx
 import { Chart, DonutChart, Navigation, NavigationStack, Script, VStack } from "scripting"

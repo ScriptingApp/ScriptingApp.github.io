@@ -1,5 +1,5 @@
 ---
-title: Example - Multiple Charts
+title: Multiple Charts
 ---
 ```tsx
 import { AreaChart, Chart, LineChart, Navigation, NavigationStack, RoundedRectangle, RuleLineForLabelChart, Script, Text, useMemo, useState, VStack, ZStack } from "scripting"

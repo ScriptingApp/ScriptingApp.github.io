@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "Present a simple view",
+    "label": "展示一个简单视图"
+  },
+  {
+    "type": "file",
+    "name": "Dismiss a view",
+    "label": "关闭一个视图"
+  }
+]

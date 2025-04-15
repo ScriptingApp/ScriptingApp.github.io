@@ -1,5 +1,5 @@
 ---
-title: Example - PointChart
+title: PointChart
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, PointChart, Script, VStack } from "scripting"

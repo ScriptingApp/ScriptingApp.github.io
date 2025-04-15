@@ -1,5 +1,5 @@
 ---
-title: 示例 - 一维柱状图（Bar1DChart）
+title: 一维柱状图（Bar1DChart）
 ---
 ```tsx
 import { Bar1DChart, Chart, Navigation, NavigationStack, Script, VStack } from "scripting"

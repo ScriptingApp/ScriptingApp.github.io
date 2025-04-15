@@ -1,5 +1,5 @@
 ---
-title: Example - TabView with badge
+title: TabView with badge
 ---
 ```tsx
 import { Label, Navigation, Script, TabView, Text, useState } from "scripting"

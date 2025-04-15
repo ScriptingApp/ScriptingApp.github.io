@@ -1,5 +1,5 @@
 ---
-title: 示例 - 列表样式
+title: 列表样式
 ---
 ```tsx
 import { List, ListStyle, Navigation, NavigationStack, Picker, Script, Section, Text, useMemo, useState } from "scripting"

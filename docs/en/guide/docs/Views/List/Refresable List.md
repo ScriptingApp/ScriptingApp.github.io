@@ -1,5 +1,5 @@
 ---
-title: Example - Refresable List
+title: Refresable List
 ---
 ```tsx
 import { List, Navigation, NavigationStack, Script, Section, Text, useState } from "scripting"

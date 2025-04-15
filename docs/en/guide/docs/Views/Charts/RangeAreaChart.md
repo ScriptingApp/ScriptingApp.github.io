@@ -1,5 +1,5 @@
 ---
-title: Example - RangeAreaChart
+title: RangeAreaChart
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, RangeAreaChart, Script, VStack } from "scripting"

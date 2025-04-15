@@ -1,5 +1,5 @@
 ---
-title: 示例 - 甘特柱状图（BarGanttChart）
+title: 甘特柱状图（BarGanttChart）
 ---
 ```tsx
 import { BarGanttChart, Chart, Navigation, NavigationStack, Script, VStack } from "scripting"

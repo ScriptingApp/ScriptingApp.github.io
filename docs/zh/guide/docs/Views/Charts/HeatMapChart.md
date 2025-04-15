@@ -1,5 +1,5 @@
 ---
-title: 示例 - 热力图（HeatMapChart）
+title: 热力图（HeatMapChart）
 ---
 ```tsx
 import { Chart, HeatMapChart, Navigation, NavigationStack, Script, VStack } from "scripting"

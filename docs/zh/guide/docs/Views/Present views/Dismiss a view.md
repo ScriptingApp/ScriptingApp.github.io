@@ -1,5 +1,5 @@
 ---
-title: 示例 - 关闭一个视图
+title: 关闭一个视图
 ---
 ```tsx
 import { Navigation, NavigationStack, Script, Text, VStack } from "scripting"

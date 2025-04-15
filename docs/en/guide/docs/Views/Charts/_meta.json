@@ -1,0 +1,87 @@
+[
+  {
+    "type": "file",
+    "name": "LineChart",
+    "label": "LineChart"
+  },
+  {
+    "type": "file",
+    "name": "BarChart",
+    "label": "BarChart"
+  },
+  {
+    "type": "file",
+    "name": "RectChart",
+    "label": "RectChart"
+  },
+  {
+    "type": "file",
+    "name": "RuleChart",
+    "label": "RuleChart"
+  },
+  {
+    "type": "file",
+    "name": "LineCategoryChart",
+    "label": "LineCategoryChart"
+  },
+  {
+    "type": "file",
+    "name": "BarStackChart",
+    "label": "BarStackChart"
+  },
+  {
+    "type": "file",
+    "name": "AreaStackChart",
+    "label": "AreaStackChart"
+  },
+  {
+    "type": "file",
+    "name": "BarGanttChart",
+    "label": "BarGanttChart"
+  },
+  {
+    "type": "file",
+    "name": "RangeAreaChart",
+    "label": "RangeAreaChart"
+  },
+  {
+    "type": "file",
+    "name": "Bar1DChart",
+    "label": "Bar1DChart"
+  },
+  {
+    "type": "file",
+    "name": "PointChart",
+    "label": "PointChart"
+  },
+  {
+    "type": "file",
+    "name": "PointCategoryChart",
+    "label": "PointCategoryChart"
+  },
+  {
+    "type": "file",
+    "name": "HeatMapChart",
+    "label": "HeatMapChart"
+  },
+  {
+    "type": "file",
+    "name": "RectAreaChart",
+    "label": "RectAreaChart"
+  },
+  {
+    "type": "file",
+    "name": "PieChart",
+    "label": "PieChart"
+  },
+  {
+    "type": "file",
+    "name": "DonutChart",
+    "label": "DonutChart"
+  },
+  {
+    "type": "file",
+    "name": "Multiple Charts",
+    "label": "Multiple Charts"
+  }
+]

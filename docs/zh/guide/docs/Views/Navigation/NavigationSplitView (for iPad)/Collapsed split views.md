@@ -1,5 +1,5 @@
 ---
-title: 示例 - 折叠分栏视图
+title: 折叠分栏视图
 ---
 ```tsx
 import { Navigation, NavigationSplitView, NavigationSplitViewColumn, Script, Text, useState, VStack } from "scripting"

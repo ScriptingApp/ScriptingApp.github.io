@@ -1,5 +1,5 @@
 ---
-title: 示例 - 标尺图（RuleChart）
+title: 标尺图（RuleChart）
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, RuleChart, Script, VStack } from "scripting"

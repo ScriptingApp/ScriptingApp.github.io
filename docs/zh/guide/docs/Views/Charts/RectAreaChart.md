@@ -1,5 +1,5 @@
 ---
-title: 示例 - 矩形面积图（RectAreaChart）
+title: 矩形面积图（RectAreaChart）
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, PointChart, RectAreaChart, Script, VStack } from "scripting"

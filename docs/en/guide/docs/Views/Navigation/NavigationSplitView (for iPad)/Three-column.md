@@ -1,5 +1,5 @@
 ---
-title: Example - Three-column
+title: Three-column
 ---
 ```tsx
 import { HStack, Label, List, Navigation, NavigationSplitView, Script, Section, Text, useState, VStack } from "scripting"

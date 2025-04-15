@@ -1,5 +1,5 @@
 ---
-title: Example - DonutChart
+title: DonutChart
 ---
 ```tsx
 import { Chart, DonutChart, Navigation, NavigationStack, Script, VStack } from "scripting"

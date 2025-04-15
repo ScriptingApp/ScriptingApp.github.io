@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "TextField",
+    "label": "TextField"
+  },
+  {
+    "type": "file",
+    "name": "SecureField",
+    "label": "SecureField"
+  },
+  {
+    "type": "file",
+    "name": "Keyboard",
+    "label": "Keyboard"
+  }
+]

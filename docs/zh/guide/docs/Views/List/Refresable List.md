@@ -1,5 +1,5 @@
 ---
-title: 示例 - 可刷新列表
+title: 可刷新列表
 ---
 ```tsx
 import { List, Navigation, NavigationStack, Script, Section, Text, useState } from "scripting"

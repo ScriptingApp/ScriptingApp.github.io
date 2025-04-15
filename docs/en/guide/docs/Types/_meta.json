@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "name": "Color",
+    "label": "Color"
+  },
+  {
+    "type": "file",
+    "name": "ShapeStyle",
+    "label": "ShapeStyle"
+  },
+  {
+    "type": "file",
+    "name": "DynamicShapeStyle",
+    "label": "DynamicShapeStyle"
+  },
+  {
+    "type": "file",
+    "name": "Alignment",
+    "label": "Alignment"
+  }
+]

@@ -1,5 +1,5 @@
 ---
-title: 示例 - 展开组
+title: 展开组
 ---
 ```tsx
 import { Button, DisclosureGroup, List, Navigation, NavigationStack, Script, Text, Toggle, useState } from "scripting"

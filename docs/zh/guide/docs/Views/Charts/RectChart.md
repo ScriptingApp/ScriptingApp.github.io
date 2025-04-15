@@ -1,5 +1,5 @@
 ---
-title: 示例 - 矩形图（RectChart）
+title: 矩形图（RectChart）
 ---
 ```tsx
 import { Chart, List, Navigation, NavigationStack, RectChart, Script, Section, Toggle, useState } from "scripting"

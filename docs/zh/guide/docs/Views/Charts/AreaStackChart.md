@@ -1,5 +1,5 @@
 ---
-title: 示例 - 堆叠面积图（AreaStackChart）
+title: 堆叠面积图（AreaStackChart）
 ---
 ```tsx
 import { AreaStackChart, Chart, ChartMarkStackingMethod, Navigation, NavigationStack, Picker, Script, Text, useState, VStack } from "scripting"

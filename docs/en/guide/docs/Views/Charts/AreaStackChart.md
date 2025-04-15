@@ -1,5 +1,5 @@
 ---
-title: Example - AreaStackChart
+title: AreaStackChart
 ---
 ```tsx
 import { AreaStackChart, Chart, ChartMarkStackingMethod, Navigation, NavigationStack, Picker, Script, Text, useState, VStack } from "scripting"

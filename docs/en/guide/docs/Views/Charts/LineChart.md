@@ -1,5 +1,5 @@
 ---
-title: Example - LineChart
+title: LineChart
 ---
 ```tsx
 import { Chart, LineChart, List, Navigation, NavigationStack, Script, Section, Toggle, useState, } from "scripting"

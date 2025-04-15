@@ -1,5 +1,5 @@
 ---
-title: Example - List style
+title: List style
 ---
 ```tsx
 import { List, ListStyle, Navigation, NavigationStack, Picker, Script, Section, Text, useMemo, useState } from "scripting"

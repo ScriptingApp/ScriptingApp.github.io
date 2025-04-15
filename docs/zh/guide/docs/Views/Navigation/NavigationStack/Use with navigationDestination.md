@@ -1,5 +1,5 @@
 ---
-title: 示例 - 与 navigationDestination 一起使用
+title: 与 navigationDestination 一起使用
 ---
 ```tsx
 import { useState, Color, NavigationStack, List, Text, HStack, Spacer, Image, VStack, Navigation, Script } from "scripting"

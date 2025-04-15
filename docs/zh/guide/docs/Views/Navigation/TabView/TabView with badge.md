@@ -1,5 +1,5 @@
 ---
-title: 示例 - 带徽章的 TabView
+title: 带徽章的 TabView
 ---
 ```tsx
 import { Label, Navigation, Script, TabView, Text, useState } from "scripting"

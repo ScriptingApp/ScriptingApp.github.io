@@ -1,5 +1,5 @@
 ---
-title: Example - Form
+title: Form
 ---
 ```tsx
 import { Button, Form, Navigation, NavigationStack, Picker, Script, Section, Text, Toggle, useState } from "scripting"

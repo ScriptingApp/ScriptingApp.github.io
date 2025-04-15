@@ -1,5 +1,5 @@
 ---
-title: 示例 - 以分区表示数据层级
+title: 以分区表示数据层级
 ---
 ```tsx
 import { HStack, Label, List, Navigation, NavigationStack, Script, Section, Text, VStack } from "scripting"

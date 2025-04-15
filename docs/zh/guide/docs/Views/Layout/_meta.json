@@ -1,0 +1,42 @@
+[
+  {
+    "type": "file",
+    "name": "HStack",
+    "label": "水平布局（HStack）"
+  },
+  {
+    "type": "file",
+    "name": "VStack",
+    "label": "垂直布局（VStack）"
+  },
+  {
+    "type": "file",
+    "name": "ZStack",
+    "label": "ZStack"
+  },
+  {
+    "type": "file",
+    "name": "Grid",
+    "label": "网格布局（Grid）"
+  },
+  {
+    "type": "file",
+    "name": "LazyHStack",
+    "label": "惰性水平布局（LazyHStack）"
+  },
+  {
+    "type": "file",
+    "name": "LazyVStack",
+    "label": "惰性垂直布局（LazyVStack）"
+  },
+  {
+    "type": "file",
+    "name": "LazyHGrid",
+    "label": "惰性水平网格布局（LazyHGrid）"
+  },
+  {
+    "type": "file",
+    "name": "LazyVGrid",
+    "label": "惰性垂直网格布局（LazyVGrid）"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "type": "file",
+    "name": "Display data inside a row",
+    "label": "在行中显示数据"
+  },
+  {
+    "type": "file",
+    "name": "Represent data hierarchy in sections",
+    "label": "以分区表示数据层级"
+  },
+  {
+    "type": "file",
+    "name": "Use list for navigations",
+    "label": "使用列表进行导航"
+  },
+  {
+    "type": "file",
+    "name": "DisclosureGroup",
+    "label": "展开组"
+  },
+  {
+    "type": "file",
+    "name": "List style",
+    "label": "列表样式"
+  },
+  {
+    "type": "file",
+    "name": "List interaction",
+    "label": "列表交互"
+  },
+  {
+    "type": "file",
+    "name": "Refresable List",
+    "label": "可刷新列表"
+  },
+  {
+    "type": "file",
+    "name": "Editable List",
+    "label": "可编辑列表"
+  }
+]

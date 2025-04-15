@@ -1,5 +1,5 @@
 ---
-title: 示例 - 与 NavigationLink 一起使用
+title: 与 NavigationLink 一起使用
 ---
 ```tsx
 import { Color, List, Navigation, NavigationLink, NavigationStack, Script, Text, VStack } from "scripting"

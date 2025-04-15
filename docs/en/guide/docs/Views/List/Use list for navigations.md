@@ -1,5 +1,5 @@
 ---
-title: Example - Use list for navigations
+title: Use list for navigations
 ---
 ```tsx
 import { DisclosureGroup, HStack, Label, List, Navigation, NavigationLink, NavigationStack, Script, Text, VStack } from "scripting"

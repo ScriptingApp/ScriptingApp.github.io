@@ -1,5 +1,5 @@
 ---
-title: 示例 - 范围面积图（RangeAreaChart）
+title: 范围面积图（RangeAreaChart）
 ---
 ```tsx
 import { Chart, Navigation, NavigationStack, RangeAreaChart, Script, VStack } from "scripting"

@@ -1,5 +1,5 @@
 ---
-title: 示例 - 展示一个简单视图
+title: 展示一个简单视图
 ---
 ```tsx
 import { Navigation, NavigationStack, Script, Text, VStack } from "scripting"

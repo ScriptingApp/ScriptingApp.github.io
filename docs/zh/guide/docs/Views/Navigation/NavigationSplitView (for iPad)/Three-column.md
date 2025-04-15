@@ -1,5 +1,5 @@
 ---
-title: 示例 - 三栏
+title: 三栏
 ---
 ```tsx
 import { HStack, Label, List, Navigation, NavigationSplitView, Script, Section, Text, useState, VStack } from "scripting"

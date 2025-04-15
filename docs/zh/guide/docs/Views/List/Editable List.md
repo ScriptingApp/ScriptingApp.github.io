@@ -1,5 +1,5 @@
 ---
-title: 示例 - 可编辑列表
+title: 可编辑列表
 ---
 ```tsx
 import { Color, EditButton, ForEach, List, Navigation, NavigationStack, Script, Text, useState } from "scripting"

@@ -1,0 +1,47 @@
+[
+  {
+    "type": "file",
+    "name": "Toggle",
+    "label": "切换开关"
+  },
+  {
+    "type": "file",
+    "name": "Stepper",
+    "label": "步进器"
+  },
+  {
+    "type": "file",
+    "name": "Slider",
+    "label": "滑块控件"
+  },
+  {
+    "type": "file",
+    "name": "ProgressView",
+    "label": "进度视图"
+  },
+  {
+    "type": "file",
+    "name": "Picker",
+    "label": "选择器"
+  },
+  {
+    "type": "file",
+    "name": "DatePicker",
+    "label": "日期、时间选择器"
+  },
+  {
+    "type": "file",
+    "name": "ColorPicker",
+    "label": "颜色选择器"
+  },
+  {
+    "type": "file",
+    "name": "Gauge",
+    "label": "仪表盘"
+  },
+  {
+    "type": "file",
+    "name": "ContentUnavailableView",
+    "label": "内容不可用视图"
+  }
+]

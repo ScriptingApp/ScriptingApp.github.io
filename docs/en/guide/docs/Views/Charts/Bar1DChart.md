@@ -1,5 +1,5 @@
 ---
-title: Example - Bar1DChart
+title: Bar1DChart
 ---
 ```tsx
 import { Bar1DChart, Chart, Navigation, NavigationStack, Script, VStack } from "scripting"

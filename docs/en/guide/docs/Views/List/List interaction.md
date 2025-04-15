@@ -1,5 +1,5 @@
 ---
-title: Example - List interaction
+title: List interaction
 ---
 ```tsx
 import { Button, Circle, HStack, Label, List, Navigation, NavigationStack, Script, Text, useState, VStack } from "scripting"

@@ -1,0 +1,23 @@
+[
+  {
+    "type": "dir",
+    "name": "NavigationStack",
+    "label": "NavigationStack",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "TabView",
+    "label": "TabView",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "NavigationSplitView (for iPad)",
+    "label": "分栏导航视图（适用于 iPad）",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

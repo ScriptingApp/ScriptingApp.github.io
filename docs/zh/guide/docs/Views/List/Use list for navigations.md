@@ -1,5 +1,5 @@
 ---
-title: 示例 - 使用列表进行导航
+title: 使用列表进行导航
 ---
 ```tsx
 import { DisclosureGroup, HStack, Label, List, Navigation, NavigationLink, NavigationStack, Script, Text, VStack } from "scripting"

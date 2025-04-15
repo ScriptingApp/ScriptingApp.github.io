@@ -1,5 +1,5 @@
 ---
-title: 示例 - 在行中显示数据
+title: 在行中显示数据
 ---
 ```tsx
 import { HStack, Label, List, Navigation, NavigationStack, Script, Text, VStack } from "scripting"

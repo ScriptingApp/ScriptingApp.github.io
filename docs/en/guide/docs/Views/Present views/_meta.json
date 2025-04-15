@@ -1,0 +1,12 @@
+[
+  {
+    "type": "file",
+    "name": "Present a simple view",
+    "label": "Present a simple view"
+  },
+  {
+    "type": "file",
+    "name": "Dismiss a view",
+    "label": "Dismiss a view"
+  }
+]

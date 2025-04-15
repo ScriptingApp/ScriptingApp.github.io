@@ -1,0 +1,42 @@
+[
+  {
+    "type": "file",
+    "name": "Display data inside a row",
+    "label": "Display data inside a row"
+  },
+  {
+    "type": "file",
+    "name": "Represent data hierarchy in sections",
+    "label": "Represent data hierarchy in sections"
+  },
+  {
+    "type": "file",
+    "name": "Use list for navigations",
+    "label": "Use list for navigations"
+  },
+  {
+    "type": "file",
+    "name": "DisclosureGroup",
+    "label": "DisclosureGroup"
+  },
+  {
+    "type": "file",
+    "name": "List style",
+    "label": "List style"
+  },
+  {
+    "type": "file",
+    "name": "List interaction",
+    "label": "List interaction"
+  },
+  {
+    "type": "file",
+    "name": "Refresable List",
+    "label": "Refresable List"
+  },
+  {
+    "type": "file",
+    "name": "Editable List",
+    "label": "Editable List"
+  }
+]

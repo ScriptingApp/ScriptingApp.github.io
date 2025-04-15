@@ -1,5 +1,5 @@
 ---
-title: 示例 - 控制栏的可见性
+title: 控制栏的可见性
 ---
 ```tsx
 import { HStack, Label, List, Navigation, NavigationSplitView, NavigationSplitViewVisibility, Script, Text, useState, VStack } from "scripting"

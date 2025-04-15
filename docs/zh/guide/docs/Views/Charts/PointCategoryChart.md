@@ -1,5 +1,5 @@
 ---
-title: 示例 - 分类点状图（PointCategoryChart）
+title: 分类点状图（PointCategoryChart）
 ---
 ```tsx
 import { Chart, List, Navigation, NavigationStack, Picker, PointCategoryChart, Script, Text, useState, VStack } from "scripting"

@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "TextField",
+    "label": "文本输入框（TextField）"
+  },
+  {
+    "type": "file",
+    "name": "SecureField",
+    "label": "安全文本输入框（SecureField）"
+  },
+  {
+    "type": "file",
+    "name": "Keyboard",
+    "label": "键盘"
+  }
+]

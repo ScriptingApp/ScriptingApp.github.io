@@ -1,0 +1,87 @@
+[
+  {
+    "type": "file",
+    "name": "LineChart",
+    "label": "折线图（LineChart）"
+  },
+  {
+    "type": "file",
+    "name": "BarChart",
+    "label": "柱状图（BarChart）"
+  },
+  {
+    "type": "file",
+    "name": "RectChart",
+    "label": "矩形图（RectChart）"
+  },
+  {
+    "type": "file",
+    "name": "RuleChart",
+    "label": "标尺图（RuleChart）"
+  },
+  {
+    "type": "file",
+    "name": "LineCategoryChart",
+    "label": "分类折线图（LineCategoryChart）"
+  },
+  {
+    "type": "file",
+    "name": "BarStackChart",
+    "label": "堆叠柱状图（BarStackChart）"
+  },
+  {
+    "type": "file",
+    "name": "AreaStackChart",
+    "label": "堆叠面积图（AreaStackChart）"
+  },
+  {
+    "type": "file",
+    "name": "BarGanttChart",
+    "label": "甘特柱状图（BarGanttChart）"
+  },
+  {
+    "type": "file",
+    "name": "RangeAreaChart",
+    "label": "范围面积图（RangeAreaChart）"
+  },
+  {
+    "type": "file",
+    "name": "Bar1DChart",
+    "label": "一维柱状图（Bar1DChart）"
+  },
+  {
+    "type": "file",
+    "name": "PointChart",
+    "label": "点状图（PointChart）"
+  },
+  {
+    "type": "file",
+    "name": "PointCategoryChart",
+    "label": "分类点状图（PointCategoryChart）"
+  },
+  {
+    "type": "file",
+    "name": "HeatMapChart",
+    "label": "热力图（HeatMapChart）"
+  },
+  {
+    "type": "file",
+    "name": "RectAreaChart",
+    "label": "矩形面积图（RectAreaChart）"
+  },
+  {
+    "type": "file",
+    "name": "PieChart",
+    "label": "饼图（PieChart）"
+  },
+  {
+    "type": "file",
+    "name": "DonutChart",
+    "label": "环形图（DonutChart）"
+  },
+  {
+    "type": "file",
+    "name": "Multiple Charts",
+    "label": "多个图表"
+  }
+]

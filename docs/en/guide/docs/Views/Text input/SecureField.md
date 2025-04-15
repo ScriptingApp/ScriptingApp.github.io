@@ -1,5 +1,5 @@
 ---
-title: Example - SecureField
+title: SecureField
 ---
 ```tsx
 import { useState, SecureField, VStack, Text, NavigationStack, Navigation, Script } from "scripting"
