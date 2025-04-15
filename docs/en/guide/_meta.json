@@ -9,7 +9,7 @@
         "name": "docs",
         "label": "docs",
         "collapsible": true,
-        "collapsed": false
+        "collapsed": true
     },
     {
         "type": "file",
