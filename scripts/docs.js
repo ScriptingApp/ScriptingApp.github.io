@@ -27,7 +27,7 @@ const processDocItem = (item, parentPath = "", language = "en") => {
     }
     const metaJson = JSON.parse(readFile(metaPath));
 
-    if (children) {
+    if (children || (readme && example)) {
         metaJson.push({
             type: "dir",
             name: folderName,

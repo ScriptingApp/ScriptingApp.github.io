@@ -36,9 +36,11 @@
     "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Device",
-    "label": "Device"
+    "label": "Device",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -46,9 +48,11 @@
     "label": "Data and UIImage"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "LiveActivity",
-    "label": "LiveActivity"
+    "label": "LiveActivity",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -111,9 +115,11 @@
     "label": "LocalAuth"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Contact",
-    "label": "Contact"
+    "label": "Contact",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -141,14 +147,18 @@
     "label": "Location"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Notification",
-    "label": "Notification"
+    "label": "Notification",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Photos",
-    "label": "Photos"
+    "label": "Photos",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -181,14 +191,18 @@
     "label": "SharedAudioSession"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Speech",
-    "label": "Speech"
+    "label": "Speech",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "SpeechRecognition",
-    "label": "SpeechRecognition"
+    "label": "SpeechRecognition",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -201,9 +215,11 @@
     "label": "Audio Player"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "VideoPlayer",
-    "label": "VideoPlayer"
+    "label": "VideoPlayer",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -216,9 +232,11 @@
     "label": "MediaPlayer"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Weather",
-    "label": "Weather"
+    "label": "Weather",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",

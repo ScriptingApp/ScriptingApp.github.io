@@ -1,47 +1,65 @@
 [
   {
-    "type": "file",
+    "type": "dir",
     "name": "Toggle",
-    "label": "Toggle"
+    "label": "Toggle",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Stepper",
-    "label": "Stepper"
+    "label": "Stepper",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Slider",
-    "label": "Slider"
+    "label": "Slider",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "ProgressView",
-    "label": "ProgressView"
+    "label": "ProgressView",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Picker",
-    "label": "Picker"
+    "label": "Picker",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "DatePicker",
-    "label": "DatePicker"
+    "label": "DatePicker",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "ColorPicker",
-    "label": "ColorPicker"
+    "label": "ColorPicker",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Gauge",
-    "label": "Gauge"
+    "label": "Gauge",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "ContentUnavailableView",
-    "label": "ContentUnavailableView"
+    "label": "ContentUnavailableView",
+    "collapsible": true,
+    "collapsed": true
   }
 ]

@@ -36,9 +36,11 @@
     "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Device",
-    "label": "设备"
+    "label": "设备",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -46,9 +48,11 @@
     "label": "Data 与 UIImage"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "LiveActivity",
-    "label": "实时活动（灵动岛）"
+    "label": "实时活动（灵动岛）",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -111,9 +115,11 @@
     "label": "本地认证"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Contact",
-    "label": "通讯录"
+    "label": "通讯录",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -141,14 +147,18 @@
     "label": "定位"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Notification",
-    "label": "通知"
+    "label": "通知",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Photos",
-    "label": "照片"
+    "label": "照片",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -181,14 +191,18 @@
     "label": "SharedAudioSession"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Speech",
-    "label": "语音合成"
+    "label": "语音合成",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "SpeechRecognition",
-    "label": "语音识别"
+    "label": "语音识别",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -201,9 +215,11 @@
     "label": "音频播放器"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "VideoPlayer",
-    "label": "视频播放器"
+    "label": "视频播放器",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -216,9 +232,11 @@
     "label": "媒体播放器"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Weather",
-    "label": "天气"
+    "label": "天气",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
