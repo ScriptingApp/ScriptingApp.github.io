@@ -58,7 +58,7 @@ export default defineConfig({
             {
                 icon: "github",
                 mode: "link",
-                content: "https://github.com/thomfang",
+                content: "https://github.com/ScriptingApp",
             },
             {
                 icon: "X",
