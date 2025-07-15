@@ -94,6 +94,18 @@ export default defineConfig({
                 mode: "link",
                 content: "https://x.com/thomfang",
             },
+            {
+                icon: {
+                    svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="32 32 512 512" fill="currentColor" width="32" height="32" style="vertical-align: middle; display: inline-block;">
+                    <path d="M128 416c0 17.7-14.3 32-32 32s-32-14.3-32-32
+                             14.3-32 32-32 32 14.3 32 32zm144 32c0-107.5-84.5-192-192-192v64
+                             c70.7 0 128 57.3 128 128h64zm96 0c0-159.1-128.9-288-288-288v64
+                             c123.7 0 224 100.3 224 224h64z"/>
+                  </svg>`,
+                },
+                mode: "link",
+                content: "https://scriptingapp.github.io/feeds/changelog.rss",
+            },
         ],
     },
     lang: "en",
