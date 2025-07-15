@@ -1,5 +1,8 @@
 import * as path from "node:path";
+import { pluginRss } from "@rspress/plugin-rss";
 import { defineConfig } from "rspress/config";
+
+const siteUrl = "https://scriptingapp.github.io";
 
 export default defineConfig({
     root: path.join(__dirname, "docs"),
@@ -19,13 +22,38 @@ export default defineConfig({
         showLineNumbers: true,
         defaultWrapCode: false,
     },
+    plugins: [
+        pluginRss({
+            siteUrl: siteUrl,
+            feed: [
+                {
+                    id: "changelog",
+                    test: "/guide/changelog",
+                    title: "Scripting Changelog",
+                    language: "en-US",
+                },
+                {
+                    id: "changelog-zh",
+                    test: "/zh/guide/changelog",
+                    title: "Scripting 更新日志",
+                    language: "zh-CN",
+                },
+            ],
+            output: {
+                dir: "feeds",
+                type: "rss",
+            },
+        }),
+    ],
     themeConfig: {
         // enableScrollToTop: true,
         // hideNavbar: "auto",
+        // lastUpdated: true, // 是否显示最后更新时间
         locales: [
             {
                 lang: "en",
                 label: "English",
+                lastUpdatedText: "Last Updated",
                 outlineTitle: "Outline",
                 prevPageText: "Previous Page",
                 nextPageText: "Next Page",
@@ -41,6 +69,7 @@ export default defineConfig({
             {
                 lang: "zh",
                 label: "简体中文",
+                lastUpdatedText: "最后更新",
                 outlineTitle: "大纲",
                 prevPageText: "上一页",
                 nextPageText: "下一页",

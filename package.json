@@ -9,9 +9,10 @@
         "build:docs": "rm -rf docs/en/guide/docs/* && rm -rf docs/zh/guide/docs/* && bun scripts/docs.js"
     },
     "dependencies": {
-        "rspress": "^1.40.2"
+        "rspress": "^1.44.0"
     },
     "devDependencies": {
+        "@rspress/plugin-rss": "^1.44.0",
         "@types/node": "^18.11.17"
     }
 }
