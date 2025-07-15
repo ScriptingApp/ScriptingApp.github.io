@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "build": "rspress build",
+        "setup": "bun install",
         "dev": "rspress dev",
-        "preview": "rspress preview",
-        "docs": "rm -rf docs/en/guide/docs/* && rm -rf docs/zh/guide/docs/* && bun scripts/docs.js"
+        "build": "rspress build",
+        "build:docs": "rm -rf docs/en/guide/docs/* && rm -rf docs/zh/guide/docs/* && bun scripts/docs.js"
     },
     "dependencies": {
         "rspress": "^1.40.2"
