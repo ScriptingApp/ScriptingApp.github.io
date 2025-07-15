@@ -1,8 +1,143 @@
 [
   {
     "type": "file",
-    "name": "Text Style",
-    "label": "文本样式"
+    "name": "frame",
+    "label": "frame"
+  },
+  {
+    "type": "file",
+    "name": "containerRelativeFrame",
+    "label": "containerRelativeFrame"
+  },
+  {
+    "type": "file",
+    "name": "foregroundStyle & background",
+    "label": "前景色和背景样式"
+  },
+  {
+    "type": "file",
+    "name": "widgetBackground",
+    "label": "小组件背景"
+  },
+  {
+    "type": "file",
+    "name": "border",
+    "label": "边框"
+  },
+  {
+    "type": "file",
+    "name": "padding",
+    "label": "间距"
+  },
+  {
+    "type": "file",
+    "name": "opacity",
+    "label": "不透明度"
+  },
+  {
+    "type": "file",
+    "name": "hidden",
+    "label": "隐藏"
+  },
+  {
+    "type": "file",
+    "name": "labelsHidden",
+    "label": "隐藏标签"
+  },
+  {
+    "type": "file",
+    "name": "disabled",
+    "label": "禁用"
+  },
+  {
+    "type": "file",
+    "name": "overlay",
+    "label": "overlay"
+  },
+  {
+    "type": "file",
+    "name": "mask",
+    "label": "遮罩"
+  },
+  {
+    "type": "file",
+    "name": "clipShape",
+    "label": "裁剪形状"
+  },
+  {
+    "type": "file",
+    "name": "clipped",
+    "label": "裁剪形状"
+  },
+  {
+    "type": "file",
+    "name": "position",
+    "label": "设置位置"
+  },
+  {
+    "type": "file",
+    "name": "offset",
+    "label": "设置偏移"
+  },
+  {
+    "type": "file",
+    "name": "rotationEffect",
+    "label": "旋转效果"
+  },
+  {
+    "type": "file",
+    "name": "scaleEffect",
+    "label": "缩放效果"
+  },
+  {
+    "type": "file",
+    "name": "shadow",
+    "label": "阴影"
+  },
+  {
+    "type": "file",
+    "name": "blur",
+    "label": "模糊"
+  },
+  {
+    "type": "file",
+    "name": "preferredColorScheme",
+    "label": "首选配色模式"
+  },
+  {
+    "type": "file",
+    "name": "tint",
+    "label": "首选配色模式"
+  },
+  {
+    "type": "file",
+    "name": "colorConvert",
+    "label": "反转颜色"
+  },
+  {
+    "type": "file",
+    "name": "contentShape",
+    "label": "内容形状"
+  },
+  {
+    "type": "file",
+    "name": "Text View Modifiers",
+    "label": "文本修饰符"
+  },
+  {
+    "type": "file",
+    "name": "fixedSize",
+    "label": "固定大小"
+  },
+  {
+    "type": "file",
+    "name": "Image Style",
+    "label": "图片样式"
+  },
+  {
+    "type": "file",
+    "name": "Symbol Style",
+    "label": "符号样式"
   },
   {
     "type": "file",
@@ -41,6 +176,11 @@
   },
   {
     "type": "file",
+    "name": "Text Field",
+    "label": "文本输入框"
+  },
+  {
+    "type": "file",
     "name": "textFieldStyle",
     "label": "文本输入框样式"
   },
@@ -61,7 +201,98 @@
   },
   {
     "type": "file",
+    "name": "ToolBar View Modifiers",
+    "label": "工具栏修饰符"
+  },
+  {
+    "type": "file",
+    "name": "Navigation View Modifiers",
+    "label": "导航视图修饰符"
+  },
+  {
+    "type": "file",
     "name": "Charts Style",
     "label": "图表样式"
+  },
+  {
+    "type": "dir",
+    "name": "ChartMarkProps",
+    "label": "通用图表标记属性 (ChartMarkProps)",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "refresable",
+    "label": "可刷新修饰符",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Search Interactions",
+    "label": "搜索交互"
+  },
+  {
+    "type": "dir",
+    "name": "Swipe Actions",
+    "label": "滑动操作",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Safe Area",
+    "label": "安全区域"
+  },
+  {
+    "type": "file",
+    "name": "Grid Layout Control",
+    "label": "网格布局控制"
+  },
+  {
+    "type": "file",
+    "name": "List View Modifiers",
+    "label": "列表视图修饰符"
+  },
+  {
+    "type": "file",
+    "name": "Presentation View Modifiers",
+    "label": "弹出视图修饰符（Presentation"
+  },
+  {
+    "type": "file",
+    "name": "contextMenu",
+    "label": "上下文菜单"
+  },
+  {
+    "type": "file",
+    "name": "contentMargins",
+    "label": "内容外边距"
+  },
+  {
+    "type": "file",
+    "name": "contentTransition",
+    "label": "内容过渡动画"
+  },
+  {
+    "type": "file",
+    "name": "flipsForRightToLeftLayoutDirection",
+    "label": "flipsForRightToLeftLayoutDirection"
+  },
+  {
+    "type": "file",
+    "name": "Redaction View Modifiers",
+    "label": "数据遮罩视图修饰符"
+  },
+  {
+    "type": "file",
+    "name": "Lifecycle Events",
+    "label": "生命周期事件"
+  },
+  {
+    "type": "file",
+    "name": "onDropContent",
+    "label": "接收外部拖拽内容"
   }
 ]

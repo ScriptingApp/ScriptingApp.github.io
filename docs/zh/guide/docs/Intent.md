@@ -1,95 +1,154 @@
 ---
 title: Intent
 ---
-**Scripting** 让您可通过 TypeScript 脚本创建交互式 **Intents**。该应用封装了 SwiftUI 视图，允许用户构建动态 UI，并与 iOS 分享面板（share sheet）和 Shortcuts 应用进行集成。
+Scripting 支持通过 `intent.tsx` 文件创建 iOS Intents，实现脚本与系统分享扩展（Share Sheet）和快捷指令（Shortcuts）的深度集成。你可以接收来自用户的文本、图片、文件和 URL 等输入，并返回结果供调用方使用。通过 UI 展示、数据处理与结果返回，可构建灵活且强大的自动化流程。
 
-## 概览
+---
 
-使用 **Scripting**，用户可以通过在 `intent.tsx` 文件中编写 TypeScript 来创建 **Intents**，从而与 iOS 的分享面板（share sheet）和 Shortcuts 无缝集成，为用户提供自定义体验。
+## 一、创建和配置 Intent
 
-创建 UI 并处理 Intent 所需的所有 API 和视图都可以从 `"scripting"` 包中导入。
+### 1. 创建 Intent 脚本
 
-## 创建 Intents
+1. 在 Scripting 中新建一个脚本项目。
+2. 添加名为 `intent.tsx` 的文件，并编写处理逻辑和可选的 UI 组件。
 
-要创建一个 iOS Intent：
-1. **创建新的 Script Project**：在 **Scripting** 中创建一个新的脚本项目（Script Project）。
-2. **添加 `intent.tsx` 文件**：在此文件中定义该 Intent 的逻辑和 UI。
-3. **配置 Supported Inputs（支持的输入）**：
-   - **Intent Settings**：在编辑器标题栏中点击项目名称，进入 **Intent Settings**。
-   - **Supported Input Types**：可选择 text、image、file URL 和 URL 等作为输入类型。
+### 2. 配置支持的输入类型
 
-### 访问输入
+点击编辑器顶部标题栏中的项目名称，打开 **Intent 设置页面**，选择该脚本支持的输入类型，如：
 
-在 `intent.tsx` 中，可使用以下 API 访问用户传递的输入：
+* 文本（Text）
+* 图片（Image）
+* 文件路径（File URL）
+* URL
 
-- **`Intent.shortcutParameter`**：快捷指令传递过来的参数，你可以通过`Intent.shortcutParameter.type`来检测数据类型，并通过`Intent.shortcutParameter.value`访问数据
-- **`Intent.textsParameter`**：文本输入的数组
-- **`Intent.imagesParameter`**：图片输入的数组
-- **`Intent.fileURLsParameter`**：文件 URL 的数组
-- **`Intent.urlsParameter`**：URL 输入的数组
+配置后，该脚本就能在分享扩展或 Shortcuts 中处理相应类型的数据。
 
-### 返回结果
+---
 
-要向调用方返回结果：
-- 使用 **`Script.exit()`** 方法，并传入一个 **IntentValue** 作为参数。例如：
+## 二、处理输入数据
 
-  ```tsx
-  import { Script, Intent } from "scripting"
+在 `intent.tsx` 中，可通过以下 API 访问用户传入的数据：
 
-  Script.exit(
-    Intent.text("some text")
-    // Intent.json({key: "value"})
-    // Intent.url("https://example.com")
-    // Intent.file("/path/to/file")
-  )
-  ```
-
-### 显示 UI 组件
-
-若需在返回结果之前基于输入展示 UI，可创建一个 function component 并使用 **`Navigation.present()`**。由于 `Navigation.present()` 返回一个 Promise，为避免内存泄漏，需妥善处理该 Promise。可将功能包装在一个 `async` 函数中，并在最后调用 `Script.exit()`。
+| 属性名                        | 说明                                       |
+| -------------------------- | ---------------------------------------- |
+| `Intent.shortcutParameter` | Shortcuts 中传入的单个参数，包含 `.type` 和 `.value` |
+| `Intent.textsParameter`    | 文本字符串数组                                  |
+| `Intent.urlsParameter`     | URL 字符串数组                                |
+| `Intent.imagesParameter`   | 图片数组（UIImage 实例）                         |
+| `Intent.fileURLsParameter` | 文件路径数组（本地 URL）                           |
 
 示例：
 
-```tsx
+```ts
+if (Intent.shortcutParameter) {
+  if (Intent.shortcutParameter.type === "text") {
+    console.log(Intent.shortcutParameter.value)
+  }
+}
+```
+
+---
+
+## 三、返回结果
+
+使用 `Script.exit(result)` 结束脚本执行并返回结果给调用方，例如 Shortcuts 或另一个脚本。支持的返回类型包括：
+
+* 文本：`Intent.text(value)`
+* 富文本：`Intent.attributedText(value)`
+* URL：`Intent.url(value)`
+* JSON 数据：`Intent.json(value)`
+* 文件路径：`Intent.file(value)` 或 `Intent.fileURL(value)`
+
+示例：
+
+```ts
+import { Script, Intent } from "scripting"
+
+Script.exit(Intent.text("处理完成"))
+```
+
+---
+
+## 四、展示交互式 UI
+
+你可以使用 `Navigation.present()` 呈现一个自定义界面，展示输入信息或收集用户反馈。在 UI 交互结束后调用 `Script.exit()` 返回结果。
+
+示例：
+
+```ts
 import { Intent, Script, Navigation, VStack, Text } from "scripting"
 
 function MyIntentView() {
   return (
     <VStack>
-      <Text>{Intent.textsParameter[0]}</Text>
+      <Text>{Intent.textsParameter?.[0]}</Text>
     </VStack>
   )
 }
 
 async function run() {
-  await Navigation.present({
-    element: <MyIntentView />
-  })
-  Script.exit() // 不返回任何内容
+  await Navigation.present(<MyIntentView />)
+  Script.exit()
 }
 
 run()
 ```
 
-## 在分享面板（Share Sheet）中使用 Intents
+---
 
-当脚本配置为支持特定输入类型（如 text、image、URL 或 file URL）后，**Scripting** 将与 iOS 分享面板（share sheet）集成，让用户可快速处理选定内容：
+## 五、在分享扩展中使用
 
-1. **Share Sheet 访问**：当用户在 Safari 等应用中选定文本并打开分享面板，如果存在可处理该类型输入的 Intent，**Scripting** 会出现在可选操作中。
-2. **从分享面板运行脚本**：
-   - 在分享面板中点击 **Run Script**（运行脚本）。
-   - **Scripting** 会列出支持所选输入类型的脚本项目，例如在 Safari 中选择文本时，会展示所有可接收文本输入的脚本。
-   - 选择所需的脚本，脚本将使用所选输入运行。
+当脚本项目启用了对应类型的输入支持，Scripting 会自动集成到系统分享菜单：
 
-## 与 Shortcuts 集成
+1. 用户选中内容（如 Safari 中的文字或图片），点击分享按钮。
+2. 分享列表中选择 **Scripting**。
+3. 显示支持当前输入类型的脚本列表，供用户执行。
 
-1. **添加一个 Shortcut**：在 Shortcuts 应用中，新建一个快捷指令（Shortcut），然后选择 **Scripting**。
-2. **选择一个 Action**：
-   - **"Run Script"**：执行脚本但不显示 UI。
-   - **"Run Script in App"**：执行脚本并可显示 UI。
-3. **配置该 Action**：在 Action 的配置界面中，选择要运行的脚本项目。
+---
 
-### 示例工作流程
+## 六、与 Shortcuts 集成
 
-1. 对需要展示 UI 的 Intents，选择 **"Run Script in App"**。
-2. **配置 Inputs 和 Actions**：快捷指令会调用 `intent.tsx` 并传入定义好的输入。
+你可以在 Shortcuts 应用中调用 Scripting 脚本：
+
+* **运行脚本（Run Script）**：后台执行，无 UI。
+* **在 App 中运行脚本（Run Script in App）**：前台执行，支持 UI 展示。
+
+操作步骤：
+
+1. 在 Shortcuts 中添加 “Run Script” 或 “Run Script in App” 操作。
+2. 选择目标脚本。
+3. 配置参数，执行脚本。
+
+---
+
+## 七、Intent API 参考
+
+### `Intent` 类属性
+
+| 属性                  | 类型                  | 说明                                    |
+| ------------------- | ------------------- | ------------------------------------- |
+| `shortcutParameter` | `ShortcutParameter` | Shortcuts 传入的参数对象，包含 `type` 和 `value` |
+| `textsParameter`    | `string[]`          | 文本输入数组                                |
+| `urlsParameter`     | `string[]`          | URL 字符串数组                             |
+| `imagesParameter`   | `UIImage[]`         | 图片数组（路径或图片对象）                         |
+| `fileURLsParameter` | `string[]`          | 文件路径数组（本地 URL）                        |
+
+### `Intent` 类方法
+
+| 方法                             | 返回类型                        | 示例                                    |
+| ------------------------------ | --------------------------- | ------------------------------------- |
+| `Intent.text(value)`           | `IntentTextValue`           | `Intent.text("内容")`                   |
+| `Intent.attributedText(value)` | `IntentAttributedTextValue` | `Intent.attributedText("富文本")`        |
+| `Intent.url(value)`            | `IntentURLValue`            | `Intent.url("https://example.com")`   |
+| `Intent.json(value)`           | `IntentJsonValue`           | `Intent.json({ key: "value" })`       |
+| `Intent.file(filePath)`        | `IntentFileValue`           | `Intent.file("/path/to/file.txt")`    |
+| `Intent.fileURL(filePath)`     | `IntentFileURLValue`        | `Intent.fileURL("/path/to/file.pdf")` |
+
+---
+
+## 八、最佳实践与注意事项
+
+* 所有脚本应显式调用 `Script.exit()` 以确保内存安全。
+* 推荐在 UI 脚本中使用 `await Navigation.present()` 之后再调用 `Script.exit()`。
+* 对于大文件或图像，建议使用 “Run Script in App” 模式，以避免系统内存限制导致的崩溃。
+* 如果脚本需要共享数据，可通过 URL Scheme 或 `queryParameters` 实现。

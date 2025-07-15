@@ -1,17 +1,21 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-const resourcePath = path.join(__dirname, "..", "resources", "Scripting Documentation");
+const resourcePath = path.join(__dirname, "..", "Scripting Documentation");
 const docsPath = path.join(__dirname, "..", "docs");
 
-const readFile = (filePath) => {
-    return fs.readFileSync(filePath, "utf-8");
-};
+function readFile(filePath) {
+    try {
+        return fs.readFileSync(filePath, "utf-8");
+    } catch {
+        return false;
+    }
+}
 
-const writeFile = (filePath, content) => {
+function writeFile(filePath, content) {
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
     fs.writeFileSync(filePath, content, "utf-8");
-};
+}
 
 // 处理文件
 const processDocItem = (item, parentPath = "", language = "en") => {
@@ -25,7 +29,9 @@ const processDocItem = (item, parentPath = "", language = "en") => {
     if (!fs.existsSync(metaPath)) {
         writeFile(metaPath, JSON.stringify([], null, 2));
     }
-    const metaJson = JSON.parse(readFile(metaPath));
+    const metaJsonContent = readFile(metaPath);
+    if (!metaJsonContent) return;
+    const metaJson = JSON.parse(metaJsonContent);
 
     if (children || (readme && example)) {
         metaJson.push({
@@ -53,6 +59,8 @@ const processDocItem = (item, parentPath = "", language = "en") => {
             if (!example) {
                 const readmePath = path.join(resourcePath, readme, language + ".md");
                 const readmeContent = readFile(readmePath);
+                if (!readmeContent) return;
+
                 const readmeMd = `---
 title: ${title[language]}
 ---\n${readmeContent}`;
@@ -61,6 +69,8 @@ title: ${title[language]}
             } else {
                 const readmePath = path.join(resourcePath, readme, language + ".md");
                 const readmeContent = readFile(readmePath);
+                if (!readmeContent) return;
+
                 const readmeMd = `---
 title: ${title[language]}
 ---\n${readmeContent}`;
@@ -72,6 +82,8 @@ title: ${title[language]}
         if (example) {
             if (!readme) {
                 const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
+                if (!tsxContent) return;
+
                 const exampleMd = `---
 title: ${title[language]}
 ---
@@ -83,6 +95,8 @@ ${tsxContent}
                 writeFile(cleanBasePath + ".md", exampleMd);
             } else {
                 const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
+                if (!tsxContent) return;
+
                 let exampleName = example.split("/").pop();
                 let exampleTitle = language === "en" ? "Example" : "示例";
 

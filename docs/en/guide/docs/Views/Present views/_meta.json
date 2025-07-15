@@ -1,12 +1,16 @@
 [
   {
-    "type": "file",
+    "type": "dir",
     "name": "Present a simple view",
-    "label": "Present a simple view"
+    "label": "Present a simple view",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
-    "name": "Dismiss a view",
-    "label": "Dismiss a view"
+    "type": "dir",
+    "name": "Dismissing a presented view",
+    "label": "Dismissing a presented view",
+    "collapsible": true,
+    "collapsed": true
   }
 ]

@@ -67,7 +67,7 @@ export default defineConfig({
             },
         ],
     },
-    lang: "zh",
+    lang: "en",
     locales: [
         {
             lang: "en",

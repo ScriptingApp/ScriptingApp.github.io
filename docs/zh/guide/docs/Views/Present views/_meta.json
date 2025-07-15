@@ -1,12 +1,16 @@
 [
   {
-    "type": "file",
+    "type": "dir",
     "name": "Present a simple view",
-    "label": "展示一个简单视图"
+    "label": "展示一个简单视图",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
-    "name": "Dismiss a view",
-    "label": "关闭一个视图"
+    "type": "dir",
+    "name": "Dismissing a presented view",
+    "label": "关闭一个视图",
+    "collapsible": true,
+    "collapsed": true
   }
 ]

@@ -1,6 +1,13 @@
 ---
 title: 颜色选择器
 ---
+`ColorPicker` 组件提供了一个系统颜色选择器 UI，允许用户选择颜色，并通过 `onChanged` 事件将选择的颜色传递回应用。该组件支持以下格式的颜色：
+- 关键字颜色（例如：`green`, `red`, `blue` 等）
+- 十六进制颜色字符串（例如：`#FF5733` 或 `#333`）
+- CSS rgba 字符串（例如：`rgba(255,0,0,1)`）
+
+---
+
 ## `ColorPickerProps`
 
 `ColorPickerProps` 是 `ColorPicker` 组件的属性类型，它可以通过以下两种方式定义：
@@ -18,15 +25,6 @@ title: 颜色选择器
 - **`onChanged`** (`(value: Color) => void`): 颜色变化时的回调函数。当用户选择颜色时会调用此回调，并传递新的颜色值。
 
 - **`supportsOpacity`** (`boolean`, 可选): 如果设置为 `true`，则允许调整选定颜色的透明度。默认为 `true`。
-
----
-
-## `ColorPicker`
-
-`ColorPicker` 组件提供了一个系统颜色选择器 UI，允许用户选择颜色，并通过 `onChanged` 事件将选择的颜色传递回应用。该组件支持以下格式的颜色：
-- 关键字颜色（例如：`green`, `red`, `blue` 等）
-- 十六进制颜色字符串（例如：`#FF5733` 或 `#333`）
-- CSS rgba 字符串（例如：`rgba(255,0,0,1)`）
 
 ### 示例代码
 
@@ -77,9 +75,3 @@ const MyComponent = () => {
 ```tsx
 const color: Color = 'rgba(255, 0, 0, 0.5)'
 ```
-
----
-
-### 总结
-
-`ColorPicker` 组件是一个强大的工具，可以让用户轻松选择颜色，并支持透明度调整。通过传递不同的属性，可以自定义颜色选择器的外观和行为。

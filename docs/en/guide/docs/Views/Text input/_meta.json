@@ -1,13 +1,17 @@
 [
   {
-    "type": "file",
+    "type": "dir",
     "name": "TextField",
-    "label": "TextField"
+    "label": "TextField",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "SecureField",
-    "label": "SecureField"
+    "label": "SecureField",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",

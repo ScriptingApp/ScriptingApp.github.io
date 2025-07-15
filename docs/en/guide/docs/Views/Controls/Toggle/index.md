@@ -131,7 +131,7 @@ function MyComponent() {
     >
       <View>
         <Text>Enable Feature</Text>
-        <Image source="feature-icon" />
+        <Image imageUrl="https://example.com/feature-icon.png" />
       </View>
     </Toggle>
   )

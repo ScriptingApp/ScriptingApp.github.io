@@ -7,14 +7,23 @@
     "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Displaying text",
-    "label": "显示文本"
+    "label": "显示文本",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
+    "name": "Time-based label views",
+    "label": "时间标签视图"
+  },
+  {
+    "type": "dir",
     "name": "Image",
-    "label": "图像"
+    "label": "图像",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -44,13 +53,22 @@
   },
   {
     "type": "file",
-    "name": "Menu",
-    "label": "菜单"
+    "name": "Link",
+    "label": "链接"
   },
   {
-    "type": "file",
+    "type": "dir",
+    "name": "Menu",
+    "label": "菜单",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
     "name": "Shapes",
-    "label": "形状"
+    "label": "形状",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "dir",
@@ -67,14 +85,18 @@
     "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Scroll views",
-    "label": "可滚动视图"
+    "label": "可滚动视图",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Gestures",
-    "label": "手势"
+    "label": "手势",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "dir",
@@ -85,33 +107,41 @@
   },
   {
     "type": "file",
-    "name": "Animation for Widget and LiveActivity",
-    "label": "在小组件和灵动岛中使用动画"
-  },
-  {
-    "type": "file",
     "name": "WebView",
     "label": "网页视图"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Dialog",
-    "label": "对话框"
+    "label": "对话框",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Modal presentaions",
-    "label": "模态展示"
+    "label": "模态展示",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Toolbars",
-    "label": "工具栏"
+    "label": "工具栏",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Search",
+    "label": "搜索",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
-    "name": "Search",
-    "label": "搜索"
+    "name": "AccessoryWidgetBackground",
+    "label": "AccessoryWidgetBackground"
   },
   {
     "type": "dir",
@@ -119,5 +149,10 @@
     "label": "图表",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Editor",
+    "label": "编辑器"
   }
 ]

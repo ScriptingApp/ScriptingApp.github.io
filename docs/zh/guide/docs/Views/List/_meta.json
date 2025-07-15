@@ -1,42 +1,58 @@
 [
   {
-    "type": "file",
+    "type": "dir",
     "name": "Display data inside a row",
-    "label": "在行中显示数据"
+    "label": "在行中显示数据",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Represent data hierarchy in sections",
-    "label": "以分区表示数据层级"
+    "label": "以分区表示数据层级",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Use list for navigations",
-    "label": "使用列表进行导航"
+    "label": "使用列表进行导航",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "DisclosureGroup",
-    "label": "展开组"
+    "label": "展开组",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "List style",
-    "label": "列表样式"
+    "label": "列表样式",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "List interaction",
-    "label": "列表交互"
+    "label": "列表交互",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Refresable List",
-    "label": "可刷新列表"
+    "label": "可刷新列表",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Editable List",
-    "label": "可编辑列表"
+    "label": "可编辑列表",
+    "collapsible": true,
+    "collapsed": true
   }
 ]

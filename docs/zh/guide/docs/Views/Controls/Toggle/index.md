@@ -134,7 +134,7 @@ function MyComponent() {
     >
       <View>
         <Text>启用功能</Text>
-        <Image source="feature-icon" />
+        <Image imageUrl="https://example.com/feature-icon.png" />
       </View>
     </Toggle>
   )

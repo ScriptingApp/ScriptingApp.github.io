@@ -1,7 +1,12 @@
 ---
 title: ColorPicker
 ---
-Sure! Here's the English version of the documentation:
+The `ColorPicker` component provides a system color picker UI that allows users to select a color and passes the selected color back to the application via the `onChanged` event. It supports the following formats for colors:
+- Keyword colors (e.g., `green`, `red`, `blue`, etc.)
+- Hexadecimal color strings (e.g., `#FF5733` or `#333`)
+- CSS rgba strings (e.g., `rgba(255,0,0,1)`)
+
+---
 
 ## `ColorPickerProps`
 
@@ -22,13 +27,6 @@ Sure! Here's the English version of the documentation:
 - **`supportsOpacity`** (`boolean`, optional): If set to `true`, allows the user to adjust the opacity of the selected color. The default is `true`.
 
 ---
-
-## `ColorPicker`
-
-The `ColorPicker` component provides a system color picker UI that allows users to select a color and passes the selected color back to the application via the `onChanged` event. It supports the following formats for colors:
-- Keyword colors (e.g., `green`, `red`, `blue`, etc.)
-- Hexadecimal color strings (e.g., `#FF5733` or `#333`)
-- CSS rgba strings (e.g., `rgba(255,0,0,1)`)
 
 ### Example Code
 
@@ -80,9 +78,3 @@ The `Color` type is used to define various color formats, including:
 ```tsx
 const color: Color = 'rgba(255, 0, 0, 0.5)'
 ```
-
----
-
-### Summary
-
-The `ColorPicker` component is a powerful tool that allows users to easily pick a color, with support for opacity adjustments. By passing different properties, you can customize the appearance and behavior of the color picker.

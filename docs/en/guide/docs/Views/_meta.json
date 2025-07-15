@@ -7,14 +7,23 @@
     "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Displaying text",
-    "label": "Displaying text"
+    "label": "Displaying text",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
+    "name": "Time-based label views",
+    "label": "Time-based label views"
+  },
+  {
+    "type": "dir",
     "name": "Image",
-    "label": "Image"
+    "label": "Image",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -44,13 +53,22 @@
   },
   {
     "type": "file",
-    "name": "Menu",
-    "label": "Menu"
+    "name": "Link",
+    "label": "Link"
   },
   {
-    "type": "file",
+    "type": "dir",
+    "name": "Menu",
+    "label": "Menu",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
     "name": "Shapes",
-    "label": "Shapes"
+    "label": "Shapes",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "dir",
@@ -67,14 +85,18 @@
     "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Scroll views",
-    "label": "Scroll views"
+    "label": "Scroll views",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Gestures",
-    "label": "Gestures"
+    "label": "Gestures",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "dir",
@@ -85,33 +107,41 @@
   },
   {
     "type": "file",
-    "name": "Animation for Widget and LiveActivity",
-    "label": "Animation for Widget and LiveActivity"
-  },
-  {
-    "type": "file",
     "name": "WebView",
     "label": "WebView"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Dialog",
-    "label": "Dialog"
+    "label": "Dialog",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Modal presentaions",
-    "label": "Modal presentaions"
+    "label": "Modal presentaions",
+    "collapsible": true,
+    "collapsed": true
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Toolbars",
-    "label": "Toolbars"
+    "label": "Toolbars",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Search",
+    "label": "Search",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
-    "name": "Search",
-    "label": "Search"
+    "name": "AccessoryWidgetBackground",
+    "label": "AccessoryWidgetBackground"
   },
   {
     "type": "dir",
@@ -119,5 +149,10 @@
     "label": "Charts",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Editor",
+    "label": "Editor"
   }
 ]

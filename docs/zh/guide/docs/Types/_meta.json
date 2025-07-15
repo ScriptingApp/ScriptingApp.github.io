@@ -18,5 +18,10 @@
     "type": "file",
     "name": "Alignment",
     "label": "对齐"
+  },
+  {
+    "type": "file",
+    "name": "Shape",
+    "label": "形状"
   }
 ]

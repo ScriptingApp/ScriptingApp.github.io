@@ -70,10 +70,9 @@ const ToggleIntentWithParams = AppIntentManager.register({
 
 import { VStack, Button, Toggle } from "scripting"
 import { IntentWithoutParams, ToggleIntentWithParams } from "./app_intents"
+import { model } from "./model"
 
 function WidgetView() {
-  const [checked, setChecked] = useState(false)
-
   return (
     <VStack>
       <Button
@@ -82,7 +81,7 @@ function WidgetView() {
       />
       <Toggle
         title="播放或暂停"
-        value={checked}
+        value={model.checked}
         intent={ToggleIntentWithParams("audio_name")} // 触发带参数的 AppIntent
       />
     </VStack>
@@ -139,7 +138,3 @@ Widget.present(<WidgetView />)
 - 在 `perform` 函数中使用 `Widget.reloadAll()` 可在执行意图后动态更新小组件。
 - 将所有 AppIntent 定义在 `app_intents.tsx` 文件中，方便组织和重用。
 - 根据意图的功能选择合适的协议（如 `AudioPlaybackIntent`）。
-
----
-
-**尽情使用 Scripting 创建互动小组件和 LiveActivity 吧！** 通过 AppIntent 实现动态、交互式 UI，释放您的创造力！

@@ -7,7 +7,7 @@
 -   与 iOS 小组件无缝集成
 -   支持 App Intents 和丰富通知
 
-[查看文档](/guide/docs/index)
+[快速开始](/guide/docs/Quick%20Start)
 
 ## 开始使用
 

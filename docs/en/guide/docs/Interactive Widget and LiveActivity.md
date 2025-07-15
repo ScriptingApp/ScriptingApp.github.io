@@ -70,10 +70,9 @@ After registering an AppIntent, it can be linked to interactive components like 
 
 import { VStack, Button, Toggle } from "scripting"
 import { IntentWithoutParams, ToggleIntentWithParams } from "./app_intents"
+import { model } from "./model"
 
 function WidgetView() {
-  const [checked, setChecked] = useState(false)
-
   return (
     <VStack>
       <Button
@@ -82,7 +81,7 @@ function WidgetView() {
       />
       <Toggle
         title="Play or Pause"
-        value={checked}
+        value={model.checked}
         intent={ToggleIntentWithParams("audio_name")} // Trigger the intent with a parameter
       />
     </VStack>
@@ -139,7 +138,3 @@ A toggle switch that triggers an AppIntent when its value changes.
 - Use `Widget.reloadAll()` within `perform` functions to update widgets dynamically after executing an intent.
 - Define your AppIntents in `app_intents.tsx` for organization and reusability.
 - Use appropriate protocols (e.g., `AudioPlaybackIntent`) to match the intent's functionality.
-
----
-
-**Enjoy building interactive widgets and LiveActivities with Scripting!** Let your creativity shine by leveraging the power of AppIntents for dynamic, interactive UIs.

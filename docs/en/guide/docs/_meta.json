@@ -5,9 +5,11 @@
     "label": "Quick Start"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Widget",
-    "label": "Widget"
+    "label": "Widget",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -37,18 +39,6 @@
   },
   {
     "type": "dir",
-    "name": "Device",
-    "label": "Device",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "Data and UIImage",
-    "label": "Data and UIImage"
-  },
-  {
-    "type": "dir",
     "name": "LiveActivity",
     "label": "LiveActivity",
     "collapsible": true,
@@ -71,181 +61,21 @@
   },
   {
     "type": "file",
-    "name": "Safari",
-    "label": "Safari"
-  },
-  {
-    "type": "file",
-    "name": "Clipboard",
-    "label": "Clipboard"
-  },
-  {
-    "type": "file",
-    "name": "Storage",
-    "label": "Storage"
-  },
-  {
-    "type": "file",
-    "name": "DocumentPicker",
-    "label": "DocumentPicker"
-  },
-  {
-    "type": "file",
-    "name": "Path",
-    "label": "Path"
-  },
-  {
-    "type": "file",
-    "name": "FileManager",
-    "label": "FileManager"
-  },
-  {
-    "type": "file",
-    "name": "HapticFeedback",
-    "label": "HapticFeedback"
-  },
-  {
-    "type": "file",
-    "name": "Keychain",
-    "label": "Keychain"
-  },
-  {
-    "type": "file",
-    "name": "LocalAuth",
-    "label": "LocalAuth"
+    "name": "Script",
+    "label": "Script"
   },
   {
     "type": "dir",
-    "name": "Contact",
-    "label": "Contact",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "Calendar",
-    "label": "Calendar"
-  },
-  {
-    "type": "file",
-    "name": "CalendarEvent",
-    "label": "CalendarEvent"
-  },
-  {
-    "type": "file",
-    "name": "Reminder",
-    "label": "Reminder"
-  },
-  {
-    "type": "file",
-    "name": "Recurrence",
-    "label": "Recurrence"
-  },
-  {
-    "type": "file",
-    "name": "Location",
-    "label": "Location"
-  },
-  {
-    "type": "dir",
-    "name": "Notification",
-    "label": "Notification",
+    "name": "Utilities",
+    "label": "Utilities",
     "collapsible": true,
     "collapsed": true
   },
   {
     "type": "dir",
-    "name": "Photos",
-    "label": "Photos",
+    "name": "Device Capabilities",
+    "label": "Device Capabilities",
     "collapsible": true,
     "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "QRCode",
-    "label": "QRCode"
-  },
-  {
-    "type": "file",
-    "name": "Request",
-    "label": "Request"
-  },
-  {
-    "type": "file",
-    "name": "Script and Intent",
-    "label": "Script and Intent"
-  },
-  {
-    "type": "file",
-    "name": "ShareSheet",
-    "label": "ShareSheet"
-  },
-  {
-    "type": "file",
-    "name": "QuickLook",
-    "label": "QuickLook"
-  },
-  {
-    "type": "file",
-    "name": "SharedAudioSession",
-    "label": "SharedAudioSession"
-  },
-  {
-    "type": "dir",
-    "name": "Speech",
-    "label": "Speech",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "SpeechRecognition",
-    "label": "SpeechRecognition",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "AudioRecorder",
-    "label": "AudioRecorder"
-  },
-  {
-    "type": "file",
-    "name": "Audio Player",
-    "label": "Audio Player"
-  },
-  {
-    "type": "dir",
-    "name": "VideoPlayer",
-    "label": "VideoPlayer",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "Mail",
-    "label": "Mail"
-  },
-  {
-    "type": "file",
-    "name": "MediaPlayer",
-    "label": "MediaPlayer"
-  },
-  {
-    "type": "dir",
-    "name": "Weather",
-    "label": "Weather",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "WebScoket",
-    "label": "WebScoket"
-  },
-  {
-    "type": "file",
-    "name": "socket.io",
-    "label": "socket.io"
   }
 ]

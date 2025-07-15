@@ -5,9 +5,11 @@
     "label": "快速开始"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Widget",
-    "label": "小组件"
+    "label": "小组件",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -37,18 +39,6 @@
   },
   {
     "type": "dir",
-    "name": "Device",
-    "label": "设备",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "Data and UIImage",
-    "label": "Data 与 UIImage"
-  },
-  {
-    "type": "dir",
     "name": "LiveActivity",
     "label": "实时活动（灵动岛）",
     "collapsible": true,
@@ -71,181 +61,21 @@
   },
   {
     "type": "file",
-    "name": "Safari",
-    "label": "Safari"
-  },
-  {
-    "type": "file",
-    "name": "Clipboard",
-    "label": "剪贴板"
-  },
-  {
-    "type": "file",
-    "name": "Storage",
-    "label": "本地存储"
-  },
-  {
-    "type": "file",
-    "name": "DocumentPicker",
-    "label": "文档选择器"
-  },
-  {
-    "type": "file",
-    "name": "Path",
-    "label": "文件路径工具"
-  },
-  {
-    "type": "file",
-    "name": "FileManager",
-    "label": "文件管理器"
-  },
-  {
-    "type": "file",
-    "name": "HapticFeedback",
-    "label": "触觉反馈"
-  },
-  {
-    "type": "file",
-    "name": "Keychain",
-    "label": "钥匙串"
-  },
-  {
-    "type": "file",
-    "name": "LocalAuth",
-    "label": "本地认证"
+    "name": "Script",
+    "label": "Script"
   },
   {
     "type": "dir",
-    "name": "Contact",
-    "label": "通讯录",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "Calendar",
-    "label": "日历"
-  },
-  {
-    "type": "file",
-    "name": "CalendarEvent",
-    "label": "日历事件"
-  },
-  {
-    "type": "file",
-    "name": "Reminder",
-    "label": "提醒事项"
-  },
-  {
-    "type": "file",
-    "name": "Recurrence",
-    "label": "重复规则"
-  },
-  {
-    "type": "file",
-    "name": "Location",
-    "label": "定位"
-  },
-  {
-    "type": "dir",
-    "name": "Notification",
-    "label": "通知",
+    "name": "Utilities",
+    "label": "工具模块",
     "collapsible": true,
     "collapsed": true
   },
   {
     "type": "dir",
-    "name": "Photos",
-    "label": "照片",
+    "name": "Device Capabilities",
+    "label": "设备功能",
     "collapsible": true,
     "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "QRCode",
-    "label": "二维码"
-  },
-  {
-    "type": "file",
-    "name": "Request",
-    "label": "请求"
-  },
-  {
-    "type": "file",
-    "name": "Script and Intent",
-    "label": "Script 和 Intent"
-  },
-  {
-    "type": "file",
-    "name": "ShareSheet",
-    "label": "分享内容"
-  },
-  {
-    "type": "file",
-    "name": "QuickLook",
-    "label": "快速查看"
-  },
-  {
-    "type": "file",
-    "name": "SharedAudioSession",
-    "label": "SharedAudioSession"
-  },
-  {
-    "type": "dir",
-    "name": "Speech",
-    "label": "语音合成",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "SpeechRecognition",
-    "label": "语音识别",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "AudioRecorder",
-    "label": "录音"
-  },
-  {
-    "type": "file",
-    "name": "Audio Player",
-    "label": "音频播放器"
-  },
-  {
-    "type": "dir",
-    "name": "VideoPlayer",
-    "label": "视频播放器",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "Mail",
-    "label": "邮件"
-  },
-  {
-    "type": "file",
-    "name": "MediaPlayer",
-    "label": "媒体播放器"
-  },
-  {
-    "type": "dir",
-    "name": "Weather",
-    "label": "天气",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "file",
-    "name": "WebScoket",
-    "label": "WebScoket"
-  },
-  {
-    "type": "file",
-    "name": "socket.io",
-    "label": "socket.io"
   }
 ]

@@ -1,7 +1,6 @@
 ---
 title: Quick Start
 ---
-
 Welcome to **Scripting**, an iOS app that lets you code UI components in **TypeScript** using **React-like TSX syntax**. With Scripting, you can create and present iOS utility UI pages through a familiar coding structure, using wrapped SwiftUI views for a smooth, native experience on iOS. This guide walks you through setting up your project, creating components, and working with hooks to build dynamic interfaces.
 
 ### Table of Contents

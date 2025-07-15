@@ -18,5 +18,10 @@
     "type": "file",
     "name": "Alignment",
     "label": "Alignment"
+  },
+  {
+    "type": "file",
+    "name": "Shape",
+    "label": "Shape"
   }
 ]

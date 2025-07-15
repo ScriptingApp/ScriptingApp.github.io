@@ -7,7 +7,7 @@
 -   Seamless integration with iOS widgets
 -   Support for App Intents and rich notifications
 
-[View Documentation](/guide/docs/index)
+[Quick Start](/guide/docs/Quick%20Start)
 
 ## Getting Started
 

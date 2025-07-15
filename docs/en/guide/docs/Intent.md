@@ -1,95 +1,156 @@
 ---
 title: Intent
 ---
+Scripting allows you to define custom iOS Intents using an `intent.tsx` file. These scripts can receive input from the iOS share sheet or the Shortcuts app and return structured results. With optional UI presentation, you can create interactive workflows that process data and deliver output dynamically.
 
-**Scripting** is an app that empowers developers to create interactive Intents by coding in TypeScript. The app wraps SwiftUI views, allowing you to build dynamic UIs and integrate with both the iOS share sheet and Shortcuts app.
+---
 
-## Overview
+## 1. Creating and Configuring an Intent
 
-With **Scripting**, users can create **Intents** by writing TypeScript in `intent.tsx` files, allowing seamless integration with iOS’s share sheet and Shortcuts for a customized user experience.
+### 1.1 Create an Intent Script
 
-All necessary APIs and views for UI creation and intent handling can be imported from the `"scripting"` package.
+1. Create a new script project in the Scripting app.
+2. Add a file named `intent.tsx` to the project.
+3. Define your logic and optionally a UI component inside the file.
 
-## Creating Intents
+### 1.2 Configure Supported Input Types
 
-To create an iOS Intent:
-1. **Create a New Script Project**: Start by creating a new script project within **Scripting**.
-2. **Add an `intent.tsx` File**: This file will define the logic and UI for the Intent.
-3. **Configure Supported Inputs**:
-   - **Intent Settings**: Tap on the project title in the editor title bar to access **Intent Settings**.
-   - **Supported Input Types**: Choose from texts, images, file URLs, and URLs.
+Tap the project title in the editor’s title bar to open **Intent Settings**, then select supported input types:
 
-### Accessing Inputs
+* Text
+* Images
+* File URLs
+* URLs
 
-Within `intent.tsx`, the following APIs allow access to user inputs:
+This configuration enables your script to appear in the share sheet or Shortcuts when matching input is provided.
 
-- **`Intent.shortcutParameter`**：Parameter from Shortcuts app, you can check the data type by `Intent.shortcutParameter.type`, then access the value by `Intent.shortcutParameter.value`.
-- **`Intent.textsParameter`**: Array of text inputs.
-- **`Intent.imagesParameter`**: Array of image inputs.
-- **`Intent.fileURLsParameter`**: Array of file URLs.
-- **`Intent.urlsParameter`**: Array of URL inputs.
+---
 
-### Returning Results
+## 2. Accessing Input Data
 
-To return a result to the caller:
-- Use the **`Script.exit()`** method, which accepts an **IntentValue** as an argument. For example:
-  ```tsx
-  import { Script, Intent } from "scripting"
+Inside `intent.tsx`, use the `Intent` API to access input values.
 
-  Script.exit(
-    Intent.text("some text")
-    // Intent.json({key: "value"})
-    // Intent.url("https://example.com")
-    // Intent.file("/path/to/file")
-  )
-  ```
-
-### Displaying UI Components
-
-To present a UI based on the inputs before returning a result, create a function component and use **`Navigation.present()`**. Since `Navigation.present()` returns a Promise, it’s essential to handle the promise correctly to avoid memory leaks. You can wrap the function in an `async` function and call `Script.exit()` afterward.
+| Property                   | Description                                                                         |
+| -------------------------- | ----------------------------------------------------------------------------------- |
+| `Intent.shortcutParameter` | A single parameter passed from the Shortcuts app, with `.type` and `.value` fields. |
+| `Intent.textsParameter`    | Array of text strings.                                                              |
+| `Intent.urlsParameter`     | Array of URL strings.                                                               |
+| `Intent.imagesParameter`   | Array of image file paths (UIImage objects).                                        |
+| `Intent.fileURLsParameter` | Array of local file URL paths.                                                      |
 
 Example:
 
-```tsx
+```ts
+if (Intent.shortcutParameter) {
+  if (Intent.shortcutParameter.type === "text") {
+    console.log(Intent.shortcutParameter.value)
+  }
+}
+```
+
+---
+
+## 3. Returning a Result
+
+Use `Script.exit(result)` to return a result to the caller, such as the Shortcuts app or another script. Valid return types include:
+
+* Plain text: `Intent.text(value)`
+* Attributed text: `Intent.attributedText(value)`
+* URL: `Intent.url(value)`
+* JSON: `Intent.json(value)`
+* File path or file URL: `Intent.file(value)` or `Intent.fileURL(value)`
+
+Example:
+
+```ts
+import { Script, Intent } from "scripting"
+
+Script.exit(Intent.text("Done"))
+```
+
+---
+
+## 4. Displaying Interactive UI
+
+Use `Navigation.present()` to show a UI before returning a result. You can render a React-style component and then call `Script.exit()` after the interaction completes.
+
+Example:
+
+```ts
 import { Intent, Script, Navigation, VStack, Text } from "scripting"
 
 function MyIntentView() {
   return (
     <VStack>
-      <Text>{Intent.textsParameter[0]}</Text>
+      <Text>{Intent.textsParameter?.[0]}</Text>
     </VStack>
   )
 }
 
 async function run() {
-  await Navigation.present({
-    element: <MyIntentView />
-  })
-  Script.exit() // returns nothing
+  await Navigation.present({ element: <MyIntentView /> })
+  Script.exit()
 }
 
 run()
 ```
 
-## Using Intents in the Share Sheet
+---
 
-When a script is configured to handle specific input types (e.g., text, images, URLs, or file URLs), **Scripting** integrates with the iOS share sheet to let users quickly process selected content:
+## 5. Using Intents in the Share Sheet
 
-1. **Share Sheet Access**: When a user selects content (like text in Safari) and opens the share sheet, the **Scripting** app will appear as an option if a compatible Intent exists.
-2. **Running a Script from the Share Sheet**:
-   - Tap **Run Script** from the share sheet options.
-   - **Scripting** will present a list of scripts supporting the selected input type. For example, selecting text in Safari will display scripts that accept text inputs.
-   - Select the desired script, and it will execute with the chosen input.
+If a script supports a specific input type (e.g., text or image), it will automatically appear as an option in the iOS share sheet:
 
-## Integration with Shortcuts
+1. Select content such as text or a file.
+2. Tap the Share button.
+3. Choose **Scripting** in the share sheet.
+4. Scripting will list scripts that support the selected input type.
 
-1. **Adding a Shortcut**: In the Shortcuts app, create a new shortcut and select **Scripting**.
-2. **Choose an Action**:
-   - **"Run Script"**: Executes the script without displaying a UI.
-   - **"Run Script in App"**: Executes the script with UI presentation capability.
-3. **Configure the Action**: In the action configuration, select the script project to run.
+---
 
-### Example Workflow
+## 6. Using Intents in the Shortcuts App
 
-1. **Select "Run Script in App"** for intents that present a UI.
-2. **Configure Inputs and Actions**: The shortcut will invoke `intent.tsx` and pass the defined inputs.
+You can call scripts from the Shortcuts app with or without UI:
+
+* **Run Script**: Executes the script in the background.
+* **Run Script in App**: Executes the script in the foreground, with UI presentation support.
+
+Steps:
+
+1. Open the Shortcuts app and create a new shortcut.
+2. Add the **Run Script** or **Run Script in App** action from Scripting.
+3. Choose the target script and pass input parameters if needed.
+
+---
+
+## 7. Intent API Reference
+
+### `Intent` Properties
+
+| Property            | Type                | Description                                     |
+| ------------------- | ------------------- | ----------------------------------------------- |
+| `shortcutParameter` | `ShortcutParameter` | Input from Shortcuts with `.type` and `.value`. |
+| `textsParameter`    | `string[]`          | Array of input text values.                     |
+| `urlsParameter`     | `string[]`          | Array of input URLs.                            |
+| `imagesParameter`   | `UIImage[]`         | Array of image file paths or objects.           |
+| `fileURLsParameter` | `string[]`          | Array of input file paths (local file URLs).    |
+
+### `Intent` Methods
+
+| Method                         | Return Type                 | Example                                |
+| ------------------------------ | --------------------------- | -------------------------------------- |
+| `Intent.text(value)`           | `IntentTextValue`           | `Intent.text("Hello")`                 |
+| `Intent.attributedText(value)` | `IntentAttributedTextValue` | `Intent.attributedText("Styled Text")` |
+| `Intent.url(value)`            | `IntentURLValue`            | `Intent.url("https://example.com")`    |
+| `Intent.json(value)`           | `IntentJsonValue`           | `Intent.json({ key: "value" })`        |
+| `Intent.file(path)`            | `IntentFileValue`           | `Intent.file("/path/to/file.txt")`     |
+| `Intent.fileURL(path)`         | `IntentFileURLValue`        | `Intent.fileURL("/path/to/file.pdf")`  |
+
+---
+
+## 8. Best Practices and Notes
+
+* Always call `Script.exit()` to properly terminate the script and return a result.
+* When displaying a UI, ensure `Navigation.present()` is awaited before calling `Script.exit()`.
+* Use **"Run Script in App"** for large files or images to avoid process termination due to memory constraints.
+* You can use `queryParameters` when launching scripts via URL scheme if additional data is needed.
