@@ -1,11 +1,9 @@
 ---
 title: Quick Start
 ---
-
 Welcome to **Scripting**, an iOS app that lets you code UI components in **TypeScript** using **React-like TSX syntax**. With Scripting, you can create and present iOS utility UI pages through a familiar coding structure, using wrapped SwiftUI views for a smooth, native experience on iOS. This guide walks you through setting up your project, creating components, and working with hooks to build dynamic interfaces.
 
 ### Table of Contents
-
 1. **Getting Started**
 2. **Creating a Script Project**
 3. **Importing Components**
@@ -27,15 +25,15 @@ Before you begin coding, you need to **create a script project**. Once the proje
 Example setup in `index.tsx`:
 
 ```tsx
-import { VStack, Text } from "scripting";
+import { VStack, Text } from "scripting"
 
 // Define a custom view component
 function View() {
-    return (
-        <VStack>
-            <Text>Hello, Scripting!</Text>
-        </VStack>
-    );
+  return (
+    <VStack>
+      <Text>Hello, Scripting!</Text>
+    </VStack>
+  )
 }
 ```
 
@@ -45,16 +43,16 @@ function View() {
 
 All views and some APIs from SwiftUI are wrapped and accessible through the `scripting` package. Here’s a list of some available views:
 
--   **Layout Views**: `VStack`, `HStack`, `ZStack`, `Grid`
--   **Controls**: `Button`, `Picker`, `Toggle`, `Slider`, `ColorPicker`
--   **Collections**: `List`, `Section`
--   **Date and Time**: `DatePicker`
--   **Text and Labels**: `Text`, `Label`, `TextField`
+- **Layout Views**: `VStack`, `HStack`, `ZStack`, `Grid`
+- **Controls**: `Button`, `Picker`, `Toggle`, `Slider`, `ColorPicker`
+- **Collections**: `List`, `Section`
+- **Date and Time**: `DatePicker`
+- **Text and Labels**: `Text`, `Label`, `TextField`
 
 To use these in your project, import them as shown:
 
 ```tsx
-import { VStack, Text, Button, Picker } from "scripting";
+import { VStack, Text, Button, Picker } from "scripting"
 ```
 
 ---
@@ -66,23 +64,30 @@ Function components in Scripting work just like in React, with JSX-like syntax f
 Example:
 
 ```tsx
-import { VStack, HStack, Text, Button } from "scripting";
+import { VStack, HStack, Text, Button } from "scripting"
 
-function Greeting({ name }: { name: string }) {
-    return (
-        <HStack>
-            <Text>Hello, {name}!</Text>
-        </HStack>
-    );
+function Greeting({
+   name
+}: {
+   name: string 
+}) {
+  return (
+    <HStack>
+      <Text>Hello, {name}!</Text>
+    </HStack>
+  )
 }
 
 function MainView() {
-    return (
-        <VStack>
-            <Greeting name="Scripting User" />
-            <Button title="Click Me" action={() => console.log("Button Clicked!")} />
-        </VStack>
-    );
+  return (
+    <VStack>
+      <Greeting name="Scripting User" />
+      <Button 
+        title="Click Me" 
+        action={() => console.log("Button Clicked!")}
+      />
+    </VStack>
+  )
 }
 ```
 
@@ -95,23 +100,23 @@ To present a UI view, use the `Navigation.present` method. This allows you to di
 Example:
 
 ```tsx
-import { VStack, Text, Navigation, Script } from "scripting";
+import { VStack, Text, Navigation, Script } from "scripting"
 
 function View() {
-    return (
-        <VStack>
-            <Text>Hello, Scripting!</Text>
-        </VStack>
-    );
+  return (
+    <VStack>
+      <Text>Hello, Scripting!</Text>
+    </VStack>
+  )
 }
 
 // Present the view
-Navigation.present({
-    element: <View />,
+Navigation.present({ 
+  element: <View />
 }).then(() => {
-    // Clean up to avoid memory leaks
-    Script.exit();
-});
+  // Clean up to avoid memory leaks
+  Script.exit()
+})
 ```
 
 In this example, `Navigation.present({ element: <View /> })` displays the `View` component, and when the user dismisses it, `Script.exit()` ensures resources are freed.
@@ -125,21 +130,23 @@ Scripting supports a range of React-like hooks for managing state, effects, memo
 ---
 
 #### **`useState`**
-
-The `useState` hook lets you add local state to a function component.
+The `useState` hook lets you add local state to a function component. 
 
 ```tsx
-import { useState, VStack, Text, Button } from "scripting";
+import { useState, VStack, Text, Button } from "scripting"
 
 function Counter() {
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
-    return (
-        <VStack>
-            <Text>Count: {count}</Text>
-            <Button title="Increment" action={() => setCount(count + 1)} />
-        </VStack>
-    );
+  return (
+    <VStack>
+      <Text>Count: {count}</Text>
+      <Button
+        title="Increment"
+        action={() => setCount(count + 1)}
+      />
+    </VStack>
+  )
 }
 ```
 
@@ -148,30 +155,31 @@ In this example, clicking the button updates the `count` variable, which automat
 ---
 
 #### **`useEffect`**
-
 The `useEffect` hook lets you perform side effects in your components, such as fetching data or setting up subscriptions.
 
 ```tsx
-import { useState, useEffect, VStack, Text } from "scripting";
+import { useState, useEffect, VStack, Text } from "scripting"
 
 function TimeDisplay() {
-    const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [time, setTime] = useState(
+    new Date().toLocaleTimeString()
+  )
 
-    useEffect(() => {
-        let timerId: number;
+  useEffect(() => {
+    let timerId: number
 
-        const startTimer = () => {
-            timerId = setTimeout(() => {
-                setTime(new Date().toLocaleTimeString());
-            }, 1000);
-        };
+    const startTimer = () => {
+      timerId = setTimeout(() => {
+        setTime(new Date().toLocaleTimeString())
+      }, 1000)
+    }
 
-        startTimer();
+    startTimer()
+    
+    return () => clearTimeout(timerId) // Clean up on unmount
+  }, [])
 
-        return () => clearTimeout(timerId); // Clean up on unmount
-    }, []);
-
-    return <Text>Current Time: {time}</Text>;
+  return <Text>Current Time: {time}</Text>
 }
 ```
 
@@ -180,40 +188,43 @@ In this example, the `useEffect` hook sets up an interval to update the `time` v
 ---
 
 #### **`useReducer`**
-
 The `useReducer` hook is useful for managing complex state logic in components.
 
 ```tsx
-import { useReducer, VStack, Text, Button } from "scripting";
+import { useReducer, VStack, Text, Button } from "scripting"
 
-type Action =
-    | {
-          type: "increment";
-      }
-    | {
-          type: "decrement";
-      };
+type Action = { 
+  type: "increment"
+} | {
+  type: "decrement"
+}
 const reducer = (state: number, action: Action) => {
-    switch (action.type) {
-        case "increment":
-            return state + 1;
-        case "decrement":
-            return state - 1;
-        default:
-            return state;
-    }
-};
+  switch (action.type) {
+    case "increment":
+      return state + 1
+    case "decrement":
+      return state - 1
+    default:
+      return state
+  }
+}
 
 function Counter() {
-    const [count, dispatch] = useReducer(reducer, 0);
+  const [count, dispatch] = useReducer(reducer, 0)
 
-    return (
-        <VStack>
-            <Text>Count: {count}</Text>
-            <Button title="Increment" action={() => dispatch({ type: "increment" })} />
-            <Button title="Decrement" action={() => dispatch({ type: "decrement" })} />
-        </VStack>
-    );
+  return (
+    <VStack>
+      <Text>Count: {count}</Text>
+      <Button 
+        title="Increment"
+        action={() => dispatch({ type: "increment" })}
+      />
+      <Button
+        title="Decrement"
+        action={() => dispatch({ type: "decrement" })}
+      />
+    </VStack>
+  )
 }
 ```
 
@@ -222,25 +233,27 @@ The `useReducer` hook helps you handle complex state transitions by using a redu
 ---
 
 #### **`useCallback`**
-
 The `useCallback` hook lets you memoize functions, optimizing performance by preventing unnecessary re-creations of the function on every render.
 
 ```tsx
-import { useState, useCallback, VStack, Text, Button } from "scripting";
+import { useState, useCallback, VStack, Text, Button } from "scripting"
 
 function Counter() {
-    const [count, setCount] = useState(0);
+  const [count, setCount] = useState(0)
 
-    const increment = useCallback(() => {
-        setCount((prev) => prev + 1);
-    }, []);
+  const increment = useCallback(() => {
+    setCount((prev) => prev + 1)
+  }, [])
 
-    return (
-        <VStack>
-            <Text>Count: {count}</Text>
-            <Button title="Increment" action={increment} />
-        </VStack>
-    );
+  return (
+    <VStack>
+      <Text>Count: {count}</Text>
+      <Button 
+        title="Increment"
+        action={increment}
+      />
+    </VStack>
+  )
 }
 ```
 
@@ -249,29 +262,29 @@ With `useCallback`, the `increment` function is only re-created when necessary, 
 ---
 
 #### **`useMemo`**
-
 The `useMemo` hook lets you memoize values, caching expensive computations for better performance.
 
 ```tsx
-import { useState, useMemo, VStack, Text, Button } from "scripting";
+import { useState, useMemo, VStack, Text, Button } from "scripting"
 
 function FactorialCounter() {
-    const [count, setCount] = useState(1);
+  const [count, setCount] = useState(1)
 
-    const factorial = useMemo(() => {
-        let result = 1;
-        for (let i = 1; i <= count; i++) result *= i;
-        return result;
-    }, [count]);
+  const factorial = useMemo(() => {
+    let result = 1
+    for (let i = 1; i <= count; i++) result *= i
+    return result
+  }, [count])
 
-    return (
-        <VStack>
-            <Text>
-                Factorial of {count} is {factorial}
-            </Text>
-            <Button title="Increase" action={() => setCount(count + 1)} />
-        </VStack>
-    );
+  return (
+    <VStack>
+      <Text>Factorial of {count} is {factorial}</Text>
+      <Button 
+        title="Increase"
+        action={() => setCount(count + 1)}
+      />
+    </VStack>
+  )
 }
 ```
 
@@ -279,28 +292,27 @@ The `useMemo` hook optimizes performance by only re-calculating the factorial wh
 
 ---
 
-#### `useContext`
-
+#### **`useContext`**
 The `useContext` hook allows components to access shared state across the app without prop drilling, using a Context API.
 
 ```tsx
-import { createContext, useContext, VStack, Text, Button } from "scripting";
+import { createContext, useContext, VStack, Text, Button } from "scripting"
 
-const CountContext = createContext<number>();
+const CountContext = createContext<number>()
 
 function Display() {
-    const count = useContext(CountContext);
-    return <Text>Shared Count: {count}</Text>;
+  const count = useContext(CountContext)
+  return <Text>Shared Count: {count}</Text>
 }
 
 function App() {
-    return (
-        <CountContext.Provider value={42}>
-            <VStack>
-                <Display />
-            </VStack>
-        </CountContext.Provider>
-    );
+  return (
+    <CountContext.Provider value={42}>
+      <VStack>
+        <Display />
+      </VStack>
+    </CountContext.Provider>
+  )
 }
 ```
 
@@ -315,44 +327,46 @@ Combine available views, hooks, and custom components to create complex, fully f
 Example:
 
 ```tsx
-import { useState, VStack, Text, TextField, List, Section, NavigationStack, Script } from "scripting";
+import { useState, VStack, Text, TextField, List, Section, NavigationStack, Script } from "scripting"
 
 function ToDoApp() {
-    const [tasks, setTasks] = useState(["Task 1", "Task 2", "Task 3"]);
-    const [content, setContent] = useState("");
+  const [tasks, setTasks] = useState(["Task 1", "Task 2", "Task 3"])
+  const [content, setContent] = useState("")
 
-    return (
-        <NavigationStack>
-            <List navigationTitle="My Tasks">
-                <Section>
-                    {tasks.map((task, index) => (
-                        <Text key={index}>{task}</Text>
-                    ))}
-                </Section>
-
-                <TextField
-                    title="New Task"
-                    value={content}
-                    onChanged={setContent}
-                    onSubmit={() => {
-                        if (content.length === 0) {
-                            return;
-                        }
-                        setTasks([...tasks, content]);
-                        setContent("");
-                    }}
-                />
-            </List>
-        </NavigationStack>
-    );
+  return (
+    <NavigationStack>
+        <List
+          navigationTitle="My Tasks"
+        >
+          <Section>
+            {tasks.map((task, index) => (
+              <Text key={index}>{task}</Text>
+            ))}
+          </Section>
+          
+          <TextField
+            title="New Task"
+            value={content}
+            onChanged={setContent}
+            onSubmit={() => {
+              if (content.length === 0) {
+                return
+              }
+              setTasks([...tasks, content])
+              setContent("")
+            }}
+          />
+        </List>
+    </NavigationStack>
+  )
 }
 
 async function run() {
-    await Navigation.present({
-        element: <ToDoApp />,
-    });
+  await Navigation.present({
+    element: <ToDoApp />
+  })
 
-    Script.exit();
+  Script.exit()
 }
 ```
 

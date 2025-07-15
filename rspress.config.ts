@@ -28,13 +28,13 @@ export default defineConfig({
             feed: [
                 {
                     id: "changelog",
-                    test: "/guide/changelog",
+                    test: "/guide/changelog/",
                     title: "Scripting Changelog",
                     language: "en-US",
                 },
                 {
                     id: "changelog-zh",
-                    test: "/zh/guide/changelog",
+                    test: "/zh/guide/changelog/",
                     title: "Scripting 更新日志",
                     language: "zh-CN",
                 },

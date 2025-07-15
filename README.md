@@ -12,3 +12,9 @@
 ```bash
 bun run docs
 ```
+
+## 修改更新日志
+
+以中文更新日志为例
+
+若 `docs/zh/guide/changelog/2.1.1.md` 为最新版文档需，则修改 `docs/zh/guide/\_meta.json` 和 `docs/zh/\_meta.json` 中 `changelog/` 后的版本号为 `2.1.1`
