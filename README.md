@@ -6,7 +6,7 @@
 
 ## 快速开始
 
-1. 将 `Scripting Documentation` (Scripting App 默认脚本) 放入 `resources` 文件夹
+1. 将 `Scripting Documentation` (Scripting App 默认脚本) 放入项目根目录
 2. 运行文档生成命令：
 
 ```bash
