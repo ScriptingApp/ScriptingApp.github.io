@@ -2,7 +2,7 @@
 
 ## 项目简介
 
-通过 `Scripting Documentation` (Scripting App 默认脚本) 生成官网的工程
+通过 `Scripting Documentation` (Scripting App 默认脚本) 生成官网文档
 
 ## 快速开始
 
@@ -10,7 +10,7 @@
 2. 运行文档生成命令：
 
 ```bash
-bun run docs
+bun run build:docs
 ```
 
 ## 修改更新日志
