@@ -13,7 +13,12 @@
     },
     {
         "type": "file",
-        "name": "changelog/2.1.1",
+        "name": "changelog/latest",
         "label": "changelog"
+    },
+    {
+        "type": "dir",
+        "name": "privacy",
+        "label": "privacy"
     }
 ]
