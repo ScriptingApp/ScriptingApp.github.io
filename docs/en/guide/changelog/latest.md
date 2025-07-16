@@ -1,9 +1,20 @@
 ---
-title: V2.1.1
+title: V2.3.3
 published_at: 2025-07-15 08:00:00
 ---
 
-# Changelog
+## 2.1.6
+
+**Assistant Features Update**
+
+-   Introduced custom role mode: Define unique roles for assistants beyond coding support.
+-   Directly @mention assistant tools in the input box for faster interaction.
+-   Scripts are now automatically saved to the `scripts` folder under the Scripting App's documents folder for easier access and organization.
+
+**Bug Fixes**
+
+-   Fixed the issue where **file bookmarks weren't working properly**
+-   Resolved documentation errors to improve clarity and accuracy
 
 :::details{title=Recent Major Updates}
 
@@ -26,16 +37,3 @@ published_at: 2025-07-15 08:00:00
 -   The "Run in App" action in the Shortcuts app also supports configuring `singleMode`.
 
 :::
-
-## 2.1.6
-
-**Assistant Features Update**
-
--   Introduced custom role mode: Define unique roles for assistants beyond coding support.
--   Directly @mention assistant tools in the input box for faster interaction.
--   Scripts are now automatically saved to the `scripts` folder under the Scripting App's documents folder for easier access and organization.
-
-**Bug Fixes**
-
--   Fixed the issue where **file bookmarks weren't working properly**
--   Resolved documentation errors to improve clarity and accuracy
