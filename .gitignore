@@ -13,4 +13,4 @@ doc_build/
 !.vscode/extensions.json
 .idea
 
-resources/
+Scripting Documentation

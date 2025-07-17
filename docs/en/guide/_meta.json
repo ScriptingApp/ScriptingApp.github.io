@@ -19,6 +19,8 @@
     {
         "type": "dir",
         "name": "privacy",
-        "label": "privacy"
+        "label": "privacy",
+        "collapsible": true,
+        "collapsed": true
     }
 ]
