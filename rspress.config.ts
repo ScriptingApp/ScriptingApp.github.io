@@ -98,27 +98,19 @@ export default defineConfig({
         icon: {
           svg: `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="32 32 512 512" width="32" height="32" fill="currentColor">
-  <!-- 1. mask：RSS logo挖掉粗外框矩形 -->
   <mask id="mask-logo">
     <rect width="100%" height="100%" fill="white"/>
-    <!-- 外框挖空，比实际矩形大，形成粗框 -->
     <rect x="220" y="340" width="275" height="190" rx="50" ry="50" fill="black"/>
   </mask>
-
-  <!-- 2. mask：矩形挖掉文字 -->
   <mask id="mask-text">
     <rect x="245" y="360" width="225" height="150" rx="40" ry="40" fill="white"/>
     <text x="357" y="480" font-size="120" font-weight="bold" text-anchor="middle" fill="black">EN</text>
   </mask>
-
-  <!-- RSS logo应用外框mask -->
   <path d="M128 416c0 17.7-14.3 32-32 32s-32-14.3-32-32
            14.3-32 32-32 32 14.3 32 32zm144 32c0-107.5-84.5-192-192-192v64
            c70.7 0 128 57.3 128 128h64zm96 0c0-159.1-128.9-288-288-288v64
            c123.7 0 224 100.3 224 224h64z"
         mask="url(#mask-logo)"/>
-
-  <!-- 矩形角标应用文字mask -->
   <rect x="240" y="363" width="235" height="150" rx="40" ry="40"
         mask="url(#mask-text)"/>
 </svg> 
@@ -131,27 +123,20 @@ export default defineConfig({
         icon: {
           svg: `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="32 32 512 512" width="32" height="32" fill="currentColor">
-  <!-- 1. mask：RSS logo挖掉粗外框矩形 -->
   <mask id="mask-logo">
     <rect width="100%" height="100%" fill="white"/>
     <!-- 外框挖空，比实际矩形大，形成粗框 -->
     <rect x="220" y="340" width="275" height="190" rx="50" ry="50" fill="black"/>
   </mask>
-
-  <!-- 2. mask：矩形挖掉文字 -->
   <mask id="mask-text">
     <rect x="245" y="360" width="225" height="150" rx="40" ry="40" fill="white"/>
     <text x="357" y="480" font-size="120" font-weight="bold" text-anchor="middle" fill="black">ZH</text>
   </mask>
-
-  <!-- RSS logo应用外框mask -->
   <path d="M128 416c0 17.7-14.3 32-32 32s-32-14.3-32-32
            14.3-32 32-32 32 14.3 32 32zm144 32c0-107.5-84.5-192-192-192v64
            c70.7 0 128 57.3 128 128h64zm96 0c0-159.1-128.9-288-288-288v64
            c123.7 0 224 100.3 224 224h64z"
         mask="url(#mask-logo)"/>
-
-  <!-- 矩形角标应用文字mask -->
   <rect x="240" y="363" width="235" height="150" rx="40" ry="40"
         mask="url(#mask-text)"/>
 </svg> 
