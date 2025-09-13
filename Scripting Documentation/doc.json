@@ -33,6 +33,17 @@
       },
       {
         "title": {
+          "en": "Widget API",
+          "zh": "小组件 API"
+        },
+        "subtitle": {
+          "en": "The Widget API provides static methods and properties to render and interact with home screen widgets.",
+          "zh": "小组件 API 提供静态方法和属性，用于渲染和与主屏幕小组件交互。"
+        },
+        "readme": "widget_api/"
+      },
+      {
+        "title": {
           "en": "Tinted Mode Adaptation Guide",
           "zh": "小组件染色模式适配指南"
         },
@@ -1332,6 +1343,17 @@
       },
       {
         "title": {
+          "en": "Markdown",
+          "zh": "Markdown"
+        },
+        "subtitle": {
+          "en": "A view that renders Markdown content, allowing you to display formatted text, links, images, and more.",
+          "zh": "一个渲染 Markdown 内容的视图，允许您显示格式化文本、链接、图片等。"
+        },
+        "readme": "views/markdown/"
+      },
+      {
+        "title": {
           "en": "Editor",
           "zh": "编辑器"
         },
@@ -1675,7 +1697,7 @@
       {
         "title": {
           "en": "tint",
-          "zh": "首选配色模式"
+          "zh": "强调色"
         },
         "subtitle": {
           "en": "Overrides the default accent color for a specific view using a given style.",
@@ -2148,6 +2170,17 @@
           "zh": "用于使某个视图成为接收来自其他 App 拖入的文件、图片或文本的拖放目标。"
         },
         "readme": "view_modifiers/on_drop_content/"
+      },
+      {
+        "title": {
+          "en": "translationHost",
+          "zh": "翻译宿主"
+        },
+        "subtitle": {
+          "en": "This view modifier is used to provide a translation service context to your UI.",
+          "zh": "该修饰符用于为视图层级提供翻译服务的上下文环境。"
+        },
+        "readme": "view_modifiers/translation_host/"
       }
     ]
   },
@@ -2206,10 +2239,11 @@
       "zh": "Script"
     },
     "subtitle": {
-      "en": "SThis API allows you to build reusable script logic, trigger automation via custom URL schemes, and manage inter-script communication in a structured and efficient manner.",
+      "en": "This API allows you to build reusable script logic, trigger automation via custom URL schemes, and manage inter-script communication in a structured and efficient manner.",
       "zh": "你可以通过该接口访问当前脚本的运行信息、终止脚本并返回结果、在脚本之间调用、以及生成 URL Scheme 以打开或运行脚本。"
     },
-    "readme": "script/"
+    "readme": "script/",
+    "keywords": ["URL Scheme"]
   },
   {
     "title": {
@@ -2223,14 +2257,25 @@
     "children": [
       {
         "title": {
-          "en": "Data and UIImage",
-          "zh": "Data 与 UIImage"
+          "en": "Data",
+          "zh": "数据"
         },
         "subtitle": {
-          "en": "These interfaces simplify working with binary data and images, allowing you to handle common scenarios easily in your scripts.",
-          "zh": "这些接口简化了对二进制数据和图像的处理，使您能够在脚本中轻松处理常见场景。"
+          "en": "This class represents binary data and provides methods to convert between various formats.",
+          "zh": "该类表示二进制数据，并提供在不同格式之间转换的方法。"
         },
-        "readme": "data_and_uiimage/"
+        "readme": "data/"
+      },
+      {
+        "title": {
+          "en": "UIImage",
+          "zh": "UIImage"
+        },
+        "subtitle": {
+          "en": "This class represents an image and provides methods to manipulate and display images.",
+          "zh": "该类表示图像，并提供操作和显示图像的方法。"
+        },
+        "readme": "ui_image/"
       },
       {
         "title": {
@@ -2242,17 +2287,6 @@
           "zh": "该接口提供了一种简单的方法来生成唯一的 UUID 字符串。"
         },
         "readme": "uuid/"
-      },
-      {
-        "title": {
-          "en": "MD5",
-          "zh": "MD5"
-        },
-        "subtitle": {
-          "en": "The interface provides provides functions to hash strings using the MD5 algorithm.",
-          "zh": "该接口提供了提供了对字符串进行 MD5 哈希处理的功能。"
-        },
-        "readme": "md5/"
       },
       {
         "title": {
@@ -2371,6 +2405,73 @@
           "zh": "该接口允许你通过socket.io库管理客户端与服务器之间的实时双向通信。"
         },
         "readme": "socket_io/"
+      },
+      {
+        "title": {
+          "en": "SSH",
+          "zh": "SSH"
+        },
+        "subtitle": {
+          "en": "This interface allows you to connect to remote servers using SSH protocol, execute commands, and transfer files securely.",
+          "zh": "该接口允许你使用 SSH 协议连接到远程服务器，执行命令并安全地传输文件。"
+        },
+        "children": [
+          {
+            "title": {
+              "en": "SSH Client",
+              "zh": "SSH 客户端"
+            },
+            "subtitle": {
+              "en": "This interface provides a simple way to connect to remote servers using SSH protocol.",
+              "zh": "该接口提供了一种简单的方法来使用 SSH 协议连接到远程服务器。"
+            },
+            "readme": "ssh/ssh_client/"
+          },
+          {
+            "title": {
+              "en": "SFTP Client",
+              "zh": "SFTP 客户端"
+            },
+            "subtitle": {
+              "en": "This interface provides a simple way to transfer files securely over SSH using SFTP protocol.",
+              "zh": "该接口提供了一种简单的方法来使用 SFTP 协议通过 SSH 安全地传输文件。"
+            },
+            "readme": "ssh/sftp_client/"
+          },
+          {
+            "title": {
+              "en": "SSH Authentication Method",
+              "zh": "SSH 认证方法"
+            },
+            "subtitle": {
+              "en": "This interface provides a way to authenticate SSH connections using various methods such as password, public key, or private key.",
+              "zh": "该接口提供了一种使用各种方法（如密码、公钥或私钥）进行 SSH 连接认证的方法。"
+            },
+            "readme": "ssh/ssh_authentication_method/"
+          },
+          {
+            "title": {
+              "en": "TTY Stdin Writer",
+              "zh": "TTY 标准输入写入器"
+            },
+            "subtitle": {
+              "en": "This interface allows you to write data to the standard input of a TTY session, enabling interactive command execution.",
+              "zh": "该接口允许你向 TTY 会话的标准输入写入数据，从而实现交互式命令执行。"
+            },
+            "readme": "ssh/tty_stdin_writer/"
+          }
+        ]
+      },
+      {
+        "title": {
+          "en": "OAuth2",
+          "zh": "OAuth2"
+        },
+        "subtitle": {
+          "en": "This interface provides a simple way to authenticate users and authorize access to resources using OAuth2 protocol.",
+          "zh": "该接口提供了一种简单的方法来使用 OAuth2 协议进行用户身份验证和资源访问授权。"
+        },
+        "readme": "oauth2/"
       },
       {
         "title": {
@@ -3127,6 +3228,18 @@
       },
       {
         "title": {
+          "en": "Send Message",
+          "zh": "发送信息"
+        },
+        "subtitle": {
+          "en": "This interface allows you to send messages using the device's messaging capabilities, such as SMS or iMessage.",
+          "zh": "该接口允许您使用设备的消息功能发送信息，例如短信或 iMessage。"
+        },
+        "keywords": ["MessageUI"],
+        "readme": "message_ui/"
+      },
+      {
+        "title": {
           "en": "Vision",
           "zh": "视觉"
         },
@@ -3152,6 +3265,17 @@
           "zh": "通过该API高效地操作 PDF 文件。"
         },
         "readme": "pdf/"
+      },
+      {
+        "title": {
+          "en": "Translation",
+          "zh": "翻译"
+        },
+        "subtitle": {
+          "en": "This interface provides language translation capabilities, allowing you to translate text between different languages.",
+          "zh": "该接口提供语言翻译功能，允许您在不同语言之间翻译文本。"
+        },
+        "readme": "translation/"
       }
     ]
   }

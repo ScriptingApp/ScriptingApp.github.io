@@ -1,3 +1,6 @@
+---
+title: HealthCategorySample
+---
 The `HealthCategorySample` class represents an individual category-based health record, such as a sleep session, menstrual flow level, or a test result. These samples are used to store discrete events or conditions over time, usually characterized by a start and end date along with a categorical value.
 
 ---

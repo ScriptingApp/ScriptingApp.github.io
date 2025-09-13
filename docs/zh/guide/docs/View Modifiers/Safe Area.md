@@ -106,12 +106,12 @@ safeAreaInset?: {
   },
   leading?: {
     alignment?: VerticalAlignment
-    sapcing?: number  // 实际为 spacing
+    spacing?: number  // 实际为 spacing
     content: VirtualNode
   },
   trailing?: {
     alignment?: VerticalAlignment
-    sapcing?: number  // 实际为 spacing
+    spacing?: number  // 实际为 spacing
     content: VirtualNode
   }
 }
@@ -148,7 +148,7 @@ safeAreaInset?: {
 * **水平对齐（top / bottom）**：`"leading"`、`"center"`、`"trailing"`
 * **垂直对齐（leading / trailing）**：`"top"`、`"center"`、`"bottom"`
 
-> 注意：`sapcing` 是拼写错误，实际应为 `spacing`。
+> 注意：`spacing` 是拼写错误，实际应为 `spacing`。
 
 ---
 

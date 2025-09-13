@@ -1,127 +1,114 @@
-The `Mail` module allows you to present a mail compose view within your app. You can specify recipients, subject, body, and attachments.
+The `Mail` module allows your script to present a native mail compose view, enabling users to send emails with recipients, subject, body, and attachments prefilled. It also provides a way to check whether the device is capable of sending emails.
 
-## Availability Check
+---
 
-```ts
-Mail.isAvailable: boolean
-```
+## `Mail.isAvailable: boolean`
 
-- **Description**: Indicates whether the device supports sending emails.
-- **Returns**: `true` if available, `false` if not
-
-### Example
+Returns `true` if the device is configured to send emails using the built-in Mail app.
 
 ```ts
-if (Mail.isAvailable) {
-  console.log('Mail service is available')
-} else {
-  console.log('Mail service is not available')
+if (!Mail.isAvailable) {
+  console.log("Mail is not available on this device.")
 }
 ```
 
 ---
 
-## Method: `Mail.present`
+## `Mail.present(options): Promise<"cancelled" | "sent" | "failed" | "saved">`
 
-```ts
-Mail.present(options: MailOptions): Promise<void>
-```
+Presents the system mail composer with the provided options. Users can edit the message, then send, cancel, or save it as a draft.
 
-### Parameters: `options` (required)
+### Parameters
 
-Defines the email content and attachments. The following fields are supported:
+| Name                           | Type           | Required | Description                                                                                  |
+| ------------------------------ | -------------- | -------- | -------------------------------------------------------------------------------------------- |
+| `toRecipients`                 | `string[]`     | Yes      | List of email addresses to include in the **To** field.                                      |
+| `ccRecipients`                 | `string[]`     | No       | List of email addresses for the **CC** (carbon copy) field.                                  |
+| `bccRecipients`                | `string[]`     | No       | List of email addresses for the **BCC** (blind carbon copy) field.                           |
+| `preferredSendingEmailAddress` | `string`       | No       | If the user has multiple accounts configured, this can specify the preferred sender's email. |
+| `subject`                      | `string`       | No       | Email subject line.                                                                          |
+| `body`                         | `string`       | No       | The content of the email body.                                                               |
+| `attachments`                  | `Attachment[]` | No       | Array of files to attach to the email.                                                       |
 
-| Field                           | Type           | Required | Description |
-|---------------------------------|---------------|----------|-------------|
-| `toRecipients`                  | `string[]`    | Yes      | Array of recipient email addresses |
-| `ccRecipients`                  | `string[]`    | No       | Array of CC (carbon copy) email addresses |
-| `bccRecipients`                 | `string[]`    | No       | Array of BCC (blind carbon copy) email addresses |
-| `preferredSendingEmailAddress`  | `string`      | No       | Preferred sender email address |
-| `subject`                       | `string`      | No       | Email subject |
-| `body`                          | `string`      | No       | Email body content |
-| `attachments`                   | `Attachment[]`| No       | List of attachments |
+### Attachment Object
 
----
+Each attachment must include the following fields:
 
-### Attachment Structure
-
-Each attachment should include the following fields:
-
-| Field      | Type    | Description |
-|----------- |-------- |------------ |
-| `data`     | `Data`  | The file data to attach |
-| `mimeType` | `string`| The MIME type of the attachment (e.g., `image/png`, `application/pdf`) |
-| `fileName` | `string`| The file name of the attachment (e.g., `photo.png`) |
+| Property   | Type     | Required | Description                                               |
+| ---------- | -------- | -------- | --------------------------------------------------------- |
+| `data`     | `Data`   | Yes      | The binary content to attach.                             |
+| `mimeType` | `string` | Yes      | The MIME type (e.g., `"image/png"`, `"application/pdf"`). |
+| `fileName` | `string` | Yes      | Name of the file as it will appear in the email.          |
 
 ---
 
-## Return Value
+### Return Value
 
-- Returns a `Promise<void>`
-- Resolves when the mail compose view is presented and dismissed
-- Does not indicate whether the email was sent successfully (handled by the system)
+Returns a `Promise` that resolves to one of the following result strings:
+
+* `"sent"` – The user sent the email.
+* `"cancelled"` – The user cancelled email composition.
+* `"failed"` – Sending failed due to an error (e.g., no email account configured).
+* `"saved"` – The email was saved as a draft.
 
 ---
 
-## Usage Examples
+### Throws
 
-### Basic Example: Send an Email
+This method will throw an error if:
+
+* `Mail.isAvailable` is `false`
+* The options are malformed or missing required fields
+
+---
+
+## Example: Simple Email
 
 ```ts
 if (Mail.isAvailable) {
-  await Mail.present({
-    toRecipients: ['example@example.com'],
-    subject: 'Hello',
-    body: 'This is a test email sent from the app'
+  const result = await Mail.present({
+    toRecipients: ["user@example.com"],
+    subject: "Hello from script",
+    body: "This email was sent using the Scripting app!"
   })
+
+  console.log("Result:", result) // sent, cancelled, failed, or saved
 }
 ```
 
 ---
 
-### Example with CC and BCC
+## Example: Email with Attachment
 
 ```ts
-await Mail.present({
-  toRecipients: ['recipient1@example.com'],
-  ccRecipients: ['cc1@example.com', 'cc2@example.com'],
-  bccRecipients: ['bcc@example.com'],
-  subject: 'Meeting Reminder',
-  body: 'Please find the meeting details below'
-})
-```
+const fileData = Data.fromString("Here is the content of the attached file.")
 
----
+if (Mail.isAvailable) {
+  const result = await Mail.present({
+    toRecipients: ["user@example.com"],
+    subject: "Document attached",
+    body: "Please find the document attached.",
+    attachments: [
+      {
+        data: fileData,
+        mimeType: "text/plain",
+        fileName: "notes.txt"
+      }
+    ]
+  })
 
-### Example with Attachment
-
-```ts
-const imageData = await FileManager.readAsData('/path/to/photo.png') // Assume this returns Data type
-
-await Mail.present({
-  toRecipients: ['user@example.com'],
-  subject: 'Check the Attachment',
-  body: 'Please see the attached image',
-  attachments: [
-    {
-      data: imageData,
-      mimeType: 'image/png',
-      fileName: 'photo.png'
-    }
-  ]
-})
+  if (result === "sent") {
+    console.log("Email successfully sent.")
+  } else {
+    console.log("Email not sent:", result)
+  }
+}
 ```
 
 ---
 
 ## Notes
 
-- Always check `Mail.isAvailable` before calling `Mail.present` to avoid runtime errors.
-- The actual sending of the email is handled by the system mail app. This API only presents the compose view.
-- Supports multiple attachments. Make sure to provide the correct MIME type for each file.
-
----
-
-## Reference
-
-- [MIME Types List (IANA)](http://www.iana.org/assignments/media-types/media-types.xhtml)
+* The system mail composer must be presented in an interactive context (not in background-only scripts).
+* The user controls the final sending of the message.
+* This API requires a properly configured mail account.

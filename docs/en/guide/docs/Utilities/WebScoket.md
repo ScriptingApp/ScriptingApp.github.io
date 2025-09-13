@@ -15,7 +15,7 @@ WebSocket is a communication protocol that allows full-duplex communication betw
 
 ### Constructor
 
-#### **`new WebSocket(url: string)`**
+#### `new WebSocket(url: string)`
 Creates a new WebSocket connection to the specified URL and attempts to establish a connection immediately.
 - **Parameters**:
   - `url: string`: The WebSocket server URL to connect to. Example: `"ws://example.com/socket"` or `"wss://example.com/socket"` for secure WebSocket connections.
@@ -45,14 +45,14 @@ Creates a new WebSocket connection to the specified URL and attempts to establis
 
 ### Methods
 
-#### **`send(message: string | Data): void`**
+#### `send(message: string | Data): void`
 Sends data to the server over the WebSocket connection.
 - **Parameters**:
   - `message: string | Data`: The data to be sent to the server. It can be a string or an instance of the `Data` class.
 
 - **Returns**: `void`
 
-#### **`close(code?: 1000 | 1001 | 1002 | 1003, reason?: string): void`**
+#### `close(code?: 1000 | 1001 | 1002 | 1003, reason?: string): void`
 Closes the WebSocket connection. If the connection is already closed, this method does nothing.
 - **Parameters**:
   - `code?: 1000 | 1001 | 1002 | 1003`: An optional WebSocket connection close code. Common codes include:
@@ -70,28 +70,28 @@ Closes the WebSocket connection. If the connection is already closed, this metho
 
 You can listen for WebSocket events using `addEventListener` and remove event listeners with `removeEventListener`.
 
-#### **`addEventListener(event: "open", listener: () => void): void`**
+#### `addEventListener(event: "open", listener: () => void): void`
 Adds an event listener for the `"open"` event, triggered when the WebSocket connection is established.
 
-#### **`addEventListener(event: "error", listener: (error: Error) => void): void`**
+#### `addEventListener(event: "error", listener: (error: Error) => void): void`
 Adds an event listener for the `"error"` event, triggered when an error occurs during the WebSocket connection.
 
-#### **`addEventListener(event: "message", listener: (message: string | Data) => void): void`**
+#### `addEventListener(event: "message", listener: (message: string | Data) => void): void`
 Adds an event listener for the `"message"` event, triggered when a message is received from the WebSocket server.
 
-#### **`addEventListener(event: "close", listener: (reason?: string) => void): void`**
+#### `addEventListener(event: "close", listener: (reason?: string) => void): void`
 Adds an event listener for the `"close"` event, triggered when the WebSocket connection is closed.
 
-#### **`removeEventListener(event: "open", listener: () => void): void`**
+#### `removeEventListener(event: "open", listener: () => void): void`
 Removes an event listener for the `"open"` event.
 
-#### **`removeEventListener(event: "error", listener: (error: Error) => void): void`**
+#### `removeEventListener(event: "error", listener: (error: Error) => void): void`
 Removes an event listener for the `"error"` event.
 
-#### **`removeEventListener(event: "message", listener: (message: string | Data) => void): void`**
+#### `removeEventListener(event: "message", listener: (message: string | Data) => void): void`
 Removes an event listener for the `"message"` event.
 
-#### **`removeEventListener(event: "close", listener: (reason?: string) => void): void`**
+#### `removeEventListener(event: "close", listener: (reason?: string) => void): void`
 Removes an event listener for the `"close"` event.
 
 ---

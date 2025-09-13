@@ -16,7 +16,7 @@
 
 ### 1. **会话类别与选项**
 
-#### **`category`**
+#### `category`
 获取当前音频会话的类别（Category）。
 
 ```typescript
@@ -24,7 +24,7 @@ const category = await SharedAudioSession.category
 console.log(category) // 示例输出：'playback'
 ```
 
-#### **`categoryOptions`**
+#### `categoryOptions`
 获取当前音频会话类别的选项（Options）。
 
 ```typescript
@@ -32,7 +32,7 @@ const options = await SharedAudioSession.categoryOptions
 console.log(options) // 示例输出：['mixWithOthers', 'allowAirPlay']
 ```
 
-#### **`setCategory(category: AudioSessionCategory, options: AudioSessionCategoryOptions[])`**
+#### `setCategory(category: AudioSessionCategory, options: AudioSessionCategoryOptions[])`
 设置音频会话的类别并指定其选项。
 
 ```typescript
@@ -43,7 +43,7 @@ await SharedAudioSession.setCategory('playback', ['mixWithOthers'])
 
 ### 2. **会话模式**
 
-#### **`mode`**
+#### `mode`
 获取当前音频会话模式（Mode）。
 
 ```typescript
@@ -51,7 +51,7 @@ const mode = await SharedAudioSession.mode
 console.log(mode) // 示例输出：'videoChat'
 ```
 
-#### **`setMode(mode: AudioSessionMode)`**
+#### `setMode(mode: AudioSessionMode)`
 设置音频会话模式。
 
 ```typescript
@@ -62,7 +62,7 @@ await SharedAudioSession.setMode('voiceChat')
 
 ### 3. **采样率 (Sample Rate)**
 
-#### **`preferredSampleRate`**
+#### `preferredSampleRate`
 获取当前首选采样率（单位为 Hz）。
 
 ```typescript
@@ -70,7 +70,7 @@ const sampleRate = await SharedAudioSession.preferredSampleRate
 console.log(sampleRate) // 示例输出：44100
 ```
 
-#### **`setPreferredSampleRate(sampleRate: number)`**
+#### `setPreferredSampleRate(sampleRate: number)`
 设置音频输入和输出的首选采样率。
 
 ```typescript
@@ -81,7 +81,7 @@ await SharedAudioSession.setPreferredSampleRate(48000)
 
 ### 4. **音频中断处理**
 
-#### **`addInterruptionListener(listener: AudioSessionInterruptionListener)`**
+#### `addInterruptionListener(listener: AudioSessionInterruptionListener)`
 监听音频中断事件。
 
 ```typescript
@@ -94,7 +94,7 @@ SharedAudioSession.addInterruptionListener((type) => {
 })
 ```
 
-#### **`removeInterruptionListener(listener: AudioSessionInterruptionListener)`**
+#### `removeInterruptionListener(listener: AudioSessionInterruptionListener)`
 移除音频中断监听器。
 
 ```typescript
@@ -105,7 +105,7 @@ SharedAudioSession.removeInterruptionListener(myListener)
 
 ### 5. **设备功能查询**
 
-#### **`availableCategories`**
+#### `availableCategories`
 获取设备上可用的音频会话类别列表。
 
 ```typescript
@@ -113,7 +113,7 @@ const categories = await SharedAudioSession.availableCategories
 console.log(categories) // 示例输出：['playback', 'record', 'soloAmbient']
 ```
 
-#### **`availableModes`**
+#### `availableModes`
 获取设备上可用的音频会话模式列表。
 
 ```typescript
@@ -125,7 +125,7 @@ console.log(modes) // 示例输出：['default', 'videoChat', 'voiceChat']
 
 ### 6. **其他属性**
 
-#### **`isOtherAudioPlaying`**
+#### `isOtherAudioPlaying`
 检查设备上是否有其他音频正在播放。
 
 ```typescript
@@ -133,7 +133,7 @@ const isPlaying = await SharedAudioSession.isOtherAudioPlaying
 console.log(isPlaying) // 示例输出：true
 ```
 
-#### **`secondaryAudioShouldBeSilencedHint`**
+#### `secondaryAudioShouldBeSilencedHint`
 检查次要音频是否应该被静音。
 
 ```typescript
@@ -141,7 +141,7 @@ const shouldSilence = await SharedAudioSession.secondaryAudioShouldBeSilencedHin
 console.log(shouldSilence) // 示例输出：false
 ```
 
-#### **`allowHapticsAndSystemSoundsDuringRecording`**
+#### `allowHapticsAndSystemSoundsDuringRecording`
 检查录音期间是否允许触觉反馈和系统声音。
 
 ```typescript
@@ -149,7 +149,7 @@ const allowHaptics = await SharedAudioSession.allowHapticsAndSystemSoundsDuringR
 console.log(allowHaptics) // 示例输出：true
 ```
 
-#### **`prefersNoInterruptionsFromSystemAlerts`**
+#### `prefersNoInterruptionsFromSystemAlerts`
 检查音频会话是否偏好不被系统警报打断。
 
 ```typescript
@@ -161,7 +161,7 @@ console.log(prefersNoInterruptions) // 示例输出：false
 
 ### 7. **会话激活**
 
-#### **`setActive(active: boolean)`**
+#### `setActive(active: boolean)`
 激活或停用共享音频会话。
 
 ```typescript
@@ -172,14 +172,14 @@ await SharedAudioSession.setActive(true)
 
 ### 8. **系统设置**
 
-#### **`setAllowHapticsAndSystemSoundsDuringRecording(value: boolean)`**
+#### `setAllowHapticsAndSystemSoundsDuringRecording(value: boolean)`
 启用或禁用在录音期间允许触觉反馈和系统声音。
 
 ```typescript
 await SharedAudioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
 ```
 
-#### **`setPrefersNoInterruptionsFromSystemAlerts(value: boolean)`**
+#### `setPrefersNoInterruptionsFromSystemAlerts(value: boolean)`
 设置是否偏好不被系统警报打断。
 
 ```typescript

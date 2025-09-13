@@ -21,7 +21,7 @@ declare const VStack: FunctionComponent<VStackProps>
 
 ## **属性**
 
-### **`alignment`** （可选）
+### `alignment` （可选）
 
 - **类型**: `HorizontalAlignment`
 - **默认值**: `"center"`
@@ -41,7 +41,7 @@ declare const VStack: FunctionComponent<VStackProps>
 
 ---
 
-### **`spacing`** （可选）
+### `spacing` （可选）
 
 - **类型**: `number | undefined`
 - **默认值**: 如果未指定，则会根据子视图自动计算。
@@ -57,7 +57,7 @@ declare const VStack: FunctionComponent<VStackProps>
 
 ---
 
-### **`children`** （可选）
+### `children` （可选）
 
 - **类型**:
   ```ts

@@ -152,8 +152,6 @@ console.log(unit.unitString) // 输出: g/mL
 console.log(unit.isNull)     // false
 ```
 
-以下是 Scripting app 中 `Health.preferredUnits()` 方法的官方中文文档说明：
-
 ---
 
 ## 8. `Health.preferredUnits()` 方法

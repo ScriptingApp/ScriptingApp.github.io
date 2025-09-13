@@ -1,129 +1,117 @@
 ---
 title: 邮件
 ---
-`Mail` 模块提供了在应用内直接唤起邮件撰写视图的能力，支持添加收件人、抄送、密送、主题、正文以及附件。
+`Mail` 模块允许你的脚本调用系统的邮件撰写视图，预填收件人、主题、正文和附件，并由用户发送邮件。它还提供一个属性用于检测设备是否支持发送邮件。
 
-## 是否可用
+---
 
-```ts
-Mail.isAvailable: boolean
-```
+## `Mail.isAvailable: boolean`
 
-- 说明：用于判断当前设备和环境是否支持邮件发送功能。
-- 返回值：`true` 表示可用，`false` 表示不可用
-
-### 示例
+如果当前设备已配置邮箱账户，并支持通过系统的 Mail 应用发送邮件，返回 `true`。
 
 ```ts
-if (Mail.isAvailable) {
-  console.log('邮件功能可用')
-} else {
-  console.log('邮件功能不可用')
+if (!Mail.isAvailable) {
+  console.log("当前设备不支持发送邮件。")
 }
 ```
 
 ---
 
-## 方法：Mail.present
+## `Mail.present(options): Promise<"cancelled" | "sent" | "failed" | "saved">`
 
-```ts
-Mail.present(options: MailOptions): Promise<void>
-```
+展示系统级的邮件撰写界面，预填内容并等待用户操作。用户可编辑内容后选择发送、取消或保存草稿。
 
-### 参数 `options`（必填）
+### 参数说明
 
-用于配置邮件的内容和附件，包含以下字段：
+| 参数名                            | 类型             | 是否必填 | 说明                         |
+| ------------------------------ | -------------- | ---- | -------------------------- |
+| `toRecipients`                 | `string[]`     | 是    | 邮件主收件人列表，填写在“收件人”字段        |
+| `ccRecipients`                 | `string[]`     | 否    | 抄送收件人列表，填写在“抄送”字段          |
+| `bccRecipients`                | `string[]`     | 否    | 密送收件人列表，填写在“密送”字段          |
+| `preferredSendingEmailAddress` | `string`       | 否    | 指定用于发送邮件的发件邮箱（如果配置了多个邮箱账户） |
+| `subject`                      | `string`       | 否    | 邮件主题内容                     |
+| `body`                         | `string`       | 否    | 邮件正文内容                     |
+| `attachments`                  | `Attachment[]` | 否    | 附件数组，添加文件至邮件中              |
 
-| 参数名                          | 类型           | 是否必填 | 说明 |
-|-------------------------------|---------------|--------|------|
-| `toRecipients`                | `string[]`    | 是     | 收件人邮箱地址数组 |
-| `ccRecipients`                | `string[]`    | 否     | 抄送邮箱地址数组 |
-| `bccRecipients`               | `string[]`    | 否     | 密送邮箱地址数组 |
-| `preferredSendingEmailAddress`| `string`      | 否     | 优先使用的发件邮箱地址 |
-| `subject`                     | `string`      | 否     | 邮件主题 |
-| `body`                        | `string`      | 否     | 邮件正文内容 |
-| `attachments`                 | `Attachment[]`| 否     | 邮件附件列表 |
+### 附件对象结构
 
----
+每个附件应包含以下字段：
 
-### 附件结构 `Attachment`
-
-每个附件包含以下字段：
-
-| 参数名   | 类型     | 说明 |
-|--------|---------|------|
-| `data`     | `Data`   | 附件数据（文件内容） |
-| `mimeType` | `string` | 附件的 MIME 类型（例如 `image/png`、`application/pdf`）|
-| `fileName` | `string` | 附件文件名（例如 `photo.png`）|
+| 字段名        | 类型       | 是否必填 | 说明                                               |
+| ---------- | -------- | ---- | ------------------------------------------------ |
+| `data`     | `Data`   | 是    | 要附加的二进制数据内容                                      |
+| `mimeType` | `string` | 是    | 附件的 MIME 类型，例如 `"image/png"`、`"application/pdf"` |
+| `fileName` | `string` | 是    | 附件在邮件中显示的文件名                                     |
 
 ---
 
-## 返回值
+### 返回值
 
-- 返回一个 `Promise<void>`，表示邮件撰写视图已成功弹出。
-- 用户完成或取消邮件发送后，Promise 结束（不返回邮件发送状态，仅表示 UI 弹出结束）。
+此方法返回一个 `Promise`，其结果为下列字符串之一：
+
+* `"sent"`：邮件已成功发送；
+* `"cancelled"`：用户取消了发送操作；
+* `"failed"`：发送失败（如无邮箱账户配置或发送错误）；
+* `"saved"`：邮件已保存为草稿。
 
 ---
 
-## 使用示例
+### 抛出异常
 
-### 最简单示例：发送一封邮件
+当满足以下条件时，此方法会抛出异常：
+
+* 当前设备不支持发送邮件（`Mail.isAvailable` 为 `false`）；
+* 参数格式错误或缺少必填项；
+
+---
+
+## 示例：发送简单邮件
 
 ```ts
 if (Mail.isAvailable) {
-  await Mail.present({
-    toRecipients: ['example@example.com'],
-    subject: '你好',
-    body: '这是一封来自应用的邮件'
+  const result = await Mail.present({
+    toRecipients: ["user@example.com"],
+    subject: "来自脚本的问候",
+    body: "这封邮件由 Scripting 脚本发送。"
   })
+
+  console.log("发送结果：", result) // 可能为 sent、cancelled、failed 或 saved
 }
 ```
 
 ---
 
-### 添加抄送和密送
+## 示例：发送带附件的邮件
 
 ```ts
-await Mail.present({
-  toRecipients: ['recipient1@example.com'],
-  ccRecipients: ['cc1@example.com', 'cc2@example.com'],
-  bccRecipients: ['bcc@example.com'],
-  subject: '会议通知',
-  body: '请查收会议通知邮件'
-})
-```
+const fileData = Data.fromString("这是附件的内容。")
 
----
+if (Mail.isAvailable) {
+  const result = await Mail.present({
+    toRecipients: ["user@example.com"],
+    subject: "附加文件",
+    body: "请查收附件。",
+    attachments: [
+      {
+        data: fileData,
+        mimeType: "text/plain",
+        fileName: "说明.txt"
+      }
+    ]
+  })
 
-### 添加附件发送
-
-```ts
-const imageData = await FileManager.readAsData('/path/to/photo.png') // 假设读取到 Data 类型
-
-await Mail.present({
-  toRecipients: ['user@example.com'],
-  subject: '查看附件',
-  body: '请查看附件图片',
-  attachments: [
-    {
-      data: imageData,
-      mimeType: 'image/png',
-      fileName: 'photo.png'
-    }
-  ]
-})
+  if (result === "sent") {
+    console.log("邮件已成功发送。")
+  } else {
+    console.log("邮件未发送，状态：", result)
+  }
+}
 ```
 
 ---
 
 ## 注意事项
 
-- `Mail.isAvailable` 在发送邮件前务必检查，避免因设备不支持而导致错误。
-- 邮件发送是否成功由系统邮件应用决定，接口不返回发送结果。
-- 支持多附件发送，附件请合理设置 MIME 类型，确保邮件客户端可识别。
-
----
-
-## 相关链接
-
-- [MIME 类型列表参考](http://www.iana.org/assignments/media-types/media-types.xhtml)
+* 邮件撰写界面必须在具有用户交互的上下文中调用，不能在后台脚本中使用；
+* 邮件发送行为由用户最终确认；
+* 此 API 需要设备上已正确配置 Mail 应用的邮箱账户。

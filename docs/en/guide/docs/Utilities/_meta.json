@@ -1,18 +1,18 @@
 [
   {
     "type": "file",
-    "name": "Data and UIImage",
-    "label": "Data and UIImage"
+    "name": "Data",
+    "label": "Data"
+  },
+  {
+    "type": "file",
+    "name": "UIImage",
+    "label": "UIImage"
   },
   {
     "type": "file",
     "name": "UUID",
     "label": "UUID"
-  },
-  {
-    "type": "file",
-    "name": "MD5",
-    "label": "MD5"
   },
   {
     "type": "file",
@@ -55,6 +55,18 @@
     "type": "file",
     "name": "socket.io",
     "label": "socket.io"
+  },
+  {
+    "type": "dir",
+    "name": "SSH",
+    "label": "SSH",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "OAuth2",
+    "label": "OAuth2"
   },
   {
     "type": "file",

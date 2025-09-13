@@ -156,8 +156,6 @@ console.log(unit.unitString) // g/mL
 console.log(unit.isNull)     // false
 ```
 
-Here is the official English documentation for the newly added `Health.preferredUnits()` method in the Scripting app’s Health module:
-
 ---
 
 ## 8. `Health.preferredUnits()` Method

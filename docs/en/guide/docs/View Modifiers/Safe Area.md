@@ -106,12 +106,12 @@ safeAreaInset?: {
   },
   leading?: {
     alignment?: VerticalAlignment
-    sapcing?: number
+    spacing?: number
     content: VirtualNode
   },
   trailing?: {
     alignment?: VerticalAlignment
-    sapcing?: number
+    spacing?: number
     content: VirtualNode
   }
 }
@@ -155,7 +155,7 @@ safeAreaInset?: {
 ### Notes
 
 * `spacing` is optional. If omitted, a default system spacing will be applied.
-* The `sapcing` typo in the `leading`/`trailing` definition should be interpreted as `spacing`.
+* The `spacing` typo in the `leading`/`trailing` definition should be interpreted as `spacing`.
 
 ---
 

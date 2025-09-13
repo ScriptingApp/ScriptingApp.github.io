@@ -28,7 +28,7 @@ title: 键盘
 
 ### 方法
 
-#### **`Keyboard.hide(): void`**  
+#### `Keyboard.hide(): void`  
 隐藏当前可见的键盘。
 
 - **用法**：
@@ -37,7 +37,7 @@ title: 键盘
 
 ---
 
-#### **`Keyboard.addVisibilityListener(listener: (visible: boolean) => void): void`**  
+#### `Keyboard.addVisibilityListener(listener: (visible: boolean) => void): void`  
 添加一个监听器函数，当键盘的可见性发生变化时触发。
 
 - **参数**：
@@ -50,7 +50,7 @@ title: 键盘
 
 ---
 
-#### **`Keyboard.removeVisibilityListener(listener: (visible: boolean) => void): void`**  
+#### `Keyboard.removeVisibilityListener(listener: (visible: boolean) => void): void`  
 移除之前添加的可见性监听器。
 
 - **参数**：
@@ -60,7 +60,7 @@ title: 键盘
 
 ## 钩子：`useKeyboardVisible`
 
-### **`useKeyboardVisible(): boolean`**
+### `useKeyboardVisible(): boolean`
 一个钩子，用于访问当前键盘的可见状态。该钩子提供了一种响应式方式来跟踪键盘是否可见。
 
 - **返回值**：

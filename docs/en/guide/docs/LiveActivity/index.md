@@ -126,7 +126,7 @@ type LiveActivityEndOptions = LiveActivityOptions & {
 }
 ```
 
-* `dismissTimeInterval`:
+* `dismissTimeInterval`, duration in seconds:
 
   * Not provided: uses default system policy (up to 4 hours).
   * `<= 0`: immediate removal.

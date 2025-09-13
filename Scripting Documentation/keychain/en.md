@@ -8,7 +8,7 @@ The `Keychain` API allowing secure storage, retrieval, and management of sensiti
 
 ---
 
-#### **`Keychain.set(key: string, value: string, options?: KeychainOptions): void`**
+#### `Keychain.set(key: string, value: string, options?: KeychainOptions): void`
 
 **Description**  
 Encrypts and saves the specified `key` with the given `value`. If the `key` already exists in the Keychain, its associated value will be updated.
@@ -33,7 +33,7 @@ Keychain.set(
 
 ---
 
-#### **`Keychain.get(key: string, options?: KeychainOptions): string | null`**
+#### `Keychain.get(key: string, options?: KeychainOptions): string | null`
 
 **Description**  
 Decrypts and retrieves the value associated with the specified `key`. Returns `null` if the `key` does not exist.
@@ -63,7 +63,7 @@ if (token) {
 
 ---
 
-#### **`Keychain.remove(key: string, options?: KeychainOptions): void`**
+#### `Keychain.remove(key: string, options?: KeychainOptions): void`
 
 **Description**  
 Deletes the value associated with the specified `key`. If the `key` does not exist, this method does nothing.
@@ -81,7 +81,7 @@ console.log('Token deleted')
 
 ---
 
-#### **`Keychain.contains(key: string, options?: KeychainOptions): boolean`**
+#### `Keychain.contains(key: string, options?: KeychainOptions): boolean`
 
 **Description**  
 Checks if the Keychain contains a value for the specified `key`.

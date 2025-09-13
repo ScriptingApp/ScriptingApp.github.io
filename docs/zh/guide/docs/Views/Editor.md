@@ -47,6 +47,7 @@ title: 编辑器
 
 **参数说明**：
 
+* `navigationTitle`（可选）：设置编辑器的顶部标题。
 * `scriptName`（可选）：用于覆盖默认的 `Script.name`，默认为 `"Temporary Script"`。
 * `fullscreen`（可选）：是否全屏显示编辑器，默认为 `false`。
 

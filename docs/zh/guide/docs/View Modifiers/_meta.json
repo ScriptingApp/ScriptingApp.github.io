@@ -107,7 +107,7 @@
   {
     "type": "file",
     "name": "tint",
-    "label": "首选配色模式"
+    "label": "强调色"
   },
   {
     "type": "file",
@@ -294,5 +294,10 @@
     "type": "file",
     "name": "onDropContent",
     "label": "接收外部拖拽内容"
+  },
+  {
+    "type": "file",
+    "name": "translationHost",
+    "label": "翻译宿主"
   }
 ]

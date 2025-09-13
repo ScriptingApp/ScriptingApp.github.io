@@ -55,7 +55,7 @@ const diastolic = HealthQuantitySample.create({
 | `type`      | `"bloodPressure"` 或 `"food"` | 相关类型                       |           |
 | `startDate` | `Date`                       | 事件开始时间                     |           |
 | `endDate`   | `Date`                       | 事件结束时间                     |           |
-| `objects`   | `(HealthQuantitySample      \| HealthCategorySample)\[]` | 包含的健康样本数组 |
+| `objects`   | `(HealthQuantitySample      \| HealthCategorySample)[]` | 包含的健康样本数组 |
 | `metadata`  | `Record<string, any>`（可选）    | 附加元数据（如来源说明）               |           |
 
 ### 示例

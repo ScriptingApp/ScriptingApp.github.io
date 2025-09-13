@@ -14,7 +14,7 @@ The `SharedAudioSession` interface provides a convenient way to manage and inter
 
 ### 1. **Session Category and Options**
 
-#### **`category`**
+#### `category`
 Get the current audio session category.
 
 ```typescript
@@ -22,7 +22,7 @@ const category = await SharedAudioSession.category
 console.log(category) // Example: 'playback'
 ```
 
-#### **`categoryOptions`**
+#### `categoryOptions`
 Retrieve the current audio session category options.
 
 ```typescript
@@ -30,7 +30,7 @@ const options = await SharedAudioSession.categoryOptions
 console.log(options) // Example: ['mixWithOthers', 'allowAirPlay']
 ```
 
-#### **`setCategory(category: AudioSessionCategory, options: AudioSessionCategoryOptions[])`**
+#### `setCategory(category: AudioSessionCategory, options: AudioSessionCategoryOptions[])`
 Set the audio session category with specific options.
 
 ```typescript
@@ -41,7 +41,7 @@ await SharedAudioSession.setCategory('playback', ['mixWithOthers'])
 
 ### 2. **Session Mode**
 
-#### **`mode`**
+#### `mode`
 Retrieve the current audio session mode.
 
 ```typescript
@@ -49,7 +49,7 @@ const mode = await SharedAudioSession.mode
 console.log(mode) // Example: 'videoChat'
 ```
 
-#### **`setMode(mode: AudioSessionMode)`**
+#### `setMode(mode: AudioSessionMode)`
 Set the audio session mode.
 
 ```typescript
@@ -60,7 +60,7 @@ await SharedAudioSession.setMode('voiceChat')
 
 ### 3. **Sample Rate**
 
-#### **`preferredSampleRate`**
+#### `preferredSampleRate`
 Retrieve the preferred sample rate in hertz.
 
 ```typescript
@@ -68,7 +68,7 @@ const sampleRate = await SharedAudioSession.preferredSampleRate
 console.log(sampleRate) // Example: 44100
 ```
 
-#### **`setPreferredSampleRate(sampleRate: number)`**
+#### `setPreferredSampleRate(sampleRate: number)`
 Set the preferred sample rate for audio input and output.
 
 ```typescript
@@ -79,7 +79,7 @@ await SharedAudioSession.setPreferredSampleRate(48000)
 
 ### 4. **Interruption Handling**
 
-#### **`addInterruptionListener(listener: AudioSessionInterruptionListener)`**
+#### `addInterruptionListener(listener: AudioSessionInterruptionListener)`
 Listen for audio interruptions.
 
 ```typescript
@@ -92,7 +92,7 @@ SharedAudioSession.addInterruptionListener((type) => {
 })
 ```
 
-#### **`removeInterruptionListener(listener: AudioSessionInterruptionListener)`**
+#### `removeInterruptionListener(listener: AudioSessionInterruptionListener)`
 Remove an interruption listener.
 
 ```typescript
@@ -103,7 +103,7 @@ SharedAudioSession.removeInterruptionListener(myListener)
 
 ### 5. **Device Capabilities**
 
-#### **`availableCategories`**
+#### `availableCategories`
 Get the list of audio session categories available on the device.
 
 ```typescript
@@ -111,7 +111,7 @@ const categories = await SharedAudioSession.availableCategories
 console.log(categories) // Example: ['playback', 'record', 'soloAmbient']
 ```
 
-#### **`availableModes`**
+#### `availableModes`
 Get the list of audio session modes available on the device.
 
 ```typescript
@@ -123,7 +123,7 @@ console.log(modes) // Example: ['default', 'videoChat', 'voiceChat']
 
 ### 6. **Additional Properties**
 
-#### **`isOtherAudioPlaying`**
+#### `isOtherAudioPlaying`
 Check if other audio is currently playing on the device.
 
 ```typescript
@@ -131,7 +131,7 @@ const isPlaying = await SharedAudioSession.isOtherAudioPlaying
 console.log(isPlaying) // Example: true
 ```
 
-#### **`secondaryAudioShouldBeSilencedHint`**
+#### `secondaryAudioShouldBeSilencedHint`
 Check if secondary audio should be silenced.
 
 ```typescript
@@ -139,7 +139,7 @@ const shouldSilence = await SharedAudioSession.secondaryAudioShouldBeSilencedHin
 console.log(shouldSilence) // Example: false
 ```
 
-#### **`allowHapticsAndSystemSoundsDuringRecording`**
+#### `allowHapticsAndSystemSoundsDuringRecording`
 Check if haptics and system sounds are allowed during recording.
 
 ```typescript
@@ -147,7 +147,7 @@ const allowHaptics = await SharedAudioSession.allowHapticsAndSystemSoundsDuringR
 console.log(allowHaptics) // Example: true
 ```
 
-#### **`prefersNoInterruptionsFromSystemAlerts`**
+#### `prefersNoInterruptionsFromSystemAlerts`
 Check if the session prefers no interruptions from system alerts.
 
 ```typescript
@@ -159,7 +159,7 @@ console.log(prefersNoInterruptions) // Example: false
 
 ### 7. **Session Activation**
 
-#### **`setActive(active: boolean)`**
+#### `setActive(active: boolean)`
 Activate or deactivate the shared audio session.
 
 ```typescript
@@ -170,14 +170,14 @@ await SharedAudioSession.setActive(true)
 
 ### 8. **System Settings**
 
-#### **`setAllowHapticsAndSystemSoundsDuringRecording(value: boolean)`**
+#### `setAllowHapticsAndSystemSoundsDuringRecording(value: boolean)`
 Enable or disable haptics and system sounds during recording.
 
 ```typescript
 await SharedAudioSession.setAllowHapticsAndSystemSoundsDuringRecording(true)
 ```
 
-#### **`setPrefersNoInterruptionsFromSystemAlerts(value: boolean)`**
+#### `setPrefersNoInterruptionsFromSystemAlerts(value: boolean)`
 Set the preference for no interruptions from system alerts.
 
 ```typescript

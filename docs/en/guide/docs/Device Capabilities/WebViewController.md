@@ -7,8 +7,6 @@ The `WebViewController` class allows you to display and interact with embedded w
 
 ## Class: `WebViewController`
 
-Represents a controller that manages a WebView.
-
 ```ts
 const webView = new WebViewController()
 ```
@@ -131,14 +129,25 @@ Returns the current HTML content of the page.
 
 ### `evaluateJavaScript<T = any>(javascript: string): Promise<T>`
 
-Evaluates a string of JavaScript in the context of the WebView.
+Evaluates the specified JavaScript string in the context of the WebView.
 
 * **Parameters**:
 
-  * `javascript`: A JavaScript code string.
-* **Returns**: `Promise<T>` — The result of the script execution.
+  * `javascript`: A JavaScript code string to be evaluated.
+    To retrieve a result from JavaScript, the code must explicitly use the `return` keyword.
+* **Returns**: `Promise<T>` — Resolves with the result of the JavaScript evaluation. If the JavaScript code returns a value, it will be returned as the resolved value of the Promise.
 
-**Example:**
+#### Example
+
+```ts
+const webView = new WebViewController()
+await webView.loadURL("https://example.com")
+const title = await webView.evaluateJavaScript("return document.title") // Must use `return`
+console.log(title) // "Example Domain"
+webView.dispose()
+```
+
+Another example:
 
 ```ts
 const webView = new WebViewController()
@@ -154,36 +163,41 @@ await webView.loadHTML(`
 
 await webView.waitForLoad()
 
-const result = await webView.evaluateJavaScript('window.myValue')
+const result = await webView.evaluateJavaScript('return window.myValue')
 console.log(result) // 42
 ```
 
 ---
 
-### `addScriptMessageHandler<P = any, R = any>(name: string, handler: (params?: P) => R): void`
+### `addScriptMessageHandler<P = any, R = any>(name: string, handler: (params?: P) => R): Promise<void>`
 
-Installs a message handler callable from JavaScript in the web page.
+Installs a message handler callable from JavaScript in the web page, and enables sending a reply back from native code.
 
 * **Parameters**:
 
-  * `name`: The message name. Must be unique.
-  * `handler`: A callback that returns a result.
+  * `name`: The message handler name. Must be unique and non-empty.
+  * `handler`: A callback function that receives parameters from JavaScript and returns a value. The return value will be sent back as the JavaScript promise resolution.
 
-**Example:**
+* **Returns**: `Promise<void>` — Resolves when the message handler is added successfully.
+
+#### Example
 
 ```ts
-const webView = new WebViewController()
+let webView = new WebViewController()
 
-webView.addScriptMessageHandler('sayHi', (greeting: string) => {
-  console.log('Received message:', greeting)
-  return 'Hello from native script'
+await webView.addScriptMessageHandler("sayHi", (greeting: string) => {
+  console.log("Receive a message", greeting)
+  return "Hello!"
 })
 
 await webView.loadHTML(`
   <html>
     <body>
       <script>
-        window.webkit.messageHandlers.sayHi.postMessage('Hi!')
+        (async () => {
+          const response = await window.webkit.messageHandlers.sayHi.postMessage("Hi!")
+          alert(response) // Shows: "Hello!"
+        })()
       </script>
     </body>
   </html>
@@ -254,7 +268,7 @@ Disposes the WebView instance and releases resources.
 ```ts
 const webView = new WebViewController()
 
-webView.addScriptMessageHandler('greet', (name) => {
+await webView.addScriptMessageHandler('greet', (name) => {
   return `Hello, ${name}`
 })
 
@@ -274,4 +288,5 @@ await webView.loadHTML(`
 `)
 
 await webView.present({ navigationTitle: 'WebView Demo' })
+webView.dispose()
 ```

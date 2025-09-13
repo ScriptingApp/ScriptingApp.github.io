@@ -294,5 +294,10 @@
     "type": "file",
     "name": "onDropContent",
     "label": "onDropContent"
+  },
+  {
+    "type": "file",
+    "name": "translationHost",
+    "label": "translationHost"
   }
 ]

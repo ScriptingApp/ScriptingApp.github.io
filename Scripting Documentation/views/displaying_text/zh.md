@@ -4,7 +4,7 @@
 
 ## **类型定义**
 
-### **`TextProps`**
+### `TextProps`
 定义了可传递给 `Text` 组件的属性。`TextProps` 类型有三种可能的结构：
 
 1. **纯文本属性**
@@ -43,7 +43,7 @@
 
 ---
 
-### **`UnderlineStyle`**
+### `UnderlineStyle`
 定义了富文本可用的下划线样式：
 - `"byWord"`：逐字下划线。
 - `"double"`：双线下划线。
@@ -56,7 +56,7 @@
 
 ---
 
-### **`StyledText`**
+### `StyledText`
 定义了富文本样式的结构：
 - `font`（可选）：指定字体名称，例如：`"title"`、`"body"`。
 - `fontDesign`（可选）：自定义字体设计，例如：`"serif"`、`"monospaced"`。

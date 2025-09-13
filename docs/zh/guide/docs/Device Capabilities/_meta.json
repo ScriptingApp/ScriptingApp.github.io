@@ -166,6 +166,11 @@
   },
   {
     "type": "file",
+    "name": "Send Message",
+    "label": "发送信息"
+  },
+  {
+    "type": "file",
     "name": "Vision",
     "label": "视觉"
   },
@@ -173,5 +178,10 @@
     "type": "file",
     "name": "PDF",
     "label": "PDF"
+  },
+  {
+    "type": "file",
+    "name": "Translation",
+    "label": "翻译"
   }
 ]

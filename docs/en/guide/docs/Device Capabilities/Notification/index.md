@@ -23,7 +23,7 @@ The `Notification` module in the **Scripting** app allows you to schedule, manag
 
 ## Scheduling Notifications
 
-Use `Notification.schedule` to schedule a local notification. It supports text content, triggers, action buttons, custom UI, and delivery configuration:
+Use `Notification.schedule` to schedule a local notification. It supports content, triggers, tap behaviors, action buttons, rich UI, and delivery configurations:
 
 ```ts
 await Notification.schedule({
@@ -39,28 +39,43 @@ await Notification.schedule({
       url: Script.createRunURLScheme("My Script", { acknowledged: true })
     }
   ],
+  tapAction: {
+    type: "runScript",
+    scriptName: "Acknowledge Script"
+  },
   customUI: false
 })
 ```
 
 ### Parameters
 
-| Name                                  | Type                                                                                                          | Description                                                                  |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `title`                               | `string`                                                                                                      | Required. Notification title.                                                |
-| `subtitle`                            | `string?`                                                                                                     | Optional. Additional context.                                                |
-| `body`                                | `string?`                                                                                                     | Optional. Main content text.                                                 |
-| `badge`                               | `number?`                                                                                                     | Optional. App icon badge count.                                              |
-| `silent`                              | `boolean?`                                                                                                    | Optional. Defaults to `true`. Set to `false` to play sound.                  |
-| `interruptionLevel`                   | `"active"` \| `"passive"` \| `"timeSensitive"`                                                                | Optional. Defines priority and delivery behavior.                            |
-| `userInfo`                            | `Record<string, any>?`                                                                                        | Optional. Custom metadata.                                                   |
-| `threadIdentifier`                    | `string?`                                                                                                     | Optional. Identifier for grouping notifications.                             |
-| `trigger`                             | `TimeIntervalNotificationTrigger` \| `CalendarNotificationTrigger` \| `LocationNotificationTrigger` \| `null` | Optional. Defines when the notification is delivered.                        |
-| `actions`                             | `NotificationAction[]?`                                                                                       | Optional. Action buttons.                                                    |
-| `customUI`                            | `boolean?`                                                                                                    | Optional. Enables rich notification interface using `notification.tsx`.      |
-| `avoidRunningCurrentScriptWhenTapped` | `boolean?`                                                                                                    | Optional. Prevents the script from running when tapped. Defaults to `false`. |
+| Name                                  | Type                                                                                                          | Description                                                                      |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `title`                               | `string`                                                                                                      | Required. Notification title.                                                    |
+| `subtitle`                            | `string?`                                                                                                     | Optional. Additional context.                                                    |
+| `body`                                | `string?`                                                                                                     | Optional. Main content text.                                                     |
+| `badge`                               | `number?`                                                                                                     | Optional. App icon badge count.                                                  |
+| `silent`                              | `boolean?`                                                                                                    | Optional. Defaults to `false`. If `true`, delivers silently without sound.       |
+| `interruptionLevel`                   | `"active"` \| `"passive"` \| `"timeSensitive"`                                                                | Optional. Defines priority and delivery behavior.                                |
+| `userInfo`                            | `Record<string, any>?`                                                                                        | Optional. Custom metadata.                                                       |
+| `threadIdentifier`                    | `string?`                                                                                                     | Optional. Identifier for grouping notifications.                                 |
+| `trigger`                             | `TimeIntervalNotificationTrigger` \| `CalendarNotificationTrigger` \| `LocationNotificationTrigger` \| `null` | Optional. Defines when the notification is delivered.                            |
+| `actions`                             | `NotificationAction[]?`                                                                                       | Optional. Action buttons shown when long-pressing or expanding the notification. |
+| `customUI`                            | `boolean?`                                                                                                    | Optional. Enables rich notification UI using `notification.tsx`.                 |
+| `tapAction`                           | `"none"` \| `{ type: "runScript", scriptName: string }` \| `{ type: "openURL", url: string }`                 | Optional. Controls what happens when the user taps the notification.             |
+| `avoidRunningCurrentScriptWhenTapped` | `boolean?`                                                                                                    | **Deprecated.** Use `tapAction: "none"` instead.                                 |
 
 > **Deprecated:** `triggerTime` and `repeatsType` are deprecated. Use `trigger` instead.
+
+### Tap Behavior (`tapAction`)
+
+The `tapAction` parameter gives you precise control over what happens when the user taps the notification:
+
+* `"none"` – Do nothing when tapped
+* `{ type: "runScript", scriptName: string }` – Run a different script
+* `{ type: "openURL", url: string }` – Open a deep link or web page
+
+If `tapAction` is not provided, the default behavior is to run the **current script**, and the notification details can be accessed using `Notification.current`.
 
 ---
 
@@ -77,9 +92,9 @@ new TimeIntervalNotificationTrigger({
 })
 ```
 
-* `timeInterval`: Delay in seconds.
-* `repeats`: Whether it repeats.
-* `nextTriggerDate()`: Returns the next expected trigger date.
+* `timeInterval`: Delay in seconds
+* `repeats`: Whether it repeats
+* `nextTriggerDate()`: Returns the next expected trigger date
 
 ---
 
@@ -95,8 +110,8 @@ new CalendarNotificationTrigger({
 })
 ```
 
-* Set any of `year`, `month`, `day`, `hour`, etc.
-* Useful for daily, weekly, or one-time schedules.
+* Supports components like `year`, `month`, `day`, `hour`, etc.
+* Useful for daily or weekly reminders
 
 ---
 
@@ -117,13 +132,13 @@ new LocationNotificationTrigger({
 })
 ```
 
-* Fires based on entering/exiting the specified region.
+* Fires based on entering/exiting the specified circular region
 
 ---
 
 ## Notification Actions
 
-Use the `actions` parameter to define buttons shown when a notification is expanded.
+Use the `actions` array to define buttons shown when the notification is expanded:
 
 ```ts
 actions: [
@@ -139,27 +154,22 @@ actions: [
 ]
 ```
 
-* Use `Script.createRunURLScheme(scriptName, parameters)` to generate the correct callback URLs.
-* Actions are displayed when long-pressing or pulling down the notification.
+* Use `Script.createRunURLScheme(...)` to generate Scripting app URLs
+* Action buttons appear on long-press or pull-down
 
 ---
 
 ## Rich Notifications with Custom UI
 
-You can provide a JSX-based interface for expanded notifications by:
+You can provide an interactive JSX interface:
 
-1. Setting `customUI: true` in `Notification.schedule`.
-2. Creating a `notification.tsx` file in your script.
-3. Calling `Notification.present(element)` inside that file.
+1. Set `customUI: true` in the `Notification.schedule()` call
+2. Create a `notification.tsx` file
+3. Call `Notification.present(element)` inside that file
 
-### `Notification.present(...)`
+### `Notification.present(element: JSX.Element): void`
 
-```ts
-Notification.present(element: JSX.Element): void
-```
-
-* Must be called within `notification.tsx`.
-* Renders the provided element as the notification's expanded UI.
+Must be called from `notification.tsx`. Renders the element as the expanded notification interface.
 
 ---
 
@@ -203,7 +213,7 @@ Notification.present(<NotificationView />)
 
 ## NotificationInfo and Request Structure
 
-Use `Notification.current` to access information when the script is launched from a notification tap.
+Use `Notification.current` to get launch context when the script is opened from a notification tap:
 
 ```ts
 if (Notification.current) {
@@ -212,7 +222,7 @@ if (Notification.current) {
 }
 ```
 
-### `NotificationRequest`
+### `NotificationRequest` Fields
 
 | Field                      | Description                           |
 | -------------------------- | ------------------------------------- |
@@ -228,7 +238,7 @@ if (Notification.current) {
 
 ## Comprehensive Example
 
-This example demonstrates a complete use of notification features: custom UI, interactive actions, time-sensitive interruption level, and repeated delivery using `TimeIntervalNotificationTrigger`.
+This example demonstrates a full-featured notification with actions, rich UI, and repeated delivery.
 
 ### Step 1: Schedule the Notification
 
@@ -242,14 +252,18 @@ await Notification.schedule({
     timeInterval: 3600,
     repeats: true
   }),
+  tapAction: {
+    type: "runScript",
+    scriptName: "Hydration Tracker"
+  },
   actions: [
     {
       title: "I Drank",
-      url: Script.createRunURLScheme("Hydration Reminder", { drank: true }),
+      url: Script.createRunURLScheme("Hydration Tracker", { drank: true }),
     },
     {
       title: "Ignore",
-      url: Script.createRunURLScheme("Hydration Reminder", { drank: false }),
+      url: Script.createRunURLScheme("Hydration Tracker", { drank: false }),
       destructive: true
     }
   ]
@@ -278,11 +292,12 @@ Notification.present(<HydrationUI />)
 
 ## Summary
 
-The `Notification` API in the Scripting app provides rich scheduling capabilities, including:
+The `Notification` API in the Scripting app supports:
 
 * Time, calendar, and location-based triggers
-* Actionable notifications with structured URL callbacks
-* Custom UI for interactive experiences
-* Full notification lifecycle management
+* Actionable buttons and script redirection
+* Tap behaviors via `tapAction`
+* Rich notification UI via `notification.tsx`
+* Full lifecycle management (deliver, remove, query)
 
-Migrate to the `trigger`-based scheduling model for full control and platform-aligned behavior.
+For future compatibility, always prefer the `trigger` and `tapAction` parameters over deprecated ones like `triggerTime` and `avoidRunningCurrentScriptWhenTapped`.

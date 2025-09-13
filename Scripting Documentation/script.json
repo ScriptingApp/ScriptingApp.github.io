@@ -2,5 +2,35 @@
   "icon": "book",
   "color": "purple",
   "name": "Scripting Documentation",
-  "version": 2025012808
+  "version": "1.0.0",
+  "description": "Documentation for all APIs used in Scripting app, provides a widget to view and track reading progress of the documentation",
+  "localizedNames": {
+    "zh": "Scripting app API文档",
+    "fr": "Documentation de l'application Scripting",
+    "de": "Scripting-App-API-Dokumentation",
+    "ja": "ScriptingアプリAPIドキュメント",
+    "es": "Documentación de la API de la aplicación Scripting",
+    "it": "Documentazione API dell'app Scripting",
+    "ko": "Scripting 앱 API 문서",
+    "pt": "Documentação da API do aplicativo Scripting",
+    "ru": "Документация по API приложения Scripting",
+    "ar": "وثائق API لتطبيق Scripting"
+  },
+  "localizedDescriptions": {
+    "zh": "Scripting应用所有API的文档，提供一个小组件来查看和记录文档阅读进度",
+    "fr": "Documentation pour toutes les API utilisées dans l'application Scripting, fournit un widget pour afficher et suivre la progression de la lecture de la documentation",
+    "de": "Dokumentation für alle in der Scripting-App verwendeten APIs, bietet ein Widget zum Anzeigen und Verfolgen des Lesefortschritts der Dokumentation",
+    "ja": "Scriptingアプリで使用されるすべてのAPIのドキュメントを提供し、ドキュメントの読書進捗を表示および追跡するウィジェットを提供します",
+    "es": "Documentación para todas las API utilizadas en la aplicación Scripting, proporciona un widget para ver y rastrear el progreso de la lectura de la documentación",
+    "it": "Documentazione per tutte le API utilizzate nell'app Scripting, fornisce un widget per visualizzare e monitorare i progressi della lettura della documentazione",
+    "ko": "Scripting 앱에서 사용되는 모든 API에 대한 문서로, 문서 읽기 진행 상황을 보고 추적하는 위젯을 제공합니다",
+    "pt": "Documentação para todas as APIs usadas no aplicativo Scripting, fornece um widget para visualizar e acompanhar o progresso da leitura da documentação",
+    "ru": "Документация для всех API, используемых в приложении Scripting, предоставляет виджет для просмотра и отслеживания прогресса чтения документации",
+    "ar": "توفر الوثائق لجميع واجهات برمجة التطبيقات المستخدمة في تطبيق Scripting، وتوفر عنصر واجهة مستخدم لعرض وتتبع تقدم قراءة الوثائق"
+  },
+  "author": {
+    "name": "Thom Fang",
+    "email": "tilfon@live.com",
+    "homepage": "https://x.com/thomfang"
+  }
 }

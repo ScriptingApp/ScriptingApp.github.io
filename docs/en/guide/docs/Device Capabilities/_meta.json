@@ -166,6 +166,11 @@
   },
   {
     "type": "file",
+    "name": "Send Message",
+    "label": "Send Message"
+  },
+  {
+    "type": "file",
     "name": "Vision",
     "label": "Vision"
   },
@@ -173,5 +178,10 @@
     "type": "file",
     "name": "PDF",
     "label": "PDF"
+  },
+  {
+    "type": "file",
+    "name": "Translation",
+    "label": "Translation"
   }
 ]

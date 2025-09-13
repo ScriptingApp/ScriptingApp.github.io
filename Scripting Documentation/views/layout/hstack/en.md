@@ -2,7 +2,7 @@ The `HStack` component in the Scripting app provides a convenient way to arrange
 
 ---
 
-## **`HStackProps`**
+## `HStackProps`
 
 ### Properties
 
@@ -53,7 +53,7 @@ The `HStack` component in the Scripting app provides a convenient way to arrange
 
 ---
 
-## **`VerticalAlignment`**
+## `VerticalAlignment`
 
 `VerticalAlignment` is an enumerated type that specifies how subviews are aligned vertically in an `HStack`.
 

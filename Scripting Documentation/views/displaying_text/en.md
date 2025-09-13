@@ -4,7 +4,7 @@ The `Text` component is used to display one or more lines of read-only text in t
 
 ## **Type Definitions**
 
-### **`TextProps`**
+### `TextProps`
 Defines the properties that can be passed to the `Text` component. There are three possible structures for the `TextProps` type:
 
 1. **Plain Text Props**
@@ -43,7 +43,7 @@ Defines the properties that can be passed to the `Text` component. There are thr
 
 ---
 
-### **`UnderlineStyle`**
+### `UnderlineStyle`
 Defines the available underline styles for rich text:
 - `"byWord"`: Underline each word.
 - `"double"`: Double underline.
@@ -56,7 +56,7 @@ Defines the available underline styles for rich text:
 
 ---
 
-### **`StyledText`**
+### `StyledText`
 Defines the structure for rich text styling:
 - `font` (optional): Specifies the font name. Example: `"title"`, `"body"`.
 - `fontDesign` (optional): Customizes the font design. Example: `"serif"`, `"monospaced"`.

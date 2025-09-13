@@ -5,7 +5,7 @@ title: 水平布局（HStack）
 
 ---
 
-## **`HStackProps`**
+## `HStackProps`
 
 ### 属性
 
@@ -56,7 +56,7 @@ title: 水平布局（HStack）
 
 ---
 
-## **`VerticalAlignment`**
+## `VerticalAlignment`
 
 `VerticalAlignment` 是一个枚举类型，用于指定子视图在 `HStack` 中的垂直对齐方式。
 

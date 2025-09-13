@@ -6,6 +6,11 @@
   },
   {
     "type": "file",
+    "name": "Widget API",
+    "label": "Widget API"
+  },
+  {
+    "type": "file",
     "name": "Tinted Mode Adaptation Guide",
     "label": "Tinted Mode Adaptation Guide"
   },

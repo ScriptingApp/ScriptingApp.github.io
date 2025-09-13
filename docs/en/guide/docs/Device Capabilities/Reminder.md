@@ -1,173 +1,207 @@
 ---
 title: Reminder
 ---
-The `Reminder` API allows users to create, edit, and manage reminders in iOS calendars. It supports features such as setting titles, due dates, priorities, and recurrence rules, enabling comprehensive reminder management.
+The `Reminder` API provides tools for creating, editing, and managing task reminders in iOS calendars. It supports flexible due dates via `DateComponents`, priorities, notes, recurrence rules, and completion tracking.
 
 ---
 
 ## Class: `Reminder`
 
-The `Reminder` class provides methods and properties for creating and managing reminders within a calendar.
+The `Reminder` class provides properties and methods to represent and control a single reminder item.
 
 ---
 
 ### Properties
 
-- **`identifier: string`**  
-  A unique identifier for the reminder, assigned by the system when the reminder is created.
+* **`identifier: string`**
+  A read-only unique identifier for the reminder, assigned by the system.
 
-- **`calendar: Calendar`**  
-  The calendar associated with the reminder. Reminders must be linked to a specific calendar.
+* **`calendar: Calendar`**
+  The calendar to which the reminder belongs.
 
-- **`title: string`**  
-  The title of the reminder, typically a brief description of the task.
+* **`title: string`**
+  The title or summary of the reminder task.
 
-- **`notes?: string`**  
-  Additional notes or details about the reminder.
+* **`notes?: string`**
+  Optional additional details for the reminder.
 
-- **`isCompleted: boolean`**  
-  Indicates whether the reminder is marked as completed.  
-  - Setting this property to `true` automatically sets `completionDate` to the current date.
-  - Setting this property to `false` sets `completionDate` to `null`.
+* **`isCompleted: boolean`**
+  Indicates whether the reminder is marked as completed.
 
-  *Special Considerations:*  
-  If the reminder was completed using another client, `isCompleted` may be `true`, but `completionDate` could still be `null`.
+  * Setting this to `true` assigns the current date to `completionDate`.
+  * Setting it to `false` clears `completionDate`.
 
-- **`priority: number`**  
-  The priority level of the reminder. Higher values indicate higher priority.
+  **Note:** If the reminder was completed from another device or app, `isCompleted` may be `true` even when `completionDate` is `null`.
 
-- **`completionDate?: Date`**  
-  The date the reminder was completed.  
-  - Setting a value automatically marks the reminder as completed (`isCompleted = true`).
-  - Setting it to `null` unmarks the reminder as completed (`isCompleted = false`).
+* **`priority: number`**
+  A numeric value indicating the urgency or importance of the task. Higher values denote higher priority.
 
-- **`dueDate?: Date`**  
-  The date by which the reminder should be completed.
+* **`completionDate?: Date`**
+  The date and time the reminder was marked completed.
 
-- **`dueDateIncludesTime: boolean`**  
-  Indicates whether the `dueDate` includes a time component. Defaults to `true`.  
-  - If `false`, the time component of `dueDate` is ignored.
+  * Setting this field will automatically set `isCompleted = true`.
+  * Setting it to `null` clears the completion status.
 
-- **`recurrenceRules?: RecurrenceRule[]`**  
-  The recurrence rules associated with the reminder.
+* **`dueDateComponents?: DateComponents`**
+  The due date expressed as individual date and time components.
 
-- **`hasRecurrenceRules: boolean`**  
-  Indicates whether the reminder has recurrence rules.
+  * Offers precise control over the structure of the due date (e.g., only a day, or day and time).
+  * Supports complex scheduling and recurrence scenarios.
+
+  **Note:** `DateComponents` allows partial specification (e.g., just a date without time), and validity should be checked using its `isValidDate` property.
+
+* **`dueDate?: Date`**
+  *(Deprecated)* Previously used for specifying the due date. Use `dueDateComponents` instead.
+
+* **`dueDateIncludesTime: boolean`**
+  *(Deprecated)* Used with `dueDate` to indicate whether the time portion is relevant. No longer necessary when using `dueDateComponents`.
+
+* **`recurrenceRules?: RecurrenceRule[]`**
+  Optional array of recurrence rules that define repetition patterns.
+
+* **`hasRecurrenceRules: boolean`**
+  Read-only flag indicating whether the reminder has associated recurrence rules.
 
 ---
 
-### Methods
+### Instance Methods
 
-#### Instance Methods
-
-- **`addRecurrenceRule(rule: RecurrenceRule): void`**  
+* **`addRecurrenceRule(rule: RecurrenceRule): void`**
   Adds a recurrence rule to the reminder.
 
-- **`removeRecurrenceRule(rule: RecurrenceRule): void`**  
-  Removes a recurrence rule from the reminder.
+* **`removeRecurrenceRule(rule: RecurrenceRule): void`**
+  Removes a specified recurrence rule.
 
-- **`remove(): Promise<void>`**  
-  Deletes the reminder from the calendar.
+* **`remove(): Promise<void>`**
+  Deletes the reminder from its calendar.
 
-- **`save(): Promise<void>`**  
-  Saves changes to the reminder. If the reminder is new, it is created in the associated calendar.
+* **`save(): Promise<void>`**
+  Persists changes to the reminder. If the reminder is new, it is created in the specified calendar.
 
 ---
 
-#### Static Methods
+### Static Methods
 
-- **`Reminder.getAll(calendars?: Calendar[]): Promise<Reminder[]>`**  
-  Fetches all reminders from the specified calendars. If no calendars are specified, retrieves reminders from all calendars.
+* **`Reminder.getAll(calendars?: Calendar[]): Promise<Reminder[]>`**
+  Retrieves all reminders from the specified calendars.
+  If no calendars are passed, all calendars are searched.
 
-- **`Reminder.getIncompletes(options?: { startDate?: Date; endDate?: Date; calendars?: Calendar[] }): Promise<Reminder[]>`**  
-  Fetches all incomplete reminders within the specified date range and calendars.  
-  - **`startDate`**: Only include reminders due after this date. Defaults to `null`.  
-  - **`endDate`**: Only include reminders due before this date. Defaults to `null`.  
-  - **`calendars`**: Specifies which calendars to search. Defaults to all calendars.
+* **`Reminder.getIncompletes(options?: { startDate?: Date; endDate?: Date; calendars?: Calendar[] }): Promise<Reminder[]>`**
+  Retrieves all incomplete reminders matching the criteria.
 
-- **`Reminder.getCompleteds(options?: { startDate?: Date; endDate?: Date; calendars?: Calendar[] }): Promise<Reminder[]>`**  
-  Fetches all completed reminders within the specified date range and calendars.  
-  - **`startDate`**: Only include reminders completed after this date. Defaults to `null`.  
-  - **`endDate`**: Only include reminders completed before this date. Defaults to `null`.  
-  - **`calendars`**: Specifies which calendars to search. Defaults to all calendars.
+  * **`startDate`**: Filter reminders due after this date.
+
+  * **`endDate`**: Filter reminders due before this date.
+
+  * **`calendars`**: Optionally specify which calendars to query.
+
+  > Note: This method does not expand recurrence rules. Only the base instances of reminders with due dates in the given range are returned.
+
+* **`Reminder.getCompleteds(options?: { startDate?: Date; endDate?: Date; calendars?: Calendar[] }): Promise<Reminder[]>`**
+  Retrieves completed reminders within a given date range.
+
+  * **`startDate`**: Filter reminders completed after this date.
+  * **`endDate`**: Filter reminders completed before this date.
+  * **`calendars`**: Optionally specify which calendars to query.
 
 ---
 
 ## Examples
 
-### Create a New Reminder
+### Create a Reminder Using Date Components
+
 ```ts
 const reminder = new Reminder()
-reminder.title = "Buy groceries"
-reminder.notes = "Milk, eggs, and bread"
-reminder.dueDate = new Date("2024-01-15T18:00:00")
-reminder.dueDateIncludesTime = true
-reminder.priority = 1
+reminder.title = "Prepare meeting notes"
+reminder.notes = "For Monday team sync"
 
+reminder.dueDateComponents = new DateComponents({
+  year: 2025,
+  month: 10,
+  day: 6,
+  hour: 9,
+  minute: 30
+})
+
+reminder.priority = 2
 await reminder.save()
 console.log(`Reminder created: ${reminder.title}`)
 ```
 
 ---
 
+### Create a Reminder Without Time
+
+```ts
+reminder.dueDateComponents = new DateComponents({
+  year: 2025,
+  month: 10,
+  day: 6
+})
+```
+
+---
+
+### Create from Date
+
+```ts
+const now = new Date()
+reminder.dueDateComponents = DateComponents.fromDate(now)
+```
+
+---
+
 ### Fetch All Reminders
+
 ```ts
 const reminders = await Reminder.getAll()
 for (const reminder of reminders) {
-  console.log(`Reminder: ${reminder.title}, Due: ${reminder.dueDate}`)
+  console.log(`Reminder: ${reminder.title}`)
 }
 ```
 
 ---
 
-### Fetch Incomplete Reminders
+### Fetch Incomplete Reminders in Date Range
+
 ```ts
-const incompleteReminders = await Reminder.getIncompletes({
-  startDate: new Date("2024-01-01"),
-  endDate: new Date("2024-01-31"),
+const incompletes = await Reminder.getIncompletes({
+  startDate: new Date("2025-01-01"),
+  endDate: new Date("2025-01-31")
 })
-
-for (const reminder of incompleteReminders) {
-  console.log(`Incomplete Reminder: ${reminder.title}, Due: ${reminder.dueDate}`)
-}
-```
-
----
-
-### Fetch Completed Reminders
-```ts
-const completedReminders = await Reminder.getCompleteds({
-  startDate: new Date("2023-12-01"),
-  endDate: new Date("2023-12-31"),
-})
-
-for (const reminder of completedReminders) {
-  console.log(`Completed Reminder: ${reminder.title}, Completed On: ${reminder.completionDate}`)
-}
 ```
 
 ---
 
 ### Mark a Reminder as Completed
+
 ```ts
 reminder.isCompleted = true
 await reminder.save()
-console.log(`Reminder marked as completed: ${reminder.title}`)
 ```
 
 ---
 
 ### Remove a Reminder
+
 ```ts
 await reminder.remove()
-console.log(`Reminder removed: ${reminder.title}`)
 ```
 
 ---
 
-## Additional Notes
+## Notes
 
-- **Time Management:** Use the `dueDateIncludesTime` property to specify whether the time component is relevant for the reminder.  
-- **Recurrence Rules:** Recurrence rules are optional and can be added or removed using the provided methods.  
-- **Priority Levels:** Customize priorities to organize reminders effectively.  
-- **Date Range Queries:** Use `getIncompletes` and `getCompleteds` to filter reminders by their status and a specified date range.  
+* **Date Management**
+  `dueDateComponents` replaces the deprecated `dueDate` and `dueDateIncludesTime`. Use it to represent both full and partial date-time configurations. Always check `isValidDate` before converting to a `Date`.
+
+* **Recurring Tasks**
+  Use `recurrenceRules` to define repeated behavior. These rules are not automatically expanded in static query methods.
+
+* **Reminder Filtering**
+  When using `getIncompletes` and `getCompleteds`, only top-level reminders are returned; recurring instances are not automatically expanded.
+
+* **Deprecated Fields**
+
+  * `dueDate` and `dueDateIncludesTime` should no longer be used in new code.
+  * They are preserved only for backward compatibility.

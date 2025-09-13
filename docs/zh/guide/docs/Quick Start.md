@@ -129,7 +129,7 @@ Scripting 支持一系列与 React 类似的 Hooks，用于管理组件中的状
 
 ---
 
-#### **`useState`**
+#### `useState`
 `useState` Hook 能够让你在函数式组件中添加本地状态。
 
 ```tsx
@@ -154,7 +154,7 @@ function Counter() {
 
 ---
 
-#### **`useEffect`**
+#### `useEffect`
 `useEffect` Hook 可以让你在组件中执行副作用操作，比如获取数据或者设置订阅。
 
 ```tsx
@@ -187,7 +187,7 @@ function TimeDisplay() {
 
 ---
 
-#### **`useReducer`**
+#### `useReducer`
 当你需要在组件中管理更复杂的状态逻辑时，`useReducer` Hook 非常有用。
 
 ```tsx
@@ -232,7 +232,7 @@ function Counter() {
 
 ---
 
-#### **`useCallback`**
+#### `useCallback`
 `useCallback` Hook 可以让你对函数进行 Memo 化，以避免在每次渲染时都重新创建函数，从而提升性能。
 
 ```tsx
@@ -261,7 +261,7 @@ function Counter() {
 
 ---
 
-#### **`useMemo`**
+#### `useMemo`
 `useMemo` Hook 允许你对某些值进行 Memo 化，以缓存代价高的计算结果，从而提高性能。
 
 ```tsx
@@ -292,7 +292,7 @@ function FactorialCounter() {
 
 ---
 
-#### **`useContext`**
+#### `useContext`
 `useContext` Hook 允许你在应用的各组件之间共享状态，而无需进行层层的 props 传递（即“向下传递”）。
 
 ```tsx

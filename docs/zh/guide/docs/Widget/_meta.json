@@ -6,6 +6,11 @@
   },
   {
     "type": "file",
+    "name": "Widget API",
+    "label": "小组件 API"
+  },
+  {
+    "type": "file",
     "name": "Tinted Mode Adaptation Guide",
     "label": "小组件染色模式适配指南"
   },

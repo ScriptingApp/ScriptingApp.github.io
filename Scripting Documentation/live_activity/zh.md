@@ -123,7 +123,7 @@ type LiveActivityEndOptions = LiveActivityOptions & {
 }
 ```
 
-* `dismissTimeInterval`：
+* `dismissTimeInterval`， 单位为秒：
 
   * 不设置：系统自动处理，最多保留 4 小时。
   * 设置为 `<= 0`：立即移除活动。

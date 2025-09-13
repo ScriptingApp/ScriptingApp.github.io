@@ -1,15 +1,15 @@
-`Script` 模块提供了用于管理脚本执行的上下文信息与工具方法。你可以通过该接口访问当前脚本的运行信息、终止脚本并返回结果、在脚本之间调用、以及生成 URL Scheme 以打开或运行脚本。
+`Script` 模块为 Scripting App 中的脚本执行提供上下文和实用函数。它允许你访问运行时元数据、通过结果终止脚本、以编程方式运行其他脚本，并构造 URL Scheme 启动或打开脚本。
 
 ---
 
-## 属性
+## 属性（Properties）
 
 ### `name: string`
 
 当前正在运行的脚本名称。
 
 ```ts
-console.log(Script.name) // 例如 "MyScript"
+console.log(Script.name) // 示例: "MyScript"
 ```
 
 ---
@@ -19,19 +19,18 @@ console.log(Script.name) // 例如 "MyScript"
 当前脚本所在的目录路径。
 
 ```ts
-console.log(Script.directory)
-// 例如 "/private/var/mobile/Containers/..."
+console.log(Script.directory) // 示例: "/private/var/mobile/Containers/..."
 ```
 
 ---
 
 ### `widgetParameter: string`
 
-当脚本由 Widget 启动时传入的参数。
+从小组件启动脚本时传入的参数。
 
 ```ts
 if (Script.widgetParameter) {
-  console.log("来自 Widget 的参数:", Script.widgetParameter)
+  console.log("Widget input:", Script.widgetParameter)
 }
 ```
 
@@ -39,7 +38,7 @@ if (Script.widgetParameter) {
 
 ### `queryParameters: Record<string, string>`
 
-通过 URL Scheme 启动脚本时传入的参数键值对。
+通过 `run` URL Scheme 传入的键值对参数。
 
 ```ts
 // URL: scripting://run/MyScript?user=John&id=123
@@ -49,16 +48,46 @@ console.log(Script.queryParameters.id)   // "123"
 
 ---
 
-## 方法
+### `metadata: { ... }`
+
+当前脚本的元数据信息。
+
+* `icon`: 脚本图标，可以是系统图标(SFSymbol)名称
+* `color`: 脚本颜色，可以是十六进制颜色字符串（如 `#FF0000`）或 CSS 颜色名称（如 `"red"`）
+* `localizedName`: 当前系统语言下的脚本本地化名称
+* `localizedNames`: 不同语言下的本地化名称，键为语言代码，值为对应的名称
+* `description`: 脚本的英文描述
+* `localizedDescription`: 当前系统语言下的本地化描述
+* `localizedDescriptions`: 不同语言下的本地化描述，键为语言代码，值为对应描述
+* `version`: 脚本的版本字符串
+* `author`: 作者信息对象：
+
+  * `name`: 作者姓名
+  * `email`: 作者电子邮箱
+  * `homepage`: 作者个人主页（可选）
+* `contributors`: 贡献者信息数组，每项结构同 `author`
+* `remoteResource`: 远程资源信息：
+
+  * `url`: 远程资源地址（可以是 zip 文件或 Git 仓库）
+  * `autoUpdateInterval`: 自动更新间隔时间（单位：秒），若未设置则不自动更新
+
+```ts
+console.log(Script.metadata.localizedName) // 示例: "天气助手"
+console.log(Script.metadata.version)       // 示例: "1.2.0"
+```
+
+---
+
+## 方法（Methods）
 
 ### `Script.exit(result?: any | IntentValue): void`
 
-结束当前脚本执行，并可选地返回一个结果。建议所有脚本执行完毕后都显式调用该方法，以释放资源。
+终止当前脚本，并可选地返回一个结果。**必须调用该方法来正确释放资源。**
 
-* `result`: 可选，返回给调用方（如 Shortcuts 或另一个脚本）的结果，可以是任意值或 `IntentValue` 对象。
+* `result`: 要返回的值，可以是任意类型，也可以是 `IntentValue` 对象（例如返回给快捷指令或其他脚本）
 
 ```ts
-Script.exit("完成")
+Script.exit("Done")
 
 // 或返回结构化数据
 Script.exit(Intent.json({ status: "ok" }))
@@ -68,13 +97,13 @@ Script.exit(Intent.json({ status: "ok" }))
 
 ### `Script.run<T>(options: { name: string; queryParameters?: Record<string, string>; singleMode?: boolean }): Promise<T | null>`
 
-在当前脚本中调用并执行另一个脚本，并等待其结果。
+以编程方式运行另一个脚本，并等待其结果。
 
-* `name`: 要调用的脚本名称。
-* `queryParameters`: 可选，传递给目标脚本的参数。
-* `singleMode`: 可选，是否以单实例模式运行，默认为 false。
+* `name`: 要运行的脚本名称
+* `queryParameters`: 可选参数，作为 URL 参数传递
+* `singleMode`: 若为 `true`，确保同一脚本只能同时运行一个实例
 
-返回：目标脚本中通过 `Script.exit(result)` 返回的结果。如果脚本不存在，则返回 `null`。
+返回目标脚本中 `Script.exit(result)` 返回的值。
 
 ```ts
 const result = await Script.run({
@@ -89,7 +118,7 @@ console.log(result)
 
 ### `Script.createRunURLScheme(scriptName: string, queryParameters?: Record<string, string>): string`
 
-生成一个 `scripting://run` URL，用于运行指定脚本。
+生成一个 `scripting://run` URL，可用于启动并执行脚本。
 
 ```ts
 const url = Script.createRunURLScheme("MyScript", { user: "Alice" })
@@ -100,7 +129,7 @@ const url = Script.createRunURLScheme("MyScript", { user: "Alice" })
 
 ### `Script.createRunSingleURLScheme(scriptName: string, queryParameters?: Record<string, string>): string`
 
-生成一个 `scripting://run_single` URL，确保指定脚本以单实例运行（仅保留一个副本）。
+生成一个 `scripting://run_single` URL，确保脚本不会并行运行多个实例。
 
 ```ts
 const url = Script.createRunSingleURLScheme("MyScript", { id: "1" })
@@ -111,7 +140,7 @@ const url = Script.createRunSingleURLScheme("MyScript", { id: "1" })
 
 ### `Script.createOpenURLScheme(scriptName: string): string`
 
-生成一个 `scripting://open` URL，用于在编辑器中打开指定脚本。
+生成一个 `scripting://open` URL，用于在编辑器中打开脚本。
 
 ```ts
 const url = Script.createOpenURLScheme("MyScript")
@@ -122,9 +151,9 @@ const url = Script.createOpenURLScheme("MyScript")
 
 ### `Script.createDocumentationURLScheme(title?: string): string`
 
-生成一个用于打开 Scripting 内部文档页面的 URL。
+生成用于打开 Scripting App 内文档页面的 URL。
 
-* `title`: 可选，指定要打开的文档标题。若不传，将打开首页。
+* `title`: （可选）若传入标题，将直接打开该文档主题页面。
 
 ```ts
 const url = Script.createDocumentationURLScheme("Widgets")
@@ -133,13 +162,25 @@ const url = Script.createDocumentationURLScheme("Widgets")
 
 ---
 
-## 注意事项
+### `createImportScriptsURLScheme(urls: string[]): string`
 
-* 每个脚本都应调用 `Script.exit()` 结束运行，避免内存泄漏。
-* 可通过 `Script.run()` 实现模块化脚本调用并获取返回值。
-* URL Scheme 可用于从外部应用（如 Shortcuts）中调用脚本并传参。
-* 建议对关键脚本使用 `singleMode` 模式，避免并发冲突。
+根据提供的 URL 数组生成导入脚本的 URL Scheme。
+
+* `urls`: 要导入的脚本资源 URL 列表（支持 zip 或单文件）
+
+```ts
+const urlScheme = Script.createImportScriptsURLScheme([
+  "https://github.com/schl3ck/scripting-app-lib",
+  "https://example.com/my-script.zip",
+])
+// "scripting://import_scripts?urls=..."
+```
 
 ---
 
-通过 Script 接口，你可以实现脚本之间的数据传递、自动化执行链、以及跨场景的脚本调用逻辑，提升脚本的复用性和可维护性。
+## 注意事项（Notes）
+
+* 请务必调用 `Script.exit()` 正确终止脚本并释放内存资源
+* 使用 `Script.run()` 可以实现脚本的模块化和调用链，获取结构化返回值
+* URL Scheme 可用于从外部应用（如快捷指令）触发脚本执行
+* 对于需要避免并发执行的脚本，建议使用 `singleMode` 或 `run_single` URL Scheme

@@ -25,7 +25,7 @@ The `Keyboard` API enables:
 
 ### Methods
 
-#### **`Keyboard.hide(): void`**  
+#### `Keyboard.hide(): void`  
 Hides the keyboard if it is currently visible.
 
 - **Usage**:
@@ -34,7 +34,7 @@ Hides the keyboard if it is currently visible.
 
 ---
 
-#### **`Keyboard.addVisibilityListener(listener: (visible: boolean) => void): void`**  
+#### `Keyboard.addVisibilityListener(listener: (visible: boolean) => void): void`  
 Adds a listener function that is triggered whenever the keyboard's visibility changes.
 
 - **Parameters**:
@@ -47,7 +47,7 @@ Adds a listener function that is triggered whenever the keyboard's visibility ch
 
 ---
 
-#### **`Keyboard.removeVisibilityListener(listener: (visible: boolean) => void): void`**  
+#### `Keyboard.removeVisibilityListener(listener: (visible: boolean) => void): void`  
 Removes a previously added visibility listener.
 
 - **Parameters**:
@@ -57,7 +57,7 @@ Removes a previously added visibility listener.
 
 ## Hook: `useKeyboardVisible`
 
-### **`useKeyboardVisible(): boolean`**
+### `useKeyboardVisible(): boolean`
 A hook to access the current keyboard visibility state. The hook provides a reactive way to track whether the keyboard is visible.
 
 - **Returns**:

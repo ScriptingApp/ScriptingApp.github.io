@@ -47,6 +47,7 @@ Displays the editor modally.
 
 **Parameters**:
 
+* `navigationTitle` (optional): Set the navigation title of the editor.
 * `scriptName` (optional): A custom script name that overrides the default `Script.name` while the editor is running. Defaults to `"Temporary Script"`.
 * `fullscreen` (optional): A boolean value that determines whether the editor should be presented in fullscreen mode. Defaults to `false`.
 

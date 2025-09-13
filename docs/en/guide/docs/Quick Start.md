@@ -129,7 +129,7 @@ Scripting supports a range of React-like hooks for managing state, effects, memo
 
 ---
 
-#### **`useState`**
+#### `useState`
 The `useState` hook lets you add local state to a function component. 
 
 ```tsx
@@ -154,7 +154,7 @@ In this example, clicking the button updates the `count` variable, which automat
 
 ---
 
-#### **`useEffect`**
+#### `useEffect`
 The `useEffect` hook lets you perform side effects in your components, such as fetching data or setting up subscriptions.
 
 ```tsx
@@ -187,7 +187,7 @@ In this example, the `useEffect` hook sets up an interval to update the `time` v
 
 ---
 
-#### **`useReducer`**
+#### `useReducer`
 The `useReducer` hook is useful for managing complex state logic in components.
 
 ```tsx
@@ -232,7 +232,7 @@ The `useReducer` hook helps you handle complex state transitions by using a redu
 
 ---
 
-#### **`useCallback`**
+#### `useCallback`
 The `useCallback` hook lets you memoize functions, optimizing performance by preventing unnecessary re-creations of the function on every render.
 
 ```tsx
@@ -261,7 +261,7 @@ With `useCallback`, the `increment` function is only re-created when necessary, 
 
 ---
 
-#### **`useMemo`**
+#### `useMemo`
 The `useMemo` hook lets you memoize values, caching expensive computations for better performance.
 
 ```tsx
@@ -292,7 +292,7 @@ The `useMemo` hook optimizes performance by only re-calculating the factorial wh
 
 ---
 
-#### **`useContext`**
+#### `useContext`
 The `useContext` hook allows components to access shared state across the app without prop drilling, using a Context API.
 
 ```tsx

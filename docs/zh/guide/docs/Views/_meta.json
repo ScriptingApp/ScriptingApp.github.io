@@ -152,6 +152,11 @@
   },
   {
     "type": "file",
+    "name": "Markdown",
+    "label": "Markdown"
+  },
+  {
+    "type": "file",
     "name": "Editor",
     "label": "编辑器"
   }

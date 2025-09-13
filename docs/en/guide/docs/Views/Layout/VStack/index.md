@@ -21,7 +21,7 @@ The `VStack` component arranges its child views in a vertical line, making it id
 
 ## **Properties**
 
-### **`alignment`** (Optional)
+### `alignment` (Optional)
 
 - **Type**: `HorizontalAlignment`
 - **Default**: `"center"`
@@ -41,7 +41,7 @@ The `VStack` component arranges its child views in a vertical line, making it id
 
 ---
 
-### **`spacing`** (Optional)
+### `spacing` (Optional)
 
 - **Type**: `number | undefined`
 - **Default**: Automatically calculated based on the child views if not specified.
@@ -57,7 +57,7 @@ The `VStack` component arranges its child views in a vertical line, making it id
 
 ---
 
-### **`children`** (Optional)
+### `children` (Optional)
 
 - **Type**:
   ```ts

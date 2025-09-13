@@ -8,7 +8,7 @@
 
 ---
 
-#### **`Keychain.set(key: string, value: string, options?: KeychainOptions): void`**
+#### `Keychain.set(key: string, value: string, options?: KeychainOptions): void`
 
 **描述**  
 加密并保存指定的 `key` 和对应的 `value`。如果 `key` 已存在于 Keychain 中，其关联的值将被更新。
@@ -26,7 +26,7 @@ Keychain.set('userToken', 'abc123', { accessibility: 'unlocked', synchronizable:
 
 ---
 
-#### **`Keychain.get(key: string, options?: KeychainOptions): string | null`**
+#### `Keychain.get(key: string, options?: KeychainOptions): string | null`
 
 **描述**  
 解密并检索与指定 `key` 关联的值。如果 `key` 不存在，返回 `null`。
@@ -54,7 +54,7 @@ if (token) {
 
 ---
 
-#### **`Keychain.remove(key: string, options?: KeychainOptions): void`**
+#### `Keychain.remove(key: string, options?: KeychainOptions): void`
 
 **描述**  
 删除与指定 `key` 关联的值。如果 `key` 不存在，该方法无任何操作。
@@ -72,7 +72,7 @@ console.log('令牌已删除')
 
 ---
 
-#### **`Keychain.contains(key: string, options?: KeychainOptions): boolean`**
+#### `Keychain.contains(key: string, options?: KeychainOptions): boolean`
 
 **描述**  
 检查 Keychain 中是否包含指定 `key` 的值。
