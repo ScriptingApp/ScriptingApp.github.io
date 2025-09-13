@@ -125,7 +125,6 @@ export default defineConfig({
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="32 32 512 512" width="32" height="32" fill="currentColor">
   <mask id="mask-logo">
     <rect width="100%" height="100%" fill="white"/>
-    <!-- 外框挖空，比实际矩形大，形成粗框 -->
     <rect x="220" y="340" width="275" height="190" rx="50" ry="50" fill="black"/>
   </mask>
   <mask id="mask-text">
