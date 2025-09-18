@@ -1,9 +1,9 @@
 import { pluginRss } from "@rspress/plugin-rss";
-import { defineConfig } from "rspress/config";
+import { defineConfig, UserConfig } from "rspress/config";
 
 const siteUrl = "https://scriptingapp.github.io";
 
-export default defineConfig({
+export const config: UserConfig = {
   // root: path.join(__dirname, "docs"),
   // outDir: "public",
   title: "Scripting",
@@ -160,4 +160,6 @@ export default defineConfig({
       description: "静态网站生成器",
     },
   ],
-});
+};
+
+export default defineConfig(config);
