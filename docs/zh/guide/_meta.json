@@ -1,26 +1,21 @@
 [
-    {
-        "type": "file",
-        "name": "start",
-        "label": "start"
-    },
-    {
-        "type": "dir",
-        "name": "docs",
-        "label": "docs",
-        "collapsible": true,
-        "collapsed": true
-    },
-    {
-        "type": "file",
-        "name": "changelog/latest",
-        "label": "changelog"
-    },
-    {
-        "type": "dir",
-        "name": "privacy",
-        "label": "privacy",
-        "collapsible": true,
-        "collapsed": true
-    }
+  {
+    "type": "dir",
+    "name": "doc_v2",
+    "label": "docs",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "changelog/latest",
+    "label": "changelog"
+  },
+  {
+    "type": "dir",
+    "name": "privacy",
+    "label": "privacy",
+    "collapsible": true,
+    "collapsed": true
+  }
 ]

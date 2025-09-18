@@ -1,9 +1,11 @@
 ---
 title: 快速开始
 ---
+
 欢迎使用 **Scripting**！这是一款可让你使用 **TypeScript** 编写 **React 类似的 TSX 语法**来创建 UI 组件和自定义小组件、灵动岛和使用发通知提醒等能力的应用。通过 Scripting，你可以使用包装过的 SwiftUI 视图来获得在 iOS 上流畅且原生的使用体验，并通过熟悉的编码结构来创建和呈现各种 iOS 工具型 UI 页面。本指南将带你完成项目设置、组件创建以及结合 Hooks 构建动态界面的流程。
 
 ### 目录
+
 1. **快速开始**
 2. **创建脚本项目**
 3. **导入组件**
@@ -25,7 +27,7 @@ title: 快速开始
 `index.tsx` 的示例：
 
 ```tsx
-import { VStack, Text } from "scripting"
+import { VStack, Text } from "scripting";
 
 // 定义一个自定义视图组件
 function View() {
@@ -33,7 +35,7 @@ function View() {
     <VStack>
       <Text>Hello, Scripting!</Text>
     </VStack>
-  )
+  );
 }
 ```
 
@@ -52,7 +54,7 @@ SwiftUI 中的所有视图以及部分 API 都进行了包装，并通过 `scrip
 你可以像这样在项目中导入它们：
 
 ```tsx
-import { VStack, Text, Button, Picker } from "scripting"
+import { VStack, Text, Button, Picker } from "scripting";
 ```
 
 ---
@@ -64,30 +66,23 @@ import { VStack, Text, Button, Picker } from "scripting"
 示例：
 
 ```tsx
-import { VStack, HStack, Text, Button } from "scripting"
+import { VStack, HStack, Text, Button } from "scripting";
 
-function Greeting({
-   name
-}: {
-   name: string 
-}) {
+function Greeting({ name }: { name: string }) {
   return (
     <HStack>
       <Text>Hello, {name}!</Text>
     </HStack>
-  )
+  );
 }
 
 function MainView() {
   return (
     <VStack>
       <Greeting name="Scripting User" />
-      <Button 
-        title="Click Me" 
-        action={() => console.log("Button Clicked!")}
-      />
+      <Button title="Click Me" action={() => console.log("Button Clicked!")} />
     </VStack>
-  )
+  );
 }
 ```
 
@@ -100,23 +95,23 @@ function MainView() {
 示例：
 
 ```tsx
-import { VStack, Text, Navigation, Script } from "scripting"
+import { VStack, Text, Navigation, Script } from "scripting";
 
 function View() {
   return (
     <VStack>
       <Text>Hello, Scripting!</Text>
     </VStack>
-  )
+  );
 }
 
 // 显示该视图
-Navigation.present({ 
-  element: <View />
+Navigation.present({
+  element: <View />,
 }).then(() => {
   // 视图关闭后清理资源，避免内存泄漏
-  Script.exit()
-})
+  Script.exit();
+});
 ```
 
 在上述示例中，`Navigation.present({ element: <View /> })` 会呈现 `View` 组件；当用户关闭此视图后，`Script.exit()` 确保释放相关资源。
@@ -130,23 +125,21 @@ Scripting 支持一系列与 React 类似的 Hooks，用于管理组件中的状
 ---
 
 #### `useState`
+
 `useState` Hook 能够让你在函数式组件中添加本地状态。
 
 ```tsx
-import { useState, VStack, Text, Button } from "scripting"
+import { useState, VStack, Text, Button } from "scripting";
 
 function Counter() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <VStack>
       <Text>Count: {count}</Text>
-      <Button
-        title="Increment"
-        action={() => setCount(count + 1)}
-      />
+      <Button title="Increment" action={() => setCount(count + 1)} />
     </VStack>
-  )
+  );
 }
 ```
 
@@ -155,31 +148,30 @@ function Counter() {
 ---
 
 #### `useEffect`
+
 `useEffect` Hook 可以让你在组件中执行副作用操作，比如获取数据或者设置订阅。
 
 ```tsx
-import { useState, useEffect, VStack, Text } from "scripting"
+import { useState, useEffect, VStack, Text } from "scripting";
 
 function TimeDisplay() {
-  const [time, setTime] = useState(
-    new Date().toLocaleTimeString()
-  )
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
-    let timerId: number
+    let timerId: number;
 
     const startTimer = () => {
       timerId = setTimeout(() => {
-        setTime(new Date().toLocaleTimeString())
-      }, 1000)
-    }
+        setTime(new Date().toLocaleTimeString());
+      }, 1000);
+    };
 
-    startTimer()
-    
-    return () => clearTimeout(timerId) // 组件卸载时清理定时器
-  }, [])
+    startTimer();
 
-  return <Text>Current Time: {time}</Text>
+    return () => clearTimeout(timerId); // 组件卸载时清理定时器
+  }, []);
+
+  return <Text>Current Time: {time}</Text>;
 }
 ```
 
@@ -188,34 +180,37 @@ function TimeDisplay() {
 ---
 
 #### `useReducer`
+
 当你需要在组件中管理更复杂的状态逻辑时，`useReducer` Hook 非常有用。
 
 ```tsx
-import { useReducer, VStack, Text, Button } from "scripting"
+import { useReducer, VStack, Text, Button } from "scripting";
 
-type Action = { 
-  type: "increment"
-} | {
-  type: "decrement"
-}
+type Action =
+  | {
+      type: "increment";
+    }
+  | {
+      type: "decrement";
+    };
 const reducer = (state: number, action: Action) => {
   switch (action.type) {
     case "increment":
-      return state + 1
+      return state + 1;
     case "decrement":
-      return state - 1
+      return state - 1;
     default:
-      return state
+      return state;
   }
-}
+};
 
 function Counter() {
-  const [count, dispatch] = useReducer(reducer, 0)
+  const [count, dispatch] = useReducer(reducer, 0);
 
   return (
     <VStack>
       <Text>Count: {count}</Text>
-      <Button 
+      <Button
         title="Increment"
         action={() => dispatch({ type: "increment" })}
       />
@@ -224,7 +219,7 @@ function Counter() {
         action={() => dispatch({ type: "decrement" })}
       />
     </VStack>
-  )
+  );
 }
 ```
 
@@ -233,27 +228,25 @@ function Counter() {
 ---
 
 #### `useCallback`
+
 `useCallback` Hook 可以让你对函数进行 Memo 化，以避免在每次渲染时都重新创建函数，从而提升性能。
 
 ```tsx
-import { useState, useCallback, VStack, Text, Button } from "scripting"
+import { useState, useCallback, VStack, Text, Button } from "scripting";
 
 function Counter() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   const increment = useCallback(() => {
-    setCount((prev) => prev + 1)
-  }, [])
+    setCount((prev) => prev + 1);
+  }, []);
 
   return (
     <VStack>
       <Text>Count: {count}</Text>
-      <Button 
-        title="Increment"
-        action={increment}
-      />
+      <Button title="Increment" action={increment} />
     </VStack>
-  )
+  );
 }
 ```
 
@@ -262,29 +255,29 @@ function Counter() {
 ---
 
 #### `useMemo`
+
 `useMemo` Hook 允许你对某些值进行 Memo 化，以缓存代价高的计算结果，从而提高性能。
 
 ```tsx
-import { useState, useMemo, VStack, Text, Button } from "scripting"
+import { useState, useMemo, VStack, Text, Button } from "scripting";
 
 function FactorialCounter() {
-  const [count, setCount] = useState(1)
+  const [count, setCount] = useState(1);
 
   const factorial = useMemo(() => {
-    let result = 1
-    for (let i = 1; i <= count; i++) result *= i
-    return result
-  }, [count])
+    let result = 1;
+    for (let i = 1; i <= count; i++) result *= i;
+    return result;
+  }, [count]);
 
   return (
     <VStack>
-      <Text>Factorial of {count} is {factorial}</Text>
-      <Button 
-        title="Increase"
-        action={() => setCount(count + 1)}
-      />
+      <Text>
+        Factorial of {count} is {factorial}
+      </Text>
+      <Button title="Increase" action={() => setCount(count + 1)} />
     </VStack>
-  )
+  );
 }
 ```
 
@@ -293,16 +286,17 @@ function FactorialCounter() {
 ---
 
 #### `useContext`
+
 `useContext` Hook 允许你在应用的各组件之间共享状态，而无需进行层层的 props 传递（即“向下传递”）。
 
 ```tsx
-import { createContext, useContext, VStack, Text, Button } from "scripting"
+import { createContext, useContext, VStack, Text, Button } from "scripting";
 
-const CountContext = createContext<number>()
+const CountContext = createContext<number>();
 
 function Display() {
-  const count = useContext(CountContext)
-  return <Text>Shared Count: {count}</Text>
+  const count = useContext(CountContext);
+  return <Text>Shared Count: {count}</Text>;
 }
 
 function App() {
@@ -312,7 +306,7 @@ function App() {
         <Display />
       </VStack>
     </CountContext.Provider>
-  )
+  );
 }
 ```
 
@@ -327,46 +321,53 @@ function App() {
 示例：
 
 ```tsx
-import { useState, VStack, Text, TextField, List, Section, NavigationStack, Script } from "scripting"
+import {
+  useState,
+  VStack,
+  Text,
+  TextField,
+  List,
+  Section,
+  NavigationStack,
+  Script,
+} from "scripting";
 
 function ToDoApp() {
-  const [tasks, setTasks] = useState(["Task 1", "Task 2", "Task 3"])
-  const [content, setContent] = useState("")
+  const [tasks, setTasks] = useState(["Task 1", "Task 2", "Task 3"]);
+  const [content, setContent] = useState("");
 
   return (
     <NavigationStack>
-        <List
-          navigationTitle="My Tasks"
-        >
-          <Section>
-            {tasks.map((task, index) => (
-              <Text key={index}>{task}</Text>
-            ))}
-          </Section>
-          
-          <TextField
-            title="New Task"
-            value={content}
-            onChanged={setContent}
-            onSubmit={() => {
-              if (content.length === 0) {
-                return
-              }
-              setTasks([...tasks, content])
-              setContent("")
-            }}
-          />
-        </List>
+      <List navigationTitle="My Tasks">
+        <Section>
+          {tasks.map((task, index) => (
+            <Text key={index}>{task}</Text>
+          ))}
+        </Section>
+
+        <TextField
+          title="New Task"
+          value={content}
+          onChanged={setContent}
+          onSubmit={() => {
+            if (content.length === 0) {
+              return;
+            }
+            setTasks([...tasks, content]);
+            setContent("");
+          }}
+        />
+      </List>
     </NavigationStack>
-  )
+  );
 }
 
 async function run() {
   await Navigation.present({
-    element: <ToDoApp />
-  })
+    element: <ToDoApp />,
+  });
 
-  Script.exit()
+  Script.exit();
 }
 ```
 

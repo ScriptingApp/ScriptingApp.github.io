@@ -1,22 +1,17 @@
 [
-    {
-        "text": "start",
-        "link": "/guide/start",
-        "activeMatch": "/guide/start"
-    },
-    {
-        "text": "docs",
-        "link": "/guide/docs/Quick Start",
-        "activeMatch": "/guide/docs"
-    },
-    {
-        "text": "changelog",
-        "link": "/guide/changelog/latest",
-        "activeMatch": "/guide/changelog"
-    },
-    {
-        "text": "privacy",
-        "link": "/guide/privacy/policy",
-        "activeMatch": "/guide/privacy"
-    }
+  {
+    "text": "docs",
+    "link": "/guide/doc_v2/Quick Start",
+    "activeMatch": "/guide/doc_v2"
+  },
+  {
+    "text": "changelog",
+    "link": "/guide/changelog/latest",
+    "activeMatch": "/guide/changelog"
+  },
+  {
+    "text": "privacy",
+    "link": "/guide/privacy/policy",
+    "activeMatch": "/guide/privacy"
+  }
 ]

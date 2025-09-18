@@ -5,8 +5,9 @@ import { defineConfig } from "rspress/config";
 const siteUrl = "https://scriptingapp.github.io";
 
 export default defineConfig({
-  root: path.join(__dirname, "docs"),
+  // root: path.join(__dirname, "docs"),
   // outDir: "public",
+  base: "/doc_v2/",
   title: "Scripting",
   icon: "/icon.png",
   logo: "/logo.png",
