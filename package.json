@@ -1,18 +1,19 @@
 {
-    "name": "scripting-doc",
-    "version": "1.0.0",
-    "private": true,
-    "scripts": {
-        "setup": "bun install",
-        "dev": "rspress dev",
-        "build": "rspress build",
-        "build:docs": "rm -rf docs/en/guide/docs/* && rm -rf docs/zh/guide/docs/* && bun scripts/docs.js"
-    },
-    "dependencies": {
-        "rspress": "^1.44.0"
-    },
-    "devDependencies": {
-        "@rspress/plugin-rss": "^1.44.0",
-        "@types/node": "^18.11.17"
-    }
+  "name": "scripting-doc",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "setup": "bun install",
+    "dev": "rspress dev",
+    "build": "rspress build",
+    "build:fun": "rspress build -c rspress.config.fun.ts",
+    "generate:docs": "rm -rf docs/en/guide/docs/* && rm -rf docs/zh/guide/docs/* && bun scripts/docs.js"
+  },
+  "dependencies": {
+    "rspress": "^1.44.0"
+  },
+  "devDependencies": {
+    "@rspress/plugin-rss": "^1.44.0",
+    "@types/node": "^18.11.17"
+  }
 }
