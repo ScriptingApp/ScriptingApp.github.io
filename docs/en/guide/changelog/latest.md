@@ -1,39 +1,69 @@
 ---
-title: V2.3.3
-published_at: 2025-07-15 08:00:00
+title: V2.4.1
+published_at: 2025-10-10 08:00:00
 ---
 
-## 2.1.6
+## 2.4.1
 
-**Assistant Features Update**
+# New Features
 
--   Introduced custom role mode: Define unique roles for assistants beyond coding support.
--   Directly @mention assistant tools in the input box for faster interaction.
--   Scripts are now automatically saved to the `scripts` folder under the Scripting App's documents folder for easier access and organization.
+Knowledge Base
+You can now import multiple files at once by selecting a directory.
 
-**Bug Fixes**
+Assistant Tool
+Introduced a built-in query knowledge bases tool, enabling the Assistant to search associated knowledge bases when completing tasks.
 
--   Fixed the issue where **file bookmarks weren't working properly**
--   Resolved documentation errors to improve clarity and accuracy
+ControlWidget (iOS 18+)
+Added ControlWidget, allowing you to place Button and Toggle controls in Control Center and assign scripts to handle their logic.
 
-:::details{title=Recent Major Updates}
+Custom Keyboard
+Added the CustomKeyboard API to create and present your own keyboard UI, handle input events, and insert text programmatically.
 
-**Assistant Tools Migration**
+Bluetooth APIs
+Introduced BluetoothCentralManager and BluetoothPeripheralManager APIs. Build end-to-end Bluetooth experiences, including scanning, connecting, reading/writing GATT characteristics, subscribing to notifications, advertising, and exposing custom services/characteristics.
 
--   Most importantly, assistant tools have been fully migrated to scripts. You can now **directly create assistant tool scripts through the assistant**, unlocking new levels of flexibility and automation.
+Added layoutPriority View Modifier
+Introduced support for the layoutPriority view modifier, allowing developers to control how space is distributed among sibling views when layout constraints are tight. This behavior is consistent with SwiftUI’s native layoutPriority(\_:).
 
-**Easier Script Saving from Other Apps**
+Introduced modifiers Property and ViewModifiers System
+A new modifiers property, along with the ViewModifiers class and the modifiers() helper function, has been added to enable fluent, chainable application of view modifiers.
+This system supports applying the same type of view modifier multiple times (e.g., repeated padding() or background() calls) and ensures modifiers are applied in the exact order they are chained, closely mirroring the behavior of SwiftUI.
 
--   You can now quickly save scripts to the Scripting App from other apps like browsers.
+SVG Rendering
+Added a new SVG rendering component to display vector graphics seamlessly.
 
-**Widget Preview Enhancements**
+Custom Fonts
+Now supports using fonts installed via the system or third-party apps.
 
--   Widgets in the preview page are now interactive and properly refresh their UI, providing a more accurate and testable preview experience.
+# Improvements
 
-**Script Execution & URL Schemes**
+Request API
+Added an allowInsecureRequest field to RequestInit / Request for controlling whether insecure requests are permitted.
 
--   Added `Script.createDocumentationURLScheme` and `Script.createRunSingleURLScheme` to generate custom deep links for your scripts.
--   `Script.run(options)` now supports the `singleMode` parameter to control script execution mode.
--   The "Run in App" action in the Shortcuts app also supports configuring `singleMode`.
+Location API
+Location.requestCurrent now returns cached location data by default if available.
+Added a new optional parameter options.forceRequest to always fetch the latest location.
 
-:::
+Developer Server
+The dev server now remembers and records the last connected address for faster reconnections.
+
+Storage Enhancements
+set, get, contains, remove, setData, and getData now accept an optional options.shared parameter for working with shared storage, which is accessible across all scripts for easier cross-script functionality.
+
+Fixes
+Assistant Tool Calls
+Fixed an issue where the Assistant could misparse tool parameters when invoking tools, improving reliability of tool execution.
+
+Photos API
+Fixed an issue where dismissing the Photos.pickPhotos sheet by swiping down would not resolve the promise.
+
+HealthKit Permissions
+Fixed an issue where requesting Health permissions did not trigger the authorization dialog.
+
+Script Advanced Settings
+Fixed an error when renaming a script in the Advanced Settings page, which could cause a refresh failure after saving.
+
+# Changes
+
+API Providers
+Removed the Pollinations.AI API provider.
