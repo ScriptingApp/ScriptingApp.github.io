@@ -5,8 +5,8 @@
   "scripts": {
     "setup": "bun install",
     "dev": "rspress dev",
-    "build": "rspress build",
-    "build:fun": "rspress build -c rspress.config.fun.ts",
+    "build": "NODE_OPTIONS='--max-old-space-size=8192' rspress build",
+    "build:fun": "NODE_OPTIONS='--max-old-space-size=8192' rspress build -c rspress.config.fun.ts",
     "generate:docs": "rm -rf docs/en/guide/docs/* && rm -rf docs/zh/guide/docs/* && bun scripts/docs.js"
   },
   "dependencies": {
