@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "BluetoothCentralManager",
+    "label": "蓝牙中央设备管理器"
+  },
+  {
+    "type": "file",
+    "name": "BluetoothPeripheral",
+    "label": "蓝牙外设"
+  },
+  {
+    "type": "file",
+    "name": "BluetoothService",
+    "label": "蓝牙服务"
+  },
+  {
+    "type": "file",
+    "name": "BluetoothCharacteristic",
+    "label": "蓝牙服务特征值"
+  },
+  {
+    "type": "file",
+    "name": "BluetoothPeripheralManager",
+    "label": "蓝牙外设管理器"
+  }
+]

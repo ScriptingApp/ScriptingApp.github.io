@@ -1,4 +1,4 @@
-The Scripting app provides a simulated web-based `fetch` interface that aligns with the Web Fetch API specification. This API enables performing network requests and handling responses in a modern, promise-based manner. It supports key features such as headers management, request cancellation, and form submission with `multipart/form-data`.
+The Scripting app provides a simulated web-based `fetch` interface that aligns with the Web Fetch API specification. This API enables performing network requests and handling responses in a modern, promise-based manner. It supports key features such as headers management, request cancellation, redirects, timeout controls, and form submission with `multipart/form-data`.
 
 ---
 
@@ -10,7 +10,7 @@ fetch(input: string | Request, init?: RequestInit): Promise<Response>
 
 The `fetch()` method initiates an HTTP request to a network resource and returns a `Promise` that resolves to a `Response` object.
 
-Unlike traditional `XMLHttpRequest`, `fetch()` uses promises and does not reject on HTTP protocol errors such as 404 or 500. Instead, these are reflected in the `Response.ok` and `Response.status` properties.
+Unlike traditional `XMLHttpRequest`, `fetch()` uses promises and does **not** reject on HTTP protocol errors such as 404 or 500. Instead, these are reflected in the `Response.ok` and `Response.status` properties.
 
 ---
 
@@ -29,15 +29,47 @@ class Request {
 
 #### Properties
 
-* `url: string` – The request URL.
-* `method: string` – HTTP method (GET, POST, PUT, DELETE, etc.).
-* `headers: Headers` – HTTP headers.
-* `body?: Data | FormData | string | ArrayBuffer` – The request body.
-* `connectTimeout?: number` – Timeout for establishing connection (in milliseconds).
-* `receiveTimeout?: number` – Timeout for receiving the response (in milliseconds).
-* `signal?: AbortSignal` – Signal to abort the request.
-* `cancelToken?: CancelToken` *(deprecated)* – Used for request cancellation.
-* `debugLabel?: string` – Custom label shown in the debug log.
+| Property                | Type                                        | Description                                                                             |
+| ----------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `url`                   | `string`                                    | The request URL.                                                                        |
+| `method`                | `string`                                    | HTTP method (GET, POST, PUT, DELETE, etc.).                                             |
+| `headers`               | `Headers`                                   | HTTP headers.                                                                           |
+| `body?`                 | `Data \| FormData \| string \| ArrayBuffer` | The request body.                                                                       |
+| `allowInsecureRequest?` | `boolean`                                   | Whether to allow HTTP requests even when app is served over HTTPS. Defaults to `false`. |
+| `shouldAllowRedirect?`  | `(newRequest: Request) => Promise<boolean>` | Optional callback to dynamically approve or block redirects. Defaults to always allow.  |
+| `timeout?`              | `number`                                    | Request timeout in **seconds**.                                                         |
+| `connectTimeout?`       | `number`                                    | Timeout for establishing connection (in **milliseconds**).                              |
+| `receiveTimeout?`       | `number`                                    | Timeout for receiving response (in **milliseconds**).                                   |
+| `signal?`               | `AbortSignal`                               | Signal used to cancel the request.                                                      |
+| `cancelToken?`          | `CancelToken` *(deprecated)*                | Legacy cancellation mechanism.                                                          |
+| `debugLabel?`           | `string`                                    | Custom label shown in debug logs.                                                       |
+
+---
+
+## RequestInit
+
+Used as the second parameter of `fetch()` or the constructor of `Request`.
+
+```ts
+type RequestInit = {
+  method?: string;
+  headers?: HeadersInit;
+  body?: Data | FormData | string | ArrayBuffer;
+
+  allowInsecureRequest?: boolean;
+  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean>;
+  timeout?: number;
+  connectTimeout?: number;
+  receiveTimeout?: number;
+
+  signal?: AbortSignal;
+
+  /** @deprecated Use `signal` instead. */
+  cancelToken?: CancelToken;
+
+  debugLabel?: string;
+}
+```
 
 ---
 
@@ -55,33 +87,34 @@ class Response {
 
 #### Properties
 
-* `body: ReadableStream<Data>` – The response body as a stream.
-* `bodyUsed: boolean` – Indicates whether the body has been read.
-* `status: number` – HTTP status code.
-* `statusText: string` – HTTP status text.
-* `headers: Headers` – Response headers.
-* `ok: boolean` – `true` if status is in the range 200–299.
-* `url: string` – The final URL after redirects.
-* `mimeType?: string`
-* `expectedContentLength?: number`
-* `textEncodingName?: string`
+| Property                 | Type                   | Description                                     |
+| ------------------------ | ---------------------- | ----------------------------------------------- |
+| `body`                   | `ReadableStream<Data>` | The response body as a stream.                  |
+| `bodyUsed`               | `boolean`              | Whether the body has been consumed.             |
+| `cookies`                | `Record<string, string>` | Response cookies.                              |
+| `status`                 | `number`               | HTTP status code.                               |
+| `statusText`             | `string`               | HTTP status text.                               |
+| `headers`                | `Headers`              | Response headers.                               |
+| `ok`                     | `boolean`              | `true` if status is in the range 200–299.       |
+| `url`                    | `string`               | The final resolved URL after any redirects.     |
+| `mimeType?`              | `string`               | Inferred MIME type, if available.               |
+| `expectedContentLength?` | `number`               | Expected content length in bytes, if available. |
+| `textEncodingName?`      | `string`               | Encoding of the response body, if specified.    |
 
 #### Methods
 
-* `json(): Promise<any>` – Parses body as JSON.
-* `text(): Promise<string>` – Parses body as text.
-* `data(): Promise<Data>` – Returns the response body as `Data`.
-* `bytes(): Promise<Uint8Array>` – Returns the body as a `Uint8Array`.
-* `arrayBuffer(): Promise<ArrayBuffer>` – Returns the body as an `ArrayBuffer`.
-* `formData(): Promise<FormData>` – Parses body as `FormData`.
+* `json(): Promise<any>`
+* `text(): Promise<string>`
+* `data(): Promise<Data>`
+* `bytes(): Promise<Uint8Array>`
+* `arrayBuffer(): Promise<ArrayBuffer>`
+* `formData(): Promise<FormData>`
 
 ---
 
 ## Headers
 
 ### `Headers` Class
-
-Manages HTTP headers.
 
 ```ts
 class Headers {
@@ -108,7 +141,7 @@ class Headers {
 
 ### `FormData` Class
 
-Represents `multipart/form-data` payloads for form submissions.
+Represents a `multipart/form-data` payload.
 
 ```ts
 class FormData { }
@@ -126,21 +159,11 @@ class FormData { }
 * `forEach(callback: (value: any, name: string, parent: FormData) => void): void`
 * `entries(): [string, any][]`
 
-#### Helper
-
-```ts
-formDataToJson(formData: FormData): Record<string, any>
-```
-
-Converts a `FormData` object into a plain JSON object.
-
 ---
 
 ## Request Cancellation
 
 ### `AbortController` and `AbortSignal`
-
-Support aborting requests using signals.
 
 ```ts
 class AbortController {
@@ -163,7 +186,7 @@ class AbortSignal {
 }
 ```
 
-Use `signal` in a fetch request:
+#### Usage
 
 ```ts
 const controller = new AbortController()
@@ -172,17 +195,11 @@ fetch('https://example.com', { signal: controller.signal })
 controller.abort('User aborted')
 ```
 
-### `AbortError`
-
-Thrown when an operation is aborted using `AbortSignal`.
-
 ---
 
 ## CancelToken (Deprecated)
 
 ### `CancelToken`
-
-Legacy API for canceling requests.
 
 ```ts
 class CancelToken {
@@ -196,7 +213,7 @@ class CancelToken {
 
 ### `useCancelToken()`
 
-React-style hook to manage `CancelToken` lifecycle in function components.
+React-style hook for functional components.
 
 ```tsx
 function App() {
@@ -209,10 +226,7 @@ function App() {
     })
   }
 
-  return <Button
-    title="Request" 
-    action={request}
-  />
+  return <Button title="Request" action={request} />
 }
 ```
 
@@ -220,9 +234,10 @@ function App() {
 
 ## Error Handling
 
-* `fetch()` will reject on network or CORS errors, not HTTP status errors.
-* Use `response.ok` or `response.status` to inspect HTTP-level errors.
-* Use `AbortController` for modern cancellation handling.
+* `fetch()` only rejects on **network** or **CORS** errors.
+* Use `response.ok` or `response.status` to handle HTTP errors.
+* Use `AbortController` for modern cancellation.
+* Legacy: use `CancelToken` where `AbortSignal` is unavailable.
 
 ---
 
@@ -231,6 +246,8 @@ function App() {
 ### Basic GET Request
 
 ```ts
+import {fetch} from 'scripting'
+
 const response = await fetch('https://example.com/data.json')
 const json = await response.json()
 ```
@@ -238,6 +255,8 @@ const json = await response.json()
 ### POST Request with JSON
 
 ```ts
+import {fetch} from 'scripting'
+
 const response = await fetch('https://example.com/api', {
   method: 'POST',
   headers: {
@@ -247,7 +266,7 @@ const response = await fetch('https://example.com/api', {
 })
 ```
 
-### Upload FormData with File
+### Upload File with FormData
 
 ```ts
 const form = new FormData()
@@ -257,4 +276,36 @@ const response = await fetch('https://example.com/upload', {
   method: 'POST',
   body: form
 })
+```
+
+### Custom Redirect Handling
+
+```ts
+const response = await fetch('https://example.com', {
+  shouldAllowRedirect: async (newReq) => {
+    console.log('Redirecting to', newReq.url)
+    return newReq.url.startsWith('https://trusted.example.com')
+  }
+})
+```
+
+### Insecure Request
+
+```ts
+const response = await fetch('http://insecure.local', {
+  allowInsecureRequest: true
+})
+```
+
+### Abort After Timeout
+
+```ts
+const controller = new AbortController()
+setTimeout(() => controller.abort('Timeout!'), 5000)
+
+try {
+  const res = await fetch('https://slowapi.com', { signal: controller.signal })
+} catch (err) {
+  console.error('Request was aborted', err)
+}
 ```

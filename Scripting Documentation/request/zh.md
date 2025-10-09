@@ -1,24 +1,24 @@
-Scripting 提供了一个符合 Web 标准的 `fetch` 网络请求接口，支持常见的 HTTP 操作，包括请求头设置、表单数据上传、响应解析、请求取消等功能。该 API 模拟了浏览器环境下的 Fetch API 行为，使你可以使用熟悉的方式进行网络通信。
+Scripting 提供了与 Web 标准兼容的 `fetch` 接口，用于执行网络请求。该接口基于 Promise 模型，支持设置请求头、请求体、取消请求、表单上传（multipart/form-data）、调试标签、超时控制、自定义重定向处理、非安全请求控制等功能。
 
 ---
 
-## 总览
+## 概览
 
 ```ts
 fetch(input: string | Request, init?: RequestInit): Promise<Response>
 ```
 
-`fetch()` 方法用于发起 HTTP 请求，并返回一个 `Promise`，该 Promise 解析为 `Response` 对象。
+`fetch()` 方法向指定资源发起网络请求，并返回一个 `Promise`，该 Promise 最终解析为一个 `Response` 响应对象。
 
-与传统的 `XMLHttpRequest` 不同，`fetch()` 使用 Promise 机制，且不会因为 HTTP 错误状态码（如 404 或 500）而 reject。你需要通过 `Response.ok` 或 `Response.status` 判断响应状态。
+与传统的 `XMLHttpRequest` 不同，`fetch()` 使用 Promise，不会因为 HTTP 协议错误（如 404 或 500）而 reject。你需要手动检查 `Response.ok` 或 `Response.status` 来判断请求是否成功。
 
 ---
 
-## 请求类
+## Request（请求）
 
 ### `Request` 类
 
-表示一个 HTTP 请求。
+代表一个 HTTP 请求。
 
 ```ts
 class Request {
@@ -29,23 +29,55 @@ class Request {
 
 #### 属性
 
-* `url: string` – 请求的地址。
-* `method: string` – 请求方法（GET、POST、PUT、DELETE 等）。
-* `headers: Headers` – 请求头。
-* `body?: Data | FormData | string | ArrayBuffer` – 请求体内容。
-* `connectTimeout?: number` – 连接超时时间（毫秒）。
-* `receiveTimeout?: number` – 响应超时时间（毫秒）。
-* `signal?: AbortSignal` – 用于中止请求的信号对象。
-* `cancelToken?: CancelToken` *(已废弃)* – 用于请求取消。
-* `debugLabel?: string` – 调试标签，可显示在日志面板中。
+| 属性名 | 类型  | 说 明  |
+| ----------------------- | ------------------------------------------- | --------------------|
+| `url`                   | `string`                                    | 请求的 URL                                                                      |
+| `method`                | `string`                                    | HTTP 方法（如 GET、POST、PUT、DELETE 等）                                             |
+| `headers`               | `Headers`                                   | 请求头对象                                                                        |
+| `body?`                 | `Data \| FormData \| string \| ArrayBuffer` | 请求体 |
+| `allowInsecureRequest?` | `boolean`                                   | 是否允许非安全请求（HTTP）。默认为 `false`。当 app 通过 HTTPS 加载时，如果请求是 HTTP，将被默认阻止，除非设置为 true。 |
+| `shouldAllowRedirect?`  | `(newRequest: Request) => Promise<boolean>` | 当发生重定向时回调函数，接收重定向后的新请求，返回是否允许跳转。未设置时默认全部允许。                                  |
+| `timeout?`              | `number`                                    | 请求超时时间（单位：秒）                                                                 |
+| `connectTimeout?`       | `number`                                    | 建立连接超时时间（单位：毫秒）                                                              |
+| `receiveTimeout?`       | `number`                                    | 接收响应超时时间（单位：毫秒）                                                              |
+| `signal?`               | `AbortSignal`                               | 可用于中止请求的信号对象                                                                 |
+| `cancelToken?`          | `CancelToken` *(已废弃)*                       | 用于取消请求的旧机制，请使用 `signal` 替代                                                   |
+| `debugLabel?`           | `string`                                    | 自定义调试标签，用于日志显示                                                               |
 
 ---
 
-## 响应类
+## RequestInit 类型
+
+用于 `fetch()` 或 `Request` 构造函数的第二个参数。
+
+```ts
+type RequestInit = {
+  method?: string;
+  headers?: HeadersInit;
+  body?: Data | FormData | string | ArrayBuffer;
+
+  allowInsecureRequest?: boolean;
+  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean>;
+  timeout?: number;
+  connectTimeout?: number;
+  receiveTimeout?: number;
+
+  signal?: AbortSignal;
+
+  /** @deprecated 已废弃，请使用 `signal` */
+  cancelToken?: CancelToken;
+
+  debugLabel?: string;
+}
+```
+
+---
+
+## Response（响应）
 
 ### `Response` 类
 
-表示 `fetch()` 请求返回的响应。
+表示 fetch 请求的响应结果。
 
 ```ts
 class Response {
@@ -55,33 +87,34 @@ class Response {
 
 #### 属性
 
-* `body: ReadableStream<Data>` – 响应体的可读数据流。
-* `bodyUsed: boolean` – 是否已经读取过响应体。
-* `status: number` – HTTP 状态码。
-* `statusText: string` – 状态描述文本。
-* `headers: Headers` – 响应头。
-* `ok: boolean` – 状态码是否在 200–299 范围内。
-* `url: string` – 最终的响应 URL（可能包含重定向）。
-* `mimeType?: string`
-* `expectedContentLength?: number`
-* `textEncodingName?: string`
+| 属性名                      | 类型                     | 说明                 |
+| ------------------------ | ---------------------- | ------------------ |
+| `body`                   | `ReadableStream<Data>` | 响应体（数据流）           |
+| `bodyUsed`               | `boolean`              | 响应体是否已被读取          |
+| `cookies`               | `Record<string, string>`  | 响应的 cookie          |
+| `status`                 | `number`               | HTTP 状态码           |
+| `statusText`             | `string`               | HTTP 状态文本          |
+| `headers`                | `Headers`              | 响应头                |
+| `ok`                     | `boolean`              | 是否状态码在 200–299 范围内 |
+| `url`                    | `string`               | 最终重定向后的 URL        |
+| `mimeType?`              | `string`               | MIME 类型（如能推断）      |
+| `expectedContentLength?` | `number`               | 预计内容长度（字节）         |
+| `textEncodingName?`      | `string`               | 文本编码名称（如可用）        |
 
 #### 方法
 
-* `json(): Promise<any>` – 以 JSON 格式解析响应体。
-* `text(): Promise<string>` – 以字符串格式解析响应体。
-* `data(): Promise<Data>` – 获取响应体的原始 `Data` 对象。
-* `bytes(): Promise<Uint8Array>` – 获取响应体的二进制数组。
-* `arrayBuffer(): Promise<ArrayBuffer>` – 获取响应体的 `ArrayBuffer`。
-* `formData(): Promise<FormData>` – 解析为表单数据对象。
+* `json(): Promise<any>` – 将响应解析为 JSON 对象
+* `text(): Promise<string>` – 解析为纯文本
+* `data(): Promise<Data>` – 以 Data 对象返回数据
+* `bytes(): Promise<Uint8Array>` – 返回二进制数据
+* `arrayBuffer(): Promise<ArrayBuffer>` – 返回原始内存缓冲区
+* `formData(): Promise<FormData>` – 解析为表单数据
 
 ---
 
-## 请求头
+## Headers（请求头）
 
 ### `Headers` 类
-
-用于设置和读取 HTTP 请求/响应头。
 
 ```ts
 class Headers {
@@ -91,24 +124,24 @@ class Headers {
 
 #### 方法
 
-* `append(name: string, value: string): void` – 添加一个新的 header 项。
-* `get(name: string): string | null` – 获取某个 header 的值。
-* `has(name: string): boolean` – 判断是否包含指定 header。
-* `set(name: string, value: string): void` – 设置或覆盖 header。
-* `delete(name: string): void` – 删除指定 header。
-* `forEach(callback: (value: string, name: string) => void): void`
+* `append(name: string, value: string): void` – 添加新字段
+* `get(name: string): string | null` – 获取字段值
+* `has(name: string): boolean` – 是否存在字段
+* `set(name: string, value: string): void` – 设置或替换字段值
+* `delete(name: string): void` – 删除字段
+* `forEach(callback): void` – 遍历所有字段
 * `keys(): string[]`
 * `values(): string[]`
 * `entries(): [string, string][]`
-* `toJson(): Record<string, string>` – 转换为普通对象格式。
+* `toJson(): Record<string, string>` – 转为 JSON 对象
 
 ---
 
-## 表单数据
+## FormData（表单数据）
 
 ### `FormData` 类
 
-用于构建 `multipart/form-data` 格式的表单数据，通常用于文件上传或模拟表单提交。
+表示 `multipart/form-data` 表单数据。
 
 ```ts
 class FormData { }
@@ -126,28 +159,22 @@ class FormData { }
 * `forEach(callback: (value: any, name: string, parent: FormData) => void): void`
 * `entries(): [string, any][]`
 
-#### 辅助方法
-
-```ts
-formDataToJson(formData: FormData): Record<string, any>
-```
-
-将 `FormData` 对象转换为普通 JSON 对象。
-
 ---
 
-## 请求取消
+## 请求取消机制
 
-### `AbortController` 和 `AbortSignal`
+### `AbortController` 与 `AbortSignal`
 
-现代方式的请求中止机制。
+现代的取消请求机制：
 
 ```ts
 const controller = new AbortController()
 fetch('https://example.com', { signal: controller.signal })
 // 取消请求
-controller.abort('用户手动中止')
+controller.abort('用户取消')
 ```
+
+#### 类定义
 
 ```ts
 class AbortController {
@@ -168,17 +195,13 @@ class AbortSignal {
 }
 ```
 
-### `AbortError`
-
-在请求已被中止时抛出的异常。
-
 ---
 
 ## CancelToken（已废弃）
 
 ### `CancelToken` 类
 
-旧版请求取消方式，已被 `AbortController` 替代。
+旧版本的请求取消机制。
 
 ```ts
 class CancelToken {
@@ -192,7 +215,7 @@ class CancelToken {
 
 ### `useCancelToken()`
 
-在函数组件中使用 `CancelToken` 的 Hook。
+React 风格的 hook，用于函数组件：
 
 ```tsx
 function App() {
@@ -205,10 +228,7 @@ function App() {
     })
   }
 
-  return <Button
-    title="请求"
-    action={request}
-  />
+  return <Button title="发起请求" action={request} />
 }
 ```
 
@@ -216,22 +236,23 @@ function App() {
 
 ## 错误处理
 
-* `fetch()` 只有在请求本身失败（如网络断开、URL 无效）时才会 reject。
-* HTTP 状态错误（如 404、500）不会引发异常，需通过 `response.ok` 或 `response.status` 判断。
-* 推荐使用 `AbortController` 实现请求取消。
+* `fetch()` 只在网络错误或 CORS 拒绝时 reject
+* HTTP 状态错误不会 reject，需手动检查 `response.ok` 或 `response.status`
+* 推荐使用 `AbortController` 来中止请求
+* 老代码仍可使用 `CancelToken`，但建议迁移
 
 ---
 
-## 使用示例
+## 示例用法
 
-### 基础 GET 请求
+### 基本 GET 请求
 
 ```ts
 const response = await fetch('https://example.com/data.json')
 const json = await response.json()
 ```
 
-### POST 请求发送 JSON 数据
+### POST JSON 请求
 
 ```ts
 const response = await fetch('https://example.com/api', {
@@ -243,7 +264,7 @@ const response = await fetch('https://example.com/api', {
 })
 ```
 
-### 上传文件（使用 FormData）
+### 上传文件表单
 
 ```ts
 const form = new FormData()
@@ -253,4 +274,36 @@ const response = await fetch('https://example.com/upload', {
   method: 'POST',
   body: form
 })
+```
+
+### 自定义重定向逻辑
+
+```ts
+const response = await fetch('https://example.com', {
+  shouldAllowRedirect: async (newReq) => {
+    console.log('跳转到', newReq.url)
+    return newReq.url.startsWith('https://trusted.example.com')
+  }
+})
+```
+
+### 非安全请求（HTTP）
+
+```ts
+const response = await fetch('http://insecure.local', {
+  allowInsecureRequest: true
+})
+```
+
+### 超时取消请求
+
+```ts
+const controller = new AbortController()
+setTimeout(() => controller.abort('请求超时'), 5000)
+
+try {
+  const res = await fetch('https://slowapi.com', { signal: controller.signal })
+} catch (err) {
+  console.error('请求被取消', err)
+}
 ```

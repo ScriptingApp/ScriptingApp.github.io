@@ -1,34 +1,34 @@
 ---
 title: 定位
 ---
-`Location` 是一个全局 API，无需导入，可用于访问设备当前的地理位置、反向地理编码地址信息、在地图上手动选择位置、配置定位精度，并支持小组件的定位权限检测。
+全局 `Location` API 提供对设备地理位置信息的访问能力，包括一次性定位、逆地理编码、用户手动选点、定位精度控制、以及用于小组件的权限检测等功能。
 
 ---
 
 ## 功能概览
 
-你可以使用 Location API 实现以下功能：
+你可以通过该 API 实现以下功能：
 
-* 获取一次性的当前地理位置
-* 使用地图界面让用户选择位置
-* 将经纬度转换为可读地址（反向地理编码）
-* 设置所需的定位精度
-* 检查小组件是否具备位置权限
+* 获取设备当前位置（支持缓存）
+* 用户通过地图界面手动选择位置
+* 将经纬度转换为可读的地址（逆地理编码）
+* 设置定位精度（耗电量和等待时间可控）
+* 检查小组件是否获得定位权限
 
-> 注意：这是一个全局 API，无需导入。
+> **注意：** 该 API 为全局 API，无需额外导入。
 
 ---
 
-## API 参考
+## 接口文档
 
 ### `Location.isAuthorizedForWidgetUpdates(): Promise<boolean>`
 
-检测当前小组件是否具备获取位置信息的权限。
+检查小组件是否拥有获取定位更新的权限。
 
 ```ts
 const isAuthorized = await Location.isAuthorizedForWidgetUpdates()
 if (!isAuthorized) {
-  console.log("小组件没有定位权限")
+  console.log("小组件没有获取定位的权限")
 }
 ```
 
@@ -36,17 +36,17 @@ if (!isAuthorized) {
 
 ### `Location.setAccuracy(accuracy: LocationAccuracy): Promise<void>`
 
-设置定位精度，决定后续位置请求的精确程度。精度越高，耗电量和等待时间可能也越高。
+设置期望的定位精度。精度越高，耗电和等待时间也可能增加。
 
-#### 可选参数值：
+#### 可选值
 
-| 精度值                 | 描述          |
-| ------------------- | ----------- |
-| `"best"`            | 最高精度        |
-| `"tenMeters"`       | 精度在 10 米以内  |
-| `"hundredMeters"`   | 精度在 100 米以内 |
-| `"kilometer"`       | 精度在 1 公里以内  |
-| `"threeKilometers"` | 精度在 3 公里以内  |
+| 精度值                 | 描述      |
+| ------------------- | ------- |
+| `"best"`            | 最高可用精度  |
+| `"tenMeters"`       | 10 米以内  |
+| `"hundredMeters"`   | 100 米以内 |
+| `"kilometer"`       | 1 公里以内  |
+| `"threeKilometers"` | 3 公里以内  |
 
 ```ts
 await Location.setAccuracy("hundredMeters")
@@ -54,15 +54,26 @@ await Location.setAccuracy("hundredMeters")
 
 ---
 
-### `Location.requestCurrent(): Promise<LocationInfo | null>`
+### `Location.requestCurrent(options?: { forceRequest?: boolean }): Promise<LocationInfo | null>`
 
-获取用户当前位置，仅请求一次。如果未授权，会弹出系统定位权限请求。
+请求一次设备当前的位置信息。
+
+默认情况下，如果存在缓存位置（例如启动时从系统获取到的位置），将立即返回该缓存值。如果未缓存，则会触发新的定位请求。
+
+你可以通过传入 `{ forceRequest: true }` 强制跳过缓存，始终发起新请求。
+
+#### 参数
+
+| 参数名            | 类型        | 是否必填 | 描述                          |
+| -------------- | --------- | ---- | --------------------------- |
+| `forceRequest` | `boolean` | 否    | 若为 `true`，将忽略缓存，始终发起新的定位请求。 |
 
 ```ts
-const location = await Location.requestCurrent()
+const location = await Location.requestCurrent({ forceRequest: true })
 if (location) {
   console.log("纬度:", location.latitude)
   console.log("经度:", location.longitude)
+  console.log("时间戳:", location.timestamp)
 }
 ```
 
@@ -70,12 +81,12 @@ if (location) {
 
 ### `Location.pickFromMap(): Promise<LocationInfo | null>`
 
-打开原生地图界面，让用户手动选择一个地理位置。
+打开内置地图界面，允许用户手动选择一个位置。
 
 ```ts
 const selected = await Location.pickFromMap()
 if (selected) {
-  console.log("用户选择的位置：", selected.latitude, selected.longitude)
+  console.log("用户选择的位置:", selected.latitude, selected.longitude)
 }
 ```
 
@@ -83,27 +94,27 @@ if (selected) {
 
 ### `Location.reverseGeocode(options): Promise<LocationPlacemark[] | null>`
 
-根据经纬度进行反向地理编码，返回地址信息（如街道、城市、国家等）。
+将经纬度转换为人类可读的地理信息（如街道、城市、国家等）。
 
-#### 参数说明：
+#### 参数
 
-| 参数名         | 类型       | 是否必填 | 描述                            |
-| ----------- | -------- | ---- | ----------------------------- |
-| `latitude`  | `number` | 是    | 纬度，单位为度                       |
-| `longitude` | `number` | 是    | 经度，单位为度                       |
-| `locale`    | `string` | 否    | 可选语言代码（如 `"zh-CN"`），默认为设备当前语言 |
+| 字段          | 类型       | 是否必填 | 描述                             |
+| ----------- | -------- | ---- | ------------------------------ |
+| `latitude`  | `number` | 是    | 纬度（单位：度）                       |
+| `longitude` | `number` | 是    | 经度（单位：度）                       |
+| `locale`    | `string` | 否    | 可选语言区域（如 `"zh-CN"`），默认使用设备语言设置 |
 
 ```ts
 const placemarks = await Location.reverseGeocode({
-  latitude: 39.9042,
-  longitude: 116.4074,
+  latitude: 31.2304,
+  longitude: 121.4737,
   locale: "zh-CN"
 })
 
 if (placemarks?.length) {
   const place = placemarks[0]
-  console.log("城市：", place.locality)
-  console.log("国家：", place.country)
+  console.log("城市:", place.locality)
+  console.log("国家:", place.country)
 }
 ```
 
@@ -113,7 +124,7 @@ if (placemarks?.length) {
 
 ### `LocationAccuracy`
 
-表示定位精度的选项：
+表示定位精度选项：
 
 ```ts
 type LocationAccuracy =
@@ -128,12 +139,22 @@ type LocationAccuracy =
 
 ### `LocationInfo`
 
-表示经纬度地理坐标：
+表示一个带有时间戳的地理坐标点：
 
 ```ts
 type LocationInfo = {
+  /**
+   * 纬度，单位：度
+   */
   latitude: number
+  /**
+   * 经度，单位：度
+   */
   longitude: number
+  /**
+   * 获取该位置的时间戳（单位：毫秒）
+   */
+  timestamp: number
 }
 ```
 
@@ -141,7 +162,7 @@ type LocationInfo = {
 
 ### `LocationPlacemark`
 
-用于表示通过反向地理编码获得的地址信息，包含多个层级的地理描述字段，可用于展示地址、生成提示文本、或者进行位置信息分类。
+表示一个可读的地理位置，通常由逆地理编码返回，包含详细的地址结构信息：
 
 ```ts
 type LocationPlacemark = {
@@ -164,55 +185,54 @@ type LocationPlacemark = {
 }
 ```
 
-#### 字段详解：
+#### 字段说明
 
-| 字段名                     | 类型             | 说明                               |
-| ----------------------- | -------------- | -------------------------------- |
-| `location`              | `LocationInfo` | 对应的经纬度信息（可选），与输入经纬度基本一致          |
-| `region`                | `string`       | 所在的行政区域名称，如“北京市”或“加利福尼亚州”        |
-| `timeZone`              | `string`       | 所在位置的时区标识（如 `"Asia/Shanghai"`）   |
-| `name`                  | `string`       | 地点的常规名称，例如建筑物名、地标名               |
-| `thoroughfare`          | `string`       | 街道名，例如“中关村大街”                    |
-| `subThoroughfare`       | `string`       | 街道附加信息，例如门牌号“59号”                |
-| `locality`              | `string`       | 城市名，例如“北京市”、“San Francisco”      |
-| `subLocality`           | `string`       | 城市的下属区域，如城区、社区、乡镇等               |
-| `administrativeArea`    | `string`       | 州、省或自治区名称，例如“广东省”或“California”   |
-| `subAdministrativeArea` | `string`       | 行政区域的下属单位，例如“广州市天河区”             |
-| `postalCode`            | `string`       | 邮政编码                             |
-| `isoCountryCode`        | `string`       | 国家/地区的 ISO 代码，例如 `"CN"`、`"US"`   |
-| `country`               | `string`       | 国家/地区名称，例如“中国”、“United States”   |
-| `inlandWater`           | `string`       | 附近的内陆水体名称（如湖泊、河流），例如“长江”、“太湖”    |
-| `ocean`                 | `string`       | 附近的海洋名称，例如“太平洋”                  |
-| `areasOfInterest`       | `string[]`     | 相关兴趣区域名称，例如“天安门广场”、“Googleplex”等 |
+| 字段                      | 类型             | 描述                                |
+| ----------------------- | -------------- | --------------------------------- |
+| `location`              | `LocationInfo` | 坐标点信息（通常等于请求的经纬度）                 |
+| `region`                | `string`       | 区域名，如省/州                          |
+| `timeZone`              | `string`       | 时区标识（如 `"Asia/Shanghai"`）         |
+| `name`                  | `string`       | 地点名称，如建筑物、地标等                     |
+| `thoroughfare`          | `string`       | 街道名称，如 `"中关村大街"`                  |
+| `subThoroughfare`       | `string`       | 详细地址，如门牌号                         |
+| `locality`              | `string`       | 城市或镇                              |
+| `subLocality`           | `string`       | 区、街道等子区域                          |
+| `administrativeArea`    | `string`       | 省份、州或其他一级行政区域                     |
+| `subAdministrativeArea` | `string`       | 县、区等次级行政区域                        |
+| `postalCode`            | `string`       | 邮政编码                              |
+| `isoCountryCode`        | `string`       | 国家代码（ISO 3166-1 alpha-2，如 `"CN"`） |
+| `country`               | `string`       | 国家全名，如 `"中国"`                     |
+| `inlandWater`           | `string`       | 附近的内陆水体名称，如湖泊、河流                  |
+| `ocean`                 | `string`       | 附近的海洋名称                           |
+| `areasOfInterest`       | `string[]`     | 附近的兴趣点/地标数组，如 `"东方明珠"`            |
 
 ---
 
-#### 用途示例：
+## 示例用法
+
+### 逆地理编码
 
 ```ts
 const placemarks = await Location.reverseGeocode({
-  latitude: 31.2304,
-  longitude: 121.4737,
+  latitude: 39.9042,
+  longitude: 116.4074,
   locale: "zh-CN"
 })
 
 if (placemarks?.length) {
   const place = placemarks[0]
-
-  console.log("国家：", place.country)
-  console.log("城市：", place.locality)
-  console.log("街道：", place.thoroughfare, place.subThoroughfare)
-  console.log("完整地址：", place.name)
-  console.log("邮编：", place.postalCode)
-  console.log("兴趣点：", place.areasOfInterest?.join(", "))
+  console.log("国家:", place.country)
+  console.log("城市:", place.locality)
+  console.log("街道:", place.thoroughfare, place.subThoroughfare)
+  console.log("地标名称:", place.name)
+  console.log("邮编:", place.postalCode)
+  console.log("兴趣点:", place.areasOfInterest?.join(", "))
 }
 ```
 
 ---
 
-#### 开发建议：
-
-* 构建地址字符串时可以根据需要选择不同层级组合，例如：
+### 地址格式化工具
 
 ```ts
 function formatAddress(p: LocationPlacemark): string {
@@ -223,18 +243,26 @@ function formatAddress(p: LocationPlacemark): string {
     p.subLocality,
     p.thoroughfare,
     p.subThoroughfare
-  ].filter(Boolean).join("")
+  ].filter(Boolean).join(", ")
 }
 ```
 
-* `areasOfInterest` 可用于显示更具辨识度的位置名称，适合用作 UI 中的提示文字或地图标注。
-* `timeZone` 可用于基于位置的时间显示或提醒设置。
+---
+
+## 最佳实践与使用建议
+
+* 使用 `areasOfInterest` 和 `name` 显示更友好的位置信息（如地标名）
+* 使用 `postalCode`、`locality`、`administrativeArea` 自动填写表单或记录标签
+* 使用 `timestamp` 判断位置数据是否新鲜
+* 使用 `timeZone` 进行本地时间转换或事件提醒
+* 在调用 `requestCurrent` 前使用 `setAccuracy` 控制精度
+* 对小组件使用 `isAuthorizedForWidgetUpdates()` 检查权限
 
 ---
 
-## 使用说明
+## 说明
 
-* 反向地理编码可能返回多个结果，通常第一个最为准确。
-* 若定位或编码失败，会返回 `null`。
-* 建议在调用 `requestCurrent` 之前先通过 `setAccuracy` 设置合适的精度。
-* 在小组件中使用定位功能前，请先使用 `isAuthorizedForWidgetUpdates()` 检查权限状态。
+* 逆地理编码可能返回多个结果，通常第一个最相关
+* 若获取失败，API 将返回 `null`
+* 若未强制刷新，系统会优先使用缓存位置，响应更快
+* 小组件受限于系统权限机制，务必检测权限状态

@@ -120,6 +120,18 @@ Modifiers applicable to the `Image` component and other views:
 
 ---
 
+### Rendering Behavior (`ImageRenderingBehaviorProps`)
+
+| Prop                          | Type                                        | Default      | Description                                                     |
+| ----------------------------- | ------------------------------------------- | ------------ | --------------------------------------------------------------- |
+| `resizable`                   | `boolean \| object`                         | `false`      | Controls whether the image resizes to fit its frame (see below) |
+| `renderingMode`               | `'original' \| 'template'`                  | `'original'` | Use `"template"` to allow tinting via `foregroundColor`         |
+| `interpolation`               | `'none' \| 'low' \| 'medium' \| 'high'`     | `'medium'`   | Sets interpolation quality when scaling the image               |
+| `antialiased`                 | `boolean`                                   | `false`      | Whether the image should use anti-aliasing                      |
+| `widgetAccentedRenderingMode` | `WidgetAccentedRenderingMode` (Widget-only) | —            | Defines how the image renders in Widget accented mode           |
+
+---
+
 ## **Usage Examples**
 
 1. **Dynamic Network Image Based on Color Scheme**

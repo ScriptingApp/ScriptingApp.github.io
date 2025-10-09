@@ -77,5 +77,99 @@
     "label": "Device Capabilities",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Quick Start",
+    "label": "Quick Start"
+  },
+  {
+    "type": "dir",
+    "name": "Widget",
+    "label": "Widget",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Control Widget",
+    "label": "Control Widget"
+  },
+  {
+    "type": "file",
+    "name": "AppIntent",
+    "label": "AppIntent"
+  },
+  {
+    "type": "file",
+    "name": "Intent",
+    "label": "Intent"
+  },
+  {
+    "type": "dir",
+    "name": "Views",
+    "label": "Views",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Types",
+    "label": "Types",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "View Modifiers",
+    "label": "View Modifiers",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "LiveActivity",
+    "label": "LiveActivity",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Interactive Widget and LiveActivity",
+    "label": "Interactive Widget and LiveActivity"
+  },
+  {
+    "type": "file",
+    "name": "Custom Keyboard",
+    "label": "Custom Keyboard"
+  },
+  {
+    "type": "file",
+    "name": "Assistant",
+    "label": "Assistant"
+  },
+  {
+    "type": "file",
+    "name": "AssistantTool",
+    "label": "AssistantTool"
+  },
+  {
+    "type": "file",
+    "name": "Script",
+    "label": "Script"
+  },
+  {
+    "type": "dir",
+    "name": "Utilities",
+    "label": "Utilities",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Device Capabilities",
+    "label": "Device Capabilities",
+    "collapsible": true,
+    "collapsed": true
   }
 ]

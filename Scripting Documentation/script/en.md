@@ -24,6 +24,35 @@ console.log(Script.directory) // e.g., "/private/var/mobile/Containers/..."
 
 ---
 
+### `env: string`
+
+Indicates the environment in which the current script is running. This allows the script to adapt its behavior based on the runtime context—whether it’s running in the main app, a widget, a notification, or an extension.
+
+### Possible Values:
+
+| Value              | Description                                                                       |
+| ------------------ | --------------------------------------------------------------------------------- |
+| `"index"`          | Running in the main app. Entry point is `index.tsx`. Used for normal UI logic.    |
+| `"widget"`         | Running in a widget. Entry point is `widget.tsx`. Used for home screen widgets.   |
+| `"control_widget"` | Running in a control widget. Entry point is `contrl_widget_button.tsx` or `control_widget_toggle.tsx`. Used for control center widgets.   |
+| `"notification"`   | Running in the rich notification extension. Entry point is `notification.tsx`.    |
+| `"intent"`         | Running as a share sheet or shortcut intent handler. Entry point is `intent.tsx`. |
+| `"app_intents"`    | Running in the App Intents extension. Entry point is `app_intents.tsx`.           |
+| `"assistant_tool"` | Running in the Assistant Tool context. Entry point is `assistant_tool.tsx`.       |
+| `"keyboard"`       | Running in the custom keyboard extension. Entry point is `keyboard.tsx`.          |
+
+### Example:
+
+```ts
+if (Script.env === "widget") {
+  Widget.present(<MyWidget />)
+} else if (Script.env === "index") {
+  Navigation.present({ element: <MainPage /> })
+}
+```
+
+---
+
 ### `widgetParameter: string`
 
 The parameter passed when the script is launched from a widget.
@@ -80,11 +109,11 @@ console.log(Script.metadata.version)       // e.g., "1.2.0"
 
 ## Methods
 
-### `Script.exit(result?: any | IntentValue): void`
+### `Script.exit(result?): void`
 
 Ends the script and optionally returns a result. This is required to release resources properly.
 
-* `result`: Any value or `IntentValue` object to return to the caller (e.g., Shortcuts or another script).
+* `result?: any | IntentValue`: Any value or `IntentValue` object to return to the caller (e.g., Shortcuts or another script).
 
 ```ts
 Script.exit("Done")
@@ -95,13 +124,13 @@ Script.exit(Intent.json({ status: "ok" }))
 
 ---
 
-### `Script.run<T>(options: { name: string; queryParameters?: Record<string, string>; singleMode?: boolean }): Promise<T | null>`
+### `Script.run<T>(options:): Promise<T | null>`
 
 Runs another script programmatically and waits for its result.
 
-* `name`: The name of the script to run.
-* `queryParameters`: Optional data to pass.
-* `singleMode`: If `true`, ensures only one instance of the script runs.
+* `options.name`: The name of the script to run.
+* `options.queryParameters`: Optional data to pass.
+* `options.singleMode`: If `true`, ensures only one instance of the script runs.
 
 Returns: the value passed from `Script.exit(result)` in the target script.
 
@@ -116,7 +145,7 @@ console.log(result)
 
 ---
 
-### `Script.createRunURLScheme(scriptName: string, queryParameters?: Record<string, string>): string`
+### `Script.createRunURLScheme(scriptName, queryParameters?): string`
 
 Creates a `scripting://run` URL to launch and execute a script.
 
@@ -127,7 +156,7 @@ const url = Script.createRunURLScheme("MyScript", { user: "Alice" })
 
 ---
 
-### `Script.createRunSingleURLScheme(scriptName: string, queryParameters?: Record<string, string>): string`
+### `Script.createRunSingleURLScheme(scriptName, queryParameters?): string`
 
 Creates a `scripting://run_single` URL that ensures only one instance of the script runs.
 
@@ -138,7 +167,7 @@ const url = Script.createRunSingleURLScheme("MyScript", { id: "1" })
 
 ---
 
-### `Script.createOpenURLScheme(scriptName: string): string`
+### `Script.createOpenURLScheme(scriptName): string`
 
 Creates a `scripting://open` URL to open a script in the editor.
 
@@ -149,7 +178,7 @@ const url = Script.createOpenURLScheme("MyScript")
 
 ---
 
-### `Script.createDocumentationURLScheme(title?: string): string`
+### `Script.createDocumentationURLScheme(title?): string`
 
 Generates a URL to open the documentation page in the Scripting app.
 
@@ -162,11 +191,11 @@ const url = Script.createDocumentationURLScheme("Widgets")
 
 ---
 
-### `createImportScriptsURLScheme(urls: string[]): string`
+### `createImportScriptsURLScheme(urls): string`
 
 Generates a URL scheme for importing scripts from the specified URLs.
 
-* `urls`: An array of URLs to import scripts from.
+* `urls: string[]`: An array of URLs to import scripts from.
 
 ```ts
 const urlScheme = Script.createImportScriptsURLScheme([

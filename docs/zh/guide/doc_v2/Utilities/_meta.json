@@ -72,5 +72,79 @@
     "type": "file",
     "name": "App Events",
     "label": "App事件"
+  },
+  {
+    "type": "file",
+    "name": "Data",
+    "label": "二进制数据（Data）"
+  },
+  {
+    "type": "file",
+    "name": "UIImage",
+    "label": "UIImage"
+  },
+  {
+    "type": "file",
+    "name": "UUID",
+    "label": "UUID"
+  },
+  {
+    "type": "file",
+    "name": "Crypto",
+    "label": "加密"
+  },
+  {
+    "type": "file",
+    "name": "DateComponents",
+    "label": "日期组件"
+  },
+  {
+    "type": "file",
+    "name": "Path",
+    "label": "文件路径工具"
+  },
+  {
+    "type": "file",
+    "name": "FileManager",
+    "label": "文件管理器"
+  },
+  {
+    "type": "file",
+    "name": "Storage",
+    "label": "本地存储"
+  },
+  {
+    "type": "dir",
+    "name": "Request",
+    "label": "请求",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "WebScoket",
+    "label": "WebScoket"
+  },
+  {
+    "type": "file",
+    "name": "socket.io",
+    "label": "socket.io"
+  },
+  {
+    "type": "dir",
+    "name": "SSH",
+    "label": "SSH",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "OAuth2",
+    "label": "OAuth2"
+  },
+  {
+    "type": "file",
+    "name": "App Events",
+    "label": "App事件"
   }
 ]

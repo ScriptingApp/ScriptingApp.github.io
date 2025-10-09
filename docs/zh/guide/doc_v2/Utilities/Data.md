@@ -1,315 +1,193 @@
 ---
-title: 数据
+title: 二进制数据（Data）
 ---
-`Data` 类用于表示二进制数据，并提供将数据在字符串、文件、Base64、Hex、`ArrayBuffer` 等多种格式之间进行转换的方法。它还支持图像编码、文件读写、二进制拼接与底层字节访问。
-
-## 概览
-
-`Data` 对象适用于以下场景：
-
-* 编码或解码文本与二进制数据
-* 从文件中加载或保存数据
-* 将图像转换为 JPEG/PNG 二进制格式
-* 在 `ArrayBuffer`、Base64、Hex 和原始字符串之间转换
-* 合并多个二进制数据为一个完整的数据块
+The `Data` class represents binary data in memory and provides a wide range of methods for manipulating, converting, compressing, decompressing, and transforming that data. It is useful for working with raw byte buffers, encoded files, images, and more.
 
 ---
 
-## 静态方法（Static Methods）
+## CompressionAlgorithm (Enum)
 
-### `Data.fromString(string: string, encoding?: string): Data | null`
+Specifies which compression algorithm to use when compressing or decompressing a `Data` instance:
 
-从字符串创建一个新的 `Data` 对象。
-
-* **参数：**
-
-  * `string`: 要编码的字符串。
-  * `encoding`（可选）：编码格式，默认为 `"utf-8"`。
-
-* **返回值：** 新的 `Data` 对象，若编码失败或内容为空则返回 `null`。
-
-* **示例：**
-
-  ```ts
-  const data = Data.fromString("Hello, world!")
-  ```
+| Value   | Description                                               |
+| ------- | --------------------------------------------------------- |
+| `lzfse` | Fast and efficient compression using the LZFSE algorithm. |
+| `lz4`   | Very fast compression with moderate compression ratio.    |
+| `lzma`  | High compression ratio, slower performance.               |
+| `zlib`  | Standard and widely-used compression format.              |
 
 ---
 
-### `Data.fromFile(filePath: string): Data | null`
+## Instance Properties and Methods
 
-从指定路径读取文件内容并创建 `Data` 对象。
+### `size: number`
 
-* **参数：**
-
-  * `filePath`: 文件的绝对路径。
-
-* **返回值：** 若读取成功返回 `Data` 实例，否则返回 `null`。
-
-* **示例：**
-
-  ```ts
-  const fileData = Data.fromFile("/path/to/tmp/sample.txt")
-  ```
+The length of the data in bytes (read-only).
 
 ---
 
-### `Data.fromArrayBuffer(arrayBuffer: ArrayBuffer): Data | null`
+### `resetBytes(startIndex: number, endIndex: number): void`
 
-将一个 `ArrayBuffer` 封装为 `Data` 对象。
+Resets a range of bytes to zero.
 
-* **参数：**
+* `startIndex`: Starting index (inclusive)
+* `endIndex`: Ending index (exclusive)
 
-  * `arrayBuffer`: 有效的 `ArrayBuffer` 实例。
-
-* **返回值：** 封装后的 `Data` 对象，若无效或为空则返回 `null`。
-
-* **示例：**
-
-  ```ts
-  const buffer = new Uint8Array([1, 2, 3]).buffer
-  const data = Data.fromArrayBuffer(buffer)
-  ```
+Throws an error if the indices are out of bounds.
 
 ---
 
-### `Data.fromBase64String(base64Encoded: string): Data | null`
+### `advanced(amount: number): Data`
 
-从 Base64 编码字符串创建 `Data` 对象。
-
-* **参数：**
-
-  * `base64Encoded`: 有效的 Base64 字符串。
-
-* **返回值：** 解码后的 `Data` 对象，失败时返回 `null`。
-
-* **示例：**
-
-  ```ts
-  const data = Data.fromBase64String("SGVsbG8=")
-  ```
+Returns a new `Data` instance by removing the first `amount` bytes from the buffer.
 
 ---
 
-### `Data.fromHexString(hexEncoded: string): Data | null`
+### `replaceSubrange(startIndex, endIndex, data): void`
 
-从十六进制字符串创建 `Data` 对象。
-
-* **参数：**
-
-  * `hexEncoded`: 十六进制字符串（如 `"48656c6c6f"`）。
-
-* **返回值：** 解析成功返回 `Data` 对象，失败返回 `null`。
-
-* **示例：**
-
-  ```ts
-  const data = Data.fromHexString("48656c6c6f") // "Hello"
-  ```
-
----
-
-### `Data.fromJPEG(image: UIImage, compressionQuality?: number): Data | null`
-
-将图像编码为 JPEG 格式二进制数据。
-
-* **参数：**
-
-  * `image`: 要编码的图像对象。
-  * `compressionQuality`（可选）：JPEG 压缩质量，范围 0.0 \~ 1.0，默认为 1.0。
-
-* **返回值：** 编码后的 `Data` 对象，失败返回 `null`。
-
----
-
-### `Data.fromPNG(image: UIImage): Data | null`
-
-将图像编码为 PNG 格式二进制数据。
-
-* **参数：**
-
-  * `image`: 要编码的图像对象。
-
-* **返回值：** 编码后的 `Data` 对象，失败返回 `null`。
-
----
-
-### `Data.combine(dataList: Data[]): Data`
-
-合并多个 `Data` 实例为一个完整的 `Data` 对象。
-
-* **参数：**
-
-  * `dataList`: `Data` 对象数组。
-
-* **返回值：** 合并后的新 `Data` 对象。空数据元素会被忽略。
-
-* **示例：**
-
-  ```ts
-  const d1 = Data.fromString("Hello, ")
-  const d2 = Data.fromString("world!")
-  const combined = Data.combine([d1, d2])
-  console.log(combined.toRawString()) // "Hello, world!"
-  ```
-
----
-
-## 实例方法（Instance Methods）
-
-### `getBytes(): Uint8Array | null`
-
-返回原始字节数组的 `Uint8Array` 视图。
-
-* **返回值：** 字节数组视图，若失败则返回 `null`。
-
-* **示例：**
-
-  ```ts
-  const data = Data.fromString("abc")
-  const bytes = data?.getBytes() // [97, 98, 99]
-  ```
-
----
-
-### `toArrayBuffer(): ArrayBuffer`
-
-以 `ArrayBuffer` 格式返回数据。
-
-* **返回值：** 新的 `ArrayBuffer` 对象，即使为空也有效。
-
-* **示例：**
-
-  ```ts
-  const buffer = data.toArrayBuffer()
-  ```
-
----
-
-### `toBase64String(): string`
-
-以 Base64 格式返回数据。
-
-* **返回值：** 编码后的 Base64 字符串。
-
-* **示例：**
-
-  ```ts
-  const base64 = data.toBase64String() // "SGVsbG8gd29ybGQ="
-  ```
-
----
-
-### `toHexString(): string`
-
-以十六进制字符串格式返回数据。
-
-* **返回值：** 十六进制字符串（如 `"48656c6c6f"` 表示 "Hello"）。
-
-* **示例：**
-
-  ```ts
-  const hex = data.toHexString()
-  ```
-
----
-
-### `toRawString(encoding?: string): string | null`
-
-使用指定编码将二进制数据转换为字符串。
-
-* **参数：**
-
-  * `encoding`（可选）：字符串编码，如 `"utf-8"`、`"ascii"`，默认为 `"utf-8"`。
-
-* **返回值：** 解码后的字符串，失败返回 `null`。
-
-* **示例：**
-
-  ```ts
-  const data = Data.fromHexString("e4b8ad")
-  const str = data?.toRawString("utf-8") // "中"
-  ```
+Replaces a specified byte range with the content of another `Data` instance.
 
 ---
 
 ### `compressed(algorithm: CompressionAlgorithm): Data`
 
-使用指定算法压缩内存中的数据。
+Compresses the current data using the specified algorithm and returns a new `Data` instance.
 
-* **参数：**
-
-  * `algorithm`: 要使用的压缩算法（详见下方枚举）。
-
-* **返回值：** 压缩后的 `Data` 对象。
-
-* **异常：** 若数据为空或压缩失败则抛出错误。
-
-* **使用建议：** 适用于减小内存占用，但对于 JPEG、AAC 等已压缩格式可能无显著效果。
+Throws an error if the data is empty or cannot be compressed.
 
 ---
 
 ### `decompressed(algorithm: CompressionAlgorithm): Data`
 
-使用指定算法解压当前数据。
+Decompresses the current data using the specified algorithm and returns a new `Data` instance.
 
-* **参数：**
-
-  * `algorithm`: 压缩时使用的相同算法。
-
-* **返回值：** 解压后的 `Data` 对象。
-
-* **异常：** 若数据为空或解压失败则抛出错误。
-
-* **使用建议：** 适用于还原使用 `compressed()` 压缩后的原始字节数据。
+Must use the same algorithm that was used to compress the data.
 
 ---
 
-## 枚举类型（Enums）
+### `slice(start?: number, end?: number): Data`
 
-### `CompressionAlgorithm`
+Returns a new `Data` instance representing a slice of the original.
 
-用于指定压缩/解压算法的枚举类型，适用于 `Data.compressed()` 和 `Data.decompressed()` 方法。
-
-```ts
-enum CompressionAlgorithm {
-  lzfse = 0, // LZFSE 算法，快速且高效
-  lz4   = 1, // LZ4 算法，极快
-  lzma  = 2, // LZMA 算法，高压缩比
-  zlib  = 3  // Zlib 标准压缩算法，兼容性好
-}
-```
+* `start`: Starting index (default is `0`)
+* `end`: Ending index (default is the end of the data)
 
 ---
 
-## 使用示例（Usage Examples）
+### `append(other: Data): void`
 
-### 字符串转十六进制再还原
-
-```ts
-const original = "SecureMessage"
-const data = Data.fromString(original)
-const hex = data?.toHexString()
-const restored = Data.fromHexString(hex!).toRawString()
-console.log(restored) // "SecureMessage"
-```
+Appends another `Data` instance to the end of the current one.
 
 ---
 
-### 读取文件并转为 Base64
+### `getBytes(): Uint8Array | null` (Deprecated)
 
-```ts
-const fileData = Data.fromFile("/path/to/file.bin")
-const base64 = fileData?.toBase64String()
-```
+Use `toUint8Array()` instead.
 
 ---
 
-### 合并多个数据对象
+### `toUint8Array(): Uint8Array | null`
 
-```ts
-const part1 = Data.fromString("Hello, ")
-const part2 = Data.fromString("world!")
-const combined = Data.combine([part1, part2])
-console.log(combined.toRawString()) // "Hello, world!"
-```
+Converts the data into a `Uint8Array`.
+
+---
+
+### `toArrayBuffer(): ArrayBuffer`
+
+Converts the data into an `ArrayBuffer`.
+
+---
+
+### `toBase64String(): string`
+
+Returns a Base64-encoded string representation of the data.
+
+---
+
+### `toHexString(): string`
+
+Returns a hexadecimal string representation of the data.
+
+---
+
+### `toRawString(encoding?: string): string | null`
+
+Converts the data into a string using the specified encoding (default: `"utf-8"`).
+
+---
+
+### `toIntArray(): number[]`
+
+Returns an array of integers representing the bytes of the data.
+
+---
+
+## Static Methods
+
+### `Data.fromIntArray(array: number[]): Data`
+
+Creates a `Data` instance from an array of integers.
+
+---
+
+### `Data.fromString(str: string, encoding?: string): Data | null` (Deprecated)
+
+Use `Data.fromRawString()` instead.
+
+---
+
+### `Data.fromRawString(str: string, encoding?: string): Data | null`
+
+Creates a `Data` instance from a raw string, using the specified encoding (default: `"utf-8"`).
+
+---
+
+### `Data.fromFile(filePath: string): Data | null`
+
+Reads binary data from a file path and returns a `Data` instance.
+
+---
+
+### `Data.fromArrayBuffer(buffer: ArrayBuffer): Data | null`
+
+Creates a `Data` instance from an `ArrayBuffer`.
+
+---
+
+### `Data.fromUint8Array(bytes: Uint8Array): Data | null`
+
+Creates a `Data` instance from a `Uint8Array`.
+
+---
+
+### `Data.fromBase64String(base64: string): Data | null`
+
+Creates a `Data` instance from a Base64-encoded string.
+
+---
+
+### `Data.fromHexString(hex: string): Data | null`
+
+Creates a `Data` instance from a hexadecimal string.
+
+---
+
+### `Data.fromJPEG(image: UIImage, compressionQuality?: number): Data | null`
+
+Converts a `UIImage` to JPEG format data.
+
+* `compressionQuality`: Compression quality between `0.0` and `1.0` (default: `1.0`)
+
+---
+
+### `Data.fromPNG(image: UIImage): Data | null`
+
+Converts a `UIImage` to PNG format data.
+
+---
+
+### `Data.combine(dataList: Data[]): Data`
+
+Combines multiple `Data` instances into one.
+
+Returns `null` if the list is empty or all items are empty.

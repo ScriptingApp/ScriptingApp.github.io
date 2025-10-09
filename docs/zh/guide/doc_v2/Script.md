@@ -27,6 +27,35 @@ console.log(Script.directory) // 示例: "/private/var/mobile/Containers/..."
 
 ---
 
+### `env: string`
+
+表示当前脚本运行的环境类型，用于根据上下文动态调整脚本行为，例如判断是否处于主应用、组件、通知或扩展中。
+
+### 可选值说明：
+
+| 值                  | 说明                                                    |
+| ------------------ | ----------------------------------------------------- |
+| `"index"`          | 主应用环境中运行，入口文件为 `index.tsx`。用于普通应用逻辑和界面展示。             |
+| `"widget"`         | 小组件中运行，入口文件为 `widget.tsx`。用于生成主屏幕组件内容。                |
+| `"control_widget"` | 控制中心小组件中运行，入口文件为 `control_widget_button.tsx`或`control_widget_toggle.tsx`。用于控制中心小组件的按钮或开关控件。                |
+| `"notification"`   | 富通知扩展中运行，入口文件为 `notification.tsx`。用于自定义通知界面。          |
+| `"intent"`         | 通过快捷指令或分享面板触发的脚本，入口文件为 `intent.tsx`。                  |
+| `"app_intents"`    | App Intents 扩展中运行，入口文件为 `app_intents.tsx`。用于原生快捷指令集成。 |
+| `"assistant_tool"` | Assistant Tool 工具模式中运行，入口文件为 `assistant_tool.tsx`。    |
+| `"keyboard"`       | 自定义键盘扩展中运行，入口文件为 `keyboard.tsx`。用于实现个性化键盘逻辑。          |
+
+### 示例：
+
+```ts
+if (Script.env === "widget") {
+  Widget.present(<MyWidget />)
+} else if (Script.env === "index") {
+  Navigation.present({ element: <MainPage /> })
+}
+```
+
+---
+
 ### `widgetParameter: string`
 
 从小组件启动脚本时传入的参数。
@@ -83,11 +112,11 @@ console.log(Script.metadata.version)       // 示例: "1.2.0"
 
 ## 方法（Methods）
 
-### `Script.exit(result?: any | IntentValue): void`
+### `Script.exit(result?): void`
 
 终止当前脚本，并可选地返回一个结果。**必须调用该方法来正确释放资源。**
 
-* `result`: 要返回的值，可以是任意类型，也可以是 `IntentValue` 对象（例如返回给快捷指令或其他脚本）
+* `result?: any | IntentValue`: 要返回的值，可以是任意类型，也可以是 `IntentValue` 对象（例如返回给快捷指令或其他脚本）
 
 ```ts
 Script.exit("Done")
@@ -98,13 +127,13 @@ Script.exit(Intent.json({ status: "ok" }))
 
 ---
 
-### `Script.run<T>(options: { name: string; queryParameters?: Record<string, string>; singleMode?: boolean }): Promise<T | null>`
+### `Script.run<T>(options): Promise<T | null>`
 
 以编程方式运行另一个脚本，并等待其结果。
 
-* `name`: 要运行的脚本名称
-* `queryParameters`: 可选参数，作为 URL 参数传递
-* `singleMode`: 若为 `true`，确保同一脚本只能同时运行一个实例
+* `options.name`: 要运行的脚本名称
+* `options.queryParameters`: 可选参数，作为 URL 参数传递
+* `options.singleMode`: 若为 `true`，确保同一脚本只能同时运行一个实例
 
 返回目标脚本中 `Script.exit(result)` 返回的值。
 
@@ -119,7 +148,7 @@ console.log(result)
 
 ---
 
-### `Script.createRunURLScheme(scriptName: string, queryParameters?: Record<string, string>): string`
+### `Script.createRunURLScheme(scriptName, queryParameters?): string`
 
 生成一个 `scripting://run` URL，可用于启动并执行脚本。
 
@@ -130,7 +159,7 @@ const url = Script.createRunURLScheme("MyScript", { user: "Alice" })
 
 ---
 
-### `Script.createRunSingleURLScheme(scriptName: string, queryParameters?: Record<string, string>): string`
+### `Script.createRunSingleURLScheme(scriptName, queryParameters?): string`
 
 生成一个 `scripting://run_single` URL，确保脚本不会并行运行多个实例。
 
@@ -141,7 +170,7 @@ const url = Script.createRunSingleURLScheme("MyScript", { id: "1" })
 
 ---
 
-### `Script.createOpenURLScheme(scriptName: string): string`
+### `Script.createOpenURLScheme(scriptName): string`
 
 生成一个 `scripting://open` URL，用于在编辑器中打开脚本。
 
@@ -152,7 +181,7 @@ const url = Script.createOpenURLScheme("MyScript")
 
 ---
 
-### `Script.createDocumentationURLScheme(title?: string): string`
+### `Script.createDocumentationURLScheme(title?): string`
 
 生成用于打开 Scripting App 内文档页面的 URL。
 
@@ -165,11 +194,11 @@ const url = Script.createDocumentationURLScheme("Widgets")
 
 ---
 
-### `createImportScriptsURLScheme(urls: string[]): string`
+### `createImportScriptsURLScheme(urls): string`
 
 根据提供的 URL 数组生成导入脚本的 URL Scheme。
 
-* `urls`: 要导入的脚本资源 URL 列表（支持 zip 或单文件）
+* `urls: string[]`: 要导入的脚本资源 URL 列表（支持 zip 或单文件）
 
 ```ts
 const urlScheme = Script.createImportScriptsURLScheme([

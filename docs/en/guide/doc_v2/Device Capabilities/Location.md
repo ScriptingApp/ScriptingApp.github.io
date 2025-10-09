@@ -1,7 +1,7 @@
 ---
 title: Location
 ---
-The global `Location` API provides access to the device’s geographic location, including one-time location retrieval, reverse geocoding, user-driven location selection via map, and accuracy control. It also supports permission checking for widgets that need location updates.
+The global `Location` API provides access to the device’s geographic location, including one-time location retrieval, reverse geocoding, user-driven location selection via map, accuracy control, and permission checking for widgets.
 
 ---
 
@@ -54,15 +54,24 @@ await Location.setAccuracy("hundredMeters")
 
 ---
 
-### `Location.requestCurrent(): Promise<LocationInfo | null>`
+### `Location.requestCurrent(options?: { forceRequest?: boolean }): Promise<LocationInfo | null>`
 
 Requests the user's current location once. May trigger a permission prompt if not previously granted.
 
+By default, if a cached location is available, it will be returned immediately. If no cached location exists, a new request will be made. To force a new location retrieval even if a cached value exists, pass `{ forceRequest: true }`.
+
+#### Parameters
+
+| Option         | Type      | Required | Description                                                     |
+| -------------- | --------- | -------- | --------------------------------------------------------------- |
+| `forceRequest` | `boolean` | No       | If `true`, bypasses the cache and always requests new location. |
+
 ```ts
-const location = await Location.requestCurrent()
+const location = await Location.requestCurrent({ forceRequest: true })
 if (location) {
   console.log("Latitude:", location.latitude)
   console.log("Longitude:", location.longitude)
+  console.log("Timestamp:", location.timestamp)
 }
 ```
 
@@ -70,7 +79,7 @@ if (location) {
 
 ### `Location.pickFromMap(): Promise<LocationInfo | null>`
 
-Opens the built-in map interface to allow the user to pick a location manually.
+Opens the built-in map interface to allow the user to manually select a location.
 
 ```ts
 const selected = await Location.pickFromMap()
@@ -113,7 +122,7 @@ if (placemarks?.length) {
 
 ### `LocationAccuracy`
 
-Specifies the accuracy of the location data:
+Specifies the desired accuracy of location data:
 
 ```ts
 type LocationAccuracy =
@@ -128,12 +137,22 @@ type LocationAccuracy =
 
 ### `LocationInfo`
 
-Represents a geographic coordinate:
+Represents a geographic coordinate with timestamp:
 
 ```ts
 type LocationInfo = {
+  /**
+   * The latitude in degrees.
+   */
   latitude: number
+  /**
+   * The longitude in degrees.
+   */
   longitude: number
+  /**
+   * Timestamp of when the location was recorded, in milliseconds since epoch.
+   */
+  timestamp: number
 }
 ```
 
@@ -141,7 +160,7 @@ type LocationInfo = {
 
 ### `LocationPlacemark`
 
-Represents a human-readable description of a geographic coordinate, typically returned by reverse geocoding. It contains structured location details, such as street, city, region, country, and points of interest.
+Represents a human-readable description of a geographic coordinate, typically returned by reverse geocoding. Includes structured location details such as city, country, and street.
 
 ```ts
 type LocationPlacemark = {
@@ -164,30 +183,32 @@ type LocationPlacemark = {
 }
 ```
 
-### Field Descriptions
+#### Field Descriptions
 
-| Field                   | Type           | Description                                                                                  |
-| ----------------------- | -------------- | -------------------------------------------------------------------------------------------- |
-| `location`              | `LocationInfo` | The latitude and longitude of the placemark (usually the same as the reverse geocode input). |
-| `region`                | `string`       | A general regional name, such as a province or state.                                        |
-| `timeZone`              | `string`       | The time zone identifier (e.g., `"Asia/Shanghai"`).                                          |
-| `name`                  | `string`       | A generic name for the place, such as a building or landmark.                                |
-| `thoroughfare`          | `string`       | The street name, such as `"Main Street"` or `"Zhongguancun Ave"`.                            |
-| `subThoroughfare`       | `string`       | Additional street-level info, such as building number `"123"` or unit info.                  |
-| `locality`              | `string`       | The city or town name.                                                                       |
-| `subLocality`           | `string`       | A sub-area of the city or town, such as a neighborhood or district.                          |
-| `administrativeArea`    | `string`       | The state, province, or similar administrative region.                                       |
-| `subAdministrativeArea` | `string`       | A further subdivision within the administrative area, such as a county or district.          |
-| `postalCode`            | `string`       | The postal or ZIP code.                                                                      |
-| `isoCountryCode`        | `string`       | The ISO 3166-1 alpha-2 country code (e.g., `"US"`, `"CN"`).                                  |
-| `country`               | `string`       | The full name of the country or region.                                                      |
-| `inlandWater`           | `string`       | The name of a nearby inland body of water (lake, river), if applicable.                      |
-| `ocean`                 | `string`       | The name of a nearby ocean, if applicable.                                                   |
-| `areasOfInterest`       | `string[]`     | An array of nearby points of interest or landmarks (e.g., `"Times Square"`).                 |
+| Field                   | Type           | Description                                                                     |
+| ----------------------- | -------------- | ------------------------------------------------------------------------------- |
+| `location`              | `LocationInfo` | The coordinates of the placemark (typically the same as reverse geocode input). |
+| `region`                | `string`       | General region or province/state.                                               |
+| `timeZone`              | `string`       | Time zone identifier (e.g., `"Asia/Shanghai"`).                                 |
+| `name`                  | `string`       | Generic name such as building, landmark, or area.                               |
+| `thoroughfare`          | `string`       | Street name (e.g., `"Main St"`, `"Zhongguancun Ave"`).                          |
+| `subThoroughfare`       | `string`       | Street-level detail like building number or unit.                               |
+| `locality`              | `string`       | City or town.                                                                   |
+| `subLocality`           | `string`       | Subdivision of the locality (e.g., neighborhood or district).                   |
+| `administrativeArea`    | `string`       | Province, state, or equivalent administrative area.                             |
+| `subAdministrativeArea` | `string`       | Further subdivision like county or district.                                    |
+| `postalCode`            | `string`       | ZIP or postal code.                                                             |
+| `isoCountryCode`        | `string`       | ISO 3166-1 alpha-2 country code (e.g., `"US"`, `"CN"`).                         |
+| `country`               | `string`       | Full name of the country or region.                                             |
+| `inlandWater`           | `string`       | Name of nearby inland water (river/lake), if applicable.                        |
+| `ocean`                 | `string`       | Name of nearby ocean, if applicable.                                            |
+| `areasOfInterest`       | `string[]`     | List of nearby points of interest or landmarks (e.g., `"Times Square"`).        |
 
 ---
 
-#### Example Usage
+## Example Usage
+
+### Reverse Geocode
 
 ```ts
 const placemarks = await Location.reverseGeocode({
@@ -209,9 +230,7 @@ if (placemarks?.length) {
 
 ---
 
-#### Suggested Address Formatter
-
-You can use the following function to construct a compact, readable address string:
+### Address Formatter (Helper)
 
 ```ts
 function formatAddress(p: LocationPlacemark): string {
@@ -228,18 +247,20 @@ function formatAddress(p: LocationPlacemark): string {
 
 ---
 
-#### Practical Use Cases
+## Best Practices & Use Cases
 
-* Use `areasOfInterest` and `name` to display user-friendly labels (e.g., “Empire State Building”).
-* Use `postalCode`, `locality`, and `administrativeArea` for auto-filling forms or location tagging.
-* Use `timeZone` for generating time-sensitive notifications or scheduling events in the user’s local time.
-* Combine `thoroughfare` and `subThoroughfare` for a complete street address.
+* Use `areasOfInterest` and `name` to display user-friendly place names.
+* Use `postalCode`, `locality`, and `administrativeArea` for autofill and geotagging.
+* Use `timestamp` to determine freshness of location data.
+* Use `timeZone` for localizing time-based features.
+* Set location accuracy before calling `requestCurrent` for optimal precision.
+* Always check widget permissions via `isAuthorizedForWidgetUpdates()`.
 
 ---
 
 ## Notes
 
-* Reverse geocoding may return multiple placemarks; typically, the first one is the most relevant.
-* `null` is returned if the location or geocoding fails.
-* You should call `setAccuracy` before `requestCurrent` to control precision based on your use case.
-* When used in widgets, permissions may be limited; use `isAuthorizedForWidgetUpdates` to verify access.
+* Reverse geocoding may return multiple results. Use the first placemark for best relevance.
+* If location retrieval fails, `null` is returned.
+* When `forceRequest` is false or omitted, cached location may be used for faster results.
+* In widgets, location access may be restricted. Always verify permissions explicitly.

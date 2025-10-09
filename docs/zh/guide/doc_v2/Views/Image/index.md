@@ -119,6 +119,18 @@ type DynamicImageSource<T> = {
 
 ---
 
+### 图像渲染行为（ImageRenderingBehaviorProps）
+
+| 属性                            | 类型                                      | 默认值          | 说明                                           |
+| ----------------------------- | --------------------------------------- | ------------ | -------------------------------------------- |
+| `resizable`                   | `boolean \| object`                     | `false`      | 控制图像是否自适应尺寸（详见下方）                            |
+| `renderingMode`               | `'original' \| 'template'`              | `'original'` | 设置图像渲染模式，`template` 可使用 `foregroundColor` 着色 |
+| `interpolation`               | `'none' \| 'low' \| 'medium' \| 'high'` | `'medium'`   | 设置图像缩放时的插值质量                                 |
+| `antialiased`                 | `boolean`                               | `false`      | 是否开启抗锯齿边缘渲染                                  |
+| `widgetAccentedRenderingMode` | `WidgetAccentedRenderingMode`           | -            | 控制在 Widget 的强调模式下的图像渲染方式（仅 Widget 有效）        |
+
+---
+
 ## **使用示例**
 
 1. **根据浅色/深色模式切换网络图片**

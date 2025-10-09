@@ -18,5 +18,25 @@
     "type": "file",
     "name": "TTY Stdin Writer",
     "label": "TTY 标准输入写入器"
+  },
+  {
+    "type": "file",
+    "name": "SSH Client",
+    "label": "SSH 客户端"
+  },
+  {
+    "type": "file",
+    "name": "SFTP Client",
+    "label": "SFTP 客户端"
+  },
+  {
+    "type": "file",
+    "name": "SSH Authentication Method",
+    "label": "SSH 认证方法"
+  },
+  {
+    "type": "file",
+    "name": "TTY Stdin Writer",
+    "label": "TTY 标准输入写入器"
   }
 ]

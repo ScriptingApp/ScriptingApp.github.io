@@ -95,6 +95,32 @@
   },
   {
     "title": {
+      "en": "Control Widget",
+      "zh": "控制中心的小组件"
+    },
+    "subtitle": {
+      "en": "Add custom Button or Toggle controls to the Control Center or Lock Screen",
+      "zh": "在控制中心或锁屏界面添加按钮（Button）或开关（Toggle）控件。"
+    },
+    "readme": "control_widget/"
+  },
+  {
+    "title": {
+      "en": "AppIntent",
+      "zh": "AppIntent"
+    },
+    "subtitle": {
+      "en": "This interface serves as the core mechanism for executing script logic behind controls in Widgets, Live Activities, and ControlWidgets.",
+      "zh": "AppIntent 为小组件，灵动岛和控制中心的控件提供了执行脚本逻辑的核心机制。"
+    },
+    "keywords": [
+      "AppIntentManager",
+      "AppIntentProtocol"
+    ],
+    "readme": "app_intents/"
+  },
+  {
+    "title": {
       "en": "Intent",
       "zh": "Intent"
     },
@@ -562,6 +588,17 @@
           "zh": "这个视图可以用来打开网页、应用特定的URL或其他协议。"
         },
         "readme": "views/link/"
+      },
+      {
+        "title": {
+          "en": "SVG",
+          "zh": "SVG"
+        },
+        "subtitle": {
+          "en": "This view can be used to render SVG images.",
+          "zh": "这个视图可以用来渲染SVG图像。"
+        },
+        "readme": "views/svg/"
       },
       {
         "title": {
@@ -2181,6 +2218,28 @@
           "zh": "该修饰符用于为视图层级提供翻译服务的上下文环境。"
         },
         "readme": "view_modifiers/translation_host/"
+      },
+      {
+        "title": {
+          "en": "layoutPriority",
+          "zh": "布局优先级"
+        },
+        "subtitle": {
+          "en": "This view modifier specifies a layout priority for a view.",
+          "zh": "该修饰符用于为视图指定布局优先级。"
+        },
+        "readme": "view_modifiers/layout_priority/"
+      },
+      {
+        "title": {
+          "en": "Chaining View Modifiers",
+          "zh": "可链式调用的修饰符"
+        },
+        "subtitle": {
+          "en": "This view modifier allows you to chain multiple modifiers together, supporting the same modifier being used multiple times in the same view.",
+          "zh": "该修饰符可用于连续调用多个修饰符，支持同一个修饰符在同一个视图中多次使用。"
+        },
+        "readme": "view_modifiers/modifiers/"
       }
     ]
   },
@@ -2210,6 +2269,17 @@
       "app_intent"
     ],
     "readme": "interactive_widget_and_liveactivity/"
+  },
+  {
+    "title": {
+      "en": "Custom Keyboard",
+      "zh": "自定义键盘"
+    },
+    "subtitle": {
+      "en": "Create custom keyboards with unique layouts and functionalities.",
+      "zh": "创建具有独特布局和功能的自定义键盘。"
+    },
+    "readme": "custom_keyboard/"
   },
   {
     "title": {
@@ -2243,7 +2313,9 @@
       "zh": "你可以通过该接口访问当前脚本的运行信息、终止脚本并返回结果、在脚本之间调用、以及生成 URL Scheme 以打开或运行脚本。"
     },
     "readme": "script/",
-    "keywords": ["URL Scheme"]
+    "keywords": [
+      "URL Scheme"
+    ]
   },
   {
     "title": {
@@ -2258,7 +2330,7 @@
       {
         "title": {
           "en": "Data",
-          "zh": "数据"
+          "zh": "二进制数据（Data）"
         },
         "subtitle": {
           "en": "This class represents binary data and provides methods to convert between various formats.",
@@ -3235,7 +3307,9 @@
           "en": "This interface allows you to send messages using the device's messaging capabilities, such as SMS or iMessage.",
           "zh": "该接口允许您使用设备的消息功能发送信息，例如短信或 iMessage。"
         },
-        "keywords": ["MessageUI"],
+        "keywords": [
+          "MessageUI"
+        ],
         "readme": "message_ui/"
       },
       {
@@ -3276,6 +3350,73 @@
           "zh": "该接口提供语言翻译功能，允许您在不同语言之间翻译文本。"
         },
         "readme": "translation/"
+      },
+      {
+        "title": {
+          "en": "Bluetooth",
+          "zh": "蓝牙"
+        },
+        "subtitle": {
+          "en": "This interface provides classes to scan, connect, and exchange data with Bluetooth devices.",
+          "zh": "提供蓝牙相关的API，允许你扫描、连接和与蓝牙设备交换数据。"
+        },
+        "children": [
+          {
+            "title": {
+              "en": "BluetoothCentralManager",
+              "zh": "蓝牙中央设备管理器"
+            },
+            "subtitle": {
+              "en": "This interface allows you to scan for, connect to, and interact with nearby Bluetooth peripherals.",
+              "zh": "该接口允许你扫描、连接和与附近的蓝牙外设进行交互。"
+            },
+            "readme": "bluetooth/central_manager/"
+          },
+          {
+            "title": {
+              "en": "BluetoothPeripheral",
+              "zh": "蓝牙外设"
+            },
+            "subtitle": {
+              "en": "This interface provides properties and methods for interacting with the device, including connecting, discovering services and characteristics, reading/writing values, and subscribing to notifications.",
+              "zh": "表示一个 BLE 外围设备对象，支持读取设备信息、连接状态、发现服务与特征值、读取写入数据、订阅通知等。"
+            },
+            "readme": "bluetooth/peripheral/"
+          },
+          {
+            "title": {
+              "en": "BluetoothService",
+              "zh": "蓝牙服务"
+            },
+            "subtitle": {
+              "en": "This interface represents a Bluetooth Low Energy (BLE) service. A service is a logical grouping of related characteristics and possibly other included services.",
+              "zh": "表示一个 BLE（低功耗蓝牙）服务。服务是外围设备中功能的逻辑分组，包含一个或多个特征值（`Characteristic`），也可以包含对其他服务的引用（包含服务）。"
+            },
+            "readme": "bluetooth/service/"
+          },
+          {
+            "title": {
+              "en": "BluetoothCharacteristic",
+              "zh": "蓝牙服务特征值"
+            },
+            "subtitle": {
+              "en": "This interface represents a Bluetooth Low Energy (BLE) service. A service is a logical grouping of related characteristics and possibly other included services.",
+              "zh": "表示蓝牙服务（`BluetoothService`）中的一个特征值，是 BLE 设备数据交互的核心单元。"
+            },
+            "readme": "bluetooth/characteristic/"
+          },
+          {
+            "title": {
+              "en": "BluetoothPeripheralManager",
+              "zh": "蓝牙外设管理器"
+            },
+            "subtitle": {
+              "en": "This interface allows you to create a Bluetooth peripheral that can advertise services and characteristics, and accept connections from central devices.",
+              "zh": "该接口允许你创建一个蓝牙外设，可以广播服务和特征，并接受来自中央设备的连接。"
+            },
+            "readme": "bluetooth/peripheral_manager/"
+          }
+        ]
       }
     ]
   }

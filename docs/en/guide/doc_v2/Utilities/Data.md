@@ -1,316 +1,193 @@
 ---
 title: Data
 ---
-The `Data` class represents binary data and provides methods to convert between various formats including strings, files, base64, hex, and `ArrayBuffer`. It also supports image and file encoding, binary composition, and low-level byte access.
-
-## Overview
-
-`Data` objects are used to:
-
-* Encode and decode textual or binary data.
-* Load or persist data from files.
-* Transform images to binary format (JPEG/PNG).
-* Convert between `ArrayBuffer`, Base64, Hex, and raw string formats.
-* Concatenate multiple binary values into a single `Data` object.
+`Data` 类用于表示二进制数据，提供多种方法用于数据的创建、转换、压缩、解压、拼接、读取等操作。可用于处理图像、文件、音频、编码数据等各种原始字节数据。
 
 ---
 
-## Static Methods
+## CompressionAlgorithm（压缩算法枚举）
 
-### `Data.fromString(string: string, encoding?: string): Data | null`
+该枚举用于指定 `Data` 的压缩或解压算法：
 
-Creates a new `Data` object from a string.
-
-* **Parameters:**
-
-  * `string`: The input string to encode.
-  * `encoding` (optional): The string encoding. Defaults to `"utf-8"`.
-
-* **Returns:** A new `Data` object, or `null` if encoding fails or input is empty.
-
-* **Example:**
-
-  ```ts
-  const data = Data.fromString("Hello, world!")
-  ```
+| 枚举值     | 描述                    |
+| ------- | --------------------- |
+| `lzfse` | LZFSE 压缩算法，快速且高效。     |
+| `lz4`   | LZ4 压缩算法，压缩和解压速度极快。   |
+| `lzma`  | LZMA 算法，压缩率高，压缩速度较慢。  |
+| `zlib`  | Zlib 算法，通用且广泛支持的压缩格式。 |
 
 ---
 
-### `Data.fromFile(filePath: string): Data | null`
+## 实例属性与方法
 
-Reads binary content from a file at the given path.
+### `size: number`
 
-* **Parameters:**
-
-  * `filePath`: Absolute file system path to the file.
-
-* **Returns:** A `Data` instance if the file is found and readable, otherwise `null`.
-
-* **Example:**
-
-  ```ts
-  const fileData = Data.fromFile("/path/to/tmp/sample.txt")
-  ```
+当前数据的字节长度（只读属性）。
 
 ---
 
-### `Data.fromArrayBuffer(arrayBuffer: ArrayBuffer): Data | null`
+### `resetBytes(startIndex: number, endIndex: number): void`
 
-Wraps an `ArrayBuffer` in a new `Data` object.
+将数据中指定范围内的字节清零。
 
-* **Parameters:**
+* `startIndex`：起始索引（包含）
+* `endIndex`：结束索引（不包含）
 
-  * `arrayBuffer`: A valid `ArrayBuffer` instance.
-
-* **Returns:** A new `Data` instance, or `null` if the buffer is empty or invalid.
-
-* **Example:**
-
-  ```ts
-  const buffer = new Uint8Array([1, 2, 3]).buffer
-  const data = Data.fromArrayBuffer(buffer)
-  ```
+若索引超出范围将抛出异常。
 
 ---
 
-### `Data.fromBase64String(base64Encoded: string): Data | null`
+### `advanced(amount: number): Data`
 
-Creates a `Data` object from a Base64-encoded string.
-
-* **Parameters:**
-
-  * `base64Encoded`: A valid Base64 string.
-
-* **Returns:** A `Data` object containing the decoded binary, or `null` if decoding fails.
-
-* **Example:**
-
-  ```ts
-  const data = Data.fromBase64String("SGVsbG8=")
-  ```
+返回一个新的 `Data` 实例，去除前 `amount` 个字节。
 
 ---
 
-### `Data.fromHexString(hexEncoded: string): Data | null`
+### `replaceSubrange(startIndex, endIndex, data): void`
 
-Creates a `Data` object from a hexadecimal string.
-
-* **Parameters:**
-
-  * `hexEncoded`: A valid hex string, e.g., `"48656c6c6f"`.
-
-* **Returns:** A `Data` object or `null` if parsing fails.
-
-* **Example:**
-
-  ```ts
-  const data = Data.fromHexString("48656c6c6f") // "Hello"
-  ```
-
----
-
-### `Data.fromJPEG(image: UIImage, compressionQuality?: number): Data | null`
-
-Encodes a `UIImage` as JPEG binary data.
-
-* **Parameters:**
-
-  * `image`: The image to encode.
-  * `compressionQuality` (optional): JPEG quality from 0.0 (lowest) to 1.0 (highest). Defaults to 1.0.
-
-* **Returns:** A `Data` object or `null` on failure.
-
----
-
-### `Data.fromPNG(image: UIImage): Data | null`
-
-Encodes a `UIImage` as PNG binary data.
-
-* **Parameters:**
-
-  * `image`: The image to encode.
-
-* **Returns:** A `Data` object or `null` on failure.
-
----
-
-### `Data.combine(dataList: Data[]): Data`
-
-Combines multiple `Data` instances into a single `Data` object.
-
-* **Parameters:**
-
-  * `dataList`: An array of `Data` instances.
-
-* **Returns:** A new `Data` instance containing the concatenated bytes. Empty `Data` elements are ignored.
-
-* **Example:**
-
-  ```ts
-  const d1 = Data.fromString("Hello, ")
-  const d2 = Data.fromString("world!")
-  const combined = Data.combine([d1, d2])
-  console.log(combined.toRawString()) // "Hello, world!"
-  ```
-
----
-
-## Instance Methods
-
-### `getBytes(): Uint8Array | null`
-
-Returns the raw bytes as a `Uint8Array`.
-
-* **Returns:** A `Uint8Array` view of the bytes, or `null` if conversion fails.
-
-* **Example:**
-
-  ```ts
-  const data = Data.fromString("abc")
-  const bytes = data?.getBytes() // [97, 98, 99]
-  ```
-
----
-
-### `toArrayBuffer(): ArrayBuffer`
-
-Returns the data as an `ArrayBuffer`.
-
-* **Returns:** A new `ArrayBuffer` instance, always valid (may be empty).
-
-* **Example:**
-
-  ```ts
-  const buffer = data.toArrayBuffer()
-  ```
-
----
-
-### `toBase64String(): string`
-
-Returns the Base64-encoded string representation of the data.
-
-* **Returns:** A string (possibly empty).
-
-* **Example:**
-
-  ```ts
-  const base64 = data.toBase64String() // "SGVsbG8gd29ybGQ="
-  ```
-
----
-
-### `toHexString(): string`
-
-Returns a hexadecimal string representing the data bytes.
-
-* **Returns:** A string (e.g., `"48656c6c6f"` for "Hello").
-
-* **Example:**
-
-  ```ts
-  const hex = data.toHexString()
-  ```
-
----
-
-### `toRawString(encoding?: string): string | null`
-
-Converts the binary data to a string using the specified encoding.
-
-* **Parameters:**
-
-  * `encoding` (optional): String encoding (e.g., `"utf-8"`, `"ascii"`). Defaults to `"utf-8"`.
-
-* **Returns:** A decoded string, or `null` if decoding fails.
-
-* **Example:**
-
-  ```ts
-  const data = Data.fromHexString("e4b8ad")
-  const str = data?.toRawString("utf-8") // "中"
-  ```
+将当前数据中指定范围的字节替换为另一个 `Data` 实例的数据。
 
 ---
 
 ### `compressed(algorithm: CompressionAlgorithm): Data`
 
-Compresses the current in-memory data using the specified algorithm.
+使用指定的压缩算法压缩当前数据，返回压缩后的新 `Data` 实例。
 
-* **Parameters:**
-
-  * `algorithm`: The compression algorithm to use.
-
-* **Returns:** A new `Data` object containing the compressed bytes.
-
-* **Throws:** An error if the data is empty or cannot be compressed.
-
-* **Usage Tip:** Use this method to reduce memory usage. Compression is most effective for raw data formats. Already compressed formats (e.g., JPEG, MP4) may benefit little or not at all.
+如果数据为空或无法压缩将抛出异常。
 
 ---
 
 ### `decompressed(algorithm: CompressionAlgorithm): Data`
 
-Decompresses the current data using the specified algorithm.
+使用指定的算法对当前数据进行解压，返回解压后的 `Data` 实例。
 
-* **Parameters:**
-
-  * `algorithm`: The same algorithm that was used to compress the data.
-
-* **Returns:** A new `Data` object containing the decompressed bytes.
-
-* **Throws:** An error if the data is empty or cannot be decompressed.
-
-* **Usage Tip:** Use this method when you need access to the original raw bytes that were compressed using `compressed()`.
+压缩与解压时使用的算法必须一致。
 
 ---
 
-## Enums
+### `slice(start?: number, end?: number): Data`
 
-### `CompressionAlgorithm`
+返回数据的子集片段，形成新的 `Data` 实例。
 
-An enum that defines the available compression algorithms used with `Data.compressed()` and `Data.decompressed()`.
-
-```ts
-enum CompressionAlgorithm {
-  lzfse = 0, // LZFSE – Fast and efficient compression
-  lz4   = 1, // LZ4 – Very fast compression algorithm
-  lzma  = 2, // LZMA – High compression ratio
-  zlib  = 3  // Zlib – Widely used standard algorithm
-}
-```
+* `start`：起始索引（默认 0）
+* `end`：结束索引（默认到末尾）
 
 ---
 
-## Usage Examples
+### `append(other: Data): void`
 
-### Convert Text to Hex and Back
-
-```ts
-const original = "SecureMessage"
-const data = Data.fromString(original)
-const hex = data?.toHexString()
-const restored = Data.fromHexString(hex!).toRawString()
-console.log(restored) // "SecureMessage"
-```
+将另一个 `Data` 实例的数据追加到当前数据末尾。
 
 ---
 
-### Read File and Convert to Base64
+### `getBytes(): Uint8Array | null`（已废弃）
 
-```ts
-const fileData = Data.fromFile("/path/to/file.bin")
-const base64 = fileData?.toBase64String()
-```
+请改用 `toUint8Array()`。
 
 ---
 
-### Concatenate Multiple Data Objects
+### `toUint8Array(): Uint8Array | null`
 
-```ts
-const part1 = Data.fromString("Hello, ")
-const part2 = Data.fromString("world!")
-const combined = Data.combine([part1, part2])
-console.log(combined.toRawString()) // "Hello, world!"
-```
+将数据转换为 `Uint8Array`。
 
+---
+
+### `toArrayBuffer(): ArrayBuffer`
+
+将数据转换为 `ArrayBuffer`。
+
+---
+
+### `toBase64String(): string`
+
+将数据编码为 Base64 字符串。
+
+---
+
+### `toHexString(): string`
+
+将数据编码为十六进制字符串。
+
+---
+
+### `toRawString(encoding?: string): string | null`
+
+将数据转换为字符串，支持指定编码（默认 `"utf-8"`）。
+
+---
+
+### `toIntArray(): number[]`
+
+将数据转换为由整数表示的字节数组。
+
+---
+
+## 静态方法
+
+### `Data.fromIntArray(array: number[]): Data`
+
+从整数数组创建 `Data` 实例。
+
+---
+
+### `Data.fromString(str: string, encoding?: string): Data | null`（已废弃）
+
+请使用 `Data.fromRawString()` 代替。
+
+---
+
+### `Data.fromRawString(str: string, encoding?: string): Data | null`
+
+从字符串创建 `Data` 实例，支持指定编码（默认 `"utf-8"`）。
+
+---
+
+### `Data.fromFile(filePath: string): Data | null`
+
+从本地文件路径读取数据，返回 `Data` 实例。
+
+---
+
+### `Data.fromArrayBuffer(buffer: ArrayBuffer): Data | null`
+
+从 `ArrayBuffer` 创建 `Data` 实例。
+
+---
+
+### `Data.fromUint8Array(bytes: Uint8Array): Data | null`
+
+从 `Uint8Array` 创建 `Data` 实例。
+
+---
+
+### `Data.fromBase64String(base64: string): Data | null`
+
+从 Base64 编码字符串创建 `Data` 实例。
+
+---
+
+### `Data.fromHexString(hex: string): Data | null`
+
+从十六进制字符串创建 `Data` 实例。
+
+---
+
+### `Data.fromJPEG(image: UIImage, compressionQuality?: number): Data | null`
+
+将图像转为 JPEG 格式的 `Data` 实例。
+
+* `compressionQuality`：JPEG 压缩质量，范围 0.0 ~ 1.0，默认值为 1.0（最高质量）
+
+---
+
+### `Data.fromPNG(image: UIImage): Data | null`
+
+将图像转为 PNG 格式的 `Data` 实例。
+
+---
+
+### `Data.combine(dataList: Data[]): Data`
+
+将多个 `Data` 实例合并为一个新实例。
+
+如果列表为空或所有数据为空，则返回空数据。
