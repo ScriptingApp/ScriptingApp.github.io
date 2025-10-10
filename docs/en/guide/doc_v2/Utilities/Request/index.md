@@ -94,7 +94,7 @@ class Response {
 | ------------------------ | ---------------------- | ----------------------------------------------- |
 | `body`                   | `ReadableStream<Data>` | The response body as a stream.                  |
 | `bodyUsed`               | `boolean`              | Whether the body has been consumed.             |
-| `cookies`                | `Record<string, string>` | Response cookies.                              |
+| `cookies`                | `Cookie[]`             | Response cookies.                              |
 | `status`                 | `number`               | HTTP status code.                               |
 | `statusText`             | `string`               | HTTP status text.                               |
 | `headers`                | `Headers`              | Response headers.                               |
@@ -103,6 +103,20 @@ class Response {
 | `mimeType?`              | `string`               | Inferred MIME type, if available.               |
 | `expectedContentLength?` | `number`               | Expected content length in bytes, if available. |
 | `textEncodingName?`      | `string`               | Encoding of the response body, if specified.    |
+
+##### `Cookie` Type
+
+```ts
+interface Cookie {
+  name: string
+  value: string
+  attributes: Record<string, string | boolean>
+}
+```
+
+- `name`: cookie name
+- `value`: cookie value
+- `attributes`: cookie attributes, including `path`, `domain`, `expires`, etc.
 
 #### Methods
 

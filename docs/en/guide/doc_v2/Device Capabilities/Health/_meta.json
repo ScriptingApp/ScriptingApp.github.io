@@ -278,5 +278,145 @@
     "type": "file",
     "name": "HealthStatisticsCollection",
     "label": "HealthStatisticsCollection"
+  },
+  {
+    "type": "file",
+    "name": "HealthKit Permission Behavior",
+    "label": "HealthKit Permission Behavior"
+  },
+  {
+    "type": "file",
+    "name": "Reading Characteristic Data",
+    "label": "Reading Characteristic Data"
+  },
+  {
+    "type": "file",
+    "name": "Reading Quantity Samples",
+    "label": "Reading Quantity Samples"
+  },
+  {
+    "type": "file",
+    "name": "Reading Category Samples",
+    "label": "Reading Category Samples"
+  },
+  {
+    "type": "file",
+    "name": "Reading Correlation Data",
+    "label": "Reading Correlation Data"
+  },
+  {
+    "type": "file",
+    "name": "Reading Workout Samples",
+    "label": "Reading Workout Samples"
+  },
+  {
+    "type": "file",
+    "name": "Reading Heartbeat Series Samples",
+    "label": "Reading Heartbeat Series Samples"
+  },
+  {
+    "type": "file",
+    "name": "Reading Activity Summaries",
+    "label": "Reading Activity Summaries"
+  },
+  {
+    "type": "file",
+    "name": "Query Statistics",
+    "label": "Query Statistics"
+  },
+  {
+    "type": "file",
+    "name": "Query Statistics Collection",
+    "label": "Query Statistics Collection"
+  },
+  {
+    "type": "file",
+    "name": "Writing Health Quantity Samples",
+    "label": "Writing Health Quantity Samples"
+  },
+  {
+    "type": "file",
+    "name": "Writing Health Category Samples",
+    "label": "Writing Health Category Samples"
+  },
+  {
+    "type": "file",
+    "name": "Writing Health Correlation Data",
+    "label": "Writing Health Correlation Data"
+  },
+  {
+    "type": "file",
+    "name": "HealthQuantityType",
+    "label": "HealthQuantityType"
+  },
+  {
+    "type": "file",
+    "name": "HealthCategoryType",
+    "label": "HealthCategoryType"
+  },
+  {
+    "type": "file",
+    "name": "HealthCategoryValue Types",
+    "label": "HealthCategoryValue Types"
+  },
+  {
+    "type": "file",
+    "name": "HealthUnit",
+    "label": "HealthUnit"
+  },
+  {
+    "type": "file",
+    "name": "HealthCharacteristicType",
+    "label": "HealthCharacteristicType"
+  },
+  {
+    "type": "file",
+    "name": "HealthQuantitySample",
+    "label": "HealthQuantitySample"
+  },
+  {
+    "type": "file",
+    "name": "HealthCategorySample",
+    "label": "HealthCategorySample"
+  },
+  {
+    "type": "file",
+    "name": "HealthCorrelation",
+    "label": "HealthCorrelation"
+  },
+  {
+    "type": "file",
+    "name": "HealthWorkoutEvent",
+    "label": "HealthWorkoutEvent"
+  },
+  {
+    "type": "file",
+    "name": "HealthWorkoutActivityType",
+    "label": "HealthWorkoutActivityType"
+  },
+  {
+    "type": "file",
+    "name": "HealthWorkout",
+    "label": "HealthWorkout"
+  },
+  {
+    "type": "file",
+    "name": "HealthHeartbeatSeriesSample",
+    "label": "HealthHeartbeatSeriesSample"
+  },
+  {
+    "type": "file",
+    "name": "HealthActivitySummary",
+    "label": "HealthActivitySummary"
+  },
+  {
+    "type": "file",
+    "name": "HealthStatistics",
+    "label": "HealthStatistics"
+  },
+  {
+    "type": "file",
+    "name": "HealthStatisticsCollection",
+    "label": "HealthStatisticsCollection"
   }
 ]

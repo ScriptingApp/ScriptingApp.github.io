@@ -91,8 +91,8 @@ Displays the control UI. Only `ControlWidgetButton` or `ControlWidgetToggle` ele
 export const ToggleDoorIntent = AppIntentManager.register({
   name: "ToggleDoorIntent",
   protocol: AppIntentProtocol.AppIntent,
-  perform: async ({ id, newState }: { id: string; newState: boolean }) => {
-    await setDoorState(id, newState)
+  perform: async ({ id, value }: { id: string; value: boolean }) => {
+    await setDoorState(id, value)
     ControlWidget.reloadToggles()
   }
 })
@@ -105,7 +105,7 @@ async function run() {
   ControlWidget.present(
     <ControlWidgetToggle
       privacySensitive
-      intent={ToggleDoorIntent({ id: doorId, newState: !data.doorOpened })}
+      intent={ToggleDoorIntent({ id: doorId, value: !data.doorOpened })}
       label={{
         title: `Door ${doorId}`,
         systemImage: data.doorOpened ? "door.garage.opened" : "door.garage.closed"

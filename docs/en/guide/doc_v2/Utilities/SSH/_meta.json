@@ -38,5 +38,25 @@
     "type": "file",
     "name": "TTY Stdin Writer",
     "label": "TTY Stdin Writer"
+  },
+  {
+    "type": "file",
+    "name": "SSH Client",
+    "label": "SSH Client"
+  },
+  {
+    "type": "file",
+    "name": "SFTP Client",
+    "label": "SFTP Client"
+  },
+  {
+    "type": "file",
+    "name": "SSH Authentication Method",
+    "label": "SSH Authentication Method"
+  },
+  {
+    "type": "file",
+    "name": "TTY Stdin Writer",
+    "label": "TTY Stdin Writer"
   }
 ]

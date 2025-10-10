@@ -91,7 +91,7 @@ class Response {
 | ------------------------ | ---------------------- | ------------------ |
 | `body`                   | `ReadableStream<Data>` | 响应体（数据流）           |
 | `bodyUsed`               | `boolean`              | 响应体是否已被读取          |
-| `cookies`               | `Record<string, string>`  | 响应的 cookie          |
+| `cookies`                | `Cookie[]`             | 响应的 cookie 列表          |
 | `status`                 | `number`               | HTTP 状态码           |
 | `statusText`             | `string`               | HTTP 状态文本          |
 | `headers`                | `Headers`              | 响应头                |
@@ -100,6 +100,21 @@ class Response {
 | `mimeType?`              | `string`               | MIME 类型（如能推断）      |
 | `expectedContentLength?` | `number`               | 预计内容长度（字节）         |
 | `textEncodingName?`      | `string`               | 文本编码名称（如可用）        |
+
+##### `Cookie` 类型
+
+```ts
+interface Cookie {
+  name: string
+  value: string
+  attributes: Record<string, string | boolean>
+}
+```
+
+- `name`: cookie 名
+- `value`: cookie 值
+- `attributes`: cookie 属性，包括 `path`、`domain`、`expires` 等
+
 
 #### 方法
 
