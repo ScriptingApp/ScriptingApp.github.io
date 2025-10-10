@@ -23,30 +23,5 @@
     "type": "file",
     "name": "BluetoothPeripheralManager",
     "label": "BluetoothPeripheralManager"
-  },
-  {
-    "type": "file",
-    "name": "BluetoothCentralManager",
-    "label": "BluetoothCentralManager"
-  },
-  {
-    "type": "file",
-    "name": "BluetoothPeripheral",
-    "label": "BluetoothPeripheral"
-  },
-  {
-    "type": "file",
-    "name": "BluetoothService",
-    "label": "BluetoothService"
-  },
-  {
-    "type": "file",
-    "name": "BluetoothCharacteristic",
-    "label": "BluetoothCharacteristic"
-  },
-  {
-    "type": "file",
-    "name": "BluetoothPeripheralManager",
-    "label": "BluetoothPeripheralManager"
   }
 ]

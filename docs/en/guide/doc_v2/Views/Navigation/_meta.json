@@ -19,47 +19,5 @@
     "label": "NavigationSplitView (for iPad)",
     "collapsible": true,
     "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "NavigationStack",
-    "label": "NavigationStack",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "TabView",
-    "label": "TabView",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "NavigationSplitView (for iPad)",
-    "label": "NavigationSplitView (for iPad)",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "NavigationStack",
-    "label": "NavigationStack",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "TabView",
-    "label": "TabView",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "NavigationSplitView (for iPad)",
-    "label": "NavigationSplitView (for iPad)",
-    "collapsible": true,
-    "collapsed": true
   }
 ]

@@ -12,33 +12,5 @@
     "label": "Dismissing a presented view",
     "collapsible": true,
     "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "Present a simple view",
-    "label": "Present a simple view",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "Dismissing a presented view",
-    "label": "Dismissing a presented view",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "Present a simple view",
-    "label": "Present a simple view",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "Dismissing a presented view",
-    "label": "Dismissing a presented view",
-    "collapsible": true,
-    "collapsed": true
   }
 ]
