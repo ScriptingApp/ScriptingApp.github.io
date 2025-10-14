@@ -4,6 +4,9 @@ import path from "path";
 const resourcePath = path.join(__dirname, "..", "Scripting Documentation");
 const docsPath = path.join(__dirname, "..", "docs");
 
+const proTag =
+  "<span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO</span>";
+
 function readFile(filePath) {
   try {
     return fs.readFileSync(filePath, "utf-8");
@@ -20,7 +23,20 @@ function writeFile(filePath, content) {
 const base = "doc_v2";
 // 处理文件
 const processDocItem = (item, parentPath = "", language = "en") => {
-  const { title, subtitle, keywords, example, readme, children } = item;
+  const { pro, title, subtitle, keywords, example, readme, children } = item;
+
+  const proDesc = pro
+    ? proTag +
+      "\n\n" +
+      `<small
+  style={{
+    display: "block",
+    color: "#666",
+    marginTop: "-4em",
+  }}>
+  ${language === "en" ? "Requires Scripting PRO" : "需要 Scripting PRO"}
+</small>`
+    : "";
 
   const folderName = title.en;
   const basePath = path.join(
@@ -75,23 +91,24 @@ const processDocItem = (item, parentPath = "", language = "en") => {
         const readmeContent = readFile(readmePath);
         if (!readmeContent) return;
 
-        const readmeMd = `---
-title: ${title[language]}
----\n${readmeContent}`;
+        const readmeMd = `# ${title[language]} ${proDesc}
+
+${readmeContent}`;
         const cleanBasePath = basePath.endsWith(path.sep)
           ? basePath.slice(0, -1)
           : basePath;
-        writeFile(cleanBasePath + ".md", readmeMd);
+        writeFile(cleanBasePath + ".mdx", readmeMd);
       } else {
         const readmePath = path.join(resourcePath, readme, language + ".md");
         const readmeContent = readFile(readmePath);
         if (!readmeContent) return;
 
-        const readmeMd = `---
-title: ${title[language]}
----\n${readmeContent}`;
+        // 有 example
+        const readmeMd = `# ${title[language]} ${proDesc}
+        
+${readmeContent}`;
 
-        writeFile(path.join(basePath, "index.md"), readmeMd);
+        writeFile(path.join(basePath, "index.mdx"), readmeMd);
       }
     }
 
@@ -100,9 +117,8 @@ title: ${title[language]}
         const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
         if (!tsxContent) return;
 
-        const exampleMd = `---
-title: ${title[language]}
----
+        const exampleMd = `# ${title[language]} ${proDesc}
+
 \`\`\`tsx
 ${tsxContent}
 \`\`\``;
@@ -110,7 +126,7 @@ ${tsxContent}
         const cleanBasePath = basePath.endsWith(path.sep)
           ? basePath.slice(0, -1)
           : basePath;
-        writeFile(cleanBasePath + ".md", exampleMd);
+        writeFile(cleanBasePath + ".mdx", exampleMd);
       } else {
         const tsxContent = readFile(path.join(resourcePath, example + ".tsx"));
         if (!tsxContent) return;
@@ -118,16 +134,16 @@ ${tsxContent}
         let exampleName = example.split("/").pop();
         let exampleTitle = language === "en" ? "Example" : "示例";
 
-        const exampleMd = `---
-title: ${exampleTitle}
----
+        // 此处添加 Pro Tag 会导致 MDX 渲染错误
+        const exampleMd = `# ${exampleTitle}
+
 \`\`\`tsx
 ${tsxContent}
 \`\`\``;
 
         const fileSuffix = exampleName === "index" ? "_example" : "";
         writeFile(
-          path.join(basePath, exampleName + fileSuffix + ".md"),
+          path.join(basePath, exampleName + fileSuffix + ".mdx"),
           exampleMd
         );
       }

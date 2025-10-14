@@ -207,6 +207,21 @@ const urlScheme = Script.createImportScriptsURLScheme([
 
 ---
 
+### `hasFullAccess(): boolean`
+
+Determine whether user has full access to the Scripting PRO features.
+
+Returns: `true` if the user has full access to the Scripting PRO features, otherwise `false`.
+
+```ts
+if (Script.hasFullAccess()) {
+  // use Scripting PRO features
+  Assistant.requestStructedData(...)
+}
+```
+
+---
+
 ## Notes
 
 * Always call `Script.exit()` to properly terminate a script and free memory.

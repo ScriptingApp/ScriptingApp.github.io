@@ -107,13 +107,23 @@ class Response {
 interface Cookie {
   name: string
   value: string
-  attributes: Record<string, string | boolean>
+  domain: string
+  path: string
+  isSecure: boolean
+  isHTTPOnly: boolean
+  isSessionOnly: boolean
+  expiresDate?: Date | null
 }
 ```
 
 - `name`: cookie 名
 - `value`: cookie 值
-- `attributes`: cookie 属性，包括 `path`、`domain`、`expires` 等
+- `domain`: cookie 所属域名
+- `path`: cookie 所属路径
+- `isSecure`: 是否为安全 cookie
+- `isHTTPOnly`: 是否为 HTTPOnly cookie
+- `isSessionOnly`: 是否为会话 cookie
+- `expiresDate`: cookie 过期时间，可选
 
 
 #### 方法

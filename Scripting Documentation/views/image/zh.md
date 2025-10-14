@@ -63,7 +63,7 @@ type DynamicImageSource<T> = {
 
 ### `NetworkImageProps`
 
-* **`imageUrl`** *(string | DynamicImageSource<string>, 必填)*
+* **`imageUrl`** *(string | DynamicImageSource\<string\>, 必填)*
   图片的网络 URL 地址。支持使用 `DynamicImageSource` 实现浅色/深色模式下切换图片。
 
 * **`placeholder`** *(VirtualNode, 可选)*
@@ -74,7 +74,7 @@ type DynamicImageSource<T> = {
 
 ### `FileImageProps`
 
-* **`filePath`** *(string | DynamicImageSource<string>, 必填)*
+* **`filePath`** *(string | DynamicImageSource\<string\>, 必填)*
   本地图片文件的路径。支持使用 `DynamicImageSource` 动态切换。
 
 * **`resizable`** *(ImageResizable, 可选)*
@@ -82,7 +82,7 @@ type DynamicImageSource<T> = {
 
 ### `UIImageProps`
 
-* **`image`** *(UIImage | DynamicImageSource<UIImage>, 必填)*
+* **`image`** *(UIImage | DynamicImageSource\<UIImage\>, 必填)*
   一个 `UIImage` 对象。支持动态切换 `UIImage` 对象以适应浅色/深色模式。
 
 * **`resizable`** *(ImageResizable, 可选)*

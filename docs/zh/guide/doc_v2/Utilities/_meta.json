@@ -59,7 +59,7 @@
   {
     "type": "dir",
     "name": "SSH",
-    "label": "SSH",
+    "label": "SSH (需要 Scripting PRO)",
     "collapsible": true,
     "collapsed": true
   },

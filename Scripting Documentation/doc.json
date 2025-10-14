@@ -94,6 +94,7 @@
     ]
   },
   {
+    "pro": true,
     "title": {
       "en": "Control Widget",
       "zh": "控制中心的小组件"
@@ -2271,6 +2272,7 @@
     "readme": "interactive_widget_and_liveactivity/"
   },
   {
+    "pro": true,
     "title": {
       "en": "Custom Keyboard",
       "zh": "自定义键盘"
@@ -2282,6 +2284,7 @@
     "readme": "custom_keyboard/"
   },
   {
+    "pro": true,
     "title": {
       "en": "Assistant",
       "zh": "智能助手"
@@ -2293,6 +2296,7 @@
     "readme": "assistant/"
   },
   {
+    "pro": true,
     "title": {
       "en": "AssistantTool",
       "zh": "智能助手工具"
@@ -2453,8 +2457,74 @@
           "表单数据",
           "取消请求"
         ],
-        "example": "request/index",
-        "readme": "request/"
+        "children": [
+          {
+            "title": {
+              "zh": "fetch 函数",
+              "en": "fetch"
+            },
+            "subtitle": {
+              "zh": "发送网络请求",
+              "en": "Send network requests."
+            },
+            "readme": "request/fetch/"
+          },
+          {
+            "title": {
+              "zh": "Request 和 RequestInit",
+              "en": "Request & RequestInit"
+            },
+            "subtitle": {
+              "en": "The interface represents a complete configuration of an HTTP request.",
+              "zh": "这些接口表示一个 HTTP 请求的完整配置。"
+            },
+            "readme": "request/request/"
+          },
+          {
+            "title": {
+              "en": "Response",
+              "zh": "响应 （Response）"
+            },
+            "subtitle": {
+              "en": "This class represents the result of an HTTP request made using the fetch() API",
+              "zh": "该类表示使用 fetch() API 发送的 HTTP 请求的结果。"
+            },
+            "readme": "request/response/"
+          },
+          {
+            "title": {
+              "en": "Headers",
+              "zh": "请求头（Headers）"
+            },
+            "subtitle": {
+              "en": "This class represents a collection of HTTP request or response header fields.",
+              "zh": "该类表示 HTTP 请求或响应的头部字段集合。"
+            },
+            "readme": "request/headers/"
+          },
+          {
+            "title": {
+              "en": "FormData",
+              "zh": "表单数据"
+            },
+            "subtitle": {
+              "en": "This class represents a collection of key/value pairs representing form data.",
+              "zh": "该类表示表单数据的键值对集合。"
+            },
+            "readme": "request/form_data/"
+          },
+          {
+            "title": {
+              "en": "ReadableStream",
+              "zh": "可读流"
+            },
+            "subtitle": {
+              "en": "This class represents a stream of data that can be read from.",
+              "zh": "该类表示可以从中读取数据的流。"
+            },
+            "readme": "request/readable_stream/"
+          }
+        ]
       },
       {
         "title": {
@@ -2479,9 +2549,10 @@
         "readme": "socket_io/"
       },
       {
+        "pro": true,
         "title": {
           "en": "SSH",
-          "zh": "SSH"
+          "zh": "SSH (需要 Scripting PRO)"
         },
         "subtitle": {
           "en": "This interface allows you to connect to remote servers using SSH protocol, execute commands, and transfer files securely.",
@@ -2489,6 +2560,7 @@
         },
         "children": [
           {
+            "pro": true,
             "title": {
               "en": "SSH Client",
               "zh": "SSH 客户端"
@@ -2500,6 +2572,7 @@
             "readme": "ssh/ssh_client/"
           },
           {
+            "pro": true,
             "title": {
               "en": "SFTP Client",
               "zh": "SFTP 客户端"
@@ -2511,6 +2584,7 @@
             "readme": "ssh/sftp_client/"
           },
           {
+            "pro": true,
             "title": {
               "en": "SSH Authentication Method",
               "zh": "SSH 认证方法"
@@ -2522,6 +2596,7 @@
             "readme": "ssh/ssh_authentication_method/"
           },
           {
+            "pro": true,
             "title": {
               "en": "TTY Stdin Writer",
               "zh": "TTY 标准输入写入器"
@@ -2921,8 +2996,8 @@
           "zh": "音频播放器"
         },
         "subtitle": {
-          "en": "The interface allows for playback of both local and network audio sources, and offers controls such as play, pause, stop, volume, and more. Below is a sample usage along with detailed explanations of each part of the code.",
-          "zh": "该接口允许播放本地和网络音源，并提供播放、暂停、停止、音量控制等功能。下面是一个示例用法以及每个部分的详细说明。"
+          "en": "The interface allows for playback of both local and network audio sources, and offers controls such as play, pause, stop, volume, and more.",
+          "zh": "该接口允许播放本地和网络音源，并提供播放、暂停、停止、音量控制等功能。"
         },
         "keywords": [
           "AVPlayer"
@@ -2968,6 +3043,7 @@
         "example": "weather/index"
       },
       {
+        "pro": true,
         "title": {
           "en": "Health",
           "zh": "健康"
@@ -2978,6 +3054,7 @@
         },
         "children": [
           {
+            "pro": true,
             "title": {
               "en": "HealthKit Permission Behavior",
               "zh": "HealthKit 权限行为"
@@ -2989,6 +3066,7 @@
             "readme": "health/permission_behavior/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Reading Characteristic Data",
               "zh": "读取特征数据"
@@ -3000,6 +3078,7 @@
             "readme": "health/read_characteristic_data/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Reading Quantity Samples",
               "zh": "读取数量型数据（HealthQuantitySample）"
@@ -3011,6 +3090,7 @@
             "readme": "health/read_quantity_sample/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Reading Category Samples",
               "zh": "读取分类数据（HealthCategorySample）"
@@ -3022,6 +3102,7 @@
             "readme": "health/read_category_sample/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Reading Correlation Data",
               "zh": "读取关联数据（HealthCorrelation）"
@@ -3033,6 +3114,7 @@
             "readme": "health/read_correlation/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Reading Workout Samples",
               "zh": "读取锻炼数据（HealthWorkout）"
@@ -3044,6 +3126,7 @@
             "readme": "health/read_workout/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Reading Heartbeat Series Samples",
               "zh": "读取心跳序列数据（HealthHeartbeatSeriesSample）"
@@ -3055,6 +3138,7 @@
             "readme": "health/read_heartbeat_series_sample/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Reading Activity Summaries",
               "zh": "读取活动摘要（HealthActivitySummary）"
@@ -3066,6 +3150,7 @@
             "readme": "health/read_activity_summary/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Query Statistics",
               "zh": "查询统计数据（HealthStatistics）"
@@ -3077,6 +3162,7 @@
             "readme": "health/query_statistics/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Query Statistics Collection",
               "zh": "查询统计数据集合（HealthStatisticsCollection）"
@@ -3088,6 +3174,7 @@
             "readme": "health/query_statistics_collection/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Writing Health Quantity Samples",
               "zh": "写入数量型数据（HealthQuantitySample）"
@@ -3099,6 +3186,7 @@
             "readme": "health/write_quantity_sample/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Writing Health Category Samples",
               "zh": "写入分类数据（HealthCategorySample）"
@@ -3110,6 +3198,7 @@
             "readme": "health/write_category_sample/"
           },
           {
+            "pro": true,
             "title": {
               "en": "Writing Health Correlation Data",
               "zh": "写入关联数据（HealthCorrelation）"
@@ -3121,6 +3210,7 @@
             "readme": "health/write_correlation/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthQuantityType",
               "zh": "健康数量型数据（HealthQuantityType）"
@@ -3132,6 +3222,7 @@
             "readme": "health/health_quantity_type/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthCategoryType",
               "zh": "健康分类数据（HealthCategoryType）"
@@ -3143,6 +3234,7 @@
             "readme": "health/health_category_type/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthCategoryValue Types",
               "zh": "健康分类值类型（HealthCategoryValue）"
@@ -3154,6 +3246,7 @@
             "readme": "health/health_category_value/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthUnit",
               "zh": "健康单位（HealthUnit）"
@@ -3165,6 +3258,7 @@
             "readme": "health/health_unit/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthCharacteristicType",
               "zh": "健康特征类型（HealthCharacteristicType）"
@@ -3176,6 +3270,7 @@
             "readme": "health/health_characteristic_type/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthQuantitySample",
               "zh": "健康数量型数据（HealthQuantitySample）"
@@ -3187,6 +3282,7 @@
             "readme": "health/health_quantity_sample/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthCategorySample",
               "zh": "健康分类数据（HealthCategorySample）"
@@ -3198,6 +3294,7 @@
             "readme": "health/health_category_sample/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthCorrelation",
               "zh": "健康关联数据（HealthCorrelation）"
@@ -3209,6 +3306,7 @@
             "readme": "health/health_correlation/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthWorkoutEvent",
               "zh": "健康锻炼事件（HealthWorkoutEvent）"
@@ -3220,6 +3318,7 @@
             "readme": "health/health_workout_event/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthWorkoutActivityType",
               "zh": "健康锻炼活动类型（HealthWorkoutActivityType）"
@@ -3231,6 +3330,7 @@
             "readme": "health/health_workout_activity_type/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthWorkout",
               "zh": "健康锻炼数据（HealthWorkout）"
@@ -3242,6 +3342,7 @@
             "readme": "health/health_workout/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthHeartbeatSeriesSample",
               "zh": "健康心跳序列数据（HealthHeartbeatSeriesSample）"
@@ -3253,6 +3354,7 @@
             "readme": "health/health_heartbeat_series_sample/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthActivitySummary",
               "zh": "健康活动摘要（HealthActivitySummary）"
@@ -3264,6 +3366,7 @@
             "readme": "health/health_activity_summary/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthStatistics",
               "zh": "健康统计（HealthStatistics）"
@@ -3275,6 +3378,7 @@
             "readme": "health/health_statistics/"
           },
           {
+            "pro": true,
             "title": {
               "en": "HealthStatisticsCollection",
               "zh": "健康统计集合（HealthStatisticsCollection）"
@@ -3341,6 +3445,7 @@
         "readme": "pdf/"
       },
       {
+        "pro": true,
         "title": {
           "en": "Translation",
           "zh": "翻译"
@@ -3352,6 +3457,7 @@
         "readme": "translation/"
       },
       {
+        "pro": true,
         "title": {
           "en": "Bluetooth",
           "zh": "蓝牙"
@@ -3362,6 +3468,7 @@
         },
         "children": [
           {
+            "pro": true,
             "title": {
               "en": "BluetoothCentralManager",
               "zh": "蓝牙中央设备管理器"
@@ -3373,6 +3480,7 @@
             "readme": "bluetooth/central_manager/"
           },
           {
+            "pro": true,
             "title": {
               "en": "BluetoothPeripheral",
               "zh": "蓝牙外设"
@@ -3384,6 +3492,7 @@
             "readme": "bluetooth/peripheral/"
           },
           {
+            "pro": true,
             "title": {
               "en": "BluetoothService",
               "zh": "蓝牙服务"
@@ -3395,6 +3504,7 @@
             "readme": "bluetooth/service/"
           },
           {
+            "pro": true,
             "title": {
               "en": "BluetoothCharacteristic",
               "zh": "蓝牙服务特征值"
@@ -3406,6 +3516,7 @@
             "readme": "bluetooth/characteristic/"
           },
           {
+            "pro": true,
             "title": {
               "en": "BluetoothPeripheralManager",
               "zh": "蓝牙外设管理器"

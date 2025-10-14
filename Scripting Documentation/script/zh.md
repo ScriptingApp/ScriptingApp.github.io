@@ -207,6 +207,21 @@ const urlScheme = Script.createImportScriptsURLScheme([
 
 ---
 
+### `hasFullAccess(): boolean`
+
+判断用户是否具有完整的 Scripting PRO 访问权限。
+
+返回:`true` 如果用户具有完整的 Scripting PRO 访问权限，否则返回 `false`。
+
+```ts
+if (Script.hasFullAccess()) {
+  // 有完整的 Scripting PRO 访问权限
+  Assistant.requestStructedData(...)
+}
+```
+
+---
+
 ## 注意事项（Notes）
 
 * 请务必调用 `Script.exit()` 正确终止脚本并释放内存资源

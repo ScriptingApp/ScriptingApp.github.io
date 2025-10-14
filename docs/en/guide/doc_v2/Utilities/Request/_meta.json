@@ -1,0 +1,32 @@
+[
+  {
+    "type": "file",
+    "name": "fetch",
+    "label": "fetch"
+  },
+  {
+    "type": "file",
+    "name": "Request & RequestInit",
+    "label": "Request & RequestInit"
+  },
+  {
+    "type": "file",
+    "name": "Response",
+    "label": "Response"
+  },
+  {
+    "type": "file",
+    "name": "Headers",
+    "label": "Headers"
+  },
+  {
+    "type": "file",
+    "name": "FormData",
+    "label": "FormData"
+  },
+  {
+    "type": "file",
+    "name": "ReadableStream",
+    "label": "ReadableStream"
+  }
+]

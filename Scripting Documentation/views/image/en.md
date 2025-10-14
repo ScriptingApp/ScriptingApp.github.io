@@ -65,7 +65,7 @@ Used for adapting the image resource for light/dark modes. Supported in:
 
 ### `NetworkImageProps`
 
-* **`imageUrl`** *(string | DynamicImageSource<string>, required)*
+* **`imageUrl`** *(string | DynamicImageSource\<string\>, required)*
   The URL of the image to load. Supports dynamic sources via `DynamicImageSource`.
 
 * **`placeholder`** *(VirtualNode, optional)*
@@ -76,7 +76,7 @@ Used for adapting the image resource for light/dark modes. Supported in:
 
 ### `FileImageProps`
 
-* **`filePath`** *(string | DynamicImageSource<string>, required)*
+* **`filePath`** *(string | DynamicImageSource\<string\>, required)*
   The path to the local image file. Supports dynamic sources via `DynamicImageSource`.
 
 * **`resizable`** *(ImageResizable, optional)*
@@ -84,7 +84,7 @@ Used for adapting the image resource for light/dark modes. Supported in:
 
 ### `UIImageProps`
 
-* **`image`** *(UIImage | DynamicImageSource<UIImage>, required)*
+* **`image`** *(UIImage | DynamicImageSource\<UIImage\>, required)*
   A `UIImage` object to display. Supports dynamic sources via `DynamicImageSource`.
 
 * **`resizable`** *(ImageResizable, optional)*

@@ -10,10 +10,10 @@
     "generate:docs": "rm -rf docs/en/guide/doc_v2/* && rm -rf docs/zh/guide/doc_v2/* && bun scripts/docs.js"
   },
   "dependencies": {
-    "rspress": "^1.44.0"
+    "rspress": "^1.45.6"
   },
   "devDependencies": {
-    "@rspress/plugin-rss": "^1.44.0",
-    "@types/node": "^18.11.17"
+    "@rspress/plugin-rss": "^1.45.6",
+    "@types/node": "^24.7.2"
   }
 }
