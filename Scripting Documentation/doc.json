@@ -892,8 +892,8 @@
           "zh": "手势"
         },
         "subtitle": {
-          "en": "Define interactions from taps, clicks, and swipes to fine-grained gestures.",
-          "zh": "定义从轻点、点击、滑动到更精细手势的交互方式。"
+          "en": "This interface provides a gesture system similar to SwiftUI, allowing any view to respond to touch interactions such as tapping, long pressing, dragging, rotating, and magnifying.",
+          "zh": "该接口提供了类似于 SwiftUI 的手势系统，允许任何视图响应触摸交互，如轻点、长按、拖拽、旋转和放大。"
         },
         "keywords": [
           "tap",
@@ -907,7 +907,6 @@
           "双击",
           "长按"
         ],
-        "example": "views/gestures/index",
         "readme": "views/gestures/"
       },
       {
@@ -2240,6 +2239,10 @@
           "en": "This view modifier allows you to chain multiple modifiers together, supporting the same modifier being used multiple times in the same view.",
           "zh": "该修饰符可用于连续调用多个修饰符，支持同一个修饰符在同一个视图中多次使用。"
         },
+        "keywords": [
+          "modifiers",
+          "ViewModifiers"
+        ],
         "readme": "view_modifiers/modifiers/"
       }
     ]
@@ -2341,6 +2344,17 @@
           "zh": "该类表示二进制数据，并提供在不同格式之间转换的方法。"
         },
         "readme": "data/"
+      },
+      {
+        "title": {
+          "en": "Encoding",
+          "zh": "编码"
+        },
+        "subtitle": {
+          "en": "This type defines a set of supported character encodings.",
+          "zh": "该类型定义了支持的字符编码集。"
+        },
+        "readme": "encoding/"
       },
       {
         "title": {
@@ -2622,6 +2636,51 @@
       },
       {
         "title": {
+          "en": "URLSession",
+          "zh": "URLSession（网络会话）"
+        },
+        "subtitle": {
+          "en": "This native iOS interface allows you to perform network requests, manage HTTP headers, and handle HTTP responses.",
+          "zh": "iOS原生的URLSession，允许你进行网络请求，管理HTTP头部和处理HTTP响应。"
+        },
+        "children": [
+          {
+            "title": {
+              "en": "BackgroundURLSession",
+              "zh": "后台网络会话"
+            },
+            "subtitle": {
+              "en": "This interface provides the ability to initiate, resume, and query background download and upload tasks.",
+              "zh": "该接口提供发起、恢复与查询「后台可持续」的下载与上传任务的能力"
+            },
+            "readme": "url_session/background_url_session/"
+          },
+          {
+            "title": {
+              "en": "URLSessionDownloadTask",
+              "zh": "下载任务"
+            },
+            "subtitle": {
+              "en": "Represents a download task instance that can be performed in the foreground or background, and can be resumed after the script is terminated.",
+              "zh": "表示一个后台下载任务实例，用于在前台或后台下载文件，并可在脚本被终止后继续运行。"
+            },
+            "readme": "url_session/url_session_download_task/"
+          },
+          {
+            "title": {
+              "en": "URLSessionUploadTask",
+              "zh": "上传任务"
+            },
+            "subtitle": {
+              "en": "Represents an upload task instance that can be performed in the foreground or background, and can be resumed after the script is terminated.",
+              "zh": "表示一个后台上传任务实例，用于在前台或后台上传文件，并可在脚本被终止后继续运行。"
+            },
+            "readme": "url_session/url_session_upload_task/"
+          }
+        ]
+      },
+      {
+        "title": {
           "en": "App Events",
           "zh": "App事件"
         },
@@ -2702,20 +2761,20 @@
       },
       {
         "title": {
-          "en": "Clipboard",
+          "en": "Pasteboard",
           "zh": "剪贴板"
         },
         "subtitle": {
-          "en": "Read and set the clipboard.",
-          "zh": "读取并设置剪贴板内容。"
+          "en": "This namspace provides a complete interface for reading, writing, and observing system pasteboard  changes.",
+          "zh": "该命名空间提供了读取、写入和观察剪贴板变化的完整接口。"
         },
         "keywords": [
           "copy",
-          "pasteboard",
+          "clipboard",
           "复制",
           "粘贴板"
         ],
-        "example": "clipboard/index"
+        "readme": "pasteboard/"
       },
       {
         "title": {
@@ -2989,6 +3048,17 @@
           "zh": "该接口允许您将音频数据录制到文件中，提供开始、停止、暂停和管理音频录制的功能，并可配置音频质量、采样率、格式等设置。"
         },
         "readme": "audio_recorder/"
+      },
+      {
+        "title": {
+          "en": "AVMetadataItem",
+          "zh": "AVMetadataItem"
+        },
+        "subtitle": {
+          "en": "AVMetadataItem is a class that represents a metadata item in an audio or video asset.",
+          "zh": "AVMetadataItem 是一个类，表示音频或视频资源中的元数据项。"
+        },
+        "readme": "av_metadata_item/"
       },
       {
         "title": {
@@ -3528,6 +3598,18 @@
             "readme": "bluetooth/peripheral_manager/"
           }
         ]
+      },
+      {
+        "pro": true,
+        "title": {
+          "en": "BackgroundKeeper",
+          "zh": "后台保活"
+        },
+        "subtitle": {
+          "en": "This interface provides methods for keeping the Scripting app running in the background.",
+          "zh": "该接口提供了用于保持 Scripting 应用在后台运行的方法。"
+        },
+        "readme": "background_keeper/"
       }
     ]
   }

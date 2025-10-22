@@ -159,11 +159,17 @@ console.log(prefersNoInterruptions) // Example: false
 
 ### 7. **Session Activation**
 
-#### `setActive(active: boolean)`
-Activate or deactivate the shared audio session.
+#### `setActive(active: boolean, options?: AudioSessionSetActiveOptions[])`
+Activate or deactivate the shared audio session with optional options.
+
+- `active`: Set to `true` to activate the session, `false` to deactivate it.
+- `options`: An array of optional activation options, such as 'interruptSpokenAudioAndMixWithOthers'.
 
 ```typescript
-await SharedAudioSession.setActive(true)
+await SharedAudioSession.setActive(
+  true,
+  ['notifyOthersOnDeactivation']
+)
 ```
 
 ---
@@ -188,37 +194,40 @@ await SharedAudioSession.setPrefersNoInterruptionsFromSystemAlerts(true)
 
 ## Enumerations
 
+### **AudioSessionSetActiveOptions**
+Optional activation options:
+- `'notifyOthersOnDeactivation'`: Notify other audio sessions when deactivating the shared audio session.
+
 ### **AudioSessionCategory**
 Defines the session's audio category:
-- `'ambient'`
-- `'multiRoute'`
-- `'playAndRecord'`
-- `'playback'`
-- `'record'`
-- `'soloAmbient'`
+- `'ambient'`: Ambient audio, such as background music or ambient sounds.
+- `'multiRoute'`: Multi-route audio, such as routing distinct streams of audio data to different output devices at the same time.
+- `'playAndRecord'`: Play and record audio, such as voice chat or video conferencing.
+- `'playback'`: Playback audio, such as music or sound effects.
+- `'record'`: Recording audio, such as voice chat or video conferencing.
+- `'soloAmbient'`: Solo ambient audio, such as background music or ambient sounds.
 
 ### **AudioSessionCategoryOptions**
 Optional behaviors for audio categories:
-- `'mixWithOthers'`
-- `'duckOthers'`
-- `'interruptSpokenAudioAndMixWithOthers'`
-- `'allowBluetooth'`
-- `'allowBluetoothA2DP'`
-- `'allowAirPlay'`
-- `'defaultToSpeaker'`
-- `'overrideMutedMicrophoneInterruption'`
+- `'mixWithOthers'`: Mix with other audio sessions.
+- `'duckOthers'`: Duck other audio sessions.
+- `'interruptSpokenAudioAndMixWithOthers'`: Interrupt spoken audio and mix with others.
+- `'allowBluetooth'`: Allow Bluetooth audio.
+- `'allowBluetoothA2DP'`: Allow Bluetooth A2DP audio.
+- `'allowAirPlay'`: Allow AirPlay audio.
+- `'defaultToSpeaker'`: Default to speaker, even if headphones are connected.
+- `'overrideMutedMicrophoneInterruption'`: Override muted microphone interruption.
 
 ### **AudioSessionMode**
 Specifies the session's mode:
-- `'default'`
-- `'gameChat'`
-- `'measurement'`
-- `'moviePlayback'`
-- `'spokenAudio'`
-- `'videoChat'`
-- `'videoRecording'`
-- `'voiceChat'`
-- `'voicePrompt'`
+- `'default'`: Default mode.
+- `'gameChat'`: Game chat mode.
+- `'measurement'`: Measurement mode, such as audio input or output.
+- `'moviePlayback'`: Movie playback mode, such as movie content.
+- `'spokenAudio'`: Spoken audio mode, such as voice chat.
+- `'videoChat'`: Video chat mode, such as video conferencing.
+- `'videoRecording'`: Video recording mode, such as video conferencing.
+- `'voicePrompt'`: Voice prompt mode, such as text-to-speech.
 
 ### **AudioSessionInterruptionType**
 Specifies the type of interruption:

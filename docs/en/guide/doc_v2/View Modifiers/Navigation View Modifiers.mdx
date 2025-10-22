@@ -7,7 +7,7 @@ The Scripting app supports a set of navigation-related view modifiers that enabl
 ## `navigationTitle`
 
 ```ts
-navigationTitle?: string | VirtualNode
+navigationTitle?: string
 ```
 
 Specifies the navigation title of the view.
@@ -16,10 +16,6 @@ Specifies the navigation title of the view.
 
 * On **iOS**, the navigation title appears in the navigation bar when the view is part of a navigation stack.
 * On **iPadOS**, the title of the primary navigation destination is also used as the app window's title in the App Switcher.
-
-### Usage
-
-You can provide either a plain string or a `VirtualNode` (such as a `Text` component) for advanced formatting.
 
 ---
 

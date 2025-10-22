@@ -5,8 +5,7 @@ Scripting App 提供了一组用于配置导航行为的视图修饰符，允许
 ## `navigationTitle`
 
 ```ts
-navigationTitle?: string | VirtualNode
-```
+navigationTitle?: string
 
 设置当前视图在导航栏中显示的标题。
 
@@ -14,10 +13,6 @@ navigationTitle?: string | VirtualNode
 
 * 在 **iOS** 中，当视图被嵌套在导航栈中时，所设置的标题将显示在导航栏中。
 * 在 **iPadOS** 中，主导航目的地的标题也会在多任务切换界面中显示为窗口的标题。
-
-### 使用方式
-
-可传入字符串（`string`）用于简单标题，或传入 `VirtualNode`（如 `Text`）以实现更复杂的格式控制。
 
 ---
 

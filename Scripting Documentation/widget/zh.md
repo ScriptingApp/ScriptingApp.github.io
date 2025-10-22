@@ -122,10 +122,48 @@ Scripting 应用内的小组件预览仅是 **近似效果**，与 iOS 主屏幕
 
 ## 9. 刷新小组件
 
-* 在脚本中调用 `Widget.reloadAll()`（例如在 AppIntent 或 `index.tsx` 中）可立即刷新所有小组件。
+### 通用刷新方法
+
+* 调用 `Widget.reloadAll()` 可立即刷新所有小组件（包括用户和开发者小组件）。
+* 可在 AppIntent 或 `index.tsx` 中调用。
 * 也可以使用 Scripting 应用中的 **刷新小组件** 按钮快速测试开发时的变更。
 
 这有助于快速迭代布局或逻辑。
+
+### 新增：用户小组件与开发者小组件
+
+Scripting 支持两种类型的小组件（kind）：
+
+| 类型                       | 说明                         |
+| ------------------------ | -------------------------- |
+| **User Widgets（用户小组件）**  | 用于普通用户在主屏幕上添加和使用的正式小组件。    |
+| **Test Widgets（开发者小组件）** | 用于开发者在开发阶段进行调试和预览的测试版本小组件。 |
+
+这两类小组件使用不同的 `kind`，互不影响，便于在开发时安全地进行刷新与测试。
+
+### 新增刷新方法
+
+| 方法                           | 描述                                                   |
+| ---------------------------- | ---------------------------------------------------- |
+| `Widget.reloadUserWidgets()` | 仅刷新 **用户小组件（User Widgets）**，不影响开发者测试用的 Test Widgets。 |
+| `Widget.reloadTestWidgets()` | 仅刷新 **开发者小组件（Test Widgets）**，不会影响用户主屏幕上的正式小组件。       |
+
+这两个方法的设计目的是为了隔离开发和用户使用场景。当你在开发阶段修改 `widget.tsx` 并调用 `Widget.reloadTestWidgets()` 时，只会刷新测试用的小组件，而用户的正式小组件不会受到任何干扰。
+
+#### 示例：
+
+```tsx
+// 在开发环境中刷新测试小组件
+await Widget.reloadTestWidgets()
+
+// 在发布前刷新所有用户小组件
+await Widget.reloadUserWidgets()
+```
+
+#### 使用建议：
+
+* 开发阶段：推荐使用 **`Widget.reloadTestWidgets()`**。
+* 发布或用户脚本更新后：推荐使用 **`Widget.reloadUserWidgets()`** 或 **`Widget.reloadAll()`**。
 
 ---
 
@@ -146,11 +184,11 @@ Scripting 应用内的小组件预览仅是 **近似效果**，与 iOS 主屏幕
 
 ### 参数说明
 
-| 属性                   | 类型                                                     | 描述                               |
-| -------------------- | ------------------------------------------------------ | -------------------------------- |
-| `family`             | `'systemSmall'` \| `'systemMedium'` \| `'systemLarge'` | 可选。预览的小组件尺寸，默认为 `'systemSmall'`。 |
-| `parameters.options` | `Record<string, string>`                               | 参数选项的字典，键为参数名，值为可 JSON 解析的字符串内容。 |
-| `parameters.default` | `string`                                               | 指定默认使用的参数名。                      |
+| 属性                   | 类型                                                   | 描述                               |
+| -------------------- | ---------------------------------------------------- | -------------------------------- |
+| `family`             | `'systemSmall'` | `'systemMedium'` | `'systemLarge'` | 可选。预览的小组件尺寸，默认为 `'systemSmall'`。 |
+| `parameters.options` | `Record<string, string>`                             | 参数选项的字典，键为参数名，值为可 JSON 解析的字符串内容。 |
+| `parameters.default` | `string`                                             | 指定默认使用的参数名。                      |
 
 ### 示例
 

@@ -171,7 +171,7 @@
 
 ---
 
-## 行数与布局控制
+## 行数、行间距与布局控制
 
 ### `lineLimit`
 
@@ -185,6 +185,16 @@
 <Text lineLimit={{ min: 2, max: 4, reservesSpace: true }}>
   可显示 2 到 4 行文本，并始终预留 4 行空间，避免布局变化。
 </Text>
+```
+
+---
+
+### `lineSpacing`
+
+设置行间距，单位为像素。
+
+```tsx
+<Text lineSpacing={5}>设置行间距为 5 像素</Text>
 ```
 
 ---

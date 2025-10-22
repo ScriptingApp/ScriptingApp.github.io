@@ -1,17 +1,21 @@
 # UIImage 
 
-The `UIImage` class represents an image that can be loaded from a file or binary data. It provides access to image dimensions and can be used for encoding, conversion, and display. `UIImage` is compatible with UI components and binary utilities such as `Data.fromPNG()` or `Data.fromJPEG()`.
+The `UIImage` class represents an image object that can be loaded from a file, binary data, or a Base64 string.
+It provides APIs for image encoding (PNG/JPEG), format conversion, and UI display.
+A `UIImage` instance can be directly displayed in an `Image` component or used together with the `Data` class for storage, uploading, or encryption.
 
 ---
 
 ## Overview
 
-`UIImage` serves as:
+`UIImage` is the core image-handling class in the scripting environment. You can use it to:
 
-* A representation of image content (PNG, JPEG, etc.).
-* An input for encoding into binary formats (`Data`).
-* A data source for displaying images in UI components.
-* A base unit for handling light/dark appearance-specific images via `DynamicImageSource`.
+* Load images from local files, binary data, or Base64 strings
+* Retrieve pixel dimensions of an image
+* Convert image formats (PNG/JPEG)
+* Generate Base64-encoded image data
+* Display images in the UI using the `<Image>` component
+* Support automatic light/dark mode switching with dynamic image sources
 
 ---
 
@@ -19,10 +23,10 @@ The `UIImage` class represents an image that can be loaded from a file or binary
 
 ### `width: number`
 
-Returns the width of the image in pixels.
+The width of the image in pixels.
 
 ```ts
-const image = UIImage.fromFile("/path/to/image.jpg")
+const image = UIImage.fromFile("/path/to/image.png")
 console.log(image?.width)
 ```
 
@@ -30,11 +34,93 @@ console.log(image?.width)
 
 ### `height: number`
 
-Returns the height of the image in pixels.
+The height of the image in pixels.
 
 ```ts
-const image = UIImage.fromFile("/path/to/image.jpg")
+const image = UIImage.fromFile("/path/to/image.png")
 console.log(image?.height)
+```
+
+---
+
+## Instance Methods
+
+### `toJPEGData(compressionQuality?: number): Data | null`
+
+Converts the image to JPEG data.
+
+* **Parameters:**
+
+  * `compressionQuality` (optional): The JPEG compression quality, ranging from `0` (maximum compression) to `1` (lossless). Default is `1`.
+* **Returns:**
+
+  * A `Data` instance containing the JPEG data, or `null` if conversion fails.
+
+**Example:**
+
+```ts
+const image = UIImage.fromFile("/path/to/photo.png")
+const jpegData = image?.toJPEGData(0.8)
+if (jpegData) {
+  console.log(`JPEG data size: ${jpegData.length} bytes`)
+}
+```
+
+---
+
+### `toPNGData(): Data | null`
+
+Converts the image to PNG data.
+
+* **Returns:**
+
+  * A `Data` instance containing PNG data, or `null` if conversion fails.
+
+**Example:**
+
+```ts
+const image = UIImage.fromFile("/path/to/logo.png")
+const pngData = image?.toPNGData()
+```
+
+---
+
+### `toJPEGBase64String(compressionQuality?: number): string | null`
+
+Converts the image to a Base64-encoded JPEG string.
+
+* **Parameters:**
+
+  * `compressionQuality` (optional): JPEG compression quality (0–1, default is `1`).
+* **Returns:**
+
+  * A Base64-encoded string, or `null` if conversion fails.
+
+**Example:**
+
+```ts
+const image = UIImage.fromFile("/path/to/avatar.jpg")
+const base64 = image?.toJPEGBase64String(0.7)
+if (base64) {
+  console.log(base64.slice(0, 100) + "...")
+}
+```
+
+---
+
+### `toPNGBase64String(): string | null`
+
+Converts the image to a Base64-encoded PNG string.
+
+* **Returns:**
+
+  * A Base64-encoded string, or `null` if conversion fails.
+
+**Example:**
+
+```ts
+const image = UIImage.fromFile("/path/to/icon.png")
+const base64 = image?.toPNGBase64String()
 ```
 
 ---
@@ -47,51 +133,73 @@ Creates a `UIImage` instance from a file path.
 
 * **Parameters:**
 
-  * `filePath`: A string path to a local image file (`.png`, `.jpg`, etc.).
+  * `filePath`: The absolute path to the image file (supports PNG, JPG, JPEG).
+* **Returns:**
 
-* **Returns:** A `UIImage` object if the file is valid and readable, otherwise `null`.
+  * A `UIImage` instance if successful, or `null` if loading fails.
 
-* **Example:**
+**Example:**
 
-  ```ts
-  const image = UIImage.fromFile("/path/to/tmp/photo.png")
-  if (image) {
-    console.log(`Image size: ${image.width} x ${image.height}`)
-  }
-  ```
+```ts
+const image = UIImage.fromFile("/path/to/images/sample.jpg")
+if (image) {
+  console.log(`Width: ${image.width}, Height: ${image.height}`)
+}
+```
 
 ---
 
 ### `UIImage.fromData(data: Data): UIImage | null`
 
-Creates a `UIImage` from binary image data.
+Creates a `UIImage` instance from binary data.
 
 * **Parameters:**
 
-  * `data`: A `Data` object containing valid image data (PNG or JPEG).
+  * `data`: A `Data` instance containing valid PNG or JPEG data.
+* **Returns:**
 
-* **Returns:** A `UIImage` instance or `null` if the data is not a valid image.
+  * A `UIImage` instance if successful, or `null` if the data is invalid.
 
-* **Example:**
+**Example:**
 
-  ```ts
-  const data = Data.fromFile("/path/to/sample.jpg")
-  const image = data ? UIImage.fromData(data) : null
-  ```
+```ts
+const fileData = Data.fromFile("/path/to/picture.png")
+const image = fileData ? UIImage.fromData(fileData) : null
+```
 
 ---
 
-## Using `UIImage` with the `Image` Component
+### `UIImage.fromBase64String(base64String: string): UIImage | null`
 
-`UIImage` can be rendered in the UI using the built-in `Image` component.
+Creates a `UIImage` instance from a Base64-encoded string.
 
-### Component: `Image`
+* **Parameters:**
+
+  * `base64String`: The Base64-encoded string representing image data.
+* **Returns:**
+
+  * A `UIImage` instance if successful, or `null` if decoding fails.
+
+**Example:**
+
+```ts
+const base64 = "iVBORw0KGgoAAAANSUhEUgAA..."
+const image = UIImage.fromBase64String(base64)
+```
+
+---
+
+## Using UIImage in the UI
+
+`UIImage` can be displayed directly in the `<Image>` component.
+
+### Component Definition
 
 ```ts
 declare const Image: FunctionComponent<UIImageProps>
 ```
 
-### Props: `UIImageProps`
+### Props Definition
 
 ```ts
 type UIImageProps = {
@@ -99,11 +207,9 @@ type UIImageProps = {
 }
 ```
 
-* `image`: The image to render, either a single `UIImage`, or a `DynamicImageSource<UIImage>` that provides different images for light and dark mode.
-
 ---
 
-### Type: `DynamicImageSource<T>`
+### Dynamic Image Type
 
 ```ts
 type DynamicImageSource<T> = {
@@ -112,25 +218,24 @@ type DynamicImageSource<T> = {
 }
 ```
 
-Use this type to assign different images based on the system color scheme.
+Used to define separate images for light and dark modes.
 
 ---
 
-### Example: Displaying a Static Image
+### Example: Display a Single Image
 
 ```ts
 const image = UIImage.fromFile("/path/to/avatar.png")
-
 <Image image={image} />
 ```
 
 ---
 
-### Example: Supporting Light and Dark Mode
+### Example: Light and Dark Mode Support
 
 ```ts
-const lightImage = UIImage.fromFile("/path/to/images/light-logo.png")
-const darkImage = UIImage.fromFile("/path/to/images/dark-logo.png")
+const lightImage = UIImage.fromFile("/path/to/light-logo.png")
+const darkImage = UIImage.fromFile("/path/to/dark-logo.png")
 
 <Image image={{ light: lightImage, dark: darkImage }} />
 ```
@@ -139,41 +244,58 @@ const darkImage = UIImage.fromFile("/path/to/images/dark-logo.png")
 
 ## Common Use Cases
 
-### Convert an Image to Base64
+### 1. Convert an Image to Base64
 
 ```ts
 const image = UIImage.fromFile("/path/to/image.png")
-const data = image ? Data.fromPNG(image) : null
-const base64 = data?.toBase64String()
+const base64 = image?.toPNGBase64String()
 ```
 
 ---
 
-### Convert an Image to JPEG with Compression
+### 2. Compress an Image and Save as JPEG
 
 ```ts
 const image = UIImage.fromFile("/path/to/photo.jpg")
-const jpeg = image ? Data.fromJPEG(image, 0.7) : null
+const jpegData = image?.toJPEGData(0.6)
+if (jpegData) {
+  // write jpegData to a file
+}
 ```
 
 ---
 
-### Display an Image in UI
+### 3. Restore and Display Image from Base64
+
+```ts
+const base64 = "iVBORw0KGgoAAAANSUhEUgAA..."
+const image = UIImage.fromBase64String(base64)
+<Image image={image} />
+```
+
+---
+
+### 4. Convert PNG to JPEG and Upload
 
 ```ts
 const image = UIImage.fromFile("/path/to/logo.png")
-
-<Image image={image} />
+const jpegData = image?.toJPEGData(0.8)
+if (jpegData) {
+  const response = await fetch("https://example.com/upload", {
+    method: "POST",
+    body: jpegData.toUint8Array()
+  })
+}
 ```
 
 ---
 
 ## Summary
 
-The `UIImage` class is a core utility for image handling within the Scripting app. It supports:
+The `UIImage` class is the foundation of image handling in the Scripting environment. It supports:
 
-* Reading from file system or binary data.
-* Image dimension introspection.
-* Encoding as PNG/JPEG via `Data`.
-* Display in UI with `Image` component.
-* Light/dark mode adaptability through `DynamicImageSource`.
+* Loading from file paths, binary data, or Base64 strings
+* Retrieving image dimensions
+* Format conversion between PNG and JPEG
+* Generating Base64 strings for sharing or storage
+* Direct UI rendering with light/dark mode adaptability

@@ -15,8 +15,8 @@
   },
   {
     "type": "file",
-    "name": "Clipboard",
-    "label": "Clipboard"
+    "name": "Pasteboard",
+    "label": "Pasteboard"
   },
   {
     "type": "file",
@@ -130,6 +130,11 @@
   },
   {
     "type": "file",
+    "name": "AVMetadataItem",
+    "label": "AVMetadataItem"
+  },
+  {
+    "type": "file",
     "name": "Audio Player",
     "label": "Audio Player"
   },
@@ -190,5 +195,10 @@
     "label": "Bluetooth",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "BackgroundKeeper",
+    "label": "BackgroundKeeper"
   }
 ]

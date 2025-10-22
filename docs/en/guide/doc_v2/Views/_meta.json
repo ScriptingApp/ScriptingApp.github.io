@@ -97,11 +97,9 @@
     "collapsed": true
   },
   {
-    "type": "dir",
+    "type": "file",
     "name": "Gestures",
-    "label": "Gestures",
-    "collapsible": true,
-    "collapsed": true
+    "label": "Gestures"
   },
   {
     "type": "dir",

@@ -6,6 +6,11 @@
   },
   {
     "type": "file",
+    "name": "Encoding",
+    "label": "编码"
+  },
+  {
+    "type": "file",
     "name": "UIImage",
     "label": "UIImage"
   },
@@ -67,6 +72,13 @@
     "type": "file",
     "name": "OAuth2",
     "label": "OAuth2"
+  },
+  {
+    "type": "dir",
+    "name": "URLSession",
+    "label": "URLSession（网络会话）",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",

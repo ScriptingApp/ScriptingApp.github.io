@@ -163,11 +163,14 @@ console.log(prefersNoInterruptions) // 示例输出：false
 
 ### 7. **会话激活**
 
-#### `setActive(active: boolean)`
-激活或停用共享音频会话。
+#### `setActive(active: boolean, options?: AudioSessionSetActiveOptions[])`
+激活或停用共享音频会话，可指定激活选项。
 
 ```typescript
-await SharedAudioSession.setActive(true)
+await SharedAudioSession.setActive(
+  true,
+  ['notifyOthersOnDeactivation']
+)
 ```
 
 ---
@@ -191,6 +194,10 @@ await SharedAudioSession.setPrefersNoInterruptionsFromSystemAlerts(true)
 ---
 
 ## 枚举（Enumerations）
+
+### **AudioSessionSetActiveOptions**
+定义激活选项：
+- `'notifyOthersOnDeactivation'`
 
 ### **AudioSessionCategory**
 定义音频会话的类别：
