@@ -1,5 +1,6 @@
 import { pluginRss } from "@rspress/plugin-rss";
 import { defineConfig, UserConfig } from "rspress/config";
+import ghPages from "rspress-plugin-gh-pages";
 
 const siteUrl = "https://scriptingapp.github.io";
 
@@ -22,6 +23,10 @@ export const config: UserConfig = {
     defaultWrapCode: false,
   },
   plugins: [
+    ghPages({
+      repo: "https://github.com/ScriptingApp/ScriptingApp.github.io.git",
+      branch: "deploy",
+    }),
     pluginRss({
       siteUrl: siteUrl,
       feed: [
