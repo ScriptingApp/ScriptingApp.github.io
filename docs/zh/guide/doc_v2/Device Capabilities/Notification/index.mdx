@@ -35,6 +35,7 @@ await Notification.schedule({
   actions: [
     {
       title: "我知道了",
+      icon: "checkmark",
       url: Script.createRunURLScheme("确认脚本", { acknowledged: true })
     }
   ],
@@ -53,6 +54,7 @@ await Notification.schedule({
 | `title`                               | `string`                                                                                                      | 必填，通知标题。                                    |
 | `subtitle`                            | `string?`                                                                                                     | 可选，副标题内容。                                   |
 | `body`                                | `string?`                                                                                                     | 可选，正文内容。                                    |
+| `iconImageData` | `Data` | 可选，自定义通知图标图片的二进制数据。                                |
 | `badge`                               | `number?`                                                                                                     | 可选，应用图标角标数字。                                |
 | `silent`                              | `boolean?`                                                                                                    | 可选，默认为 `false`。设为 `true` 则不播放声音静默送达。        |
 | `interruptionLevel`                   | `"active"` \| `"passive"` \| `"timeSensitive"`                                                                | 可选，通知的重要级别和投递优先级。                           |
@@ -62,9 +64,29 @@ await Notification.schedule({
 | `actions`                             | `NotificationAction[]?`                                                                                       | 可选，通知展开后展示的操作按钮。                            |
 | `customUI`                            | `boolean?`                                                                                                    | 可选，设为 `true` 可使用 `notification.tsx` 自定义 UI。 |
 | `tapAction`                           | `"none"` \| `{ type: "runScript", scriptName: string }` \| `{ type: "openURL", url: string }`                 | 可选，定义用户点击通知时执行的操作。                          |
-| `avoidRunningCurrentScriptWhenTapped` | `boolean?`                                                                                                    | **已废弃**，请改用 `tapAction: "none"`。            |
 
-> **注意：** `triggerTime` 和 `repeatsType` 参数已废弃，请统一使用 `trigger`。
+
+---
+
+### 通知操作按钮（`actions`）
+
+通过 `actions` 参数，你可以为通知添加操作按钮。操作按钮会在通知展开后出现，用户可以点击进行操作。
+
+#### 通知操作按钮类型（`NotificationAction`）
+
+```ts
+type NotificationAction = {
+    title: string;
+    icon?: string;
+    url: string;
+    destructive?: boolean;
+}
+```
+
+- `title`: 按钮标题
+- `icon`: 按钮图标
+- `url`: 点击后打开的 URL
+- `destructive`: 是否为破坏性操作
 
 ---
 
@@ -248,6 +270,10 @@ await Notification.schedule({
   title: "喝水提醒",
   body: "别忘了喝水哦！",
   interruptionLevel: "timeSensitive",
+  iconImageData: UIImage
+    .fromSFSymbol("waterbottle")!
+    .withTintColor("systemBlue")!
+    .toPNGData(),
   customUI: true,
   trigger: new TimeIntervalNotificationTrigger({
     timeInterval: 3600,
@@ -300,5 +326,3 @@ Scripting 中的 `Notification` API 提供了强大的本地通知功能：
 * 通过 `tapAction` 自定义点击通知的行为
 * 使用 `notification.tsx` 创建富交互通知界面
 * 提供全面的通知生命周期管理
-
-建议使用新的 `trigger` 和 `tapAction` 模式替代已废弃的 `triggerTime` 和 `avoidRunningCurrentScriptWhenTapped`。

@@ -155,3 +155,19 @@ submitScope?: boolean
 ```
 
 This ensures that `onSubmit` handlers defined higher up in the view hierarchy won’t be called when this field is submitted.
+
+## `submitLabel`
+
+Sets the label for the submit button.
+
+### Type
+
+```ts
+submitLabel?: "continue" | "return" | "send" | "go" | "search" | "join" | "done" | "next" | "route"
+```
+
+### Example
+
+```tsx
+<TextField submitLabel="search" />
+```

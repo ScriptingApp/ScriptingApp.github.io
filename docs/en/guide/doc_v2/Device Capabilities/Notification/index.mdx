@@ -54,6 +54,7 @@ await Notification.schedule({
 | `subtitle`                            | `string?`                                                                                                     | Optional. Additional context.                                                    |
 | `body`                                | `string?`                                                                                                     | Optional. Main content text.                                                     |
 | `badge`                               | `number?`                                                                                                     | Optional. App icon badge count.                                                  |
+| `iconImageData` | `Data` | Optional. Custom notification icon image data.                                |
 | `silent`                              | `boolean?`                                                                                                    | Optional. Defaults to `false`. If `true`, delivers silently without sound.       |
 | `interruptionLevel`                   | `"active"` \| `"passive"` \| `"timeSensitive"`                                                                | Optional. Defines priority and delivery behavior.                                |
 | `userInfo`                            | `Record<string, any>?`                                                                                        | Optional. Custom metadata.                                                       |
@@ -62,9 +63,30 @@ await Notification.schedule({
 | `actions`                             | `NotificationAction[]?`                                                                                       | Optional. Action buttons shown when long-pressing or expanding the notification. |
 | `customUI`                            | `boolean?`                                                                                                    | Optional. Enables rich notification UI using `notification.tsx`.                 |
 | `tapAction`                           | `"none"` \| `{ type: "runScript", scriptName: string }` \| `{ type: "openURL", url: string }`                 | Optional. Controls what happens when the user taps the notification.             |
-| `avoidRunningCurrentScriptWhenTapped` | `boolean?`                                                                                                    | **Deprecated.** Use `tapAction: "none"` instead.                                 |
 
-> **Deprecated:** `triggerTime` and `repeatsType` are deprecated. Use `trigger` instead.
+---
+
+### Notification Actions (`actions`)
+
+The `actions` parameter defines action buttons that are shown when the user long-presses or expands the notification. Each action has a title and an optional URL to open when tapped.
+
+#### Notification Action (`NotificationAction`)
+
+```ts
+type NotificationAction = {
+  title: string;
+  icon?: string;
+  url: string;
+  destructive?: boolean;
+}
+```
+
+- `title`: Action button title
+- `icon`: Action button icon
+- `url`: URL to open when tapped
+- `destructive`: Whether the action is destructive
+
+---
 
 ### Tap Behavior (`tapAction`)
 
@@ -246,6 +268,10 @@ await Notification.schedule({
   title: "Hydration Reminder",
   body: "Time to drink water!",
   interruptionLevel: "timeSensitive",
+  iconImageData: UIImage
+    .fromSFSymbol("waterbottle")!
+    .withTintColor("systemBlue")!
+    .toPNGData(),
   customUI: true,
   trigger: new TimeIntervalNotificationTrigger({
     timeInterval: 3600,
@@ -298,5 +324,3 @@ The `Notification` API in the Scripting app supports:
 * Tap behaviors via `tapAction`
 * Rich notification UI via `notification.tsx`
 * Full lifecycle management (deliver, remove, query)
-
-For future compatibility, always prefer the `trigger` and `tapAction` parameters over deprecated ones like `triggerTime` and `avoidRunningCurrentScriptWhenTapped`.

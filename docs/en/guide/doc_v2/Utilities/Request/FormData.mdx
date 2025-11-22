@@ -1,9 +1,9 @@
 # FormData 
 
-The `FormData` class is used to construct form data (`multipart/form-data`) for uploading text fields or file data in network requests.  
-Its behavior is basically consistent with the **Fetch API FormData** in browsers, but in **Scripting app**, it is extended to support the `Data` type (native binary objects), making file or image uploads more convenient.
+The `FormData` class provides a way to construct key/value pairs representing form fields and their values.
+It is mainly used for building `multipart/form-data` requests that can include both text and binary data (such as files or images).
 
-You can use a `FormData` object directly as the `body` parameter of a `fetch()` request. The system will automatically generate a `multipart/form-data` request body with the correct boundary.
+In the **Scripting app**, `FormData` is fully compatible with the standard **Fetch API**, allowing you to send data through `fetch()` with mixed text and file fields.
 
 ---
 
@@ -11,6 +11,7 @@ You can use a `FormData` object directly as the `body` parameter of a `fetch()` 
 
 ```ts
 class FormData {
+  private formData
   append(name: string, value: string): void
   append(name: string, value: Data, mimeType: string, filename?: string): void
   get(name: string): string | Data | null
@@ -27,31 +28,33 @@ class FormData {
 
 ---
 
-## Main Uses
+## Purpose
 
-* Construct form requests containing both text and file data  
-* Use for file upload APIs (e.g., images, audio, documents)  
-* Replace JSON structures when uploading binary or form data  
+`FormData` is used to:
+
+* Build `multipart/form-data` requests with text and file fields.
+* Upload files (images, documents, audio, etc.) with metadata.
+* Replace JSON-based bodies when binary data is included.
 
 ---
 
-## Method Description
+## Methods
 
 ### `append(name: string, value: string): void`
 
 ### `append(name: string, value: Data, mimeType: string, filename?: string): void`
 
-Add a field to the form.  
-Can be used to add text fields or file data.
+Appends a new field to the form.
+Can be used to add both text and file fields.
 
-#### Parameter Description
+#### Parameters
 
-| Parameter     | Type                | Description                                                  |
-| -------------- | ----------------- | ------------------------------------------------------------ |
-| **name**       | `string`          | Field name.                                                  |
-| **value**      | `string` | `Data` | Field value, can be a string or `Data` object (binary file). |
-| **mimeType**   | `string`          | File MIME type (e.g. `"image/png"`). Required only when passing `Data`. |
-| **filename**   | `string` (optional) | File name, used only when uploading files.                   |
+| Parameter    | Type                  | Description                                                                                     |
+| ------------ | --------------------- | ----------------------------------------------------------------------------------------------- |
+| **name**     | `string`              | The name of the form field.                                                                     |
+| **value**    | `string` | `Data`     | The value of the field (text or binary data).                                                   |
+| **mimeType** | `string`              | The MIME type of the file (e.g., `"image/png"`). Required only when `value` is a `Data` object. |
+| **filename** | `string` *(optional)* | The filename to include for file uploads.                                                       |
 
 #### Example
 
@@ -67,9 +70,8 @@ form.append("file", Data.fromFile("/path/to/image.png"), "image/png", "avatar.pn
 
 ### `set(name: string, value: Data, filename?: string): void`
 
-Set the value of a field.  
-If the field already exists, it will be overwritten.  
-Difference from `append()`: `set()` keeps only one value, while `append()` allows multiple values for the same field name.
+Sets a form field, replacing any existing field with the same name.
+Unlike `append()`, this overwrites previous values.
 
 #### Example
 
@@ -83,22 +85,22 @@ form.set("file", Data.fromFile("/path/to/file.txt"), "text/plain", "note.txt")
 
 ### `get(name: string): string | Data | null`
 
-Get the value of a specified field.  
-If the field does not exist, returns `null`.
+Retrieves the value of a form field.
+Returns `null` if the field does not exist.
 
 #### Example
 
 ```tsx
 const form = new FormData()
 form.append("title", "My Post")
-console.log(form.get("title")) // Output: "My Post"
+console.log(form.get("title")) // "My Post"
 ```
 
 ---
 
 ### `getAll(name: string): any[]`
 
-Get all values of fields with the same name (if `append()` was used multiple times).
+Returns all values associated with a given field name (useful when using multiple `append()` calls with the same name).
 
 #### Example
 
@@ -115,7 +117,7 @@ console.log(form.getAll("tag")) // ["swift", "ios", "scripting"]
 
 ### `has(name: string): boolean`
 
-Check whether a field with the specified name exists in the form.
+Checks whether a form field exists.
 
 #### Example
 
@@ -131,7 +133,7 @@ console.log(form.has("password")) // false
 
 ### `delete(name: string): void`
 
-Delete a field and all its values.
+Deletes the specified field and all of its values.
 
 #### Example
 
@@ -147,7 +149,7 @@ form.delete("file")
 
 ### `forEach(callback: (value: any, name: string, parent: FormData) => void): void`
 
-Iterate over all form fields and execute a callback function.
+Iterates over all form fields and invokes the callback function for each one.
 
 #### Example
 
@@ -165,7 +167,7 @@ form.forEach((value, name) => {
 
 ### `entries(): [string, any][]`
 
-Return an array of key-value pairs `[name, value]`.
+Returns an array of `[name, value]` pairs for all form fields.
 
 #### Example
 
@@ -181,8 +183,8 @@ console.log(form.entries())
 
 ### `toJson(): Record<string, any>`
 
-Convert form data to a regular JavaScript object for debugging or logging.  
-⚠️ Note: If the form contains files (`Data` type), this method will not output binary content, but show placeholder info instead.
+Converts the form data into a plain JSON object for debugging or logging.
+If the form contains binary data (`Data` objects), those fields will be represented as descriptive placeholders instead of raw binary data.
 
 #### Example
 
@@ -199,7 +201,7 @@ console.log(form.toJson())
 
 ## Usage Examples
 
-### Example 1: Upload a file
+### Example 1 — Upload a File
 
 ```tsx
 const form = new FormData()
@@ -216,7 +218,7 @@ console.log(await response.json())
 
 ---
 
-### Example 2: Upload multiple files
+### Example 2 — Upload Multiple Files
 
 ```tsx
 const form = new FormData()
@@ -231,12 +233,12 @@ await fetch("https://api.example.com/multi-upload", {
 
 ---
 
-### Example 3: Construct a mixed text and file request
+### Example 3 — Mixed Text and File Fields
 
 ```tsx
 const form = new FormData()
 form.append("title", "Travel Memories")
-form.append("description", "A collection of my travel photos.")
+form.append("description", "A collection of travel photos.")
 form.append("cover", Data.fromFile("/path/to/cover.png"), "image/png", "cover.png")
 
 const response = await fetch("https://example.com/uploadPost", {
@@ -249,7 +251,7 @@ console.log(await response.text())
 
 ---
 
-### Example 4: Iterate and debug form content
+### Example 4 — Iterating and Debugging
 
 ```tsx
 const form = new FormData()
@@ -263,32 +265,35 @@ form.forEach((value, name) => {
 
 ---
 
-## Relationship with Other Classes
+## Relationships with Other Classes
 
-| Class Name     | Description                                                                 |
-| -------------- | ---------------------------------------------------------------------------- |
-| **`fetch()`**  | Can directly use a `FormData` instance as the request body. Automatically sets `multipart/form-data` headers. |
-| **`Data`**     | Represents binary content such as files or images, passed as field values in `FormData`. |
-| **`Request`**  | Can set a `FormData` instance in `RequestInit.body`.                         |
-| **`Response`** | Can parse response to `FormData` using `response.formData()`.                |
+| Class          | Description                                                                                       |
+| -------------- | ------------------------------------------------------------------------------------------------- |
+| **`fetch()`**  | Accepts `FormData` as a request body; automatically sets `Content-Type` to `multipart/form-data`. |
+| **`Data`**     | Used to represent binary content (e.g., files, images) added to form fields.                      |
+| **`Request`**  | A `FormData` instance can be passed to `RequestInit.body`.                                        |
+| **`Response`** | You can use `response.formData()` to parse a multipart response into a `FormData` object.         |
 
 ---
 
 ## Notes
 
-* **Automatic Content-Type setting**: When using `FormData`, `fetch()` automatically sets the correct `Content-Type` (with boundary). Do not set it manually.  
-* **Duplicate field names**: Supports multiple values for the same name using `append()`.  
-* **File upload**: You must provide a MIME type when uploading files, otherwise it may default to `application/octet-stream`.  
-* **JSON conversion limitation**: `toJson()` is for debugging only, not suitable for real data transmission.  
+* **Automatic Content-Type:** When you pass a `FormData` instance to `fetch()`, the app automatically sets the correct `Content-Type` header (with a boundary). Do not manually set it.
+* **Multiple Fields:** Use `append()` to add multiple values with the same name.
+* **Binary Uploads:** Always provide a MIME type for binary uploads. Otherwise, the data defaults to `application/octet-stream`.
+* **JSON Conversion:** The `toJson()` method is intended for debugging and should not be used for actual data transmission.
 
 ---
 
 ## Summary
 
-`FormData` is the **core class in the Scripting network request system for constructing multipart/form-data requests**, featuring:
+`FormData` is the **core class for building multipart/form-data requests** in the Scripting app.
+It provides a flexible and developer-friendly API for combining text and binary fields, integrating seamlessly with `fetch()` and `Data`.
 
-* Supports mixed upload of text and files  
-* Seamless integration with `fetch()`  
-* Supports `Data` type for file transmission  
-* Provides convenient helper methods like `forEach()`, `entries()`, `toJson()`, etc.
-* Fully compatible with the Web standard FormData behavior  
+### Key Features
+
+* Fully compatible with the Fetch API
+* Supports text and file uploads
+* Automatically handles multipart boundaries
+* Useful debugging utilities (`entries()`, `toJson()`)
+* Integrates natively with `Data`, `Request`, and `Response`

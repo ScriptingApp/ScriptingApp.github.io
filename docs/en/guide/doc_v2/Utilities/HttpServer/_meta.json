@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "HttpServer",
+    "label": "HttpServer"
+  },
+  {
+    "type": "file",
+    "name": "HttpRequest",
+    "label": "HttpRequest"
+  },
+  {
+    "type": "file",
+    "name": "HttpResponse",
+    "label": "HttpResponse"
+  },
+  {
+    "type": "file",
+    "name": "HttpResponseBody",
+    "label": "HttpResponseBody"
+  },
+  {
+    "type": "file",
+    "name": "WebSocketSession",
+    "label": "WebSocketSession"
+  }
+]

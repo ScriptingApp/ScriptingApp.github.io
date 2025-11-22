@@ -11,6 +11,7 @@ export const config: UserConfig = {
   icon: "/icon.png",
   logo: "/logo.png",
   logoText: "Scripting",
+  base: "/doc_v2/",
   route: {
     cleanUrls: true,
     extensions: [".md", ".mdx"],

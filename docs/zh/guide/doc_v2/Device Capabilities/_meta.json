@@ -24,6 +24,18 @@
     "label": "文档选择器"
   },
   {
+    "type": "dir",
+    "name": "Photos",
+    "label": "照片",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "FontPicker",
+    "label": "FontPicker（字体选择器）"
+  },
+  {
     "type": "file",
     "name": "HapticFeedback",
     "label": "触觉反馈"
@@ -74,13 +86,6 @@
     "type": "dir",
     "name": "Notification",
     "label": "通知",
-    "collapsible": true,
-    "collapsed": true
-  },
-  {
-    "type": "dir",
-    "name": "Photos",
-    "label": "照片",
     "collapsible": true,
     "collapsed": true
   },
@@ -166,8 +171,8 @@
   },
   {
     "type": "file",
-    "name": "Mail",
-    "label": "邮件"
+    "name": "Send Mail",
+    "label": "发送邮件"
   },
   {
     "type": "file",

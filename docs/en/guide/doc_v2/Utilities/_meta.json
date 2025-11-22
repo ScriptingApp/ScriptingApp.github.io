@@ -41,6 +41,16 @@
   },
   {
     "type": "file",
+    "name": "FileEntity",
+    "label": "FileEntity"
+  },
+  {
+    "type": "file",
+    "name": "Archive",
+    "label": "Archive"
+  },
+  {
+    "type": "file",
     "name": "Storage",
     "label": "Storage"
   },
@@ -69,6 +79,13 @@
     "collapsed": true
   },
   {
+    "type": "dir",
+    "name": "HttpServer",
+    "label": "HttpServer",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
     "type": "file",
     "name": "OAuth2",
     "label": "OAuth2"
@@ -79,6 +96,11 @@
     "label": "URLSession",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Thread",
+    "label": "Thread"
   },
   {
     "type": "file",

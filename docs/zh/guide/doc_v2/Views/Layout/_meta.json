@@ -54,5 +54,10 @@
     "label": "惰性垂直网格布局（LazyVGrid）",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "FlowLayout",
+    "label": "流式布局组件(FlowLayout)"
   }
 ]

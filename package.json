@@ -3,10 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "setup": "bun install",
     "dev": "rspress dev",
     "build": "NODE_OPTIONS='--max-old-space-size=16384' rspress build",
-    "build:fun": "NODE_OPTIONS='--max-old-space-size=16384' rspress build -c rspress.config.fun.ts",
     "generate:docs": "rm -rf docs/en/guide/doc_v2/* && rm -rf docs/zh/guide/doc_v2/* && bun scripts/docs.js"
   },
   "dependencies": {

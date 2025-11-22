@@ -9,7 +9,7 @@
   需要 Scripting PRO
 </small>
 
-`Assistant` 模块提供了一套强大的 API，允许用户通过智能助手请求结构化的 JSON 数据。该功能可用于自动化任务，例如提取账单信息、分类支出、解析文本等。
+`Assistant` 模块提供了一套强大的 API，允许用户通过智能助手请求结构化的 JSON 数据。该功能可用于自动化任务，例如提取账单信息、分类支出、解析文本、识别图像内容等。
 
 ---
 
@@ -29,42 +29,87 @@
 ### 描述
 
 `requestStructuredData` 允许用户发送自然语言提示，并根据定义好的 JSON Schema 接收结构化数据响应。
+该方法现已支持两种形式：
 
-### 语法
+1. 仅文本输入版本
+2. 带图片输入版本 —— 可同时传入多张图片，让 AI 结合视觉内容进行结构化分析。
+
+---
+
+### 语法 1：文本输入版本
 
 ```ts
 function requestStructuredData<R>(
   prompt: string,
   schema: JSONSchemaArray | JSONSchemaObject,
   options?: {
-    provider: "openai" | "gemini" | "anthropic" | "deepseek" | "pollinations" | { custom: string }
+    provider: "openai" | "gemini" | "anthropic" | "deepseek" | "openrouter" | { custom: string }
     modelId?: string
   }
 ): Promise<R>
 ```
 
+### 语法 2：带图片输入版本
+
+```ts
+function requestStructuredData<R>(
+  prompt: string,
+  images: string[],
+  schema: JSONSchemaArray | JSONSchemaObject,
+  options?: {
+    provider: "openai" | "gemini" | "anthropic" | "deepseek" | "openrouter" | { custom: string }
+    modelId?: string
+  }
+): Promise<R>
+```
+
+---
+
 ### 参数说明
 
-* `prompt` (`string`)：
-  自然语言提示，用于描述要解析的内容或任务。
+#### `prompt` (`string`)
 
-* `schema` (`JSONSchemaArray | JSONSchemaObject`)：
-  定义返回 JSON 数据结构的模式。
+自然语言提示，用于描述要解析的内容或任务。
+例如：
 
-* `options`（可选）：
+> “请从以下账单中提取金额、日期、类别和地点。”
 
-  * `provider`：
-    指定要使用的 AI 提供商。支持以下值：
+#### `images` (`string[]`)
 
-    * `"openai"`：使用 OpenAI 模型（如 GPT-4）
-    * `"gemini"`：使用 Google Gemini
-    * `"anthropic"`：使用 Claude 系列
-    * `"deepseek"`：使用 DeepSeek 模型
-    * `"pollinations"`：使用 Pollinations 模型
-    * `{ custom: string }`：指定自定义的 API 提供商名称
+要提供给模型的输入图片列表。每个元素应为 **Base64 数据 URI 格式** 的字符串，例如：
 
-  * `modelId`：
-    指定提供商对应的模型 ID（如 `"gpt-4-turbo"`、`"gemini-1.5-pro"` 等）。如果未指定，将使用 app 中当前默认模型。
+```
+data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...
+```
+
+* 允许多张图片，但**不建议一次传入过多图片**，否则可能导致请求体过大或超时。
+* 可用于 OCR 账单识别、发票解析、图像场景分析等任务。
+
+#### `schema` (`JSONSchemaArray | JSONSchemaObject`)
+
+定义返回的 JSON 数据结构（参见下方 “JSON Schema 定义”）。
+
+#### `options`（可选）
+
+* `provider`：
+
+  指定要使用的 AI 提供商。支持以下值：
+
+  | 值                    | 说明                                |
+  | -------------------- | --------------------------------- |
+  | `"openai"`           | 使用 OpenAI 模型（如 GPT-4、GPT-4-Turbo） |
+  | `"gemini"`           | 使用 Google Gemini 模型               |
+  | `"anthropic"`        | 使用 Anthropic Claude 系列            |
+  | `"deepseek"`         | 使用 DeepSeek 模型                    |
+  | `"openrouter"`       | 使用 OpenRouter 平台（可聚合多模型）          |
+  | `{ custom: string }` | 指定自定义的 API 提供商名称，例如自建代理服务         |
+
+* `modelId`：
+
+  指定模型 ID（如 `"gpt-4-turbo"`、`"gemini-1.5-pro"`、`"claude-3-opus"` 等）。
+  如果未指定，则会自动使用应用中配置的该提供商的默认模型。
+
+---
 
 ### 返回值
 
@@ -74,7 +119,7 @@ function requestStructuredData<R>(
 
 ## JSON Schema 定义
 
-`schema` 参数定义了返回数据的结构类型：
+`schema` 参数定义了返回数据的结构类型。
 
 ### `JSONSchemaType`
 
@@ -116,7 +161,7 @@ type JSONSchemaObject = {
 
 ---
 
-## 示例：提取账单信息
+## 示例：提取账单信息（文本输入）
 
 假设你有一段账单文本，想要提取金额、日期、类别和地点：
 
@@ -181,18 +226,76 @@ console.log(data)
 
 ---
 
+## 示例：解析图片中的发票信息
+
+以下示例展示如何通过带图片输入的 `requestStructuredData` 方法，提取发票中的结构化数据：
+
+```ts
+const prompt = "请从以下图片中提取发票金额、开票日期和商家名称"
+
+// const base64Data = UIImage.fromFile("/path/to/image.png").toJPEGBase64String(0.6)
+// const base64Image = `data:image/jpeg;base64,${base64Data}`
+
+const images = [
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...", // 第一张发票图
+  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ..."      // 第二张发票图
+]
+
+const schema: JSONSchemaObject = {
+  type: "object",
+  properties: {
+    total: { type: "number", description: "发票总金额", required: true },
+    date: { type: "string", description: "发票日期" },
+    merchant: { type: "string", description: "商家名称" }
+  },
+  description: "发票信息"
+}
+
+const result = await Assistant.requestStructuredData(
+  prompt,
+  images,
+  schema,
+  { provider: "gemini", modelId: "gemini-1.5-pro" }
+)
+
+console.log(result)
+```
+
+**可能的输出：**
+
+```json
+{
+  "total": 268.5,
+  "date": "2024-12-01",
+  "merchant": "深圳市优选超市"
+}
+```
+
+---
+
 ## 使用注意事项
 
 1. **确保 `schema` 定义合理**
    返回的数据结构必须与定义的 schema 匹配，否则可能解析失败。
 
 2. **合理设置 `required` 字段**
-   对于必须存在的字段，务必设置 `required: true`，可选字段可省略。
+   对于必须存在的字段，务必设置 `required: true`；可选字段可省略。
 
 3. **明确选择 provider 和 modelId**
-   如需使用特定模型（如 GPT-4），应通过 `options` 参数指定提供商和模型 ID。
+   若需使用特定模型（如 GPT-4、Gemini Pro），应通过 `options` 参数明确指定。
 
-4. **建议加入错误处理逻辑**
+4. **支持 OpenRouter 与自定义 Provider**
+
+   * `"openrouter"` 允许使用 OpenRouter 平台聚合的多种模型。
+   * `{ custom: "your-provider" }` 可用于自定义后端 API。
+
+5. **支持图片输入（多模态解析）**
+
+   * 仅部分模型（如 `gpt-4-turbo`、`gemini-1.5-pro`）支持图像输入。
+   * 图片必须为 Base64 编码的 `data:image/...;base64,` 格式。
+   * 不建议一次上传过多图片，以避免超时。
+
+6. **建议加入错误处理逻辑**
 
 ```ts
 try {

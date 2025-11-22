@@ -36,6 +36,11 @@
   },
   {
     "type": "file",
+    "name": "Animation and Transition",
+    "label": "Animation and Transition"
+  },
+  {
+    "type": "file",
     "name": "hidden",
     "label": "hidden"
   },
@@ -211,6 +216,11 @@
   },
   {
     "type": "file",
+    "name": "LiveActivity View Modifiers",
+    "label": "LiveActivity View Modifiers"
+  },
+  {
+    "type": "file",
     "name": "Charts Style",
     "label": "Charts Style"
   },
@@ -254,6 +264,11 @@
     "type": "file",
     "name": "List View Modifiers",
     "label": "List View Modifiers"
+  },
+  {
+    "type": "file",
+    "name": "Toast",
+    "label": "Toast"
   },
   {
     "type": "file",
@@ -304,6 +319,11 @@
     "type": "file",
     "name": "layoutPriority",
     "label": "layoutPriority"
+  },
+  {
+    "type": "file",
+    "name": "Set environment values (environments)",
+    "label": "Set environment values (environments)"
   },
   {
     "type": "file",

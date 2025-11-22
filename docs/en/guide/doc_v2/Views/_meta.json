@@ -143,6 +143,21 @@
   },
   {
     "type": "file",
+    "name": "ScrollViewReader",
+    "label": "ScrollViewReader"
+  },
+  {
+    "type": "file",
+    "name": "GeometryReader",
+    "label": "GeometryReader"
+  },
+  {
+    "type": "file",
+    "name": "EnvironmentValuesReader",
+    "label": "EnvironmentValuesReader"
+  },
+  {
+    "type": "file",
     "name": "AccessoryWidgetBackground",
     "label": "AccessoryWidgetBackground"
   },

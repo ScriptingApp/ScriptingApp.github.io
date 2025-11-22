@@ -41,6 +41,16 @@
   },
   {
     "type": "file",
+    "name": "FileEntity",
+    "label": "FileEntity"
+  },
+  {
+    "type": "file",
+    "name": "Archive",
+    "label": "Archive（归档）"
+  },
+  {
+    "type": "file",
     "name": "Storage",
     "label": "本地存储"
   },
@@ -64,7 +74,14 @@
   {
     "type": "dir",
     "name": "SSH",
-    "label": "SSH (需要 Scripting PRO)",
+    "label": "SSH",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "HttpServer",
+    "label": "HttpServer（HTTP 服务器）",
     "collapsible": true,
     "collapsed": true
   },
@@ -79,6 +96,11 @@
     "label": "URLSession（网络会话）",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Thread",
+    "label": "线程（Thread）"
   },
   {
     "type": "file",

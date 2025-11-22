@@ -10,9 +10,11 @@
     "label": "Section"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "ForEach",
-    "label": "ForEach"
+    "label": "ForEach",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",

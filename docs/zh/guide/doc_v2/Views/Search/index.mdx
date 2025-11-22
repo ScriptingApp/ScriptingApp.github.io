@@ -83,6 +83,26 @@ searchSuggestions?: VirtualNode
 ### 示例
 
 ```tsx
+const suggestions = useMemo(() => [
+  {
+    label: "🍎 Apple",
+    value: "Apple"
+  },
+  {
+    label: "🍌 Bananer",
+    value: "Bananer"
+  }
+], [])
+const filteredSuggestions = useMemo(() => {
+  if (!/\S+/.test(query)) {
+    return suggestions
+  }
+  const q = query.toLowerCase()
+  return suggestions.filter(s =>
+    s.label.toLowerCase().includes(q) ||
+    s.value.toLowerCase().includes(q))
+}, [query, suggestions])
+
 <List
   searchable={{
     value: query,
@@ -90,8 +110,11 @@ searchSuggestions?: VirtualNode
   }}
   searchSuggestions={
     <>
-      <Text searchCompletion="Apple">🍎 苹果</Text>
-      <Text searchCompletion="Banana">🍌 香蕉</Text>
+      {filteredSuggestions.map(s =>
+        <Text
+          searchCompletion={s.value}
+        >{s.label}</Text>
+      )}
     </>
   }
 />

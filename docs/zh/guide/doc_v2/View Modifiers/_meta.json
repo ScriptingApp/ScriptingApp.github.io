@@ -36,6 +36,11 @@
   },
   {
     "type": "file",
+    "name": "Animation and Transition",
+    "label": "动画和过渡"
+  },
+  {
+    "type": "file",
     "name": "hidden",
     "label": "隐藏"
   },
@@ -211,6 +216,11 @@
   },
   {
     "type": "file",
+    "name": "LiveActivity View Modifiers",
+    "label": "实时活动（LiveActivity）修饰符"
+  },
+  {
+    "type": "file",
     "name": "Charts Style",
     "label": "图表样式"
   },
@@ -254,6 +264,11 @@
     "type": "file",
     "name": "List View Modifiers",
     "label": "列表视图修饰符"
+  },
+  {
+    "type": "file",
+    "name": "Toast",
+    "label": "Toast提示"
   },
   {
     "type": "file",
@@ -304,6 +319,11 @@
     "type": "file",
     "name": "layoutPriority",
     "label": "布局优先级"
+  },
+  {
+    "type": "file",
+    "name": "Set environment values (environments)",
+    "label": "设置环境变量 (environments)"
   },
   {
     "type": "file",

@@ -155,3 +155,19 @@ submitScope?: boolean
 ```
 
 启用此项后，该字段的提交事件将不会触发父视图中的提交处理逻辑。
+
+## `submitLabel`
+
+设置提交按钮的文本。
+
+### 类型
+
+```ts
+submitLabel?: "continue" | "return" | "send" | "go" | "search" | "join" | "done" | "next" | "route"
+```
+
+### 示例
+
+```tsx
+<TextField submitLabel="send" />
+```

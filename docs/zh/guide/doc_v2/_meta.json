@@ -6,6 +6,13 @@
   },
   {
     "type": "dir",
+    "name": "API Adjustments and Updates",
+    "label": "API 调整与更新",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
     "name": "Widget",
     "label": "小组件",
     "collapsible": true,
@@ -48,11 +55,9 @@
     "collapsed": true
   },
   {
-    "type": "dir",
+    "type": "file",
     "name": "LiveActivity",
-    "label": "实时活动（灵动岛）",
-    "collapsible": true,
-    "collapsed": true
+    "label": "实时活动（灵动岛）"
   },
   {
     "type": "file",

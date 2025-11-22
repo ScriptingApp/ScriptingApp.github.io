@@ -111,7 +111,13 @@ Returns a hexadecimal string representation of the data.
 
 ### `toRawString(encoding?: string): string | null`
 
-Converts the data into a string using the specified encoding (default: `"utf-8"`).
+Converts the data into a string using the specified encoding (default: `"utf-8"`), strictly following the specified encoding, and returning `null` if the data is empty or cannot be converted to a string.
+
+---
+
+### `toDecodedString(encoding?: "utf8" | "ascii"): string`
+
+Converts the data into a decoded string using the specified encoding (default: `"utf-8"`), loosing any bad characters.
 
 ---
 

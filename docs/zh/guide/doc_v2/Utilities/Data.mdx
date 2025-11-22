@@ -111,7 +111,13 @@
 
 ### `toRawString(encoding?: string): string | null`
 
-将数据转换为字符串，支持指定编码（默认 `"utf-8"`）。
+将数据转换为字符串，支持指定编码（默认 `"utf-8"`），严格解码，无法解码的字符将返回 `null`。
+
+---
+
+### `toDecodedString(encoding?: "utf8" | "ascii"): string`
+
+将数据转换为字符串，支持指定编码（默认 `"utf-8"`）, 宽松解码，会将无法解码的字符替换为 `?`。
 
 ---
 

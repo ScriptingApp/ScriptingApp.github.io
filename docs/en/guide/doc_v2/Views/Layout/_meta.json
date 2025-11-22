@@ -54,5 +54,10 @@
     "label": "LazyVGrid",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "FlowLayout",
+    "label": "FlowLayout"
   }
 ]

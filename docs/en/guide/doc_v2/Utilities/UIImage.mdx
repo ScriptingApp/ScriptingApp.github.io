@@ -1,21 +1,23 @@
 # UIImage 
 
-The `UIImage` class represents an image object that can be loaded from a file, binary data, or a Base64 string.
-It provides APIs for image encoding (PNG/JPEG), format conversion, and UI display.
-A `UIImage` instance can be directly displayed in an `Image` component or used together with the `Data` class for storage, uploading, or encryption.
+The `UIImage` class represents an image object that can be loaded, encoded, converted, and displayed.
+It supports creating images from file paths, binary data, or Base64 strings and provides multiple format conversion methods (PNG/JPEG).
+`UIImage` can be displayed directly in an `Image` component or used with the `Data` class for storage, uploading, or encryption.
 
 ---
 
 ## Overview
 
-`UIImage` is the core image-handling class in the scripting environment. You can use it to:
+`UIImage` is the core class for handling images in the scripting environment. It is commonly used for:
 
-* Load images from local files, binary data, or Base64 strings
-* Retrieve pixel dimensions of an image
-* Convert image formats (PNG/JPEG)
-* Generate Base64-encoded image data
-* Display images in the UI using the `<Image>` component
-* Support automatic light/dark mode switching with dynamic image sources
+* Loading images from local files, binary data, Base64 strings or networl URL.
+* Accessing image dimensions and scale
+* Converting image formats (e.g., PNG, JPEG)
+* Generating Base64-encoded strings
+* Adjusting rendering and resizing modes
+* Flipping or tinting images
+* Generating thumbnails
+* Displaying dynamic images that switch between light and dark modes
 
 ---
 
@@ -43,7 +45,337 @@ console.log(image?.height)
 
 ---
 
+### `scale: number`
+
+The scale factor of the image, usually `1` or `2` for Retina displays.
+
+```ts
+console.log(image?.scale)
+```
+
+---
+
+### `imageOrientation: string`
+
+The orientation of the image. Possible values:
+
+* `"up"`
+* `"down"`
+* `"left"`
+* `"right"`
+* `"upMirrored"`
+* `"downMirrored"`
+* `"leftMirrored"`
+* `"rightMirrored"`
+* `"unknown"`
+
+---
+
+### `isSymbolImage: boolean`
+
+Indicates whether the image is an SF Symbol image.
+
+```ts
+const symbol = UIImage.fromSFSymbol("heart.fill")
+console.log(symbol?.isSymbolImage) // true
+```
+
+---
+
+### `renderingMode: "automatic" | "alwaysOriginal" | "alwaysTemplate" | "unknown"`
+
+The rendering mode of the image:
+
+* `automatic`: Automatically determined by the system
+* `alwaysOriginal`: Display the image in its original color
+* `alwaysTemplate`: Render the image as a template (can be tinted)
+
+---
+
+### `resizingMode: "tile" | "stretch" | "unknown"`
+
+The resizing mode of the image:
+
+* `"tile"`: The image is tiled to fill the area
+* `"stretch"`: The image is stretched to fit
+
+---
+
+### `capInsets: { top: number, left: number, bottom: number, right: number }`
+
+The cap insets that define the stretchable area of the image.
+
+---
+
+### `flipsForRightToLeftLayoutDirection: boolean`
+
+Indicates whether the image automatically flips in right-to-left (RTL) layout directions.
+
+---
+
 ## Instance Methods
+
+### `preparingThumbnail(size: Size): UIImage | null`
+
+Creates a thumbnail with the specified size.
+
+* **Parameters:**
+
+  * `size.width`: Width of the thumbnail
+  * `size.height`: Height of the thumbnail
+
+* **Returns:**
+  A new `UIImage` instance, or `null` if creation fails.
+
+**Example:**
+
+```ts
+const image = UIImage.fromFile("/path/to/photo.jpg")
+const thumb = image?.preparingThumbnail({ width: 200, height: 200 })
+```
+
+---
+
+### `withBaselineOffset(offset: number): UIImage`
+
+Returns a new image with the specified baseline offset, it is useful for aligning text to the bottom of an image.
+
+```ts
+const offset = image?.withBaselineOffset(10)
+```
+
+---
+
+### `withHorizontallyFlippedOrientation(): UIImage`
+
+Returns a new image with horizontally flipped orientation.
+
+```ts
+const flipped = image?.withHorizontallyFlippedOrientation()
+```
+
+---
+
+### `withTintColor(color: string, renderingMode?: "automatic" | "alwaysOriginal" | "alwaysTemplate"): UIImage | null`
+
+Applies a tint color to the image using the specified rendering mode.
+
+* **Parameters:**
+
+  * `color`: The tint color as a string, e.g. `"#ffcc00"` or `"rgb(255,128,0)"`
+  * `renderingMode`: The rendering mode to use. Defaults to `"automatic"`
+
+**Example:**
+
+```ts
+const symbol = UIImage.fromSFSymbol("star.fill")
+const tinted = symbol?.withTintColor("#ffcc00", "alwaysTemplate")
+```
+
+---
+
+### `withRenderingMode(renderingMode: "automatic" | "alwaysOriginal" | "alwaysTemplate"): UIImage | null`
+
+Returns a new version of the image using the specified rendering mode.
+
+```ts
+const templated = image?.withRenderingMode("alwaysTemplate")
+```
+
+---
+
+### `resizableImage(capInsets, resizingMode?): UIImage | null`
+
+Returns a new version of the image with specified cap insets and resizing mode.
+
+* **Parameters:**
+
+  * `capInsets`: `{ top, left, bottom, right }`
+  * `resizingMode`: `"tile"` or `"stretch"` (default `"tile"`)
+
+**Example:**
+
+```ts
+const resizable = image?.resizableImage(
+  { top: 10, left: 10, bottom: 10, right: 10 },
+  "stretch"
+)
+```
+
+---
+
+### `renderedInCircle(radius?: number | null, fitEntireImage?: boolean): UIImage`
+
+Returns a new version of the image rendered as a circle, with optional radius and fit behavior.
+
+* **Parameters:**
+
+  * `radius` (optional): The radius of the circle in points.
+
+    * If not specified:
+
+      * When `fitEntireImage` is `false`, the circle uses the **shortest dimension** of the image.
+      * When `fitEntireImage` is `true`, the circle uses the **longest dimension** of the image.
+  * `fitEntireImage` (optional): Whether to fit the entire image inside the circle.
+
+    * Default value: `true`.
+    * If set to `false`, the image fills the circular area and may be cropped.
+
+* **Returns:**
+
+  * A new `UIImage` instance representing the circular rendering.
+
+**Example 1: Create a default circular avatar**
+
+```ts
+const image = UIImage.fromFile("/path/to/avatar.jpg")
+const circle = image?.renderedInCircle()
+<Image image={circle} />
+```
+
+**Example 2: Specify radius and fit entire image**
+
+```ts
+const image = UIImage.fromFile("/path/to/photo.png")
+const circle = image?.renderedInCircle(60, true)
+<Image image={circle} />
+```
+
+**Example 3: Fill mode (may crop parts of the image)**
+
+```ts
+const image = UIImage.fromFile("/path/to/icon.png")
+const circle = image?.renderedInCircle(50, false)
+<Image image={circle} />
+```
+
+---
+
+### `renderedIn(size: { width: number, height: number }, source?: {  position?: ..., size?: ... }): UIImage | null`
+
+Returns a new version of the image rendered with the specified size and optional source region.
+
+* **Parameters:**
+
+  * `size`: `{ width: number, height: number }` - The size of the rendered image.
+  * `source`: `{ position?: { x: number, y: number }, size?: { width: number, height: number } }` - The source region of the image.
+
+* **Returns:**
+
+  * A new `UIImage` instance if rendering succeeds, or `null` if it fails.
+
+**Example 1: Scale entire image into a rectangle**
+
+```ts
+const image = UIImage.fromFile("/path/to/photo.jpg")
+const rendered = image?.renderedIn({width: 200, height: 200 })
+<Image image={rendered} />
+```
+
+**Example 2: Crop and render a specific region**
+
+```ts
+const image = UIImage.fromFile("/path/to/landscape.jpg")
+const cropped = image?.renderedIn({
+    width: 150, height: 150 
+  },
+  position: { x: 100, y: 50 },
+  size: { width: 300, height: 300 }
+)
+<Image image={cropped} />
+```
+
+---
+
+### `applySymbolConfiguration(config: UIImageSymbolConfiguration | UIImageSymbolConfiguration[]): UIImage | null`
+
+Returns a new version of the image with the specified **symbol configuration** (`UIImageSymbolConfiguration`).
+This method is primarily used to customize the appearance of **SF Symbols** images, including color, weight, size, rendering mode, and palette.
+
+* **Parameters:**
+
+  * `config`: The symbol configuration to apply to the image.
+
+    * Can be a single `UIImageSymbolConfiguration` instance, or
+    * An array of configurations, which will be applied sequentially (later configurations may override earlier ones).
+
+* **Returns:**
+
+  * A new `UIImage` instance representing the symbol with applied configuration, or `null` if the operation fails.
+
+**Example 1: Display a symbol in multicolor**
+
+```ts
+const image = UIImage.fromFile("/path/to/sf_symbol.png")
+const config = UIImageSymbolConfiguration.preferringMulticolor()
+const colored = image?.applySymbolConfiguration(config)
+<Image image={colored} />
+```
+
+**Example 2: Apply both scale and weight configurations**
+
+```ts
+const image = UIImage.fromFile("/path/to/sf_symbol.png")
+const config = [
+  UIImageSymbolConfiguration.scale("large"),
+  UIImageSymbolConfiguration.weight("bold")
+]
+const boldLarge = image?.applySymbolConfiguration(config)
+<Image image={boldLarge} />
+```
+
+**Example 3: Set hierarchical and palette colors**
+
+```ts
+const image = UIImage.fromFile("/path/to/symbol.png")
+const config = [
+  UIImageSymbolConfiguration.hierarchicalColor(Color.blue()),
+  UIImageSymbolConfiguration.paletteColors([Color.red(), Color.orange()])
+]
+const customized = image?.applySymbolConfiguration(config)
+<Image image={customized} />
+```
+
+---
+
+## UIImageSymbolConfiguration
+
+`UIImageSymbolConfiguration` is a class used to define appearance configurations for **symbol images (SF Symbols)**.
+Instances created with its static methods can be passed to `applySymbolConfiguration()` to modify how the symbol is rendered.
+
+### Available Static Methods
+
+| Method                      | Description                                                                                                                                                        |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `preferringMonochrome()`    | Prefers monochrome rendering for the symbol.                                                                                                                       |
+| `preferringMulticolor()`    | Prefers multicolor rendering for the symbol.                                                                                                                       |
+| `scale(value)`              | Sets the scale of the symbol. Possible values: `"default"`, `"large"`, `"medium"`, `"small"`, `"unspecified"`.                                                     |
+| `weight(value)`             | Sets the stroke weight of the symbol. Possible values: `"ultraLight"`, `"thin"`, `"light"`, `"regular"`, `"medium"`, `"semibold"`, `"bold"`, `"heavy"`, `"black"`. |
+| `pointSize(value)`          | Sets the point size of the symbol.                                                                                                                                 |
+| `paletteColors(value)`      | Sets a color palette (array of `Color`) for multicolor or layered symbols.                                                                                         |
+| `hierarchicalColor(value)`  | Applies a hierarchical color (used for layered shading effects).                                                                                                   |
+| `variableValueMode(value)`  | Sets how variable-value symbols are displayed. Possible values: `"automatic"`, `"color"`, `"draw"`.                                                                |
+| `colorRenderingMode(value)` | Sets the color rendering mode. Possible values: `"automatic"`, `"flat"`, `"gradient"`.                                                                             |
+| `locale(identifier)`        | Sets the locale for localized symbol variants (e.g., `"en"`, `"zh-Hans"`).                                                                                         |
+
+---
+
+**Example: Combine multiple symbol configurations**
+
+```ts
+const config = [
+  UIImageSymbolConfiguration.scale("medium"),
+  UIImageSymbolConfiguration.weight("semibold"),
+  UIImageSymbolConfiguration.preferringMonochrome(),
+  UIImageSymbolConfiguration.colorRenderingMode("flat")
+]
+
+const image = UIImage.fromFile("/path/to/symbol.png")
+const result = image?.applySymbolConfiguration(config)
+<Image image={result} />
+```
+
+---
 
 ### `toJPEGData(compressionQuality?: number): Data | null`
 
@@ -51,37 +383,16 @@ Converts the image to JPEG data.
 
 * **Parameters:**
 
-  * `compressionQuality` (optional): The JPEG compression quality, ranging from `0` (maximum compression) to `1` (lossless). Default is `1`.
+  * `compressionQuality`: A number between `0` and `1`, default is `1`.
 * **Returns:**
-
-  * A `Data` instance containing the JPEG data, or `null` if conversion fails.
-
-**Example:**
-
-```ts
-const image = UIImage.fromFile("/path/to/photo.png")
-const jpegData = image?.toJPEGData(0.8)
-if (jpegData) {
-  console.log(`JPEG data size: ${jpegData.length} bytes`)
-}
-```
+  A `Data` instance or `null`.
 
 ---
 
 ### `toPNGData(): Data | null`
 
 Converts the image to PNG data.
-
-* **Returns:**
-
-  * A `Data` instance containing PNG data, or `null` if conversion fails.
-
-**Example:**
-
-```ts
-const image = UIImage.fromFile("/path/to/logo.png")
-const pngData = image?.toPNGData()
-```
+Returns a `Data` instance or `null`.
 
 ---
 
@@ -89,102 +400,56 @@ const pngData = image?.toPNGData()
 
 Converts the image to a Base64-encoded JPEG string.
 
-* **Parameters:**
-
-  * `compressionQuality` (optional): JPEG compression quality (0–1, default is `1`).
-* **Returns:**
-
-  * A Base64-encoded string, or `null` if conversion fails.
-
-**Example:**
-
-```ts
-const image = UIImage.fromFile("/path/to/avatar.jpg")
-const base64 = image?.toJPEGBase64String(0.7)
-if (base64) {
-  console.log(base64.slice(0, 100) + "...")
-}
-```
-
 ---
 
 ### `toPNGBase64String(): string | null`
 
 Converts the image to a Base64-encoded PNG string.
 
-* **Returns:**
-
-  * A Base64-encoded string, or `null` if conversion fails.
-
-**Example:**
-
-```ts
-const image = UIImage.fromFile("/path/to/icon.png")
-const base64 = image?.toPNGBase64String()
-```
-
 ---
 
 ## Static Methods
 
-### `UIImage.fromFile(filePath: string): UIImage | null`
+### `UIImage.fromData(data: Data): UIImage | null`
 
-Creates a `UIImage` instance from a file path.
-
-* **Parameters:**
-
-  * `filePath`: The absolute path to the image file (supports PNG, JPG, JPEG).
-* **Returns:**
-
-  * A `UIImage` instance if successful, or `null` if loading fails.
-
-**Example:**
-
-```ts
-const image = UIImage.fromFile("/path/to/images/sample.jpg")
-if (image) {
-  console.log(`Width: ${image.width}, Height: ${image.height}`)
-}
-```
+Creates an image from a `Data` instance containing PNG or JPEG data.
 
 ---
 
-### `UIImage.fromData(data: Data): UIImage | null`
+### `UIImage.fromFile(filePath: string): UIImage | null`
 
-Creates a `UIImage` instance from binary data.
-
-* **Parameters:**
-
-  * `data`: A `Data` instance containing valid PNG or JPEG data.
-* **Returns:**
-
-  * A `UIImage` instance if successful, or `null` if the data is invalid.
-
-**Example:**
-
-```ts
-const fileData = Data.fromFile("/path/to/picture.png")
-const image = fileData ? UIImage.fromData(fileData) : null
-```
+Creates an image from a file path (supports PNG, JPG, JPEG).
 
 ---
 
 ### `UIImage.fromBase64String(base64String: string): UIImage | null`
 
-Creates a `UIImage` instance from a Base64-encoded string.
+Creates an image from a Base64 string.
 
-* **Parameters:**
+---
 
-  * `base64String`: The Base64-encoded string representing image data.
-* **Returns:**
+### `UIImage.fromSFSymbol(name: string): UIImage | null`
 
-  * A `UIImage` instance if successful, or `null` if decoding fails.
+Creates an image from a system SF Symbol.
 
 **Example:**
 
 ```ts
-const base64 = "iVBORw0KGgoAAAANSUhEUgAA..."
-const image = UIImage.fromBase64String(base64)
+const heart = UIImage.fromSFSymbol("heart.fill")
+<Image image={heart} />
+```
+
+---
+
+### `UIImage.fromURL(url: string): Promise<UIImage | null>`
+
+Creates an image from a URL.
+
+**Example:**
+
+```ts
+const image = await UIImage.fromURL("https://example.com/image.jpg")
+<Image image={image} />
 ```
 
 ---
@@ -198,6 +463,8 @@ const image = UIImage.fromBase64String(base64)
 ```ts
 declare const Image: FunctionComponent<UIImageProps>
 ```
+
+---
 
 ### Props Definition
 
@@ -218,7 +485,7 @@ type DynamicImageSource<T> = {
 }
 ```
 
-Used to define separate images for light and dark modes.
+Used for automatically switching images in light and dark mode.
 
 ---
 
@@ -231,7 +498,7 @@ const image = UIImage.fromFile("/path/to/avatar.png")
 
 ---
 
-### Example: Light and Dark Mode Support
+### Example: Light and Dark Mode
 
 ```ts
 const lightImage = UIImage.fromFile("/path/to/light-logo.png")
@@ -242,9 +509,9 @@ const darkImage = UIImage.fromFile("/path/to/dark-logo.png")
 
 ---
 
-## Common Use Cases
+## Common Usage Examples
 
-### 1. Convert an Image to Base64
+### 1. Convert Image to Base64
 
 ```ts
 const image = UIImage.fromFile("/path/to/image.png")
@@ -253,19 +520,19 @@ const base64 = image?.toPNGBase64String()
 
 ---
 
-### 2. Compress an Image and Save as JPEG
+### 2. Compress and Save as JPEG
 
 ```ts
 const image = UIImage.fromFile("/path/to/photo.jpg")
 const jpegData = image?.toJPEGData(0.6)
 if (jpegData) {
-  // write jpegData to a file
+  // Save the data to a local file
 }
 ```
 
 ---
 
-### 3. Restore and Display Image from Base64
+### 3. Restore Image from Base64 String
 
 ```ts
 const base64 = "iVBORw0KGgoAAAANSUhEUgAA..."
@@ -290,12 +557,35 @@ if (jpegData) {
 
 ---
 
+### 5. Create and Tint an SF Symbol
+
+```ts
+const symbol = UIImage.fromSFSymbol("star.fill")
+const colored = symbol?.withTintColor("#ffcc00", "alwaysTemplate")
+<Image image={colored} />
+```
+
+---
+
+### 6. Generate a Thumbnail
+
+```ts
+const image = UIImage.fromFile("/path/to/large.jpg")
+const thumb = image?.preparingThumbnail({ width: 120, height: 120 })
+<Image image={thumb} />
+```
+
+---
+
 ## Summary
 
-The `UIImage` class is the foundation of image handling in the Scripting environment. It supports:
+`UIImage` is the core class for image manipulation in the Scripting environment. It provides:
 
-* Loading from file paths, binary data, or Base64 strings
-* Retrieving image dimensions
-* Format conversion between PNG and JPEG
-* Generating Base64 strings for sharing or storage
-* Direct UI rendering with light/dark mode adaptability
+* Loading from files, binary data, or Base64 strings
+* Support for SF Symbols
+* Access to dimensions, scale, orientation, and rendering information
+* Methods for flipping, tinting, and resizing
+* PNG/JPEG conversion and Base64 encoding
+* Thumbnail generation and customizable rendering modes
+* Seamless integration with the `<Image>` component
+* Light and dark mode image switching support
