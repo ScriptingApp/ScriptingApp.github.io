@@ -6,7 +6,6 @@ const siteUrl = "https://scriptingapp.github.io";
 
 export const config: UserConfig = {
   // root: path.join(__dirname, "docs"),
-  // outDir: "public",
   title: "Scripting",
   icon: "/icon.png",
   logo: "/logo.png",
@@ -27,6 +26,7 @@ export const config: UserConfig = {
     ghPages({
       repo: "https://github.com/ScriptingApp/ScriptingApp.github.io.git",
       branch: "deploy",
+      // siteBase: "/doc_v2",
     }),
     pluginRss({
       siteUrl: siteUrl,

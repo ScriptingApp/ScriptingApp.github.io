@@ -15,7 +15,7 @@
 | `title`             | `string`                                                                                       | 按钮上显示的文本标签。                                                                                             |
 | `systemImage`       | `string` *(可选)*                                                                              | 按钮标题旁边显示的系统图标名称。                                                                                   |
 | `children`          | `VirtualNode` 或 `VirtualNode[]`                                                               | 用作按钮标签的自定义视图，替代 `title`。                                                                           |
-| `role`              | `'destructive' \| 'cancel'` *(可选)*                                                            | 描述按钮的用途。`destructive` 用于标记执行潜在危险操作的按钮，`cancel` 表示取消操作。                                 |
+| `role`              | `'destructive' \| 'cancel' \| 'close' \| 'confirm'` *(可选)*                                                            | 描述按钮的用途。`destructive` 用于标记执行潜在危险操作的按钮，`cancel` 表示取消操作。                                 |
 | `intent`            | `AppIntent<any>`                                                                               | 当按钮被触发时执行的意图。适用于 `Widget` 或 `LiveActivity`。详情见 `Interactive Widget and LiveActivity`。         |
 | `action`            | `() => void`                                                                                   | 用户触发按钮时执行的函数。                                                                                         |
 

@@ -15,8 +15,8 @@ onDisappear?: () => void
 
 | Property      | Type         | Description                                                                                                                                                                                                   |
 | ------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `onAppear`    | `() => void` | Called every time the view becomes visible. This includes the initial appearance and reappearance after being temporarily obscured (e.g., when dismissing a sheet). Executed before the first rendered frame. |
-| `onDisappear` | `() => void` | Called every time the view is no longer visible on screen. This includes temporary disappearance (e.g., when presenting a sheet over the view).                                                               |
+| `onAppear`    | `() => void` | Called when the view becomes visible. |
+| `onDisappear` | `() => void` | Called when the view is no longer visible on screen. |
 
 ---
 
@@ -37,29 +37,3 @@ function Example() {
   </VStack>
 }
 ```
-
----
-
-## Behavior Notes
-
-* Unlike UIKit’s `viewDidAppear` and `viewDidDisappear`, which are tied to the navigation stack or full-screen view controller lifecycle, **Scripting's `onAppear` and `onDisappear` are called every time the view appears or disappears from the screen**.
-* For example:
-
-  * If you **present a sheet**, the background view’s `onDisappear` is triggered.
-  * When the **sheet is dismissed**, the background view’s `onAppear` is triggered again.
-* These events are **not called only once**, but **every time visibility changes**, making them well-suited for observing the view’s active presence in the UI.
-
----
-
-## Use Cases
-
-* `onAppear`:
-
-  * Start loading data
-  * Begin animations
-  * Reset UI state when shown
-* `onDisappear`:
-
-  * Stop timers
-  * Cancel requests
-  * Save form data

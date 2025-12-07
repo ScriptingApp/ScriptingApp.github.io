@@ -76,6 +76,11 @@
     "collapsed": true
   },
   {
+    "type": "file",
+    "name": "ConcentricRectangle",
+    "label": "ConcentricRectangle"
+  },
+  {
     "type": "dir",
     "name": "List",
     "label": "List",
@@ -100,6 +105,11 @@
     "type": "file",
     "name": "Gestures",
     "label": "Gestures"
+  },
+  {
+    "type": "file",
+    "name": "NamespaceReader",
+    "label": "NamespaceReader"
   },
   {
     "type": "dir",

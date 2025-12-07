@@ -76,6 +76,11 @@
     "collapsed": true
   },
   {
+    "type": "file",
+    "name": "ConcentricRectangle",
+    "label": "同心圆矩形（ConcentricRectangle）"
+  },
+  {
     "type": "dir",
     "name": "List",
     "label": "列表",
@@ -100,6 +105,11 @@
     "type": "file",
     "name": "Gestures",
     "label": "手势"
+  },
+  {
+    "type": "file",
+    "name": "NamespaceReader",
+    "label": "命名空间读取器（NamespaceReader）"
   },
   {
     "type": "dir",

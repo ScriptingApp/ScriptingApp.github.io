@@ -11,6 +11,11 @@
   },
   {
     "type": "file",
+    "name": "SFTP File",
+    "label": "SFTP File"
+  },
+  {
+    "type": "file",
     "name": "SSH Authentication Method",
     "label": "SSH Authentication Method"
   },

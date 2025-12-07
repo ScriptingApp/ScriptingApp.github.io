@@ -200,9 +200,18 @@
     "label": "仪表盘样式"
   },
   {
-    "type": "file",
+    "type": "dir",
+    "name": "Liquid Glass",
+    "label": "液态玻璃",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
     "name": "toolbar",
-    "label": "工具栏"
+    "label": "工具栏",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -261,9 +270,11 @@
     "label": "网格布局控制"
   },
   {
-    "type": "file",
-    "name": "List View Modifiers",
-    "label": "列表视图修饰符"
+    "type": "dir",
+    "name": "List and Section View Modifiers",
+    "label": "列表和区块修饰符",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -289,6 +300,16 @@
     "type": "file",
     "name": "contentTransition",
     "label": "内容过渡动画"
+  },
+  {
+    "type": "file",
+    "name": "matchedGeometryEffect",
+    "label": "匹配几何效果（matchedGeometryEffect）"
+  },
+  {
+    "type": "file",
+    "name": "matchedTransitionSource",
+    "label": "匹配过渡源（matchedTransitionSource）"
   },
   {
     "type": "file",

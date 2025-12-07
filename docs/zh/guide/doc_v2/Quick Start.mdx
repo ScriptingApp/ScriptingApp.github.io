@@ -326,11 +326,11 @@ function App() {
 示例：
 
 ```tsx
-import { useState, useObservable, VStack, Text, TextField, List, Section, NavigationStack, Script } from "scripting"
+import { useState, VStack, Text, TextField, List, Section, NavigationStack, Script } from "scripting"
 
 function ToDoApp() {
   const [tasks, setTasks] = useState(["Task 1", "Task 2", "Task 3"])
-  const content = useObservable<stirng>("")
+  const [content, setContent] = useState("")
 
   return (
     <NavigationStack>

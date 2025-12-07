@@ -1,6 +1,11 @@
 [
   {
     "type": "file",
+    "name": "TabView",
+    "label": "TabView"
+  },
+  {
+    "type": "file",
     "name": "TabView with badge",
     "label": "带徽章的 TabView"
   },

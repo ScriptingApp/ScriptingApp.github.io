@@ -200,9 +200,18 @@
     "label": "gaugeStyle"
   },
   {
-    "type": "file",
+    "type": "dir",
+    "name": "Liquid Glass",
+    "label": "Liquid Glass",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
     "name": "toolbar",
-    "label": "toolbar"
+    "label": "toolbar",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -261,9 +270,11 @@
     "label": "Grid Layout Control"
   },
   {
-    "type": "file",
-    "name": "List View Modifiers",
-    "label": "List View Modifiers"
+    "type": "dir",
+    "name": "List and Section View Modifiers",
+    "label": "List and Section View Modifiers",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
@@ -289,6 +300,16 @@
     "type": "file",
     "name": "contentTransition",
     "label": "contentTransition"
+  },
+  {
+    "type": "file",
+    "name": "matchedGeometryEffect",
+    "label": "matchedGeometryEffect"
+  },
+  {
+    "type": "file",
+    "name": "matchedTransitionSource",
+    "label": "matchedTransitionSource"
   },
   {
     "type": "file",

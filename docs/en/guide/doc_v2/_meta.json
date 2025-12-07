@@ -29,9 +29,11 @@
     "label": "AppIntent"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Intent",
-    "label": "Intent"
+    "label": "Intent",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "dir",
