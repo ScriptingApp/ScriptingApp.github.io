@@ -74,6 +74,11 @@
   },
   {
     "type": "file",
+    "name": "EventAlarm",
+    "label": "EventAlarm"
+  },
+  {
+    "type": "file",
     "name": "Recurrence",
     "label": "Recurrence"
   },
@@ -130,6 +135,11 @@
   },
   {
     "type": "file",
+    "name": "VideoRecorder",
+    "label": "VideoRecorder"
+  },
+  {
+    "type": "file",
     "name": "AudioRecorder",
     "label": "AudioRecorder"
   },
@@ -145,8 +155,8 @@
   },
   {
     "type": "dir",
-    "name": "VideoPlayer",
-    "label": "VideoPlayer",
+    "name": "Play Video",
+    "label": "Play Video",
     "collapsible": true,
     "collapsed": true
   },
@@ -161,6 +171,11 @@
     "label": "Weather",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "AppStore",
+    "label": "AppStore"
   },
   {
     "type": "dir",

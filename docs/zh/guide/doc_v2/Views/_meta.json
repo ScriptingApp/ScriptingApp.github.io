@@ -187,5 +187,20 @@
     "type": "file",
     "name": "Editor",
     "label": "编辑器"
+  },
+  {
+    "type": "file",
+    "name": "LivePhotoView",
+    "label": "LivePhotoView"
+  },
+  {
+    "type": "file",
+    "name": "AVPlayerView",
+    "label": "视频播放组件(AVPlayerView)"
+  },
+  {
+    "type": "file",
+    "name": "VideoPreviewView",
+    "label": "视频预览视图（VideoPreviewView）"
   }
 ]

@@ -187,5 +187,20 @@
     "type": "file",
     "name": "Editor",
     "label": "Editor"
+  },
+  {
+    "type": "file",
+    "name": "LivePhotoView",
+    "label": "LivePhotoView"
+  },
+  {
+    "type": "file",
+    "name": "AVPlayerView",
+    "label": "AVPlayerView"
+  },
+  {
+    "type": "file",
+    "name": "VideoPreviewView",
+    "label": "VideoPreviewView"
   }
 ]

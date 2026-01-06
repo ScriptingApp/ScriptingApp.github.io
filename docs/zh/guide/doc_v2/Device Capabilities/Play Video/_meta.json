@@ -1,0 +1,14 @@
+[
+  {
+    "type": "dir",
+    "name": "VideoPlayer",
+    "label": "视频播放器",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "AVPlayerView",
+    "label": "视频播放组件(AVPlayerView)"
+  }
+]

@@ -333,6 +333,11 @@
   },
   {
     "type": "file",
+    "name": "Picture in Pictuer View Modifiers",
+    "label": "Picture in Picture （画中画）"
+  },
+  {
+    "type": "file",
     "name": "translationHost",
     "label": "翻译宿主"
   },

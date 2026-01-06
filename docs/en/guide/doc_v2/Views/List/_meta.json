@@ -49,6 +49,11 @@
     "collapsed": true
   },
   {
+    "type": "file",
+    "name": "Selectable List",
+    "label": "Selectable List"
+  },
+  {
     "type": "dir",
     "name": "Editable List",
     "label": "Editable List",

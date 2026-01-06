@@ -1,0 +1,14 @@
+[
+  {
+    "type": "dir",
+    "name": "VideoPlayer",
+    "label": "VideoPlayer",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "AVPlayerView",
+    "label": "AVPlayerView"
+  }
+]

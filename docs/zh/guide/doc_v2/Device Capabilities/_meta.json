@@ -74,6 +74,11 @@
   },
   {
     "type": "file",
+    "name": "EventAlarm",
+    "label": "事件闹钟"
+  },
+  {
+    "type": "file",
     "name": "Recurrence",
     "label": "重复规则"
   },
@@ -130,6 +135,11 @@
   },
   {
     "type": "file",
+    "name": "VideoRecorder",
+    "label": "视频录制（VideoRecorder）"
+  },
+  {
+    "type": "file",
     "name": "AudioRecorder",
     "label": "录音"
   },
@@ -145,8 +155,8 @@
   },
   {
     "type": "dir",
-    "name": "VideoPlayer",
-    "label": "视频播放器",
+    "name": "Play Video",
+    "label": "播放视频",
     "collapsible": true,
     "collapsed": true
   },
@@ -161,6 +171,11 @@
     "label": "天气",
     "collapsible": true,
     "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "AppStore",
+    "label": "AppStore"
   },
   {
     "type": "dir",

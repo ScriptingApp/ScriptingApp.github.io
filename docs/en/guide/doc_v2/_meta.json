@@ -6,8 +6,8 @@
   },
   {
     "type": "dir",
-    "name": "API Adjustments and Updates",
-    "label": "API Adjustments and Updates",
+    "name": "Changelog",
+    "label": "Changelog",
     "collapsible": true,
     "collapsed": true
   },

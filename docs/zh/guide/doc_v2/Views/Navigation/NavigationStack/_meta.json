@@ -1,6 +1,11 @@
 [
   {
     "type": "file",
+    "name": "NavigationStack with path",
+    "label": "NavigationStack 配合 path"
+  },
+  {
+    "type": "file",
     "name": "Use with NavigationLink",
     "label": "与 NavigationLink 一起使用"
   },

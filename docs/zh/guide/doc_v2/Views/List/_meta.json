@@ -49,6 +49,11 @@
     "collapsed": true
   },
   {
+    "type": "file",
+    "name": "Selectable List",
+    "label": "可选择的列表"
+  },
+  {
     "type": "dir",
     "name": "Editable List",
     "label": "可编辑列表",

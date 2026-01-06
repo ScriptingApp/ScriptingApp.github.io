@@ -6,8 +6,8 @@
   },
   {
     "type": "dir",
-    "name": "API Adjustments and Updates",
-    "label": "API 调整与更新",
+    "name": "Changelog",
+    "label": "更新日志",
     "collapsible": true,
     "collapsed": true
   },
