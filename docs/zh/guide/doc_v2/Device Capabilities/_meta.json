@@ -167,6 +167,13 @@
   },
   {
     "type": "dir",
+    "name": "MediaComposer",
+    "label": "音视频合成器（MediaComposer）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
     "name": "Weather",
     "label": "天气",
     "collapsible": true,

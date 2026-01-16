@@ -109,6 +109,11 @@
   },
   {
     "type": "file",
+    "name": "ItemProvider",
+    "label": "ItemProvider"
+  },
+  {
+    "type": "file",
     "name": "App Events",
     "label": "App Events"
   }

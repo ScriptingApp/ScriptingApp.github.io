@@ -223,9 +223,9 @@ Options:
 ## Creating a Reminder with DateComponents
 
 ```ts
-const reminder = new Reminder();
-reminder.title = "Prepare meeting materials";
-reminder.notes = "Finish before Monday’s team meeting";
+const reminder = new Reminder()
+reminder.title = "Prepare meeting materials"
+reminder.notes = "Finish before Monday’s team meeting"
 
 reminder.dueDateComponents = new DateComponents({
   year: 2025,
@@ -233,10 +233,10 @@ reminder.dueDateComponents = new DateComponents({
   day: 6,
   hour: 9,
   minute: 30,
-});
+})
 
-reminder.priority = 2;
-await reminder.save();
+reminder.priority = 2
+await reminder.save()
 ```
 
 ---
@@ -248,7 +248,7 @@ reminder.dueDateComponents = new DateComponents({
   year: 2025,
   month: 10,
   day: 6,
-});
+})
 ```
 
 ---
@@ -256,8 +256,8 @@ reminder.dueDateComponents = new DateComponents({
 ## Creating DateComponents from a Date
 
 ```ts
-const now = new Date();
-reminder.dueDateComponents = DateComponents.fromDate(now);
+const now = new Date()
+reminder.dueDateComponents = DateComponents.fromDate(now)
 ```
 
 ---
@@ -265,9 +265,9 @@ reminder.dueDateComponents = DateComponents.fromDate(now);
 ## Fetching All Reminders
 
 ```ts
-const reminders = await Reminder.getAll();
+const reminders = await Reminder.getAll()
 for (const r of reminders) {
-  console.log(`Reminder: ${r.title}`);
+  console.log(`Reminder: ${r.title}`)
 }
 ```
 
@@ -279,7 +279,7 @@ for (const r of reminders) {
 const incompletes = await Reminder.getIncompletes({
   startDate: new Date("2025-01-01"),
   endDate: new Date("2025-01-31"),
-});
+})
 ```
 
 ---
@@ -287,8 +287,8 @@ const incompletes = await Reminder.getIncompletes({
 ## Marking a Reminder as Completed
 
 ```ts
-reminder.isCompleted = true;
-await reminder.save();
+reminder.isCompleted = true
+await reminder.save()
 ```
 
 ---
@@ -296,7 +296,7 @@ await reminder.save();
 ## Deleting a Reminder
 
 ```ts
-await reminder.remove();
+await reminder.remove()
 ```
 
 ---

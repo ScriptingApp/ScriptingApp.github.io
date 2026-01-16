@@ -247,6 +247,10 @@ await Photos.pick({ filter })
 
 表示照片选择器返回的单个选择结果。
 
+### itemProvider: ItemProvider
+
+获取结果的 `ItemProvider`对象，是一个Swift 的 `NSItemProvider` 对象的包装。
+
 ### livePhoto()
 
 ```ts
@@ -275,9 +279,14 @@ uiImage(): Promise<UIImage | null>
 imagePath(): Promise<string | null>
 ```
 
-尝试将结果解析为图片。
+尝试将结果解析为图片。如果可以加载成功，该文件会被复制到 app group 的沙盒中，返回图片路径。
+你应该在使用完成后删除该文件。
 
-成功时返回图片文件路径，否则返回 `null`。
+#### 示例
+
+```ts
+const filePath = await result.imagePath()
+```
 
 ---
 
@@ -287,9 +296,8 @@ imagePath(): Promise<string | null>
 videoPath(): Promise<string | null>
 ```
 
-尝试将结果解析为视频。
-
-成功时返回视频文件路径，否则返回 `null`。
+尝试将结果解析为视频。如果可以加载成功，该文件会被复制到 app group 的沙盒中，返回视频路径。
+你应该在使用完成后删除该文件。
 
 ---
 
@@ -392,9 +400,3 @@ function saveVideo(
 * 所有 UI 均由系统托管
 * Picker 返回的结果为惰性对象，需显式解析
 * 保存接口仅返回成功状态，不暴露系统资源标识
-
----
-
-## 总结
-
-Photos 模块为 Scripting 提供了一套完整、可靠的系统媒体访问能力，覆盖 **拍摄、选择、过滤与保存** 等核心场景，同时保持了系统级安全性、权限隔离以及一致的异步编程体验。

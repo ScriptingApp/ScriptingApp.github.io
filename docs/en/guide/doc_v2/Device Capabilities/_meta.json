@@ -167,6 +167,13 @@
   },
   {
     "type": "dir",
+    "name": "MediaComposer",
+    "label": "MediaComposer",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
     "name": "Weather",
     "label": "Weather",
     "collapsible": true,

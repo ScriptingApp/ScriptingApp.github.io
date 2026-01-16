@@ -328,6 +328,11 @@
   },
   {
     "type": "file",
+    "name": "onDrag and onDrop View Modifiers",
+    "label": "onDrag 和 onDrop 修饰符"
+  },
+  {
+    "type": "file",
     "name": "onDropContent",
     "label": "接收外部拖拽内容"
   },

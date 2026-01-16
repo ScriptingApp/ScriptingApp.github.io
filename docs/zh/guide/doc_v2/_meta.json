@@ -72,9 +72,11 @@
     "label": "自定义键盘"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "Assistant",
-    "label": "智能助手"
+    "label": "智能助手",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",

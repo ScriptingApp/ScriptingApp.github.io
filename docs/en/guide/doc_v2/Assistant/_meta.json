@@ -1,0 +1,22 @@
+[
+  {
+    "type": "file",
+    "name": "Assistant Quick Start",
+    "label": "Assistant Quick Start"
+  },
+  {
+    "type": "file",
+    "name": "requestStructuredData",
+    "label": "requestStructuredData"
+  },
+  {
+    "type": "file",
+    "name": "requestStreaming",
+    "label": "requestStreaming"
+  },
+  {
+    "type": "file",
+    "name": "Assistant Conversation APIs",
+    "label": "Assistant Conversation APIs"
+  }
+]

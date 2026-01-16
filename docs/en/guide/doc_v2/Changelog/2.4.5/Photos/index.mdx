@@ -242,6 +242,10 @@ await Photos.pick({ filter })
 
 Represents a single item returned from the photo picker.
 
+### itemProvider: ItemProvider
+
+The item provider for the selected asset, which can be used to load the asset.
+
 ### livePhoto()
 
 ```ts
@@ -270,9 +274,13 @@ Resolves to `null` if the asset cannot be represented as an image.
 imagePath(): Promise<string | null>
 ```
 
-Attempts to read the result as an image.
+If this result can be read as an image, this file will be copied to the app group's sandbox and returns a promise that resolves to the image path, otherwise returns null, or rejects with an error. You should delete the image file when you no longer need it.
 
-Returns a file path to the image, or `null` if unavailable.
+#### Example
+
+```ts
+const filePath = await result.imagePath()
+```
 
 ---
 
@@ -282,9 +290,7 @@ Returns a file path to the image, or `null` if unavailable.
 videoPath(): Promise<string | null>
 ```
 
-Attempts to read the result as a video.
-
-Returns a file path to the video, or `null` if unavailable.
+If this result can be read as a video, this file will be copied to the app group's sandbox and returns a promise that resolves to the video path, otherwise returns null, or rejects with an error. You should delete the video file when you no longer need it.
 
 ---
 
@@ -387,9 +393,3 @@ Saves raw video data directly to the Photos app.
 * All UI is system-managed and not customizable
 * Picker results are lazy and must be explicitly resolved
 * Save APIs return only success status, not asset identifiers
-
----
-
-## Summary
-
-The Photos module provides a clean and reliable abstraction over iOS photo and camera capabilities, covering capture, selection, filtering, and saving, while preserving system-level security guarantees and a consistent asynchronous programming model.

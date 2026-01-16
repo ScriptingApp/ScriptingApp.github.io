@@ -328,6 +328,11 @@
   },
   {
     "type": "file",
+    "name": "onDrag and onDrop View Modifiers",
+    "label": "onDrag and onDrop View Modifiers"
+  },
+  {
+    "type": "file",
     "name": "onDropContent",
     "label": "onDropContent"
   },

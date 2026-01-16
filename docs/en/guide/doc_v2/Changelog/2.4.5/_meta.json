@@ -1,8 +1,10 @@
 [
   {
-    "type": "file",
+    "type": "dir",
     "name": "Assistant",
-    "label": "Assistant"
+    "label": "Assistant",
+    "collapsible": true,
+    "collapsed": true
   },
   {
     "type": "file",
