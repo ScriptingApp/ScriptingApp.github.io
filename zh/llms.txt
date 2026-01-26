@@ -1,0 +1,638 @@
+# Scripting
+
+## 文档
+
+- [AppIntent](/zh/doc/AppIntent.md): AppIntentManager 用于在 Scripting 中注册并管理 AppIntent，它是 Widget、Live Activity、ControlWidget 等控件执行脚本逻辑的核心机制。
+所有的 AppIntent 必须 定义在 app_intents.tsx 文件中，且在执行时其运行环境 Script.env 为 "app_intents"。 通过 AppIntentManager 注册的意图可以被 Widget / Live Activity / ControlWidget 中的 Button 与 Toggle 控件调用，以在用户交互时触发对应的脚本逻辑。
+- [智能助手会话 API <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Assistant/Assistant Conversation APIs.md): Conversation API 用于启动、控制和展示一个由系统托管的 Assistant 对话会话。
+该会话对应一个完整的聊天页面（Chat Page），由 Scripting App 统一管理 UI、状态和模型交互。 与 requestStreaming / requestStructuredData 的区别在于： Conversation API 面向交互式聊天体验系统负责消息发送、流式输出、Provider 切换、UI 渲染开发者只需关注“何时开始 / 何时结束 / 是否展示”
+- [快速了解智能助手 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Assistant/Assistant Quick Start.md): Scripting 的 Assistant API 提供了三类能力，分别面向 数据处理、流式输出 和 交互式聊天 三种不同使用场景。
+在使用之前，建议先明确你的需求属于哪一类。
+- [请求流式数据 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Assistant/requestStreaming.md): requestStreaming 用于向 Assistant 请求流式输出（Streaming Response）。
+与一次性返回完整结果不同，该 API 会在模型生成内容的过程中持续返回数据片段（Chunk），调用方可以边接收边处理，从而实现： 实时展示 AI 输出（打字机效果）流式日志 / 分段结果处理长文本生成的低延迟体验在生成过程中提前终止或切换 UI 状态 该 API 返回的是一个 ReadableStream<StreamChunk>，你可以通过 for await ... of 逐块读取。
+- [请求结构化数据 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Assistant/requestStructuredData.md): requestStructuredData 用于向 Assistant 请求严格符合指定 JSON Schema 的结构化 JSON 数据。
+该 API 适合在你需要可预测、可直接用于程序逻辑的数据结果时使用，而不是自由文本。 典型使用场景包括： 从自然语言中提取结构化字段解析发票、收据、账单、票据生成配置对象、规则数据在不同 AI Provider / Model 之间获得一致的数据结构
+- [智能助手工具 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/AssistantTool.md): Assistant Tool 是 Scripting 应用中为智能助手（Assistant）提供系统功能扩展的机制。通过定义和实现 Assistant Tool，开发者可以为 Assistant 提供设备能力访问、文件读写操作、数据分析处理等辅助功能，提升 Assistant 的智能性和实用性。 本文以一个示例工具「Request Current Location」为基础，介绍 Assistant Tool 的完整实现流程，包括工具创建、配置文件说明、执行逻辑实现以及各类函数的详细说明。
+- [动画和过渡](/zh/doc/Changelog/2.4.3/Animation and Transition.md): Scripting 通过 Observable / useObservable、Animation、Transition、withAnimation 以及视图的 animation / transition 属性，基本对齐了 SwiftUI 的动画能力，包括： 属性动画：数值、颜色、布局等属性随状态变化平滑过渡过渡动画：视图插入 / 移除时的进出效果（如淡入淡出、滑入滑出、翻转）显式动画：通过 withAnimation 包裹一段「状态更新代码」统一加动画
+- [EnvironmentValuesReader](/zh/doc/Changelog/2.4.3/EnvironmentValuesReader.md): EnvironmentValuesReader 是 Scripting 提供的一个组件，用于读取 SwiftUI 风格的环境值（Environment Values）。
+它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。 该组件的定位与 SwiftUI 中的 @Environment 类似，但设计上更加明确：
+你必须指定要读取的 environment keys，系统仅在渲染时读取这些值并传入回调函数。 以下为每个字段的说明：
+- [ForEach](/zh/doc/Changelog/2.4.3/ForEach/index.md): ForEach 是 Scripting 中用于渲染可变数量子视图的组件，用于构建动态列表、可编辑列表，以及支持系统级的删除与移动行为。其设计参考 SwiftUI 的 ForEach，并与 Scripting 的 Observable 状态管理系统深度集成。 组件支持两种模式： 旧版模式（已不推荐使用）：count + itemBuilder推荐的现代模式：data: Observable<T[]> + builder
+- [示例](/zh/doc/Changelog/2.4.3/ForEach/iterating.md)
+- [GeometryReader](/zh/doc/Changelog/2.4.3/GeometryReader.md): GeometryReader 是 Scripting 中与 SwiftUI 等效的几何布局读取组件。
+它能够在视图构建阶段提供当前容器的尺寸、边距、安全区域和角落内边距等信息，使开发者可以根据环境动态布局内容。 当你需要根据父容器的大小进行自适应布局（响应式布局）时，GeometryReader 是非常重要的工具。 当 GeometryReader 构建其子内容时，会将一个 GeometryProxy 实例传递给 children 回调。开发者可以使用此对象访问与当前容器相关的布局信息。
+- [实时活动（LiveActivity）修饰符](/zh/doc/Changelog/2.4.3/LiveActivity View Modifiers.md): Scripting 支持与 SwiftUI 等效的 Live Activity 外观控制修饰符。这些修饰符专门用于 锁屏（Lock Screen）中的 Live Activity 界面，用于自定义背景色和系统动作按钮颜色。 通过为 Activity UI 中的 content 视图设置这些修饰符，可使 Live Activity 更符合品牌风格或特定活动主题。
+- [实时活动（灵动岛）](/zh/doc/Changelog/2.4.3/LiveActivity.md): LiveActivity API 允许你的脚本在 iOS 的锁屏界面以及支持的设备上的动态岛中展示实时数据。通过该 API，你可以创建、更新并结束 Live Activity，同时监听其生命周期状态和系统支持情况。 本文件详细介绍 Scripting app 中的 LiveActivity API，包括： Live Activity 的生命周期与核心概念如何注册 Live Activity UI如何在脚本中启动、更新、结束 Live Activity如何构建 Live Activity UI（包括 Dynamic Island 多种布局）所有类型参数说明完整示例代码与最佳实践 本 API 基于 Apple ActivityKit 能力，并以 TypeScript/TSX 的方式封装，允许开发者使用 React 风格构建 Lock Screen 与 Dynamic Island 界面。 Live Activity 展示在以下区域： 锁屏界面iPhone 14 Pro+ 的 Dynamic Island其他设备的悬浮样式（Banner） 它能随着应用或脚本运行实时更新内容，如： 计时器外卖进度健身、运动状态倒计时、打卡、提醒 在 Scripting app 中，一个 Live Activity 由两部分组成： 内容状态（contentState）
+一个 JSON 可序列化的对象，会随时间改变。UI Builder
+通过 TSX 描述不同区域的展示方式。 用于描述当前正在运行的所有 Live Activity 信息。
+- [可拖拽的 ForEach (ReorderableForEach)](/zh/doc/Changelog/2.4.3/ReorderableForEach/index.md): ReorderableForEach 是 Scripting 提供的一个支持 拖拽排序（Drag to Reorder） 的高级渲染组件。
+它在保持 ForEach 使用方式的同时，内置了拖拽手势识别、激活态管理、排序回调等能力，使开发者可以非常低成本地实现 可拖拽排序的列表或网格布局。 该组件特别适用于以下场景： 拖拽调整排序的卡片布局拖拽调整顺序的网格（LazyVGrid / LazyHGrid）脚本驱动的可交互功能模块编排界面
+- [示例](/zh/doc/Changelog/2.4.3/ReorderableForEach/index_example.md)
+- [SSH 客户端 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.3/SSH Client.md): SSHClient 类用于连接远程 SSH 服务器，支持执行命令、打开 TTY/PTY 会话、使用 SFTP 进行文件传输，以及通过跳板主机进行多级 SSH 跳转。该类是建立和管理 SSH 会话的核心接口。
+- [ScrollViewReader](/zh/doc/Changelog/2.4.3/ScrollViewReader.md): ScrollViewReader 组件，用于在脚本中获得对可滚动内容的编程化控制能力，使开发者能够在运行时滚动至任意视图位置，包括列表项、文本节点等。 ScrollViewReader 与 SwiftUI 的行为保持一致：
+开发者通过一个回调函数获得一个 ScrollViewProxy 实例，并可以在任意时机调用 scrollTo(id) 控制滚动视图的位置。 ScrollViewProxy 是提供滚动控制的代理对象，由 ScrollViewReader 在渲染期间自动注入。
+- [设置环境变量 (environments)](/zh/doc/Changelog/2.4.3/Set environment values (environments).md): environments 是 Scripting 新增的视图修饰符，用于向当前视图树（View Hierarchy）注入特定的 environment values。
+它的作用与 SwiftUI 的 .environment() 类似，但基于 Scripting 的设计进行了显式声明和类型收敛，避免隐式行为。 目前 environments 支持以下 environment 值： editMode: 控制视图的编辑模式（如 List 的编辑状态）openURL: 自定义打开链接（URL）的处理方式 这些 environment 值会影响其子视图中的行为与交互能力。 editMode 用于设置当前视图树中所有支持编辑模式的组件的编辑状态。 典型用途： 控制 List 的编辑状态启用批量删除、移动操作与用户交互同步（如切换编辑按钮）
+- [线程（Thread）](/zh/doc/Changelog/2.4.3/Thread.md): Scripting 的 UI 渲染系统以及绝大多数 JavaScript 执行逻辑默认运行在主线程中，因此通常开发者无需主动切换线程。 为了确保 UI 更新安全、避免主线程阻塞，并在必要时执行后台任务，Scripting 提供了全局 Thread API。部分系统 API 或运行时逻辑可能会在后台执行，此 API 能帮助你安全地处理复杂场景。 Thread 为全局命名空间，无需导入即可使用。
+- [useObservable](/zh/doc/Changelog/2.4.3/useObservable.md): Scripting 提供一套响应式状态系统，由 Observable<T> 与 useObservable<T> 组成，用于驱动组件渲染、与动画系统协同工作，并与 SwiftUI 的双向绑定能力保持一致（例如 List(selection:)、NavigationStack(path:) 等未来扩展接口）。 Observable<T> 是一个可观察的数据容器，当 .value 更新时，会触发依赖该值的 UI 自动重新渲染。
+- [同心圆矩形（ConcentricRectangle）](/zh/doc/Changelog/2.4.4/ConcentricRectangle.md): ConcentricRectangle 是 iOS 26+ 引入的一种同心矩形（Concentric Rectangle）形状视图，用于创建具有“向内递进圆角”特性的矩形结构。
+该形状特别适合用于： 现代玻璃风格按钮卡片容器背景交互裁剪区域（命中测试形状）玻璃过渡动画遮罩动态层级 UI 结构 在 Scripting 中，ConcentricRectangle 既可以作为一个独立 Shape 视图渲染，也可以作为： clipShapebackgroundcontentShape 中的专用形状类型使用。
+- [玻璃效果过渡效果](/zh/doc/Changelog/2.4.4/Glass Effect Transition/index.md): Liquid Glass 在 iOS 26 引入了更先进的几何匹配与材质过渡能力。
+Scripting 完整支持这些特性，并通过 glassEffectTransition、glassEffectID、glassEffectUnion、GlassEffectContainer 以及 NamespaceReader 组合实现自然、顺滑且结构化的玻璃动画体验。 本文将详细说明： 什么是 Glass Effect Transition三种过渡类型为什么需要 glassEffectID 与 namespaceglassEffectUnion 的作用NamespaceReader 的设计目的与机制实际示例解析最佳实践 glassEffectTransition 用于指定 Liquid Glass 在视图出现、消失或布局变化期间应如何过渡。 Glass Effect Transition 控制三个核心内容： 玻璃材质如何出现 / 消失玻璃的几何形状是否会参与动画玻璃是否与容器中其他视图的几何形状匹配 过渡效果只影响“玻璃材质本身”，而不是普通视图的 opacity 或 scale。
+- [示例](/zh/doc/Changelog/2.4.4/Glass Effect Transition/index_example.md)
+- [Intent.continueInForeground <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.4/Intent.continueInForeground.md): Intent.continueInForeground 用于在脚本从 Shortcuts 中后台执行时，请求系统将流程转移到 Scripting App 的前台继续运行。
+此过程需要用户明确确认。 适用场景包括： 需要展示完整 UI（如表单、列表、导航页面）需要用户在 App 内进行交互操作后续步骤无法在后台执行 调用此方法后，系统会弹出确认对话框： 用户 允许 → Scripting App 打开到前台，脚本继续执行用户 取消 → 当前脚本立即终止此行为完全由系统管理，开发者无需手动处理跳转流程 由于该能力基于 iOS 26 引入的 AppIntents 行为： 该 API 只能在 iOS 26 及以上系统使用。
+- [Intent.requestConfirmation <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.4/Intent.requestConfirmation.md): Intent.requestConfirmation 用于在脚本执行过程中，向用户请求确认某项操作。
+调用后，系统会暂停脚本执行，并展示一个基于 SnippetIntent 的 UI 作为确认界面，同时可显示提示对话内容。 确认流程行为： 用户 确认 → Promise resolve，脚本继续执行用户 取消 → 当前脚本终止执行确认界面通过传入的 SnippetIntent 的 UI 定义系统自动管理此流程，无需开发者处理 UI 呈现逻辑 该 API 仅可在 iOS 26 及以上系统使用。
+- [IntentMemoryStorage](/zh/doc/Changelog/2.4.4/IntentMemoryStorage.md): IntentMemoryStorage 是一个用于 在多个 AppIntent 执行之间保留临时数据 的内存存储系统。然而，它的生命周期并不严格绑定在单次 AppIntent 或 Script.exit 以上，而是由系统对 Extension 环境（Intent Extension / Widget Extension）的运行状态决定，因此具有一定的非确定性。 以下文档基于你之前确认的完整版结构，并加入系统行为的解释。 在 Scripting 中，每个 AppIntent 都运行在其所属脚本的 脚本执行上下文（Script Execution Context） 中。当 AppIntent 的 perform() 执行完成，或在 intent.tsx 中调用 Script.exit() 时，当前 AppIntent 的执行流程会结束。 但关键点是： IntentMemoryStorage 不会在 AppIntent 或 Script.exit 结束时被立即销毁 它的生命周期依赖于： 系统是否继续保留当前 Extension 进程系统是否因为内存压力或其他策略回收 ExtensionWidget 或 Live Activity 是否仍在使用同一 Extension 因此： 在 Shortcuts 再次运行同一个脚本时
+有可能读取到上次设置的 MemoryStorage 值在 Widget 或 Live Activity 中调用 AppIntent
+同一个脚本的 JS Context 可能被重用，因此 MemoryStorage 也会保留系统何时清除 MemoryStorage 不可预测 MemoryStorage 的本质是： 存储在当前 Extension 进程中的短期内存，非持久化、非可靠、非严格会话级 IntentMemoryStorage 提供两类存储区域：
+- [液态玻璃效果](/zh/doc/Changelog/2.4.4/Liquid Glass Effect/index.md): GlassEffect、GlassEffectContainer、UIGlass 等相关 API 基于 SwiftUI 新引入的 Liquid Glass 技术，让开发者能够在脚本中以 TSX 方式使用流体化、动态的玻璃材质效果，并支持过渡动画、匹配几何、联合玻璃区域等高级特性。
+- [示例](/zh/doc/Changelog/2.4.4/Liquid Glass Effect/index_example.md)
+- [命名空间读取器（NamespaceReader）](/zh/doc/Changelog/2.4.4/NamespaceReader.md): NamespaceReader 用于 创建并管理一个几何动画命名空间（Namespace）。
+该命名空间是实现以下能力的前提条件： matchedGeometryEffect（组件级几何联动动画）matchedTransitionSource（页面级导航转场动画）navigationTransition（如 zoom 转场） 可以将 NamespaceReader 理解为： 一个“动画坐标系提供者”，用于告诉系统：哪些视图属于同一组几何动画作用域。
+- [新的 List 视图修饰符](/zh/doc/Changelog/2.4.4/New List View Modifiers.md): 功能说明 控制 List 的右侧索引条是否显示。常用于需要类似通讯录 A-Z 快速跳转的场景。 可选值： "visible""hidden""automatic"（系统自行判断） 示例 功能说明 设置 Section 的外边距，完全替换系统默认边距。可使用数值、 EdgeSets，或指定边的写法。 三种写法说明 2.1 使用单一数字作为四边边距 2.2 使用 EdgeInsets 2.3 针对特定边设置长度 此写法等同于 SwiftUI 中： 示例 功能说明 为 Section 设置索引条的显示字符，一般为单字母，如 “A”、“B”、“C”。 示例 功能说明 为 Section 添加自定义操作按钮、菜单等 UI，位置通常显示在 Section Header 区域的右侧。 示例：添加刷新按钮 示例：添加菜单动作
+- [通知](/zh/doc/Changelog/2.4.4/Notification/index.md): Scripting App 中的 Notification 模块用于安排、管理和展示本地通知，支持多种触发方式、交互操作按钮和富交互界面（自定义 UI）。
+- [示例](/zh/doc/Changelog/2.4.4/Notification/index_example.md)
+- [SFTP 客户端 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.4/SFTP Client.md): SFTPClient 用于通过 SSH 连接访问远程文件系统，基于 SFTP 协议。
+它提供目录操作、文件操作、路径解析等能力，并可通过 openFile() 获得更强大的 SFTPFile 对象执行读取、写入等低层操作。 该类实例通常由： 返回。
+- [SFTP 文件 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.4/SFTP File.md): SFTPFile 表示一个已经通过 SFTP 打开的远程文件句柄。
+通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。 实例通常通过： 获得。
+- [SnippetIntent <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.4/SnippetIntent.md): SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。它适用于： 多步骤表单式交互从 Shortcuts 中获取用户输入键值选择、确认、展示结果等轻量级交互在 Shortcuts 工作流中内嵌 UI 组件 SnippetIntent 特点如下： 在 Scripting 中必须通过 AppIntentManager.register 注册protocol 必须为 AppIntentProtocol.SnippetIntentperform() 必须返回一个 VirtualNode（TSX UI）在脚本中必须以 Intent.snippetIntent() 封装后返回Shortcuts 必须使用「Show Snippet Intent」动作才能显示 Snippet UI SnippetIntent 只能在 iOS 26 及以上系统运行。 在 iOS 26 以下环境： 无法调用 Intent.snippetIntent无法使用 Intent.requestConfirmationShortcuts 中不存在「Show Snippet Intent」动作SnippetIntent 类型的 AppIntent 不会被 Shortcuts 正常识别 在 app_intents.tsx 中声明 SnippetIntent： 再例如： 要求： protocol 必须为 AppIntentProtocol.SnippetIntentperform() 必须返回 VirtualNode与普通 AppIntent 区别在于返回的是 UI，而非数据 SnippetIntent 不能直接作为 JS 返回值，必须通过 Intent.snippetIntent() 包装成 IntentSnippetIntentValue。 类型定义 封装的返回值可被 Shortcuts 的「Show Snippet Intent」动作识别并展示 UI。 SnippetIntent 支持在执行逻辑中先请求用户确认某个操作。此能力同样基于 iOS 26。 ConfirmationActionName 这些名称会影响 Shortcuts UI 中呈现的文案，例如 “Set …”、“Add …”、“Toggle …” 等。 示例值： 示例 效果： Shortcuts 弹出 PickColorIntent 对应的 Snippet UI用户点击确认后 Promise resolve用户取消时脚本执行终止 Shortcuts 在 iOS 26 新增动作： Show Snippet Intent 用于展示 SnippetIntent 返回的 Snippet UI。 与其他动作对比 使用方式： 在 Shortcuts 中添加「Show Snippet Intent」选择脚本项目（需包含 intent.tsx）脚本返回 Intent.snippetIntent(...)Shortcuts 显示 Snippet UI
+- [TabView](/zh/doc/Changelog/2.4.4/TabView.md): Scripting 提供了与最新 iOS TabView 体系一致的 API：
+通过 TabView、Tab、TabSection 组织界面结构，使应用能够在 iOS 18+ 环境下完整支持多标签视图、侧边栏标签、可定制布局等。 相比旧版本依赖 tabItem 修饰符的方式，新的结构更加灵活、分组更清晰，并能与 TabViewCustomization 等新特性无缝配合。 在最基本的形式中，TabView 作为容器，内部包含多个 Tab。
+每个 Tab 定义： 标签标题图标标识值（value）角色（如 search）对应的内容视图 示例： 要点： selection 通过 Observable 控制当前激活的标签value 必须与 selection 的泛型类型匹配（string 或 number）Search Tab 可使用 role="search" 与搜索相关行为联动 当 Tab 数量较多、需要按功能分类、需要在侧边栏中显示复杂结构时，可以使用 TabSection。 结构关系为：
+- [使用 Toolbar 组件](/zh/doc/Changelog/2.4.4/Use with Toolbar Component.md): Scripting 的工具栏系统不仅支持直接在 toolbar 属性中传入 ToolBarProps 对象，也支持使用与 SwiftUI 结构一致的 <Toolbar>、<ToolbarItem>、<ToolbarItemGroup>、<ToolbarSpacer>、<DefaultToolbarItem> 等组件，构建更灵活、更强大的导航栏和工具栏布局。 这些组件能够提供更精细的控制，允许开发者像 SwiftUI 一样以声明式方式编排工具栏内容，并为复杂布局提供更高可读性和可维护性。 工具栏组件始终通过视图的 toolbar 属性使用： toolbar 可以接受： ToolBarProps 对象（与原机制一致）VirtualNode（必须为 <Toolbar> 组件） 使用 <Toolbar> 时，所有内容都通过 <ToolbarItem> 系列组件明确定义位置和呈现方式。 Toolbar 组件是工具栏的容器，用于包含多个工具栏项。它本身不定义位置，内部的 ToolbarItem 或 ToolbarItemGroup 决定实际布局。
+- [匹配几何效果（matchedGeometryEffect）](/zh/doc/Changelog/2.4.4/matchedGeometryEffect.md): matchedGeometryEffect 用于在 不同视图之间建立几何关联关系，使视图在： 位置变化尺寸变化布局层级变化条件渲染切换 这些场景中，仍然保持 连续、平滑、空间一致的动画过渡效果。 该能力对应 SwiftUI 中的 matchedGeometryEffect，属于 组件级几何联动动画系统，不依赖导航系统。
+- [匹配过渡源（matchedTransitionSource）](/zh/doc/Changelog/2.4.4/matchedTransitionSource.md): matchedTransitionSource 用于 标记某个视图作为“导航转场动画的几何源视图”，使该视图在页面跳转时可以作为： 缩放动画的起点位置过渡的起点共享几何动画的起始帧 该能力对应 SwiftUI 中的 matchedTransitionSource，主要用于： 页面级导航动画Zoom（缩放）转场Hero 动画（共享元素转场） 它 只用于导航转场，不用于组件级几何联动（组件级联动应使用 matchedGeometryEffect）。
+- [视频播放组件(AVPlayerView)](/zh/doc/Changelog/2.4.5/AVPlayerView.md): AVPlayerView 是 Scripting 提供的视频播放组件，基于系统原生 AVPlayerViewController 封装。
+与 VideoPlayer 不同，AVPlayerView 完整支持系统级 Picture in Picture（画中画，PiP），并允许脚本层监听 PiP 的生命周期变化。 该组件适用于对原生播放行为、后台播放、PiP、锁屏与控制中心联动有明确需求的媒体类场景。
+- [AppStore <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.5/AppStore.md): AppStore API 用于在 不离开 Scripting 应用 的情况下，展示 App Store 中某个应用的详情页面。
+该能力基于系统原生的 App Store 展示组件，适合用于实现 应用推荐、应用收藏夹、关联应用跳转、生态扩展入口 等场景。
+- [智能助手会话 API <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.5/Assistant/Assistant Conversation APIs.md): Conversation API 用于启动、控制和展示一个由系统托管的 Assistant 对话会话。
+该会话对应一个完整的聊天页面（Chat Page），由 Scripting App 统一管理 UI、状态和模型交互。 与 requestStreaming / requestStructuredData 的区别在于： Conversation API 面向交互式聊天体验系统负责消息发送、流式输出、Provider 切换、UI 渲染开发者只需关注“何时开始 / 何时结束 / 是否展示”
+- [快速了解智能助手 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.5/Assistant/Assistant Quick Start.md): Scripting 的 Assistant API 提供了三类能力，分别面向 数据处理、流式输出 和 交互式聊天 三种不同使用场景。
+在使用之前，建议先明确你的需求属于哪一类。
+- [请求流式数据 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.5/Assistant/requestStreaming.md): requestStreaming 用于向 Assistant 请求流式输出（Streaming Response）。
+与一次性返回完整结果不同，该 API 会在模型生成内容的过程中持续返回数据片段（Chunk），调用方可以边接收边处理，从而实现： 实时展示 AI 输出（打字机效果）流式日志 / 分段结果处理长文本生成的低延迟体验在生成过程中提前终止或切换 UI 状态 该 API 返回的是一个 ReadableStream<StreamChunk>，你可以通过 for await ... of 逐块读取。
+- [请求结构化数据 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.5/Assistant/requestStructuredData.md): requestStructuredData 用于向 Assistant 请求严格符合指定 JSON Schema 的结构化 JSON 数据。
+该 API 适合在你需要可预测、可直接用于程序逻辑的数据结果时使用，而不是自由文本。 典型使用场景包括： 从自然语言中提取结构化字段解析发票、收据、账单、票据生成配置对象、规则数据在不同 AI Provider / Model 之间获得一致的数据结构
+- [日历事件](/zh/doc/Changelog/2.4.5/CalendarEvent.md): CalendarEvent API 用于在 iOS 日历中创建、读取、编辑与管理事件。
+开发者可以操作事件的标题、时间、地点、参与者、重复规则、提醒（EventAlarm）、事件可用性以及地理位置信息，并且可以使用系统提供的创建/编辑界面。
+- [日期格式化（DateFormatter）](/zh/doc/Changelog/2.4.5/DateFormatter.md): DateFormatter 类用于将 Date 类型格式化为字符串，或将字符串解析为 Date。
+该类封装了 iOS 的 DateFormatter 能力，适用于格式化日期、时间、本地化展示、农历日期展示（通过切换日历）、相对日期显示等场景。
+- [事件闹钟](/zh/doc/Changelog/2.4.5/EventAlarm.md): EventAlarm 用于为 日历事件（CalendarEvent） 和 提醒事项（Reminder） 设置提醒规则。
+通过该类，开发者可以创建： 基于绝对时间触发的提醒基于事件开始时间的相对提醒基于地理围栏（Geofence）触发的提醒 此类为 Scripting Calendar/Reminder API 的基础能力，用于构建灵活的提醒行为。
+- [钥匙串](/zh/doc/Changelog/2.4.5/Keychain.md): Keychain 提供对系统钥匙串（Keychain）的安全访问接口，用于在 Scripting 脚本环境中安全、持久地存储敏感数据，典型用途包括： 登录凭证Token许可证信息订阅状态加密密钥用户隐私数据 所有数据均使用系统级 Keychain 安全机制存储，具备高安全性与持久性。
+- [LivePhotoView](/zh/doc/Changelog/2.4.5/LivePhotoView.md): LivePhoto 表示一张 系统级 Live Photo，它由以下两部分组成： 一张高分辨率静态图片一段与图片绑定的短视频（通常为 MOV） 在 Scripting 中，LivePhoto 是一个 不可直接 new 的系统对象，通常来源于： 照片选择器返回的结果使用本地图片与视频文件动态构建 LivePhoto 的主要用途包括： 在界面中实时展示 Live Photo读取并处理其底层资源（图片 / 视频）将其拆解、重建或重新保存到系统相册
+- [NavigationStack 配合 path](/zh/doc/Changelog/2.4.5/NavigationStack with path.md): NavigationStack.path 用于为 NavigationStack 提供可观察的导航路径控制能力，用于实现： 编程式导航（Programmatic Navigation）多级页面堆栈控制页面回退到指定层级或根视图与 NavigationDestination 的动态页面映射联动
+- [照片](/zh/doc/Changelog/2.4.5/Photos/index.md): Photos 模块为 Scripting 提供了对系统相册与相机能力的统一访问接口，用于： 使用系统相机拍照或录制视频从系统照片库中选择图片、视频或 Live Photo获取最近拍摄的照片将图片或视频保存到系统 Photos 应用 所有 API 均基于 iOS 原生框架（Photos、PHPicker、UIImagePicker 等）封装，并遵循以下设计原则： 系统级权限管理Promise 异步接口系统 UI 托管，不可自定义媒体数据访问安全、受控
+- [示例](/zh/doc/Changelog/2.4.5/Photos/index_example.md)
+- [Picture in Picture （画中画） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.5/Picture in Pictuer View Modifiers.md): Scripting 提供了一组 PiP（Picture in Picture，画中画）相关的 View Modifiers，用于将任意 SwiftUI View 以系统级 PiP 窗口的形式呈现。
+开发者无需直接接触底层 AVPictureInPicture API，即可完整控制 PiP 的展示、隐藏、交互行为及生命周期。 PiP 适用于以下典型场景： 实时状态展示（计时、运动、任务进度）音频 / 视频播放的辅助 UI应用进入后台后仍需持续展示的轻量信息视图
+- [提醒事项](/zh/doc/Changelog/2.4.5/Reminder.md): Reminder API 用于在 iOS 日历系统中创建、编辑和管理提醒事项。
+它支持通过 DateComponents 设置截止日期、管理完成状态、设置优先级、添加备注、配置重复规则，以及使用提醒的各种相关属性，例如闹钟（EventAlarm）、参与者信息、状态检测属性等。
+- [可拖拽的 ForEach (ReorderableForEach)](/zh/doc/Changelog/2.4.5/ReorderableForEach/index.md): ReorderableForEach 是 Scripting 提供的一个支持 拖拽排序（Drag to Reorder） 的高级渲染组件。
+它在保持 ForEach 使用方式的同时，内置了拖拽手势识别、激活态管理、排序回调等能力，使开发者可以非常低成本地实现 可拖拽排序的列表或网格布局。 该组件特别适用于以下场景： 拖拽调整排序的卡片布局拖拽调整顺序的网格（LazyVGrid / LazyHGrid）脚本驱动的可交互功能模块编排界面
+- [示例](/zh/doc/Changelog/2.4.5/ReorderableForEach/index_example.md)
+- [可选择的列表](/zh/doc/Changelog/2.4.5/Selectable List.md): List.selection 用于为 List 组件提供选择状态绑定能力，用于实现列表的： 单选模式（Single Selection）多选模式（Multiple Selection）与编辑模式（EditButton）联动的批量选择行为
+- [视频预览视图（VideoPreviewView）](/zh/doc/Changelog/2.4.5/VideoPreviewView.md): VideoPreviewView 用于实时展示 VideoRecorder 当前相机会话的预览画面（camera preview）。
+它是 UI 层组件，不负责录制控制逻辑；录制的准备、开始、暂停、恢复与停止由 VideoRecorder 负责。 VideoPreviewView 的核心职责是：将录制器内部的预览输出渲染到界面中，并支持通过通用 View props（如 frame、aspectRatio 等）进行布局。
+- [视频录制（VideoRecorder） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Changelog/2.4.5/VideoRecorder.md): VideoRecorder 用于在 Scripting 中创建和控制一个可编程的视频录制会话，完整封装了相机选择、音视频采集、编码、暂停/恢复、缩放、对焦、补光灯控制以及最终文件写入流程。 该 API 适用于自定义相机界面、视频采集工具、自动化录制脚本等场景。
+- [WebView 控制器](/zh/doc/Changelog/2.4.5/WebViewController.md): WebViewController 是一个用于显示和交互网页内容的控制器。它允许你在脚本中加载 HTML、展示 Web 页面、执行 JavaScript 脚本，并与页面中的 JavaScript 进行消息通信。你可以将它作为浏览器使用，也可以嵌入应用功能页面。
+- [设备](/zh/doc/Changelog/2.4.6/Device/index.md): Device 命名空间提供当前运行设备的基础信息、系统环境、屏幕与电池状态、语言与地区设置，以及部分与设备能力相关的方法（如唤醒锁、网络接口信息）。 该 API 常用于： 设备差异化逻辑（iPhone / iPad / Mac）UI 布局与适配多语言与本地化判断网络调试与诊断防止脚本执行期间设备休眠
+- [示例](/zh/doc/Changelog/2.4.6/Device/index_example.md)
+- [Intent](/zh/doc/Changelog/2.4.6/Intent.md): Scripting 支持通过 intent.tsx 文件创建 iOS Intents，实现脚本与系统分享扩展（Share Sheet）和快捷指令（Shortcuts）的深度集成。你可以接收来自用户的文本、图片、文件和 URL 等输入，并返回结果供调用方使用。通过 UI 展示、数据处理与结果返回，可构建灵活且强大的自动化流程。
+- [ItemProvider](/zh/doc/Changelog/2.4.6/ItemProvider.md): ItemProvider 用于表示一个可按需加载的数据提供者，常见于拖放、文件导入、Photos 选择等场景。
+它并不直接包含数据本身，而是描述可以如何、安全地获取数据。 ItemProvider 支持加载对象、文本、URL、原始数据以及文件路径，并对文件访问施加了明确的安全访问边界。
+- [MediaComposer 示例](/zh/doc/Changelog/2.4.6/MediaComposer/MediaComposer Example.md): 本示例演示如何使用 MediaComposer 将 视频 + 图片 + 音频 组合成一个最终视频文件，并导出到脚本目录中。 示例流程包括： 选择音频文件选择一张图片选择一个视频构建视频时间线（Video + Image）在指定时间点插入音频导出合成后的视频
+- [MediaTime](/zh/doc/Changelog/2.4.6/MediaComposer/MediaTime.md): MediaTime 用于表示音视频处理中的精确时间点或时间长度，是 Scripting 中 MediaComposer 时间系统的基础类型。
+它在语义上对应于底层媒体框架中的“带时间基准的时间值”（如 AVFoundation 的 CMTime），但对脚本侧提供了更安全、可读、可计算的抽象。 MediaTime 既可以表示确定的数值时间，也可以表示无效、无限或不确定时间，并支持严格的时间运算与比较。
+- [快速开始](/zh/doc/Changelog/2.4.6/MediaComposer/Quick Start.md): MediaComposer 用于在 Scripting 中 组合视频、图片与音频时间线并导出最终媒体文件。
+它封装了一套稳定的时间线模型，支持视频剪辑、图片片段、音频叠加、淡入淡出、音频 ducking、导出参数控制等高级能力。 该模块适用于： 视频与图片混合生成短片给视频添加背景音乐、配音或音效使用图片序列生成视频自动化视频处理与内容生成脚本
+- [SharedAudioSession](/zh/doc/Changelog/2.4.6/SharedAudioSession.md): 通过 SharedAudioSession，你可以在脚本中方便地管理和操作共享音频会话（audio session）。音频会话充当脚本、Scripting 应用、操作系统和底层音频硬件之间的中介，允许你有效地配置和控制音频的行为。
+- [视频录制（VideoRecorder）](/zh/doc/Changelog/2.4.6/VideoRecorder.md): VideoRecorder 用于在 Scripting 中创建和控制一个可编程的视频录制会话，完整封装了相机选择、音视频采集、编码、暂停/恢复、缩放、对焦、补光灯控制以及最终文件写入流程。 该 API 适用于自定义相机界面、视频采集工具、自动化录制脚本等场景。
+- [onDrag 和 onDrop 修饰符](/zh/doc/Changelog/2.4.6/onDrag and onDrop View Modifiers.md): Scripting 提供了一套与 SwiftUI Drag & Drop 行为模型高度一致的 API，用于在脚本中实现视图间、应用内或跨应用的拖拽与放置操作。 该能力主要由以下三部分构成： onDrag：将当前视图声明为拖拽源onDrop：将当前视图声明为放置目标DropInfo / ItemProvider / UTType：描述拖拽内容与状态的上下文对象 拖拽与放置是一个严格受系统控制的交互流程，部分 API 只能在特定回调中调用，文档中会明确指出这些限制。
+- [接收外部拖拽内容](/zh/doc/Changelog/2.4.6/onDropContent.md): onDropContent 是 Scripting 提供的一个视图修饰符，用于将当前视图设置为拖放目标（Drop Target），以接收从其他 App 拖拽进入的文件、图片或文本内容。
+- [控制中心的小组件 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Control Widget.md): Scripting 支持用户在控制中心或锁屏界面添加按钮（Button）或开关（Toggle）控件，并通过绑定脚本 AppIntent 实现自定义逻辑。控件支持状态反馈、图标动态切换、隐私显示控制等能力。
+- [自定义键盘 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Custom Keyboard.md): CustomKeyboard 是 Scripting 提供的全局命名空间，用于开发 iOS 自定义键盘扩展。在 keyboard.tsx 脚本中使用该 API，可以渲染自定义键盘 UI，并访问当前输入状态、插入文本、控制光标、监听输入事件、调整高度，并在多个脚本之间导航切换。
+- [AVMetadataItem](/zh/doc/Device Capabilities/AVMetadataItem.md): AVMetadataItem 类用于表示媒体文件（如音频或视频）中的单个元数据条目。
+此类通常通过 AVPlayer.loadMetadata() 或 AVPlayer.loadCommonMetadata() 方法返回，用于访问媒体文件中嵌入的标准或自定义元数据信息。 元数据项可以包含标题、艺术家、专辑、封面图片、编码信息、语言标签等。
+每个 AVMetadataItem 实例都表示一个独立的键值对，并且提供多种类型化访问方式。
+- [AppStore <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/AppStore.md): AppStore API 用于在 不离开 Scripting 应用 的情况下，展示 App Store 中某个应用的详情页面。
+该能力基于系统原生的 App Store 展示组件，适合用于实现 应用推荐、应用收藏夹、关联应用跳转、生态扩展入口 等场景。
+- [音频播放器](/zh/doc/Device Capabilities/Audio Player.md): AVPlayer 提供播放音频或视频的能力，并支持播放控制、循环播放、回调事件和元数据读取等功能。你可以通过 setSource() 设置媒体源（本地文件或远程 URL），然后使用 play() 开始播放。
+- [录音](/zh/doc/Device Capabilities/AudioRecorder.md): AudioRecorder 类允许您将音频数据录制到文件。它提供了开始、停止、暂停和管理音频录制的功能，并可配置音频质量、采样率、格式等。
+- [后台保活 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/BackgroundKeeper.md): BackgroundKeeper API 用于控制 Scripting App 的后台保活行为，使脚本在应用切换到后台后，能够在一定时间内继续运行。
+这在需要保持持续操作（如网络连接、数据同步或后台任务）的场景中非常有用。 可用性：
+仅当脚本在主应用中运行 (即Script.env === "index") 时可用。
+请谨慎使用此功能，因为长时间保持后台运行可能会增加设备的电量消耗。
+- [蓝牙中央设备管理器 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Bluetooth/BluetoothCentralManager.md): BluetoothCentralManager 提供了用于操作 BLE 中央设备的核心接口，包括扫描附近蓝牙设备、连接外设、获取已知设备、断开连接等能力。适用于实现如外设控制、数据采集、IoT通信等典型蓝牙场景。
+- [蓝牙服务特征值 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Bluetooth/BluetoothCharacteristic.md): BluetoothCharacteristic 表示蓝牙服务（BluetoothService）中的一个特征值，是 BLE 设备数据交互的核心单元。每个特征值由唯一 UUID 标识，并定义了支持的操作类型、当前值、通知状态等属性。
+- [蓝牙外设 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Bluetooth/BluetoothPeripheral.md): BluetoothPeripheral 表示一个 BLE 外围设备对象，支持读取设备信息、连接状态、发现服务与特征值、读取写入数据、订阅通知等。它是蓝牙通信的主要交互对象。
+- [蓝牙外设管理器 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Bluetooth/BluetoothPeripheralManager.md): BluetoothPeripheralManager 提供将设备作为 BLE 外设运行的能力，允许你： 广播设备名称与服务 UUID添加并移除服务处理来自中央设备的读写请求发送通知给已订阅的中央设备管理连接参数（如连接延迟） 该 API 适用于构建如自定义传感器设备、蓝牙外设模拟器、控制器等场景。
+- [蓝牙服务 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Bluetooth/BluetoothService.md): BluetoothService 表示一个 BLE（低功耗蓝牙）服务。服务是外围设备中功能的逻辑分组，包含一个或多个特征值（Characteristic），也可以包含对其他服务的引用（包含服务）。
+- [日历](/zh/doc/Device Capabilities/Calendar.md): Scripting 应用中的 Calendar API 提供了与 iOS 日历账户、日历对象、事件和提醒事项交互的能力。开发者可以通过此 API 获取默认日历、创建新的日历、列出支持特定实体类型（日程、提醒）的日历，以及管理日历属性。
+- [日历事件](/zh/doc/Device Capabilities/CalendarEvent.md): CalendarEvent API 用于在 iOS 日历中创建、读取、编辑与管理事件。
+开发者可以操作事件的标题、时间、地点、参与者、重复规则、提醒（EventAlarm）、事件可用性以及地理位置信息，并且可以使用系统提供的创建/编辑界面。
+- [通讯录](/zh/doc/Device Capabilities/Contact/index.md): Scripting 提供 Contact 模块，允许在脚本中访问和管理设备上的联系人数据，包括创建、查询、更新、删除联系人，以及操作联系人组和容器。
+- [示例](/zh/doc/Device Capabilities/Contact/index_example.md)
+- [设备](/zh/doc/Device Capabilities/Device/index.md): Device 命名空间提供当前运行设备的基础信息、系统环境、屏幕与电池状态、语言与地区设置，以及部分与设备能力相关的方法（如唤醒锁、网络接口信息）。 该 API 常用于： 设备差异化逻辑（iPhone / iPad / Mac）UI 布局与适配多语言与本地化判断网络调试与诊断防止脚本执行期间设备休眠
+- [示例](/zh/doc/Device Capabilities/Device/index_example.md)
+- [文档选择器](/zh/doc/Device Capabilities/DocumentPicker.md): DocumentPicker 类为 iOS 的文档选择器提供接口，允许用户在 Files App 中选择文件或目录，或者将文件导出到 Files App。这对于需要访问用户文件、共享内容或将资源有序保存在指定目录中的脚本非常有用。
+- [事件闹钟](/zh/doc/Device Capabilities/EventAlarm.md): EventAlarm 用于为 日历事件（CalendarEvent） 和 提醒事项（Reminder） 设置提醒规则。
+通过该类，开发者可以创建： 基于绝对时间触发的提醒基于事件开始时间的相对提醒基于地理围栏（Geofence）触发的提醒 此类为 Scripting Calendar/Reminder API 的基础能力，用于构建灵活的提醒行为。
+- [FontPicker（字体选择器） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/FontPicker.md): FontPicker 命名空间提供了在系统中选择字体的能力。
+它会调用系统字体选择器，让用户从可用字体列表中选取字体，并返回所选字体的 PostScript 名称。
+- [触觉反馈](/zh/doc/Device Capabilities/HapticFeedback.md)
+- [健康活动摘要（HealthActivitySummary） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthActivitySummary.md): HealthActivitySummary 类用于访问用户每日健康活动的汇总数据，包括活跃能量消耗、锻炼时间、站立小时数等。该类支持不同的移动模式（如消耗能量或移动时间），可用于显示活动圆环的进度或生成自定义的健康日报表。
+- [健康分类数据（HealthCategorySample） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthCategorySample.md): HealthCategorySample 表示一条基于分类的健康事件记录，例如睡眠分析、月经流量、排卵测试结果等。每条样本通常具有一个时间区间以及一个类别值，适用于记录健康相关事件的状态或发生情况。
+- [健康分类数据（HealthCategoryType） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthCategoryType.md): HealthCategoryType 用于表示离散型的健康状态或事件。它们通常为“是否发生”的记录（如：是否怀孕、是否进行正念训练、是否存在某种症状），适用于症状追踪、睡眠分析、生殖健康记录、环境暴露监测等场景。
+- [健康分类值类型（HealthCategoryValue） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthCategoryValue Types.md): 本文档列出了 HealthCategorySample.create() 及相关 API 中支持的所有 HealthCategoryValue 枚举类型。每个枚举值用于表示特定 HealthCategoryType 的分类结果。
+- [健康特征类型（HealthCharacteristicType） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthCharacteristicType.md): 本文档介绍与 HealthKit 中“个人健康档案”及“活动摘要”相关的枚举类型，主要用于获取或表示用户的静态健康特征信息（如性别、血型、皮肤类型、轮椅使用情况）以及运动模式设定。
+- [健康关联数据（HealthCorrelation） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthCorrelation.md): HealthCorrelation 类表示一组彼此相关的健康样本。它提供接口用于访问和创建健康关联记录，这些记录将多个健康数据类型组合成一个整体，例如将饮食摄入与血压读数关联，或将排卵测试结果与月经流量数据相关联。
+- [健康心跳序列数据（HealthHeartbeatSeriesSample） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthHeartbeatSeriesSample.md): HealthHeartbeatSeriesSample 类用于访问 心跳序列样本（heartbeat series samples），它表示一段时间内记录的一系列心跳间隔（RR 间期），通常用于分析心律，识别心律不齐等情况。 该类的实例由公共接口 Health.queryHeartbeatSeriesSamples() 返回。
+- [HealthKit 权限行为 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthKit Permission Behavior.md): 在使用 Scripting 提供的 Health 模块访问 iOS 健康数据时，开发者需要了解 iOS HealthKit 特有的授权机制，以及 Scripting API 的行为设计。本说明文档将帮助你正确处理无权限时的情况，并提供开发建议。
+- [健康数量型数据（HealthQuantitySample） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthQuantitySample.md): HealthQuantitySample 表示一条健康数量类型的数据样本，例如一次心率测量、记录的步数或摄入的热量。它包含了关于该数据的类型、数值、时间区间、单位和可选的元数据信息。 该类是两个更具体子类的基类： HealthCumulativeQuantitySample（累计型样本）HealthDiscreteQuantitySample（离散型样本）
+- [健康数量型数据（HealthQuantityType） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthQuantityType.md): HealthQuantityType 用于指定你希望读取或写入的健康数据类型。每个标识符代表一种可度量的健康指标，涵盖身体测量、运动、营养、生理信号、环境暴露等多个维度。
+- [健康统计（HealthStatistics） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthStatistics.md): HealthStatistics 类提供了对特定健康数量类型在指定时间范围内的统计数据访问。通过此类，你可以获取以下汇总信息： 总持续时间（duration）平均值（average）总和（sum）最小值和最大值（min/max）最近一次的值及其时间范围 该类适用于生成每日、每周或任意自定义区间的健康数据统计信息。
+- [健康统计集合（HealthStatisticsCollection） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthStatisticsCollection.md): HealthStatisticsCollection 类用于表示按时间分组的健康统计数据集合，如每日、每周或每月的汇总统计。集合中的每一项代表一个时间区间，并对应一个 HealthStatistics 实例，包含该时间段内的统计信息。 该类特别适用于： 绘制健康数据的时间趋势图生成按日/周/月分组的报告按日期区间访问统计数据
+- [健康单位（HealthUnit） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthUnit.md): HealthUnit 类用于表示 HealthKit 中各种度量单位。你可以使用它来构建基本单位（如公斤、米、升等）、带前缀的单位（如毫克、千米等），并支持进行乘法、除法、次方等单位组合运算。
+- [健康锻炼数据（HealthWorkout） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthWorkout.md): HealthWorkout 类提供了访问和分析 Apple 健康应用中锻炼数据的接口。每个锻炼实例代表一次完整的锻炼会话，包括活动类型、开始与结束时间、持续时长，以及相关的事件与统计数据。
+- [健康锻炼活动类型（HealthWorkoutActivityType） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthWorkoutActivityType.md): 此枚举定义了所有支持的锻炼活动类型，常用于创建或读取 HealthKit 中的健身记录。 如需在创建 HealthWorkout 实例时指定活动类型，可使用： 本枚举与 Apple HealthKit 的 HKWorkoutActivityType 保持一致，确保系统对锻炼类型的识别与记录。若需在自定义健身记录中支持更多类型，请参考 Apple 官方文档。
+- [健康锻炼事件（HealthWorkoutEvent） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/HealthWorkoutEvent.md): HealthWorkoutEvent 类用于访问 Apple 健康中记录的锻炼事件。每个事件表示一次锻炼过程中的特定动作或时刻，例如暂停、继续、圈数记录、标记、或自动运动检测。
+- [查询统计数据集合（HealthStatisticsCollection） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Query Statistics Collection.md): Health.queryStatisticsCollection() 方法用于按时间区间查询指定 HealthQuantityType 类型的聚合统计数据，例如每天、每周或每月的步数、心率等。它返回一个 HealthStatisticsCollection 实例，其中包含多个按时间间隔对齐的 HealthStatistics 对象。 此方法非常适合： 分析健康趋势构建图表生成历史报告
+- [查询统计数据（HealthStatistics） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Query Statistics.md): queryStatistics 方法用于查询某个健康数量类型在指定时间范围内的聚合统计数据，包括： 总和（sum）平均值（average）最小值、最大值最近一条记录总持续时间（duration） 你也可以选择按来源（设备或应用）分开统计。 此方法非常适合生成每日、每周或历史健康数据的摘要。
+- [读取活动摘要（HealthActivitySummary） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Reading Activity Summaries.md): Scripting 应用通过全局函数 Health.queryActivitySummaries() 提供对 Apple Health 每日活动摘要数据的访问。这些摘要包含 Apple Watch 追踪的 移动（Move）、锻炼（Exercise） 和 站立（Stand） 目标，以及完成情况和历史趋势。 此 API 非常适合在应用中展示每日活动环或分析长期健身趋势。
+- [读取分类数据（HealthCategorySample） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Reading Category Samples.md): Scripting 应用支持通过全局函数 Health.queryCategorySamples() 访问 HealthKit 中的分类健康数据。分类样本表示某一健康事件或状态的记录，通常包括起止时间和一个离散的状态值，例如：睡眠分析、冥想记录、经期流量、排卵测试结果等。 本文将介绍如何查询、解析并使用这些分类数据。
+- [读取特征数据 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Reading Characteristic Data.md): HealthKit 中的 特征数据 指的是用户个人的静态属性，如出生日期、生物性别、血型、皮肤类型、是否使用轮椅，以及活动移动模式等。这些信息通常由用户在“健康”App 中设置，属于只读数据。 Scripting 提供了一系列 全局异步 API 来读取这些数据。
+- [读取关联数据（HealthCorrelation） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Reading Correlation Data.md): Scripting 应用支持通过全局 API Health.queryCorrelations() 查询 HealthKit 中的相关健康数据。相关数据用于表示一组相互关联的健康样本，例如： 一次血压测量（包含收缩压和舒张压）一次食物摄入记录（包含热量、蛋白质、碳水等） 本文将介绍如何读取相关数据并提取其中的样本信息。
+- [读取心跳序列数据（HealthHeartbeatSeriesSample） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Reading Heartbeat Series Samples.md): Scripting 应用通过全局函数 Health.queryHeartbeatSeriesSamples() 提供对 Apple Health 中心跳序列数据的访问。该数据代表 Apple Watch 在锻炼或静息状态下记录的一系列连续心跳间隔（R-R 间隔），可用于分析心律稳定性与频率变化。 每条记录提供该心跳序列的持续时间、心跳数量及元数据，但不包含原始的每次间隔时间值。
+- [读取数量型数据（HealthQuantitySample） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Reading Quantity Samples.md): Scripting 应用支持通过全局 API Health.queryQuantitySamples() 查询 HealthKit 中的数量型健康数据，例如步数、心率、体重、卡路里、距离等。 本文将介绍如何使用该 API 查询数据样本并解析结果。
+- [读取锻炼数据（HealthWorkout） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Reading Workout Samples.md): Scripting 应用支持通过全局函数 Health.queryWorkouts() 从 HealthKit 查询锻炼记录。Workout 表示一次完整的身体活动，如跑步、步行、游泳、骑行、力量训练等。 每条锻炼记录包含活动类型、起止时间、持续时间、相关事件以及详细的统计信息（如心率、步数、距离、能量消耗等）。
+- [写入分类数据（HealthCategorySample） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Writing Health Category Samples.md): Scripting 应用支持将分类健康数据（如睡眠状态、冥想记录、月经流量、排卵测试结果等）写入 Apple HealthKit。你可以通过 HealthCategorySample 类创建分类数据样本，并使用 Health.saveCategorySample() 方法将其保存到健康数据库中。
+- [写入关联数据（HealthCorrelation） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Writing Health Correlation Data.md): Scripting 应用允许你使用全局 API HealthCorrelation.create() 和 Health.saveCorrelation() 向 Apple HealthKit 写入相关健康数据。相关数据表示多个健康样本之间的逻辑关联，例如： 一次血压测量同时包含收缩压和舒张压；一次进食记录同时包含卡路里、蛋白质、碳水等多种营养成分。 本文档将说明如何创建和保存相关样本。
+- [写入数量型数据（HealthQuantitySample） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Health/Writing Health Quantity Samples.md): Scripting 应用支持将数量型健康数据（例如步数、心率、体重、卡路里等）写入 Apple 的 HealthKit。你可以使用 HealthQuantitySample 类创建数据样本，并通过 Health.saveQuantitySample() 方法保存到健康数据库中。
+- [钥匙串](/zh/doc/Device Capabilities/Keychain.md): Keychain 提供对系统钥匙串（Keychain）的安全访问接口，用于在 Scripting 脚本环境中安全、持久地存储敏感数据，典型用途包括： 登录凭证Token许可证信息订阅状态加密密钥用户隐私数据 所有数据均使用系统级 Keychain 安全机制存储，具备高安全性与持久性。
+- [本地认证](/zh/doc/Device Capabilities/LocalAuth.md): LocalAuth API 是一个 iOS 本地认证框架的封装，用于在 Scripting 应用的脚本中启用生物识别或密码认证。本文档介绍了如何高效使用 LocalAuth API。
+- [定位](/zh/doc/Device Capabilities/Location.md): 全局 Location API 提供对设备地理位置信息的访问能力，包括一次性定位、逆地理编码、用户手动选点、定位精度控制、以及用于小组件的权限检测等功能。
+- [MediaComposer 示例](/zh/doc/Device Capabilities/MediaComposer/MediaComposer Example.md): 本示例演示如何使用 MediaComposer 将 视频 + 图片 + 音频 组合成一个最终视频文件，并导出到脚本目录中。 示例流程包括： 选择音频文件选择一张图片选择一个视频构建视频时间线（Video + Image）在指定时间点插入音频导出合成后的视频
+- [MediaTime](/zh/doc/Device Capabilities/MediaComposer/MediaTime.md): MediaTime 用于表示音视频处理中的精确时间点或时间长度，是 Scripting 中 MediaComposer 时间系统的基础类型。
+它在语义上对应于底层媒体框架中的“带时间基准的时间值”（如 AVFoundation 的 CMTime），但对脚本侧提供了更安全、可读、可计算的抽象。 MediaTime 既可以表示确定的数值时间，也可以表示无效、无限或不确定时间，并支持严格的时间运算与比较。
+- [快速开始](/zh/doc/Device Capabilities/MediaComposer/Quick Start.md): MediaComposer 用于在 Scripting 中 组合视频、图片与音频时间线并导出最终媒体文件。
+它封装了一套稳定的时间线模型，支持视频剪辑、图片片段、音频叠加、淡入淡出、音频 ducking、导出参数控制等高级能力。 该模块适用于： 视频与图片混合生成短片给视频添加背景音乐、配音或音效使用图片序列生成视频自动化视频处理与内容生成脚本
+- [媒体播放器](/zh/doc/Device Capabilities/MediaPlayer.md): MediaPlayer API 允许与 Now Playing Center 交互，管理 Now Playing Info，并响应远程控制事件。以下是使用指南、最佳实践及示例。
+- [通知](/zh/doc/Device Capabilities/Notification/index.md): Scripting App 中的 Notification 模块用于安排、管理和展示本地通知，支持多种触发方式、交互操作按钮和富交互界面（自定义 UI）。
+- [示例](/zh/doc/Device Capabilities/Notification/index_example.md)
+- [PDF](/zh/doc/Device Capabilities/PDF.md): Scripting app 提供了 PDFDocument 和 PDFPage 两个类，封装了 PDFKit 功能，支持加载、修改、提取、保存 PDF 文件，并支持同步或异步的操作方式。
+- [剪贴板](/zh/doc/Device Capabilities/Pasteboard.md): Pasteboard 命名空间提供在 Scripting app 中读取、设置与监听系统粘贴板内容变化的完整接口。
+相比旧版 Clipboard，Pasteboard 提供了更强的功能支持，包括： 支持多类型数据（文本、图片、URL、二进制数据等）监听粘贴板变化事件设置隐私属性（如过期时间、本地可见性） 注意
+如果希望能够从其他 App 粘贴内容，请前往：
+设置 > Scripting > 从其他 App 粘贴 > 允许
+- [照片](/zh/doc/Device Capabilities/Photos/index.md): Photos 模块为 Scripting 提供了对系统相册与相机能力的统一访问接口，用于： 使用系统相机拍照或录制视频从系统照片库中选择图片、视频或 Live Photo获取最近拍摄的照片将图片或视频保存到系统 Photos 应用 所有 API 均基于 iOS 原生框架（Photos、PHPicker、UIImagePicker 等）封装，并遵循以下设计原则： 系统级权限管理Promise 异步接口系统 UI 托管，不可自定义媒体数据访问安全、受控
+- [示例](/zh/doc/Device Capabilities/Photos/index_example.md)
+- [视频播放组件(AVPlayerView)](/zh/doc/Device Capabilities/Play Video/AVPlayerView.md): AVPlayerView 是 Scripting 提供的视频播放组件，基于系统原生 AVPlayerViewController 封装。
+与 VideoPlayer 不同，AVPlayerView 完整支持系统级 Picture in Picture（画中画，PiP），并允许脚本层监听 PiP 的生命周期变化。 该组件适用于对原生播放行为、后台播放、PiP、锁屏与控制中心联动有明确需求的媒体类场景。
+- [视频播放器](/zh/doc/Device Capabilities/Play Video/VideoPlayer/index.md): 该视图使用强大的 AVPlayer 作为后端，配合简单且可定制的前端 UI，用于播放视频和音频内容。通过这种方式，你可以轻松加载媒体、控制播放、处理事件，甚至添加自定义的覆盖（overlay）界面。
+- [示例](/zh/doc/Device Capabilities/Play Video/VideoPlayer/index_example.md)
+- [二维码](/zh/doc/Device Capabilities/QRCode.md)
+- [快速查看](/zh/doc/Device Capabilities/QuickLook.md): 在 Scripting 应用中，QuickLook API 提供了一种简单的方法，用于在脚本中预览文本、图片或文件。这是对 iOS QuickLook 功能的封装，允许您快速显示多种内容类型的预览。 每个方法都会返回一个 Promise，该 Promise 会在 QuickLook 视图被关闭时解析，从而使您可以轻松地链式调用操作或处理预览后的逻辑。
+- [重复规则](/zh/doc/Device Capabilities/Recurrence.md): 这些与重复相关的类型和类（RecurrenceFrequency、RecurrenceDayOfWeek、RecurrenceWeekday、RecurrenceEnd 以及 RecurrenceRule）允许你在 Scripting 中为事件和提醒定义并管理重复模式。通过这些类型和类，你可以设置重复间隔、指定重复的特定日期或月份，以及定义结束条件。
+- [提醒事项](/zh/doc/Device Capabilities/Reminder.md): Reminder API 用于在 iOS 日历系统中创建、编辑和管理提醒事项。
+它支持通过 DateComponents 设置截止日期、管理完成状态、设置优先级、添加备注、配置重复规则，以及使用提醒的各种相关属性，例如闹钟（EventAlarm）、参与者信息、状态检测属性等。
+- [Safari](/zh/doc/Device Capabilities/Safari/index.md): Safari 模块提供用于打开和展示网页的函数，可通过系统默认浏览器外部打开，或在 Scripting 应用内通过内嵌 Safari 视图打开网页，实现沉浸式或外部浏览的无缝切换。
+- [示例](/zh/doc/Device Capabilities/Safari/index_example.md)
+- [发送邮件](/zh/doc/Device Capabilities/Send Mail.md): MailUI 模块允许你的脚本调用系统的邮件撰写视图，预填收件人、主题、正文和附件，并由用户发送邮件。它还提供一个属性用于检测设备是否支持发送邮件。 原 Mail API 已废弃。
+- [发送信息](/zh/doc/Device Capabilities/Send Message.md): MessageUI 命名空间提供了一组 API，用于检测设备的短信发送能力，并展示系统级的短信撰写界面。你可以通过脚本向一个或多个联系人发送短信或彩信，还可以添加主题和附件（如果设备支持）。
+- [分享内容](/zh/doc/Device Capabilities/ShareSheet.md)
+- [SharedAudioSession](/zh/doc/Device Capabilities/SharedAudioSession.md): 通过 SharedAudioSession，你可以在脚本中方便地管理和操作共享音频会话（audio session）。音频会话充当脚本、Scripting 应用、操作系统和底层音频硬件之间的中介，允许你有效地配置和控制音频的行为。
+- [语音合成](/zh/doc/Device Capabilities/Speech/index.md): 该接口为文本转语音（TTS）功能提供了高级 API，方便进行语音合成、播放控制以及语音合成相关设置的管理。下面详细介绍 Speech API 的方法、属性以及用法示例。
+- [示例](/zh/doc/Device Capabilities/Speech/index_example.md)
+- [语音识别](/zh/doc/Device Capabilities/SpeechRecognition/index.md): 该接口可用于执行语音识别，包括实时语音识别和音频文件的识别，能适应多种使用场景的需求。
+- [示例](/zh/doc/Device Capabilities/SpeechRecognition/index_example.md)
+- [翻译 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/Translation.md): Translation API 提供了将文本在不同语言之间翻译的能力，支持单条文本和批量文本的翻译，适用于 iOS 18.0 及以上系统。
+- [视频录制（VideoRecorder） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Device Capabilities/VideoRecorder.md): VideoRecorder 用于在 Scripting 中创建和控制一个可编程的视频录制会话，完整封装了相机选择、音视频采集、编码、暂停/恢复、缩放、对焦、补光灯控制以及最终文件写入流程。 该 API 适用于自定义相机界面、视频采集工具、自动化录制脚本等场景。
+- [视觉](/zh/doc/Device Capabilities/Vision.md): Vision 模块提供了用于文本识别的 API。支持从静态图片中识别文本，或者通过相机扫描文档并提取文本内容。
+- [天气](/zh/doc/Device Capabilities/Weather/index.md): Scripting 的天气 API 提供对实时天气和天气预报数据的访问，包括当前天气状况、每小时预报和每日预报。用户可以获取指定位置的温度、风速、湿度和降水等天气信息。
+- [示例](/zh/doc/Device Capabilities/Weather/index_example.md)
+- [WebView 控制器](/zh/doc/Device Capabilities/WebViewController.md): WebViewController 是一个用于显示和交互网页内容的控制器。它允许你在脚本中加载 HTML、展示 Web 页面、执行 JavaScript 脚本，并与页面中的 JavaScript 进行消息通信。你可以将它作为浏览器使用，也可以嵌入应用功能页面。
+- [Intent.continueInForeground <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Intent/Intent.continueInForeground.md): Intent.continueInForeground 用于在脚本从 Shortcuts 中后台执行时，请求系统将流程转移到 Scripting App 的前台继续运行。
+此过程需要用户明确确认。 适用场景包括： 需要展示完整 UI（如表单、列表、导航页面）需要用户在 App 内进行交互操作后续步骤无法在后台执行 调用此方法后，系统会弹出确认对话框： 用户 允许 → Scripting App 打开到前台，脚本继续执行用户 取消 → 当前脚本立即终止此行为完全由系统管理，开发者无需手动处理跳转流程 由于该能力基于 iOS 26 引入的 AppIntents 行为： 该 API 只能在 iOS 26 及以上系统使用。
+- [Intent.requestConfirmation <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Intent/Intent.requestConfirmation.md): Intent.requestConfirmation 用于在脚本执行过程中，向用户请求确认某项操作。
+调用后，系统会暂停脚本执行，并展示一个基于 SnippetIntent 的 UI 作为确认界面，同时可显示提示对话内容。 确认流程行为： 用户 确认 → Promise resolve，脚本继续执行用户 取消 → 当前脚本终止执行确认界面通过传入的 SnippetIntent 的 UI 定义系统自动管理此流程，无需开发者处理 UI 呈现逻辑 该 API 仅可在 iOS 26 及以上系统使用。
+- [快速开始](/zh/doc/Intent/Quick Start.md): Scripting 支持通过 intent.tsx 文件创建 iOS Intents，实现脚本与系统分享扩展（Share Sheet）和快捷指令（Shortcuts）的深度集成。你可以接收来自用户的文本、图片、文件和 URL 等输入，并返回结果供调用方使用。通过 UI 展示、数据处理与结果返回，可构建灵活且强大的自动化流程。
+- [SnippetIntent <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Intent/SnippetIntent.md): SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。它适用于： 多步骤表单式交互从 Shortcuts 中获取用户输入键值选择、确认、展示结果等轻量级交互在 Shortcuts 工作流中内嵌 UI 组件 SnippetIntent 特点如下： 在 Scripting 中必须通过 AppIntentManager.register 注册protocol 必须为 AppIntentProtocol.SnippetIntentperform() 必须返回一个 VirtualNode（TSX UI）在脚本中必须以 Intent.snippetIntent() 封装后返回Shortcuts 必须使用「Show Snippet Intent」动作才能显示 Snippet UI SnippetIntent 只能在 iOS 26 及以上系统运行。 在 iOS 26 以下环境： 无法调用 Intent.snippetIntent无法使用 Intent.requestConfirmationShortcuts 中不存在「Show Snippet Intent」动作SnippetIntent 类型的 AppIntent 不会被 Shortcuts 正常识别 在 app_intents.tsx 中声明 SnippetIntent： 再例如： 要求： protocol 必须为 AppIntentProtocol.SnippetIntentperform() 必须返回 VirtualNode与普通 AppIntent 区别在于返回的是 UI，而非数据 SnippetIntent 不能直接作为 JS 返回值，必须通过 Intent.snippetIntent() 包装成 IntentSnippetIntentValue。 类型定义 封装的返回值可被 Shortcuts 的「Show Snippet Intent」动作识别并展示 UI。 SnippetIntent 支持在执行逻辑中先请求用户确认某个操作。此能力同样基于 iOS 26。 ConfirmationActionName 这些名称会影响 Shortcuts UI 中呈现的文案，例如 “Set …”、“Add …”、“Toggle …” 等。 示例值： 示例 效果： Shortcuts 弹出 PickColorIntent 对应的 Snippet UI用户点击确认后 Promise resolve用户取消时脚本执行终止 Shortcuts 在 iOS 26 新增动作： Show Snippet Intent 用于展示 SnippetIntent 返回的 Snippet UI。 与其他动作对比 使用方式： 在 Shortcuts 中添加「Show Snippet Intent」选择脚本项目（需包含 intent.tsx）脚本返回 Intent.snippetIntent(...)Shortcuts 显示 Snippet UI
+- [可互动的小组件和灵动岛](/zh/doc/Interactive Widget and LiveActivity.md): Scripting 应用支持在 小组件 和 LiveActivity（灵动岛） 中添加互动的功能，使您可以通过 Button 和 Toggle 组件创建动态、交互式的 UI。这些控件可以执行 AppIntent 来触发操作，从而增强小组件和 LiveActivity 的功能。
+- [实时活动（灵动岛）](/zh/doc/LiveActivity.md): LiveActivity API 允许你的脚本在 iOS 的锁屏界面以及支持的设备上的动态岛中展示实时数据。通过该 API，你可以创建、更新并结束 Live Activity，同时监听其生命周期状态和系统支持情况。 本文件详细介绍 Scripting app 中的 LiveActivity API，包括： Live Activity 的生命周期与核心概念如何注册 Live Activity UI如何在脚本中启动、更新、结束 Live Activity如何构建 Live Activity UI（包括 Dynamic Island 多种布局）所有类型参数说明完整示例代码与最佳实践 本 API 基于 Apple ActivityKit 能力，并以 TypeScript/TSX 的方式封装，允许开发者使用 React 风格构建 Lock Screen 与 Dynamic Island 界面。 Live Activity 展示在以下区域： 锁屏界面iPhone 14 Pro+ 的 Dynamic Island其他设备的悬浮样式（Banner） 它能随着应用或脚本运行实时更新内容，如： 计时器外卖进度健身、运动状态倒计时、打卡、提醒 在 Scripting app 中，一个 Live Activity 由两部分组成： 内容状态（contentState）
+一个 JSON 可序列化的对象，会随时间改变。UI Builder
+通过 TSX 描述不同区域的展示方式。 用于描述当前正在运行的所有 Live Activity 信息。
+- [快速开始](/zh/doc/Quick Start.md): 欢迎使用 Scripting！这是一款可让你使用 TypeScript 编写 React 类似的 TSX 语法来创建 UI 组件和自定义小组件、灵动岛和使用发通知提醒等能力的应用。通过 Scripting，你可以使用包装过的 SwiftUI 视图来获得在 iOS 上流畅且原生的使用体验，并通过熟悉的编码结构来创建和呈现各种 iOS 工具型 UI 页面。本指南将带你完成项目设置、组件创建以及结合 Hooks 构建动态界面的流程。 目录 快速开始创建脚本项目导入组件创建自定义组件呈现 UI 视图使用 Hooks构建复杂的 UI 1. 快速开始 在 Scripting 中，你可以通过定义函数式组件的方式来创建简单的 UI 元素。你需要的所有组件和 API 都可以从 scripting 包里导入。 2. 创建脚本项目 在开始编写代码之前，你需要创建一个脚本项目。项目创建完成后，你可以在 index.tsx 文件中编写代码。这个文件是定义 UI 组件和逻辑的主要入口。 index.tsx 的示例： 3. 导入视图 SwiftUI 中的所有视图以及部分 API 都进行了包装，并通过 scripting 包提供给你使用。以下是部分可用视图的列表： 布局视图: VStack, HStack, ZStack, Grid控件: Button, Picker, Toggle, Slider, ColorPicker集合: List, Section日期和时间: DatePicker文本和标签: Text, Label, TextField 你可以像这样在项目中导入它们： 4. 创建自定义组件 在 Scripting 中，函数式组件的工作原理与 React 基本相同，可以使用类似 JSX 的语法来构建可复用组件。 示例： 5. 呈现 UI 视图 若要呈现 UI 视图，可以使用 Navigation.present 方法。它能够以模态视图的形式显示自定义组件，并处理该视图的关闭。Navigation.present 方法会返回一个在视图被关闭后才会完成的 Promise。为了避免内存泄漏，一定要在视图关闭后调用 Script.exit()。 示例： 在上述示例中，Navigation.present({ element: <View /> }) 会呈现 View 组件；当用户关闭此视图后，Script.exit() 确保释放相关资源。 6. 使用 Hooks Scripting 支持一系列与 React 类似的 Hooks，用于管理组件中的状态、副作用、Memo 化以及上下文。以下是每种 Hook 的使用指南及示例： useState useState Hook 能够让你在函数式组件中添加本地状态。 在这个示例中，每次点击按钮都会更新 count 变量，并触发组件的自动重新渲染。 useEffect useEffect Hook 可以让你在组件中执行副作用操作，比如获取数据或者设置订阅。 在此示例中，useEffect Hook 会设置一个间隔操作，每秒更新一次 time 变量，并在组件卸载时清除该间隔以避免潜在的问题。 useReducer 当你需要在组件中管理更复杂的状态逻辑时，useReducer Hook 非常有用。 useReducer Hook 可以通过一个 reducer 函数来帮助你更好地处理复杂的状态变更。 useCallback useCallback Hook 可以让你对函数进行 Memo 化，以避免在每次渲染时都重新创建函数，从而提升性能。 使用 useCallback，只有在依赖项改变时才会重新创建 increment 函数，从而在大型或频繁更新的组件中提升性能。 useMemo useMemo Hook 允许你对某些值进行 Memo 化，以缓存代价高的计算结果，从而提高性能。 useMemo Hook 仅在 count 改变时才重新计算阶乘，从而避免不必要的性能消耗。 useContext useContext Hook 允许你在应用的各组件之间共享状态，而无需进行层层的 props 传递（即“向下传递”）。 在此示例中，useContext 可以访问 CountContext，从而在应用中共享计数值。 7. 构建复杂的 UI 通过结合已提供的视图、Hooks 和自定义组件，你可以构建出功能完善、结构复杂的 UI。 示例： 如需了解更多详细信息，请查阅完整的 API 文档，该文档包含关于 scripting 包的更多示例和使用场景。
+- [Script](/zh/doc/Script.md): Script 模块为 Scripting App 中的脚本执行提供上下文和实用函数。它允许你访问运行时元数据、通过结果终止脚本、以编程方式运行其他脚本，并构造 URL Scheme 启动或打开脚本。
+- [对齐](/zh/doc/Types/Alignment.md): 通过 Alignment，你可以指定内容在视图框架（frame）中的位置，与 SwiftUI 内置对齐方式的行为相对应。当组件有额外空间或需要在布局中按特定方式对齐时，可使用 Alignment 来控制元素在容器中的位置。
+- [颜色](/zh/doc/Types/Color.md): Color API 支持多种颜色格式，包括 HEX 字符串、RGBA 字符串和预定义颜色关键字。它与 SwiftUI 的颜色系统无缝集成，提供鲜艳且可自适应的颜色，用于设计出色的 UI。
+- [DynamicShapeStyle](/zh/doc/Types/DynamicShapeStyle.md): DynamicShapeStyle 类型允许为一个形状定义两种不同的样式——一种用于浅色模式，另一种用于深色模式。系统会根据用户设备的当前配色方案（浅色或深色）自动应用适合的样式。
+- [形状](/zh/doc/Types/Shape.md): Shape 类型用于定义视图的裁剪形状或背景形状，常用于 clipShape、background、border 等修饰符中，对应 SwiftUI 中的 Shape 协议。支持内建关键字形状，也支持自定义圆角矩形（包括统一圆角、椭圆角或每个角独立控制）。
+- [形状样式](/zh/doc/Types/ShapeStyle.md): ShapeStyle 类型定义了如何将颜色、渐变和材质应用于视图的前景或背景，反映了 SwiftUI 中的样式能力。它涵盖了广泛的样式选项，包括纯色、系统材质和复杂的渐变。
+- [App事件](/zh/doc/Utilities/App Events.md): Scripting 提供的 AppEvents 模块允许你监听应用程序级别的状态变化事件，例如生命周期（scene phase）变更以及系统外观（light/dark 模式）切换。这些功能非常适合用于构建对运行时环境具有感知能力的响应式脚本或组件。
+- [Archive（归档） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/Archive.md): Archive 类用于读取、创建与修改压缩归档文件（如 ZIP 格式）。
+它支持以同步或异步的方式向归档中添加文件、目录或从归档中提取文件内容。
+- [加密](/zh/doc/Utilities/Crypto.md): Crypto 模块提供了一组加密工具函数，用于数据哈希、HMAC 认证、对称密钥生成，以及 AES-GCM 加解密。该模块支持标准的加密算法，配合 Data 类型使用，适用于各种安全处理场景。
+- [二进制数据（Data）](/zh/doc/Utilities/Data.md): Data 类用于表示二进制数据，提供多种方法用于数据的创建、转换、压缩、解压、拼接、读取等操作。可用于处理图像、文件、音频、编码数据等各种原始字节数据。
+- [日期组件](/zh/doc/Utilities/DateComponents.md): DateComponents 类提供了一种灵活的方式，用于表示和操作日期与时间的各个组成部分，例如年、月、日、小时、分钟、秒等。该类基于 Swift 的 DateComponents 实现，并与系统当前日历协同工作。
+- [日期格式化（DateFormatter）](/zh/doc/Utilities/DateFormatter.md): DateFormatter 类用于将 Date 类型格式化为字符串，或将字符串解析为 Date。
+该类封装了 iOS 的 DateFormatter 能力，适用于格式化日期、时间、本地化展示、农历日期展示（通过切换日历）、相对日期显示等场景。
+- [编码](/zh/doc/Utilities/Encoding.md): Encoding 类型定义了可用于文本与二进制数据之间转换的字符编码集。
+常用于以下方法： Data.fromRawString(str, encoding) — 使用指定编码将字符串转换为二进制数据。Data.toRawString(encoding) — 使用指定编码将二进制数据解码为字符串。 通过这些编码类型，可以在不同系统、语言和文件格式之间正确地读写文本内容。
+- [FileEntity](/zh/doc/Utilities/FileEntity.md): FileEntity 类提供了文件级的读写操作接口，用于在 HttpServer 或其他脚本环境中直接读取、写入、定位和关闭文件。
+它支持以多种模式（只读、只写、读写、追加等）打开文件，并能配合 HttpResponse 直接返回文件内容给客户端。
+- [文件管理器](/zh/doc/Utilities/FileManager.md): FileManager 模块提供对文件系统的统一访问接口，是脚本与本地文件及 iCloud 文件交互的主要方式。它支持对目录与文件进行读取、写入、拷贝、移动、删除、压缩、解压、符号链接操作，以及 iCloud 文件管理等功能。
+- [HttpRequest（HTTP 请求） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/HttpServer/HttpRequest.md): HttpRequest 类表示一个由客户端发往服务器的 HTTP 请求对象。它封装了请求的路径、方法、头部、请求体、来源地址以及解析后的参数信息，可在服务器的路由处理函数中使用。
+- [HttpResponse（HTTP 响应） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/HttpServer/HttpResponse.md): HttpResponse 类表示服务器对客户端请求的响应对象。
+它定义了 HTTP 响应的状态码、响应体及头部信息，并提供多种便捷方法生成常见的标准响应（如 ok、notFound、internalServerError 等）。 此类通常与 HttpResponseBody 搭配使用，用于在服务器端返回文本、HTML、二进制数据或文件内容。
+- [HttpResponseBody（HTTP 响应体） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/HttpServer/HttpResponseBody.md): HttpResponseBody 类用于构造 HTTP 响应的主体内容。
+它可以表示文本内容、HTML 页面、二进制数据或任意自定义数据类型，并与 HttpResponse 一起使用，用于向客户端返回响应内容。
+- [HttpServer（HTTP 服务器） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/HttpServer/HttpServer.md): HttpServer 类提供了在本地或局域网中启动一个轻量级 HTTP 服务器的能力，可用于处理 HTTP 请求、静态文件服务、WebSocket 通信等场景。该类在脚本中常用于本地 Web 调试、远程控制、设备通信等。
+- [WebSocketSession（WebSocket 会话） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/HttpServer/WebSocketSession.md): WebSocketSession 类表示一个已建立的 WebSocket 连接会话。
+它由服务器端的 HttpServer.registerWebsocket() 注册的处理函数自动创建，用于与客户端进行双向实时通信。
+- [ItemProvider](/zh/doc/Utilities/ItemProvider.md): ItemProvider 用于表示一个可按需加载的数据提供者，常见于拖放、文件导入、Photos 选择等场景。
+它并不直接包含数据本身，而是描述可以如何、安全地获取数据。 ItemProvider 支持加载对象、文本、URL、原始数据以及文件路径，并对文件访问施加了明确的安全访问边界。
+- [OAuth2](/zh/doc/Utilities/OAuth2.md): OAuth2 类用于在脚本中实现 OAuth 2.0 授权流程。它支持标准的授权码流程、PKCE（Proof Key for Code Exchange）、访问令牌续期及多种配置选项。
+- [文件路径工具](/zh/doc/Utilities/Path.md): Path API 提供了一些实用函数，用于处理和转换文件与目录路径。它受到 Node.js 的 path 模块启发，提供了开发者熟悉的方法来高效地处理路径。
+- [表单数据](/zh/doc/Utilities/Request/FormData.md): FormData 类用于构造表单数据（multipart/form-data），以便在网络请求中上传文本字段或文件数据。
+它的行为与浏览器中的 Fetch API FormData 基本一致，但在 Scripting app 中进行了扩展以支持 Data 类型（原生二进制对象），从而更方便地上传文件或图片。 你可以将 FormData 对象直接作为 fetch() 请求的 body 参数使用。系统会自动生成带有正确边界的 multipart/form-data 请求体。
+- [请求头（Headers）](/zh/doc/Utilities/Request/Headers.md): Headers 类用于管理 HTTP 请求与响应的头部信息。
+它与浏览器 Fetch API 中的同名类保持一致，但在 Scripting 环境中提供了更友好的接口方法和 JSON 化能力，以方便脚本中对网络请求进行调试与序列化。 Headers 对象可以在以下场景中使用： 构造请求时，通过 RequestInit.headers 设置请求头从 Response.headers 中读取响应头在脚本逻辑中动态添加、修改或删除头部字段
+- [可读流](/zh/doc/Utilities/Request/ReadableStream.md): ReadableStream 表示一个 可读的数据流（data stream），用于逐步读取数据而不是一次性加载全部内容。
+在 Scripting app 中，ReadableStream<Data> 通常用于： 处理网络响应中的流式数据（如 Response.body）实现大文件的分块读取或实时下载支持长连接或持续推送的数据（如 SSE、分块 JSON、日志流） 与标准 Web API 一致，Scripting 的 ReadableStream 允许异步迭代（for await...of）以及通过读取器 (ReadableStreamDefaultReader) 手动读取流内容。
+- [Request 和 RequestInit](/zh/doc/Utilities/Request/Request & RequestInit.md): Request 类表示一次 HTTP 请求的完整配置。
+它可作为 fetch() 方法的参数使用，也可用于克隆、修改或重试请求。 在 Scripting 中，Request 的行为与浏览器 Fetch API 中的同名接口一致，但额外支持了原生扩展功能，包括： 支持二进制 Data 类型作为请求体支持自定义重定向处理支持请求超时、取消、与调试标签支持允许不安全请求（HTTP 请求）
+- [响应 （Response）](/zh/doc/Utilities/Request/Response.md): Response 类表示通过 fetch() 方法发起的网络请求返回的响应结果。
+它提供了访问响应体（body）、头部（headers）、状态码、MIME 类型、以及服务器返回的 Cookies 的接口。 在 Scripting app 中，Response 的设计基于标准 Fetch API，但进行了原生扩展，支持： 原生级 Cookie 访问与解析二进制数据 (Data) 支持流式响应 (ReadableStream<Data>) 读取响应的 MIME 类型、编码信息与预期长度完整兼容标准 Web Fetch 行为
+- [fetch 函数](/zh/doc/Utilities/Request/fetch.md): fetch() 是用于发起 HTTP/HTTPS 网络请求的通用方法，返回一个表示响应 (Response) 的 Promise。
+它在 Scripting 中的行为与浏览器标准 Fetch API 基本一致，但进行了原生增强以更好地支持 iOS 本地运行环境（包括文件请求、Data 对象、FormData 上传、可控重定向、信号中止与调试标签等）。
+- [SFTP 客户端 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/SSH/SFTP Client.md): SFTPClient 用于通过 SSH 连接访问远程文件系统，基于 SFTP 协议。
+它提供目录操作、文件操作、路径解析等能力，并可通过 openFile() 获得更强大的 SFTPFile 对象执行读取、写入等低层操作。 该类实例通常由： 返回。
+- [SFTP 文件 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/SSH/SFTP File.md): SFTPFile 表示一个已经通过 SFTP 打开的远程文件句柄。
+通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。 实例通常通过： 获得。
+- [SSH 认证方法 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/SSH/SSH Authentication Method.md): 表示 SSH 身份验证方法。该类提供多个静态方法用于创建不同类型的 SSH 身份验证方式，包括基于密码、RSA 私钥、ED25519 私钥，以及 ECDSA（P-256、P-384、P-521）私钥的认证方式。 你可以将本类创建的实例传递给 SSHClient.connect() 方法中的 authenticationMethod 参数，用于连接 SSH 服务器。
+- [SSH 客户端 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/SSH/SSH Client.md): SSHClient 类用于连接远程 SSH 服务器，支持执行命令、打开 TTY/PTY 会话、使用 SFTP 进行文件传输，以及通过跳板主机进行多级 SSH 跳转。该类是建立和管理 SSH 会话的核心接口。
+- [TTY 标准输入写入器 <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/Utilities/SSH/TTY Stdin Writer.md): 表示一个可写的 TTY（终端）标准输入流，用于通过 SSH 建立的伪终端（PTY）或 TTY 会话。该类支持将数据写入远程终端的 stdin，以及动态调整终端窗口大小。 通常由 SSHClient.withPTY() 或 SSHClient.withTTY() 方法返回。
+- [本地存储](/zh/doc/Utilities/Storage.md): Storage 模块为脚本提供轻量级的持久化存储能力。
+开发者可以在脚本中保存与读取简单的数据类型（如字符串、数字、布尔值、JSON 对象）以及二进制数据（Data）。 所有数据默认存储在 当前脚本的私有存储域，不会被其他脚本访问。
+若希望在多个脚本之间共享数据，可将 shared: true 作为选项传入，使数据写入 共享存储域。 数据会在后台异步持久化到磁盘，但写入方法同步返回执行结果。 Storage 支持以下类型的数据： stringnumberbooleanJSON（符合 JSON 可序列化类型的结构）Data（需使用 setData / getData） 以上类型均可安全持久化。
+- [线程（Thread）](/zh/doc/Utilities/Thread.md): Scripting 的 UI 渲染系统以及绝大多数 JavaScript 执行逻辑默认运行在主线程中，因此通常开发者无需主动切换线程。 为了确保 UI 更新安全、避免主线程阻塞，并在必要时执行后台任务，Scripting 提供了全局 Thread API。部分系统 API 或运行时逻辑可能会在后台执行，此 API 能帮助你安全地处理复杂场景。 Thread 为全局命名空间，无需导入即可使用。
+- [UIImage](/zh/doc/Utilities/UIImage.md): UIImage 类表示一个图像对象，可用于加载、编码、转换与显示。它支持从文件路径、二进制数据或 Base64 字符串中创建图像，并提供多种格式转换方法（PNG/JPEG）。
+UIImage 可直接用于 Image 组件显示，也可与 Data 类配合用于图像存储、上传、加密等操作。
+- [后台网络会话](/zh/doc/Utilities/URLSession/BackgroundURLSession.md): BackgroundURLSession 提供在 Scripting app 中发起、恢复与查询「后台可持续」的下载与上传任务的能力。 可用性： 仅当脚本运行在主应用 (Script.env === "index") 时可用。
+- [下载任务](/zh/doc/Utilities/URLSession/URLSessionDownloadTask.md): URLSessionDownloadTask 表示一个后台下载任务实例。
+它由 BackgroundURLSession.startDownload() 或 BackgroundURLSession.resumeDownload() 创建，用于在前台或后台下载文件，并可在脚本被终止后继续运行。 每个下载任务都由系统负责调度与执行，并提供进度、状态和事件回调等信息。
+任务在创建后需手动调用 resume() 开始任何。
+- [上传任务](/zh/doc/Utilities/URLSession/URLSessionUploadTask.md): URLSessionUploadTask 表示一个后台上传任务实例。
+它由 BackgroundURLSession.startUpload() 或 BackgroundURLSession.resumeUpload() 创建，用于在前台或后台上传文件。
+上传任务由系统管理，可以在应用或脚本被暂停、切换到后台甚至被终止后继续执行。 每个上传任务都提供状态、进度信息，以及多个回调事件以便追踪上传过程。
+- [UUID](/zh/doc/Utilities/UUID.md): UUID 模块提供了简便的方法来生成唯一的 UUID 字符串。
+- [WebScoket](/zh/doc/Utilities/WebScoket.md): WebSocket 类提供了创建和管理 WebSocket 连接的接口，允许与服务器进行实时通信。你可以通过 WebSocket 连接发送和接收文本和二进制数据，包括字节缓冲区。
+- [socket.io](/zh/doc/Utilities/socket.io.md): Socket.IO API 提供强大的工具，用于管理客户端与服务器之间的实时双向通信。它包括 SocketManager（用于管理多个命名空间）和 SocketIOClient（用于单个 socket 连接）。以下是该 API 的详细使用指南，包括设置、配置和常见用例。
+- [动画和过渡](/zh/doc/View Modifiers/Animation and Transition.md): Scripting 通过 Observable / useObservable、Animation、Transition、withAnimation 以及视图的 animation / transition 属性，基本对齐了 SwiftUI 的动画能力，包括： 属性动画：数值、颜色、布局等属性随状态变化平滑过渡过渡动画：视图插入 / 移除时的进出效果（如淡入淡出、滑入滑出、翻转）显式动画：通过 withAnimation 包裹一段「状态更新代码」统一加动画
+- [可链式调用的修饰符](/zh/doc/View Modifiers/Chaining View Modifiers.md): modifiers 是一个支持链式调用的视图修饰器集合，允许你为同一个视图应用多个修饰器，并以严格的顺序依次执行。 与传统 TSX 中每个视图只能通过一个 modifier 属性传入单个修饰器不同，modifiers 支持： 同一种修饰器的重复使用（例如多个 padding()、background()）明确控制修饰器的应用顺序更贴近 SwiftUI 的声明方式和效果
+- [通用图表标记属性 (ChartMarkProps)](/zh/doc/View Modifiers/ChartMarkProps/index.md): ChartMarkProps 用于配置图表中的每一个 mark（例如柱状图的 BarMark、折线图的 LineMark 等），提供一系列通用的修饰属性，支持设置样式、符号、位置、注解、变换等内容。该类型可用于 BarChart、LineChart、AreaChart 等组件的 marks 属性中。
+- [图表样式](/zh/doc/View Modifiers/Charts Style.md): 该组件提供了一个高度可定制的界面，用于创建和展示多种类型的图表。本文档详细说明了如何使用 Chart 视图的属性来配置轴、比例、标签、图例等。 1. 轴的可见性 chartXAxis类型: "automatic" | "hidden" | "visible"描述: 设置 X 轴的可见性。示例:<Chart chartXAxis="visible">
+  <BarChart ... />
+</Chart>chartYAxis类型: "automatic" | "hidden" | "visible"描述: 设置 Y 轴的可见性。示例:<Chart chartYAxis="hidden">
+  <LineChart ... />
+</Chart> 2. 轴标签 chartXAxisLabel类型:{
+  position?: "automatic" | "bottom" | "bottomLeading" | "bottomTrailing" | "leading" | "overlay" | "top" | "topLeading" | "topTrailing" | "trailing";
+  alignment?: "leading" | "center" | "trailing";
+  spacing?: number;
+  content: VirtualNode;
+}描述: 为 X 轴添加标签。示例:<Chart
+  chartXAxisLabel={{
+    position: "bottom",
+    alignment: "center",
+    spacing: 10,
+    content: <Text>X 轴标签</Text>,
+  }}
+>
+  <BarChart ... />
+</Chart>chartYAxisLabel类型: 与 chartXAxisLabel 相同。描述: 为 Y 轴添加标签。示例:<Chart
+  chartYAxisLabel={{
+    position: "leading",
+    content: <Text>Y 轴标签</Text>,
+  }}
+>
+  <LineChart ... />
+</Chart> 3. 图例 chartLegend类型:"automatic" | "hidden" | "visible" | {
+  position?: "automatic" | "bottom" | "bottomLeading" | "bottomTrailing" | "leading" | "overlay" | "top" | "topLeading" | "topTrailing" | "trailing";
+  alignment?: "leading" | "center" | "trailing";
+  spacing?: number;
+  content?: VirtualNode;
+}描述: 配置图例。示例:<Chart
+  chartLegend={{
+    position: "top",
+    alignment: "center",
+    content: <Text>图例</Text>,
+  }}
+>
+  <AreaChart ... />
+</Chart> 4. 比例 chartXScale / chartYScale类型:ClosedRange<number> | ClosedRange<Date> | string[] | "category" | "date" | "linear" | "log" | "squareRoot" | "symmetricLog" | {
+  domain: ClosedRange<number> | ClosedRange<Date> | string[];
+  type: "category" | "date" | "linear" | "log" | "squareRoot" | "symmetricLog";
+}描述: 配置 X 或 Y 轴的比例。示例:<Chart
+  chartXScale={{ domain: { from: 0, to: 100 }, type: "linear" }}
+  chartYScale={["A", "B", "C"]}
+>
+  <LineChart ... />
+</Chart> 5. 背景 chartBackground类型:VirtualNode | {
+  alignment?: "leading" | "center" | "trailing";
+  content: VirtualNode;
+}描述: 为图表容器添加背景。示例:<Chart
+  chartBackground={{
+    alignment: "center",
+    content: <Rectangle fill="gray" />,
+  }}
+>
+  <PieChart ... />
+</Chart> 6. 前景样式 chartForegroundStyleScale类型:Record<string, ShapeStyle>;描述: 自定义图表标记的颜色。示例:<Chart
+  chartForegroundStyleScale={{
+    "类别 1": { color: "blue" },
+    "类别 2": { color: "red" },
+  }}
+>
+  <BarChart ... />
+</Chart> 7. 可滚动轴 chartScrollableAxes类型:"vertical" | "horizontal" | "all"描述: 启用指定轴的滚动。示例:<Chart chartScrollableAxes="horizontal">
+  <LineChart ... />
+</Chart> 8. 选中 chartXSelection / chartYSelection / chartAngleSelection类型:{
+  value: string | number | null;
+  onChanged: (newValue: string | number | null) => void;
+  valueType: "string" | "number";
+}描述: 启用指定轴的选择功能。示例:<Chart
+  chartXSelection={{
+    value: "类别 1",
+    onChanged: (newValue) => console.log("已选择:", newValue),
+    valueType: "string",
+  }}
+>
+  <BarChart ... />
+</Chart> 9. 滚动位置 chartScrollPositionX / chartScrollPositionY类型:number | string | {
+  value: number | string;
+  onChanged: (newValue: number | string) => void;
+}描述: 设置 X 或 Y 轴的初始滚动位置。示例:<Chart
+  chartScrollPositionX={{
+    value: 0,
+    onChanged: (newValue) => console.log("滚动 X:", newValue),
+  }}
+>
+  <BarChart ... />
+</Chart>
+- [网格布局控制](/zh/doc/View Modifiers/Grid Layout Control.md): 这些修饰符用于控制视图在 Grid 网格布局中的行为，包括单元格的跨列、对齐方式、尺寸限制等，适用于构建灵活且精细的二维界面布局。 gridCellColumns 设置某个视图在网格中跨越的列数。 类型 说明 用于让单个视图占据多个列，常见用法包括用作区块标题或需要额外水平空间的内容。 示例 gridCellAnchor 设置当前视图在网格单元格内的对齐锚点。 类型 说明 使用关键词（如 "center"、"topLeading"）或自定义点（如 { x: 0.5, y: 0.0 }）来控制该视图在其单元格中的对齐位置。 示例 gridCellUnsizedAxes 阻止网格在指定方向上为视图分配额外空间。 类型 说明 此修饰符用于告诉网格布局：不要在特定方向（水平或垂直）扩展该视图的尺寸，使其内容尺寸更紧凑。 可选值 "horizontal" – 禁止水平扩展"vertical" – 禁止垂直扩展"all" – 禁止两个方向的扩展 示例 gridColumnAlignment 设置该视图所在列的水平对齐方式。 类型 说明 此修饰符将影响该列中所有视图的水平对齐方式。通常只需要对列中的第一个视图设置即可。 示例
+- [图片样式](/zh/doc/View Modifiers/Image Style.md): 这些修饰符专门用于控制图像视图的缩放、布局与渲染方式。
+- [生命周期事件](/zh/doc/View Modifiers/Lifecycle Events.md): Scripting 支持 SwiftUI 风格的生命周期钩子 onAppear 与 onDisappear，用于在视图显示或从界面中消失时执行自定义逻辑。你可以使用这些钩子执行动画、加载数据、初始化状态或在视图不再可见时清理资源。
+- [玻璃效果过渡效果](/zh/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index.md): Liquid Glass 在 iOS 26 引入了更先进的几何匹配与材质过渡能力。
+Scripting 完整支持这些特性，并通过 glassEffectTransition、glassEffectID、glassEffectUnion、GlassEffectContainer 以及 NamespaceReader 组合实现自然、顺滑且结构化的玻璃动画体验。 本文将详细说明： 什么是 Glass Effect Transition三种过渡类型为什么需要 glassEffectID 与 namespaceglassEffectUnion 的作用NamespaceReader 的设计目的与机制实际示例解析最佳实践 glassEffectTransition 用于指定 Liquid Glass 在视图出现、消失或布局变化期间应如何过渡。 Glass Effect Transition 控制三个核心内容： 玻璃材质如何出现 / 消失玻璃的几何形状是否会参与动画玻璃是否与容器中其他视图的几何形状匹配 过渡效果只影响“玻璃材质本身”，而不是普通视图的 opacity 或 scale。
+- [示例](/zh/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index_example.md)
+- [液态玻璃效果](/zh/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md): GlassEffect、GlassEffectContainer、UIGlass 等相关 API 基于 SwiftUI 新引入的 Liquid Glass 技术，让开发者能够在脚本中以 TSX 方式使用流体化、动态的玻璃材质效果，并支持过渡动画、匹配几何、联合玻璃区域等高级特性。
+- [示例](/zh/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index_example.md)
+- [通用修饰符](/zh/doc/View Modifiers/List and Section View Modifiers/Common.md): 这些修饰符可用于精细控制 <List> 中每一行（Row）或每一个区块（Section）的布局与样式。
+- [新的 List 视图修饰符](/zh/doc/View Modifiers/List and Section View Modifiers/New List View Modifiers.md): 功能说明 控制 List 的右侧索引条是否显示。常用于需要类似通讯录 A-Z 快速跳转的场景。 可选值： "visible""hidden""automatic"（系统自行判断） 示例 功能说明 设置 Section 的外边距，完全替换系统默认边距。可使用数值、 EdgeSets，或指定边的写法。 三种写法说明 2.1 使用单一数字作为四边边距 2.2 使用 EdgeInsets 2.3 针对特定边设置长度 此写法等同于 SwiftUI 中： 示例 功能说明 为 Section 设置索引条的显示字符，一般为单字母，如 “A”、“B”、“C”。 示例 功能说明 为 Section 添加自定义操作按钮、菜单等 UI，位置通常显示在 Section Header 区域的右侧。 示例：添加刷新按钮 示例：添加菜单动作
+- [实时活动（LiveActivity）修饰符](/zh/doc/View Modifiers/LiveActivity View Modifiers.md): Scripting 支持与 SwiftUI 等效的 Live Activity 外观控制修饰符。这些修饰符专门用于 锁屏（Lock Screen）中的 Live Activity 界面，用于自定义背景色和系统动作按钮颜色。 通过为 Activity UI 中的 content 视图设置这些修饰符，可使 Live Activity 更符合品牌风格或特定活动主题。
+- [导航视图修饰符](/zh/doc/View Modifiers/Navigation View Modifiers.md): Scripting App 提供了一组用于配置导航行为的视图修饰符，允许开发者控制页面标题的展示内容与样式，并自定义返回按钮的显示与否。这些修饰符与 SwiftUI 中的导航系统高度一致，适用于导航栈中的任意视图。
+- [Picture in Picture （画中画） <span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO](/zh/doc/View Modifiers/Picture in Pictuer View Modifiers.md): Scripting 提供了一组 PiP（Picture in Picture，画中画）相关的 View Modifiers，用于将任意 SwiftUI View 以系统级 PiP 窗口的形式呈现。
+开发者无需直接接触底层 AVPictureInPicture API，即可完整控制 PiP 的展示、隐藏、交互行为及生命周期。 PiP 适用于以下典型场景： 实时状态展示（计时、运动、任务进度）音频 / 视频播放的辅助 UI应用进入后台后仍需持续展示的轻量信息视图
+- [弹出视图修饰符（Presentation](/zh/doc/View Modifiers/Presentation View Modifiers.md): 这些修饰符用于配置通过 sheet 呈现的视图的行为和外观，包括在不同尺寸环境下的适配方式、拖拽指示器、支持的尺寸（detents）、背景交互、滚动与调整优先级等。 这些修饰符应作用于 被 sheet 弹出显示的根视图（例如 <VStack>、<NavigationStack> 或 <List>）。
+- [数据遮罩视图修饰符](/zh/doc/View Modifiers/Redaction View Modifiers.md): Scripting App 支持用于视图层级的数据遮罩（Redaction）修饰符。通过这些修饰符，开发者可以将视图内容以占位符、隐私保护或失效状态的形式展示，常用于加载中、隐私信息隐藏或内容待更新的场景。 这些修饰符的行为与 SwiftUI 中的 redacted(reason:) 和 unredacted() 完全一致。
+- [安全区域](/zh/doc/View Modifiers/Safe Area.md): Scripting 提供与 SwiftUI 类似的安全区域控制功能，允许你灵活地向安全区域内插入视图内容，或让视图忽略安全区域限制进行全屏布局。安全区域通常指设备屏幕上的“刘海”、工具栏、键盘等系统 UI 所保留的边距。
+- [搜索交互](/zh/doc/View Modifiers/Search Interactions.md): Scripting 支持与 SwiftUI 类似的搜索功能。你可以为列表等滚动视图添加搜索栏，控制搜索栏的显示位置、状态，监听输入变化，并动态显示搜索建议。
+- [设置环境变量 (environments)](/zh/doc/View Modifiers/Set environment values (environments).md): environments 是 Scripting 新增的视图修饰符，用于向当前视图树（View Hierarchy）注入特定的 environment values。
+它的作用与 SwiftUI 的 .environment() 类似，但基于 Scripting 的设计进行了显式声明和类型收敛，避免隐式行为。 目前 environments 支持以下 environment 值： editMode: 控制视图的编辑模式（如 List 的编辑状态）openURL: 自定义打开链接（URL）的处理方式 这些 environment 值会影响其子视图中的行为与交互能力。 editMode 用于设置当前视图树中所有支持编辑模式的组件的编辑状态。 典型用途： 控制 List 的编辑状态启用批量删除、移动操作与用户交互同步（如切换编辑按钮）
+- [滑动操作](/zh/doc/View Modifiers/Swipe Actions/index.md): 在 Scripting 中，你可以为用作 <List> 列表行的视图（如 <HStack>）添加滑动操作按钮，支持如“删除”、“编辑”、“收藏”等常见交互。 为了更清晰地支持 TypeScript，Scripting 将 SwiftUI 的 swipeActions 拆分为两个方向明确的修饰符： leadingSwipeActions: 向右滑动（从左到右）trailingSwipeActions: 向左滑动（从右到左）
+- [示例](/zh/doc/View Modifiers/Swipe Actions/index_example.md)
+- [符号样式](/zh/doc/View Modifiers/Symbol Style.md): 这些修饰符用于配置 SF Symbols（系统符号图标）的显示样式和动画效果，常用于 <Image systemName="..."> 组件。 symbolRenderingMode 设置符号图像的 渲染模式。 类型 可选值（SymbolRenderingMode）： "monochrome"：单色模式，使用当前前景色绘制"hierarchical"：层次渲染，根据不同图层设置不透明度（适合语义着色）"multicolor"：使用符号内置颜色"palette"：分层渲染，可自定义每一层的颜色样式（需搭配 foregroundStyle） 示例 foregroundStyle 设置符号或前景元素的颜色样式。 类型 说明： 在 "monochrome" 模式下使用单个颜色或渐变；在 "palette" 模式下使用 { primary, secondary, tertiary } 对象指定多层样式；tertiary 可选，仅在符号有三层图层时有效。 symbolVariant 为符号添加特定的 视觉变体。 类型 可选值（SymbolVariants）： "none"：无变体，原始符号样式"fill"：填充样式"circle"：包裹在圆形轮廓中"square"：包裹在方形轮廓中"rectangle"：包裹在矩形轮廓中"slash"：斜杠样式，表示禁止/关闭等状态 示例 symbolEffect 为符号添加 动画效果，支持静态应用或绑定数值以触发动画。 类型 使用方式： 1. 静态符号效果（SymbolEffect 简写字符串） 2. 动态绑定符号效果（每次值变化时触发动画） 每次 isLiked 状态变化时，图标会执行 bounce 动画。 可用 Symbol 动效分类（DiscreteSymbolEffect） 综合示例 上述示例中： 使用了分层渲染（hierarchical）；添加了圆形变体（circle）；设置了 indigo 颜色；每当 isNotified 变化时，符号执行 breathePulse 动画。
+- [文本输入框](/zh/doc/View Modifiers/Text Field.md): 这些修饰符可用于自定义 TextField 组件的行为和外观，包括键盘类型、自动更正、自动大写、提交操作等。
+- [文本修饰符](/zh/doc/View Modifiers/Text View Modifiers.md): 以下属性可用于为基于文本的视图（如 Text 或 Label）设置样式和格式，其功能与 SwiftUI 的内建修饰符类似。通过自定义这些属性，您可以控制文本的字体、字重、设计、间距及其他排版特性。
+- [Toast提示](/zh/doc/View Modifiers/Toast.md): toast 修饰器用于在视图上显示一个临时提示框（Toast）。
+它通常用于短暂地展示消息或反馈信息，例如“保存成功”、“操作完成”、“网络错误”等。 Toast 可以包含简单的文本消息，也可以自定义内容视图。
+你可以控制其显示位置、持续时间、背景颜色、圆角、阴影等外观属性。
+- [工具栏修饰符](/zh/doc/View Modifiers/ToolBar View Modifiers.md): Scripting App 支持一系列视图修饰符，用于控制系统工具栏（包括导航栏、底部工具栏、标签栏等）的可见性、外观样式以及行为。这些修饰符参考了 SwiftUI 的设计，允许你在每个视图中以声明式方式对工具栏进行个性化配置。
+- [模糊](/zh/doc/View Modifiers/blur.md): 对视图应用高斯模糊效果。
+- [边框](/zh/doc/View Modifiers/border.md): border 属性用于为视图添加边框，可指定边框样式与可选的宽度。支持使用纯色、渐变、系统材质等视觉样式，并能根据系统浅色/深色模式自动切换。
+- [按钮样式](/zh/doc/View Modifiers/buttonStyle.md): 该属性用于自定义 UI 中视图层次结构内按钮的交互行为和外观。
+- [裁剪形状](/zh/doc/View Modifiers/clipShape.md): 将视图裁剪为指定形状，并保持内容比例。 类型 示例
+- [裁剪形状](/zh/doc/View Modifiers/clipped.md): 将视图裁剪为其矩形边界。若为 true，启用裁剪；否则忽略该修饰符。可用于避免内容超出布局。
+- [反转颜色](/zh/doc/View Modifiers/colorConvert.md): 反转该视图的颜色，用于视觉强调或辅助功能场景。 类型 示例
+- [containerRelativeFrame](/zh/doc/View Modifiers/containerRelativeFrame.md): 将当前视图放置在一个相对于其最近容器尺寸的“隐形框架”中。该修饰符适用于 ScrollView、Grid、布局栈等容器中，用于实现按比例布局或视图对齐。
+- [内容外边距](/zh/doc/View Modifiers/contentMargins.md): contentMargins 修饰符用于为视图内容添加自定义的外边距（Margins）。它支持统一设置所有边，也支持根据指定方向（如顶部、底部、水平、垂直）以及不同位置（内容区域或滚动指示器区域）灵活设置边距。
+- [内容形状](/zh/doc/View Modifiers/contentShape.md): contentShape 属性用于定义视图内容的交互区域或视觉边界形状。该形状可影响视图在点击、拖放、辅助功能、悬停等场景中的行为。常用于精确控制命中测试（hit-testing）区域或指定用于辅助功能和交互反馈的自定义轮廓。 这在如下场景中特别有用： 控制按钮或自定义视图的可点击区域；定义拖放预览或上下文菜单的形状；指定辅助功能的可聚焦区域；优化鼠标悬停的交互体验。
+- [内容过渡动画](/zh/doc/View Modifiers/contentTransition.md): contentTransition 修饰符用于指定当视图 内容发生变化 时所应用的动画过渡效果。不同于 .transition(...) 这种控制视图出现或消失的动画，contentTransition 仅作用于视图内部内容的更新，例如 Text 文本变化、Image 图标替换等。 适用于需要在数据变化时提供平滑视觉过渡的场景，增强界面响应性和用户体验。
+- [上下文菜单](/zh/doc/View Modifiers/contextMenu.md): contextMenu 属性用于为任意视图添加系统风格的上下文菜单。在触控设备上通过长按触发，在使用鼠标的设备上则可通过右键点击触发。开发者可以自定义菜单项内容，并可选地添加一个预览视图，与菜单同时显示。
+- [控件组样式](/zh/doc/View Modifiers/controlGroupStyle.md): 通过该属性，你可以为视图中的控件组设置视觉和交互样式，模仿 SwiftUI 的外观和体验。通过定义 ControlGroupStyle，可以影响相关控件（如按钮、切换开关或其他可交互元素）如何被分组和呈现给用户。
+- [日期选择器样式](/zh/doc/View Modifiers/datePickerStyle.md): 该属性用于自定义 DatePicker 视图在 UI 中的外观和交互方式。
+- [禁用](/zh/doc/View Modifiers/disabled.md): 禁用当前视图及其子视图的用户交互行为，视觉上通常为半透明状态。
+- [固定大小](/zh/doc/View Modifiers/fixedSize.md): 将视图固定在其理想大小，防止其被压缩或扩展超出其内容本身所需的尺寸。
+- [flipsForRightToLeftLayoutDirection](/zh/doc/View Modifiers/flipsForRightToLeftLayoutDirection.md): 设置当系统使用从右到左（Right-to-Left, RTL）布局方向时，当前视图是否应水平镜像其内容。
+- [前景色和背景样式](/zh/doc/View Modifiers/foregroundStyle & background.md): foregroundStyle 和 background 是用于设置视图前景与背景视觉效果的两个常用属性，支持颜色、渐变、系统材质，以及深浅模式自动切换等丰富的样式能力。
+- [表单样式](/zh/doc/View Modifiers/formStyle.md): 通过设置 FormStyle，你可以定义表单内容的视觉排列方式和呈现方式，从而提供更清晰、更直观的用户体验。
+- [frame](/zh/doc/View Modifiers/frame.md): frame 属性用于设置视图的尺寸（固定或弹性）以及在容器中的对齐方式。支持两种不同的配置格式： 1. 固定尺寸格式 用于指定固定的宽度和高度，并设置在该区域内的对齐方式。 示例 2. 弹性尺寸格式 用于设置最小、最大和理想尺寸。数值可以为具体数值或字符串 'infinity'，表示尽可能占满可用空间。 示例
+- [仪表盘样式](/zh/doc/View Modifiers/gaugeStyle.md): 通过设置 GaugeStyle，你可以定义仪表（Gauge）的视觉表示方式，从而控制其外观是否显示为环形、条形或通过标记指示当前值。一些样式仅适用于特定平台（如 watchOS），其他样式则具有更广泛的适用性。
+- [隐藏](/zh/doc/View Modifiers/hidden.md): 若为 true，视图不可见且无法交互，但仍保留在视图层级中并参与布局。 类型 示例
+- [隐藏标签](/zh/doc/View Modifiers/labelsHidden.md): 隐藏视图内控件（如 Picker, DatePicker）的标签部分，但控件本身仍然显示。
+- [布局优先级](/zh/doc/View Modifiers/layoutPriority.md): layoutPriority 用于控制父级布局在空间不足或需要分配空间时，优先给予哪些子视图更多空间。 在同一个父视图下，如果多个子视图竞争空间，设置了较高 layoutPriority 的视图将被优先分配更多空间，而较低或未设置的则可能被压缩或裁剪。
+- [列表样式](/zh/doc/View Modifiers/listStyle.md): 通过该属性，你可以自定义 List 视图在 UI 中的行为和外观。
+- [遮罩](/zh/doc/View Modifiers/mask.md): mask 修饰符使用另一个视图的 透明度（alpha 通道） 作为遮罩，将目标视图按形状进行裁剪。遮罩中不透明的区域会显示目标视图，透明区域则被隐藏。 该修饰符常用于图像裁剪、聚光灯效果、遮挡与图形渐显等视觉表现中。
+- [匹配几何效果（matchedGeometryEffect）](/zh/doc/View Modifiers/matchedGeometryEffect.md): matchedGeometryEffect 用于在 不同视图之间建立几何关联关系，使视图在： 位置变化尺寸变化布局层级变化条件渲染切换 这些场景中，仍然保持 连续、平滑、空间一致的动画过渡效果。 该能力对应 SwiftUI 中的 matchedGeometryEffect，属于 组件级几何联动动画系统，不依赖导航系统。
+- [匹配过渡源（matchedTransitionSource）](/zh/doc/View Modifiers/matchedTransitionSource.md): matchedTransitionSource 用于 标记某个视图作为“导航转场动画的几何源视图”，使该视图在页面跳转时可以作为： 缩放动画的起点位置过渡的起点共享几何动画的起始帧 该能力对应 SwiftUI 中的 matchedTransitionSource，主要用于： 页面级导航动画Zoom（缩放）转场Hero 动画（共享元素转场） 它 只用于导航转场，不用于组件级几何联动（组件级联动应使用 matchedGeometryEffect）。
+- [设置偏移](/zh/doc/View Modifiers/offset.md): 将视图从其默认位置沿 x 和 y 方向偏移指定的距离。
+- [onDrag 和 onDrop 修饰符](/zh/doc/View Modifiers/onDrag and onDrop View Modifiers.md): Scripting 提供了一套与 SwiftUI Drag & Drop 行为模型高度一致的 API，用于在脚本中实现视图间、应用内或跨应用的拖拽与放置操作。 该能力主要由以下三部分构成： onDrag：将当前视图声明为拖拽源onDrop：将当前视图声明为放置目标DropInfo / ItemProvider / UTType：描述拖拽内容与状态的上下文对象 拖拽与放置是一个严格受系统控制的交互流程，部分 API 只能在特定回调中调用，文档中会明确指出这些限制。
+- [接收外部拖拽内容](/zh/doc/View Modifiers/onDropContent.md): onDropContent 是 Scripting 提供的一个视图修饰符，用于将当前视图设置为拖放目标（Drop Target），以接收从其他 App 拖拽进入的文件、图片或文本内容。
+- [不透明度](/zh/doc/View Modifiers/opacity.md): 设置视图的不透明度。0 表示完全透明不可见，1 表示完全不透明。
+- [overlay](/zh/doc/View Modifiers/overlay.md): overlay 修饰符用于在当前视图的上方叠加一个额外视图，形成层叠的视觉效果。这在添加装饰元素（如徽章）、加载指示器、半透明遮罩或交互按钮等场景中非常有用。
+- [间距](/zh/doc/View Modifiers/padding.md): padding 属性用于设置视图内容与其边缘之间的间距，相当于 SwiftUI 中的 padding 修饰符。它有助于视图之间的分隔与整体布局美观。
+- [选择器样式](/zh/doc/View Modifiers/pickerStyle.md): 通过该属性，你可以自定义视图层次结构中选择器（Picker）的外观和行为。
+- [设置位置](/zh/doc/View Modifiers/position.md): 将视图的中心点定位到父视图坐标空间中的指定位置。
+- [首选配色模式](/zh/doc/View Modifiers/preferredColorScheme.md): 指定该视图层级使用的系统配色模式（浅色或深色）。通常用于控制系统覆盖元素的显示样式。 类型 示例
+- [进度视图样式](/zh/doc/View Modifiers/progressViewStyle.md): 通过该属性，你可以自定义进度视图在 UI 中的外观。
+- [可刷新修饰符](/zh/doc/View Modifiers/refresable/index.md): 将可滚动视图标记为 可刷新，允许用户下拉以触发异步的数据刷新操作。
+- [示例](/zh/doc/View Modifiers/refresable/refreshable_list.md)
+- [旋转效果](/zh/doc/View Modifiers/rotationEffect.md): 将视图绕指定锚点旋转指定角度。默认锚点为 center。
+- [缩放效果](/zh/doc/View Modifiers/scaleEffect.md): 按指定倍数缩放视图的渲染结果。支持统一缩放值，或分别设置横向与纵向缩放，并可指定锚点。
+- [阴影](/zh/doc/View Modifiers/shadow.md): 为视图添加阴影效果。可设置颜色、模糊半径以及偏移量。
+- [文本输入框样式](/zh/doc/View Modifiers/textFieldStyle.md): 通过该属性，你可以定义文本框的视觉样式，从而影响其边框、背景和布局的外观。不同的样式可以帮助文本框在各种 UI 设计中无缝融合，或提供功能上的提示。
+- [强调色](/zh/doc/View Modifiers/tint.md): tint 属性用于为视图设置局部的强调色，覆盖默认的系统 accent color。与应用的全局 accent color 不同，tint 不会被用户偏好覆盖，始终有效，适合用来强调控件的语义意义或视觉重点。
+- [切换开关样式](/zh/doc/View Modifiers/toggleStyle.md): 通过该属性，你可以定义 Toggle（通常称为开关或复选框）的视觉外观和行为。
+- [使用 Toolbar 组件](/zh/doc/View Modifiers/toolbar/Use with Toolbar Component.md): Scripting 的工具栏系统不仅支持直接在 toolbar 属性中传入 ToolBarProps 对象，也支持使用与 SwiftUI 结构一致的 <Toolbar>、<ToolbarItem>、<ToolbarItemGroup>、<ToolbarSpacer>、<DefaultToolbarItem> 等组件，构建更灵活、更强大的导航栏和工具栏布局。 这些组件能够提供更精细的控制，允许开发者像 SwiftUI 一样以声明式方式编排工具栏内容，并为复杂布局提供更高可读性和可维护性。 工具栏组件始终通过视图的 toolbar 属性使用： toolbar 可以接受： ToolBarProps 对象（与原机制一致）VirtualNode（必须为 <Toolbar> 组件） 使用 <Toolbar> 时，所有内容都通过 <ToolbarItem> 系列组件明确定义位置和呈现方式。 Toolbar 组件是工具栏的容器，用于包含多个工具栏项。它本身不定义位置，内部的 ToolbarItem 或 ToolbarItemGroup 决定实际布局。
+- [使用 ToolbarProps](/zh/doc/View Modifiers/toolbar/Use with ToolbarProps.md): 通过该属性，你可以为视图的导航栏或工具栏区域添加各种项目，类似于 SwiftUI 的 toolbar 修饰符功能。
+- [翻译宿主](/zh/doc/View Modifiers/translationHost.md): translationHost 是一个视图修饰符，用于为当前页面提供翻译服务上下文。它支持系统级的交互提示，例如下载语言包或在语言不明确时提示用户选择。
+- [小组件背景](/zh/doc/View Modifiers/widgetBackground.md): widgetBackground 是一个专用于小组件的视图修饰符，用于在不同的渲染模式下设置背景样式，特别是为适配 iOS 18 的 tinted（强调色）模式而设计。
+- [视频播放组件(AVPlayerView)](/zh/doc/Views/AVPlayerView.md): AVPlayerView 是 Scripting 提供的视频播放组件，基于系统原生 AVPlayerViewController 封装。
+与 VideoPlayer 不同，AVPlayerView 完整支持系统级 Picture in Picture（画中画，PiP），并允许脚本层监听 PiP 的生命周期变化。 该组件适用于对原生播放行为、后台播放、PiP、锁屏与控制中心联动有明确需求的媒体类场景。
+- [AccessoryWidgetBackground](/zh/doc/Views/AccessoryWidgetBackground.md): 一个自适应的背景视图，根据小组件当前的环境提供系统标准外观。
+- [按钮](/zh/doc/Views/Button.md): 在 Scripting 应用中，Button 组件允许您创建具有可自定义动作、标签、样式和角色的交互式元素。按钮可以触发动作、执行意图，并根据配置显示不同的视觉样式。本指南提供了关于如何使用 Button API 的详细说明，包括其属性、角色、样式及示例。
+- [堆叠面积图（AreaStackChart）](/zh/doc/Views/Charts/AreaStackChart/index.md): AreaStackChart 是用于展示堆叠区域图的组件，可将一系列数值以堆叠区域的方式呈现在共享坐标轴上，适用于展示各分类数据在一段时间内的变化趋势及其组合占比。
+- [示例](/zh/doc/Views/Charts/AreaStackChart/index_example.md)
+- [一维柱状图（Bar1DChart）](/zh/doc/Views/Charts/Bar1DChart/index.md): Bar1DChart 是一种一维条形图组件，用于在多个离散分类之间直观比较数值大小。每一个条形代表一个分类及其对应的数值，适合用于构建简洁的横向或纵向柱状对比图。
+- [示例](/zh/doc/Views/Charts/Bar1DChart/index_example.md)
+- [柱状图（BarChart）](/zh/doc/Views/Charts/BarChart/index.md): BarChart（柱状图）组件用于以条形的形式直观比较不同分类的数值大小。每个柱形条对应一个标签，并通过其高度（纵向布局）或长度（横向布局）表示具体数值。
+- [示例](/zh/doc/Views/Charts/BarChart/index_example.md)
+- [甘特柱状图（BarGanttChart）](/zh/doc/Views/Charts/BarGanttChart/index.md): BarGanttChart（甘特条形图）组件用于可视化多个分类下的时间区间，非常适合展示日程安排、任务持续时间或项目时间线。每条条形从 start 延伸至 end，表示某项任务或事件在时间轴上的跨度。
+- [示例](/zh/doc/Views/Charts/BarGanttChart/index_example.md)
+- [分组柱状图（BarGroupChart）](/zh/doc/Views/Charts/BarGroupChart/index.md): 本示例演示如何在 BarChart 中使用 positionBy 属性将柱状图按子分类（如颜色）进行分组，并使用 foregroundStyleBy 对每组数据应用不同的颜色样式。此方式适用于在主分类下对多个子类进行对比展示。
+- [示例](/zh/doc/Views/Charts/BarGroupChart/index_example.md)
+- [堆叠柱状图（BarStackChart）](/zh/doc/Views/Charts/BarStackChart/index.md): BarStackChart（堆叠柱状图）组件用于将多个子分类的数据值以堆叠条形的方式展现在同一个主分类下，便于对比每组数据的总量及其组成部分。每条柱状条会被拆分为多个颜色段，每段代表一个子分类。
+- [示例](/zh/doc/Views/Charts/BarStackChart/index_example.md)
+- [环形图（DonutChart）](/zh/doc/Views/Charts/DonutChart/index.md): DonutChart（环形图）组件用于以圆环的形式展示各分类在整体中的占比。每一个扇形区域代表一个数据项，角度大小与其数值成比例。相比传统的饼图，DonutChart 中央有一个空心区域，视觉上更清晰且易于叠加标签或图标。
+- [示例](/zh/doc/Views/Charts/DonutChart/index_example.md)
+- [热力图（HeatMapChart）](/zh/doc/Views/Charts/HeatMapChart/index.md): HeatMapChart（热力图）组件用于以网格形式展示二维数据的分布情况，其中每个单元格的颜色深浅表示该位置对应的数值大小。非常适合用于可视化两个分类维度之间的关系、频率或强度。
+- [示例](/zh/doc/Views/Charts/HeatMapChart/index_example.md)
+- [分类折线图（LineCategoryChart）](/zh/doc/Views/Charts/LineCategoryChart/index.md): LineCategoryChart 是一款用于展示多类别折线图的组件，支持在共享的标签轴上，对多个分类的数值趋势进行对比。每条折线代表一个分类，其在每个标签上的数值以点连接成线。 此图表非常适合可视化多个子类别（如产品线、部门、地区）在某些阶段、步骤或时间点上的对比和变化趋势。
+- [示例](/zh/doc/Views/Charts/LineCategoryChart/index_example.md)
+- [折线图（LineChart）](/zh/doc/Views/Charts/LineChart/index.md): LineChart（折线图）组件用于在一组带标签的离散点之间绘制一条连续的折线，适合用于展示简单趋势、变化过程或阶段对比。
+该组件的 API 与 BarChart 相同，适合用于单条折线的基础可视化。
+- [示例](/zh/doc/Views/Charts/LineChart/index_example.md)
+- [多个图表示例](/zh/doc/Views/Charts/Multiple Charts Example/index.md): 本示例展示了如何在同一个图表中结合多种图表类型（折线图、面积图、参考线图），并根据用户交互动态展示注解内容，打造具有交互性的可视化图表。
+- [示例](/zh/doc/Views/Charts/Multiple Charts Example/index_example.md)
+- [饼图（PieChart）](/zh/doc/Views/Charts/PieChart/index.md): PieChart（饼图）组件用于以圆形扇区的方式展示各分类在整体中的占比。每一个扇区代表一个分类，其角度根据该分类对应数值在总值中的占比自动计算，适合用于展示比例、分布或市场份额等数据。
+- [示例](/zh/doc/Views/Charts/PieChart/index_example.md)
+- [分类点状图（PointCategoryChart）](/zh/doc/Views/Charts/PointCategoryChart/index.md): PointCategoryChart（分类点图）组件用于在二维平面上绘制带有分类信息的数据点，并支持通过颜色、图形符号或符号大小来区分不同分类。适用于展示分组散点图、调查数据、或多分类指标对比等可视化场景。
+- [示例](/zh/doc/Views/Charts/PointCategoryChart/index_example.md)
+- [点状图（PointChart）](/zh/doc/Views/Charts/PointChart/index.md): PointChart（点图）组件用于在二维坐标系中绘制一组独立的数值点，即经典的散点图。每个点由一个 (x, y) 数值对表示，可通过样式属性进一步自定义其外观。 该组件适用于可视化两个连续变量之间的关系、分布或数值测量结果。
+- [示例](/zh/doc/Views/Charts/PointChart/index_example.md)
+- [范围面积图（RangeAreaChart）](/zh/doc/Views/Charts/RangeAreaChart/index.md): RangeAreaChart 是一种范围区域图表组件，用于展示每个数据点的值区间，通常包括 start 和 end 值。它适合用来可视化温度范围、置信区间、最大值与最小值等。
+- [示例](/zh/doc/Views/Charts/RangeAreaChart/index_example.md)
+- [矩形面积图（RectAreaChart）](/zh/doc/Views/Charts/RectAreaChart/index.md): RectAreaChart 组件用于在二维图表中绘制矩形区域，适合用来突出显示特定区域、数据分布、容差区间或标注感兴趣的范围。可与其他图表（如 PointChart）叠加使用以增强可视化效果。
+- [示例](/zh/doc/Views/Charts/RectAreaChart/index_example.md)
+- [矩形图（RectChart）](/zh/doc/Views/Charts/RectChart/index.md): RectChart 是一个矩形条形图组件，用于可视化基于标签的数值数据。其用法与 BarChart 类似，使用相同的 BarChartProps 接口。
+- [示例](/zh/doc/Views/Charts/RectChart/index_example.md)
+- [标尺图（RuleChart）](/zh/doc/Views/Charts/RuleChart/index.md): RuleChart 用于展示每个分类项的数值范围或持续时间。每条规则表示一个起始值和结束值的跨度，适用于展示周期、持续时间或数值范围的可视化数据。
+- [示例](/zh/doc/Views/Charts/RuleChart/index_example.md)
+- [标签线图（RuleLineForLabelChart）](/zh/doc/Views/Charts/RuleLineForLabelChart.md): RuleLineForLabelChart 用于在图表中根据标签（或日期）位置绘制垂直或水平的参考线。通常与其他图表类型（如 BarChart 或 LineChart）配合使用，用于高亮特定的分类或时间点。
+- [值线图（RuleLineForValueChart）](/zh/doc/Views/Charts/RuleLineForValueChart.md): RuleLineForValueChart 组件用于在图表上绘制一条或多条参考线（水平或垂直），基于指定的数值位置。常用于标示阈值、目标线或参考线，增强图表的可读性与数据对比。
+- [同心圆矩形（ConcentricRectangle）](/zh/doc/Views/ConcentricRectangle.md): ConcentricRectangle 是 iOS 26+ 引入的一种同心矩形（Concentric Rectangle）形状视图，用于创建具有“向内递进圆角”特性的矩形结构。
+该形状特别适合用于： 现代玻璃风格按钮卡片容器背景交互裁剪区域（命中测试形状）玻璃过渡动画遮罩动态层级 UI 结构 在 Scripting 中，ConcentricRectangle 既可以作为一个独立 Shape 视图渲染，也可以作为： clipShapebackgroundcontentShape 中的专用形状类型使用。
+- [颜色选择器](/zh/doc/Views/Controls/ColorPicker/index.md): ColorPicker 组件提供了一个系统颜色选择器 UI，允许用户选择颜色，并通过 onChanged 事件将选择的颜色传递回应用。该组件支持以下格式的颜色： 关键字颜色（例如：green, red, blue 等）十六进制颜色字符串（例如：#FF5733 或 #333）CSS rgba 字符串（例如：rgba(255,0,0,1)）
+- [示例](/zh/doc/Views/Controls/ColorPicker/index_example.md)
+- [内容不可用视图](/zh/doc/Views/Controls/ContentUnavailableView/index.md): ContentUnavailableView 是一个 UI 组件，用于在应用内容不可用时向用户展示一个视图。它通常会显示标题、可选的描述内容以及操作区，用以清晰地告知用户内容缺失或尚未准备好。此组件适用于如列表等场景，当没有数据展示时，提供明确的提示。
+- [示例](/zh/doc/Views/Controls/ContentUnavailableView/index_example.md)
+- [日期、时间选择器](/zh/doc/Views/Controls/DatePicker/index.md): DatePicker 是一个用于选择日期（以及可选的时间）的 UI 组件，支持通过多种显示方式（如日历、滚轮、文本等）进行交互。它允许用户根据自己的需求选择特定的日期，并根据组件配置决定是否包括时间选择。此组件特别适合需要日期和时间输入的场景，例如选择事件的开始日期或任务的截止日期。
+- [示例](/zh/doc/Views/Controls/DatePicker/index_example.md)
+- [仪表盘](/zh/doc/Views/Controls/Gauge/index.md): Gauge 组件是一个用于显示当前值与指定容量之间关系的视图，类似于汽车上的油表。Gauge 组件可以根据配置，显示当前值、显示范围以及描述该量表目的的标签。适用于展示有限容量内的当前值，如进度、水平或数量。
+- [示例](/zh/doc/Views/Controls/Gauge/index_example.md)
+- [选择器](/zh/doc/Views/Controls/Picker/index.md): Picker 组件用于从一组互斥的选项中进行选择。它支持不同的显示样式，并允许用户选择单个值。可以通过设置 value 和 onChanged 属性来控制选项的值和改变事件。
+- [示例](/zh/doc/Views/Controls/Picker/index_example.md)
+- [进度视图](/zh/doc/Views/Controls/ProgressView/index.md): ProgressView 是一个用于表示任务或操作进度的 UI 组件。它可以显示确定性（百分比完成）和不确定性（正在进行或未进行）的进度状态。此外，它还提供了可自定义的进度视图样式，包括线性和圆形表示。 你可以使用 ProgressView 来显示各种任务的进度，例如下载文件、完成某个过程或等待某个事件。该组件还可以显示附加的细节，如任务描述和当前进度。
+- [示例](/zh/doc/Views/Controls/ProgressView/index_example.md)
+- [滑块控件](/zh/doc/Views/Controls/Slider/index.md): Slider 组件允许用户从一个有限的线性范围内选择一个值。可以通过设置最小值、最大值、步长和当前值来配置滑动条，支持自定义标签用于描述最小值、最大值及滑动条本身。这个组件还支持处理值的变化和编辑状态的回调。
+- [示例](/zh/doc/Views/Controls/Slider/index_example.md)
+- [步进器](/zh/doc/Views/Controls/Stepper/index.md): Stepper 是一个用于执行递增和递减操作的控件。它允许用户通过点击“+”或“-”按钮来增加或减少数值。该组件也支持触发编辑状态变化的回调函数。
+- [示例](/zh/doc/Views/Controls/Stepper/index_example.md)
+- [切换开关](/zh/doc/Views/Controls/Toggle/index.md): Toggle 组件是 Scripting 应用中的一种视图控件，允许用户在“开启”和“关闭”状态之间切换。它支持多种配置选项，以适应不同的使用场景，包括用户交互处理器、自动化的意图支持以及用于显示的自定义选项。
+- [示例](/zh/doc/Views/Controls/Toggle/index_example.md)
+- [对话框](/zh/doc/Views/Dialog/index.md): Dialog 模块提供了一组用于展示对话框的快捷方法，包括提示框（Alert）、确认框（Confirm）、输入框（Prompt）和操作表（Action Sheet）。可用于在脚本执行过程中与用户进行交互。
+- [示例](/zh/doc/Views/Dialog/index_example.md)
+- [显示文本](/zh/doc/Views/Displaying text/index.md): Text 组件用于在 Scripting 应用中显示一行或多行只读文本。它支持纯文本、富文本（Markdown）以及丰富的文本样式。
+- [示例](/zh/doc/Views/Displaying text/index_example.md)
+- [编辑器](/zh/doc/Views/Editor.md): 一个强大的代码编辑器，既可以通过编程方式控制，也可以嵌入自定义视图中展示。编辑器支持语法高亮、读写访问以及完整的生命周期管理，主要通过 EditorController 类和 Editor 组件来实现。
+- [EnvironmentValuesReader](/zh/doc/Views/EnvironmentValuesReader.md): EnvironmentValuesReader 是 Scripting 提供的一个组件，用于读取 SwiftUI 风格的环境值（Environment Values）。
+它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。 该组件的定位与 SwiftUI 中的 @Environment 类似，但设计上更加明确：
+你必须指定要读取的 environment keys，系统仅在渲染时读取这些值并传入回调函数。 以下为每个字段的说明：
+- [GeometryReader](/zh/doc/Views/GeometryReader.md): GeometryReader 是 Scripting 中与 SwiftUI 等效的几何布局读取组件。
+它能够在视图构建阶段提供当前容器的尺寸、边距、安全区域和角落内边距等信息，使开发者可以根据环境动态布局内容。 当你需要根据父容器的大小进行自适应布局（响应式布局）时，GeometryReader 是非常重要的工具。 当 GeometryReader 构建其子内容时，会将一个 GeometryProxy 实例传递给 children 回调。开发者可以使用此对象访问与当前容器相关的布局信息。
+- [手势](/zh/doc/Views/Gestures.md): Scripting 提供了与 SwiftUI 类似的完整手势系统，可为任意视图（如 <VStack>、<HStack>、<Text> 等）添加点击、长按、拖动、缩放、旋转等交互行为。
+开发者既可以使用简化的 onTapGesture / onLongPressGesture / onDragGesture 等直接属性，也可以使用新的 Gesture 类接口和 gesture 修饰符，以获得更灵活的组合方式。
+- [图像](/zh/doc/Views/Image/index.md): Image 组件用于展示图片，支持来自多种来源的图像，包括系统图标、网络图片、本地文件以及 UIImage 对象。同时，它还支持根据浅色 / 深色模式动态切换图片资源，并提供多个视图修饰符用于自定义图像的行为和外观。
+- [示例](/zh/doc/Views/Image/index_example.md)
+- [流式布局组件(FlowLayout)](/zh/doc/Views/Layout/FlowLayout.md): FlowLayout 是一种流式布局组件，用于按照水平方向依次排列子视图，当空间不足时会自动换行至下一行。适用于展示一组大小不一的元素，如标签、按钮、图标列表等。
+- [网格布局（Grid）](/zh/doc/Views/Layout/Grid/index.md): Scripting 应用中的 Grid 组件提供了一个灵活的容器，用于将子视图排列为二维网格布局。它支持自定义对齐、间距以及嵌套子组件，从而创建美观的布局。 Grid 组件 一个容器视图，用于将其他视图排列为二维布局。 导入路径 类型：GridProps GridRow 组件 Grid 的子组件，表示网格布局中的水平行。使用 GridRow 可水平分组并对齐网格中的子视图。 类型：GridRowProps
+- [示例](/zh/doc/Views/Layout/Grid/index_example.md)
+- [水平布局（HStack）](/zh/doc/Views/Layout/HStack/index.md): 在Scripting应用中，HStack 组件提供了一种方便的方法，用于以灵活的对齐和间距选项水平排列视图。此组件是创建需要子视图并排布局的关键工具。
+- [示例](/zh/doc/Views/Layout/HStack/index_example.md)
+- [惰性水平网格布局（LazyHGrid）](/zh/doc/Views/Layout/LazyHGrid/index.md): LazyHGrid 组件是 Scripting 应用用户界面库的一部分。它通过可自定义的大小和对齐选项将其子元素排列在网格布局中，仅根据需要创建和显示项目，从而为大型或动态数据集提供了性能优化。
+- [示例](/zh/doc/Views/Layout/LazyHGrid/index_example.md)
+- [惰性水平布局（LazyHStack）](/zh/doc/Views/Layout/LazyHStack/index.md): LazyHStack 组件是 Scripting 应用程序用户界面库的一部分。它将其子元素排列在水平堆栈中，仅在需要时创建和显示元素，从而提高了处理大型数据集时的性能。
+- [示例](/zh/doc/Views/Layout/LazyHStack/index_example.md)
+- [惰性垂直网格布局（LazyVGrid）](/zh/doc/Views/Layout/LazyVGrid/index.md): LazyVGrid 组件是 Scripting 应用的用户界面库的一部分。它通过可自定义的大小和对齐选项将其子元素排列在网格布局中。组件仅根据需要创建和显示项目，从而为处理大型或动态数据集提供了性能优化。
+- [示例](/zh/doc/Views/Layout/LazyVGrid/index_example.md)
+- [惰性垂直布局（LazyVStack）](/zh/doc/Views/Layout/LazyVStack/index.md): LazyVStack 组件是 Scripting 应用用户界面库的一部分。它将子元素排列在垂直堆叠中，仅根据需要创建和显示项目，从而为大型数据集提供了性能优化。
+- [示例](/zh/doc/Views/Layout/LazyVStack/index_example.md)
+- [垂直布局（VStack）](/zh/doc/Views/Layout/VStack/index.md): 在Scripting 应用程序中，VStack 组件是一个布局视图，用于垂直排列其子视图。它提供了灵活的选项，用于调整子视图的对齐方式以及控制它们之间的间距。
+- [示例](/zh/doc/Views/Layout/VStack/index_example.md)
+- [ZStack](/zh/doc/Views/Layout/ZStack/index.md): ZStack 组件在 Scripting 应用中用于将子视图以层叠堆栈的形式排列。它支持通过预定义的对齐指南，在 x 和 y 轴上灵活地对齐这些图层。
+- [示例](/zh/doc/Views/Layout/ZStack/index_example.md)
+- [链接](/zh/doc/Views/Link.md): Link 组件用于创建可点击的控件，点击后可跳转到指定的 URL。该组件可用于打开网页、App 内自定义 URL Scheme，或其他支持的链接类型。 注意：如果在小组件中使用 Link，则会忽略 widgetURL 修饰符的设置。 属性说明 示例 该组件支持使用纯文本作为子内容，也可以使用复杂的布局作为子节点。点击链接后，会根据 URL 类型打开相应的页面（如 Safari、其他 App 或自定义处理程序）。
+- [展开组](/zh/doc/Views/List/DisclosureGroup/index.md): DisclosureGroup 组件用于将相关内容组织为可展开/折叠的区域。它非常适合在列表中分组展示具有层级结构或可选显示的内容。 本示例展示如何创建一个顶层的 DisclosureGroup，以及如何嵌套子组来构建多层结构。同时结合按钮和切换开关（Toggle）进行交互控制。
+- [示例](/zh/doc/Views/List/DisclosureGroup/index_example.md)
+- [在行中显示数据](/zh/doc/Views/List/Display data inside a row/index.md): 本示例展示如何使用 List 组件，通过自定义的行布局来展示结构化数据。每一行显示一个人的姓名和电话号码，布局清晰，排版整洁，采用了 SwiftUI 风格的堆叠式组件。
+- [示例](/zh/doc/Views/List/Display data inside a row/index_example.md)
+- [可编辑列表](/zh/doc/Views/List/Editable List/index.md): 本示例展示如何在 Scripting 应用中使用 List、ForEach 和 EditButton 组件构建一个支持 删除与排序操作 的可编辑列表。
+- [示例](/zh/doc/Views/List/Editable List/index_example.md)
+- [列表交互](/zh/doc/Views/List/List interaction/index.md): 本示例展示如何在 Scripting 应用中通过左右滑动手势为 List 列表项添加交互操作。借助 leadingSwipeActions 和 trailingSwipeActions，你可以实现诸如标记未读、删除、标记重点等常见功能。
+- [示例](/zh/doc/Views/List/List interaction/index_example.md)
+- [列表样式](/zh/doc/Views/List/List style/index.md): 通过该属性，你可以自定义 List 视图在 UI 中的行为和外观。
+- [示例](/zh/doc/Views/List/List style/list_style.md)
+- [可刷新列表](/zh/doc/Views/List/Refresable List/index.md): 将可滚动视图标记为 可刷新，允许用户下拉以触发异步的数据刷新操作。
+- [示例](/zh/doc/Views/List/Refresable List/refreshable_list.md)
+- [以分区表示数据层级](/zh/doc/Views/List/Represent data hierarchy in sections/index.md): 本示例展示如何在 Scripting 应用中使用 Section 组件，在 List 中清晰地组织层级化数据。通过将相关数据（例如员工列表）按部门分组，并为每个分组设置标题，可以更好地提升信息的可读性与结构性。
+- [示例](/zh/doc/Views/List/Represent data hierarchy in sections/index_example.md)
+- [可选择的列表](/zh/doc/Views/List/Selectable List.md): List.selection 用于为 List 组件提供选择状态绑定能力，用于实现列表的： 单选模式（Single Selection）多选模式（Multiple Selection）与编辑模式（EditButton）联动的批量选择行为
+- [使用列表进行导航](/zh/doc/Views/List/Use list for navigations/index.md): 本示例展示如何在 Scripting 应用中使用 List 创建可导航的分层数据界面。通过 DisclosureGroup 将内容按部门分组，并结合 NavigationLink 实现点击跳转到人员详情页的功能。
+- [示例](/zh/doc/Views/List/Use list for navigations/index_example.md)
+- [LivePhotoView](/zh/doc/Views/LivePhotoView.md): LivePhoto 表示一张 系统级 Live Photo，它由以下两部分组成： 一张高分辨率静态图片一段与图片绑定的短视频（通常为 MOV） 在 Scripting 中，LivePhoto 是一个 不可直接 new 的系统对象，通常来源于： 照片选择器返回的结果使用本地图片与视频文件动态构建 LivePhoto 的主要用途包括： 在界面中实时展示 Live Photo读取并处理其底层资源（图片 / 视频）将其拆解、重建或重新保存到系统相册
+- [Markdown](/zh/doc/Views/Markdown.md): Markdown 是一个用于渲染 Markdown 格式文本的视图组件，可在脚本的用户界面中显示富文本内容、代码块、文档说明等。它支持多种显示主题以及代码语法高亮样式，非常适合展示格式化文档、日志、开发说明等信息。
+- [菜单](/zh/doc/Views/Menu/index.md): Scripting 提供的 Menu 是一个交互式菜单组件，用于展示一组操作项或子菜单。该组件可以作为操作容器，也支持嵌套结构，适合在工具栏、上下文菜单或紧凑布局中统一管理多个相关操作。 其行为类似于 SwiftUI 中的 Menu，支持纯文本标签和自定义视图标签，并可配置点击时的默认行为。
+- [示例](/zh/doc/Views/Menu/index_example.md)
+- [模态展示](/zh/doc/Views/Modal presentaions/index.md): Scripting App 提供了对 SwiftUI 风格的模态视图展示的支持。开发者可以通过向组件声明特定的属性，实现类似 sheet、popover、fullScreenCover、alert 和 confirmationDialog 的展示行为。这些展示是响应状态变化的，并支持多种配置项，以满足在不同屏幕尺寸和交互需求下的使用场景。
+- [示例](/zh/doc/Views/Modal presentaions/index_example.md)
+- [命名空间读取器（NamespaceReader）](/zh/doc/Views/NamespaceReader.md): NamespaceReader 用于 创建并管理一个几何动画命名空间（Namespace）。
+该命名空间是实现以下能力的前提条件： matchedGeometryEffect（组件级几何联动动画）matchedTransitionSource（页面级导航转场动画）navigationTransition（如 zoom 转场） 可以将 NamespaceReader 理解为： 一个“动画坐标系提供者”，用于告诉系统：哪些视图属于同一组几何动画作用域。
+- [折叠分栏视图](/zh/doc/Views/Navigation/NavigationSplitView (for iPad)/Collapsed split views.md)
+- [控制栏的可见性](/zh/doc/Views/Navigation/NavigationSplitView (for iPad)/Control column visibility.md)
+- [三栏](/zh/doc/Views/Navigation/NavigationSplitView (for iPad)/Three-column.md)
+- [两栏](/zh/doc/Views/Navigation/NavigationSplitView (for iPad)/Two-column.md)
+- [NavigationStack 配合 path](/zh/doc/Views/Navigation/NavigationStack/NavigationStack with path.md): NavigationStack.path 用于为 NavigationStack 提供可观察的导航路径控制能力，用于实现： 编程式导航（Programmatic Navigation）多级页面堆栈控制页面回退到指定层级或根视图与 NavigationDestination 的动态页面映射联动
+- [与 NavigationLink 一起使用](/zh/doc/Views/Navigation/NavigationStack/Use with NavigationLink.md)
+- [与 navigationDestination 一起使用](/zh/doc/Views/Navigation/NavigationStack/Use with navigationDestination.md)
+- [带徽章的 TabView](/zh/doc/Views/Navigation/TabView/TabView with badge.md)
+- [包含多个可滚动页面的 TabView](/zh/doc/Views/Navigation/TabView/TabView with multiple scrolling pages.md)
+- [TabView](/zh/doc/Views/Navigation/TabView/TabView.md): Scripting 提供了与最新 iOS TabView 体系一致的 API：
+通过 TabView、Tab、TabSection 组织界面结构，使应用能够在 iOS 18+ 环境下完整支持多标签视图、侧边栏标签、可定制布局等。 相比旧版本依赖 tabItem 修饰符的方式，新的结构更加灵活、分组更清晰，并能与 TabViewCustomization 等新特性无缝配合。 在最基本的形式中，TabView 作为容器，内部包含多个 Tab。
+每个 Tab 定义： 标签标题图标标识值（value）角色（如 search）对应的内容视图 示例： 要点： selection 通过 Observable 控制当前激活的标签value 必须与 selection 的泛型类型匹配（string 或 number）Search Tab 可使用 role="search" 与搜索相关行为联动 当 Tab 数量较多、需要按功能分类、需要在侧边栏中显示复杂结构时，可以使用 TabSection。 结构关系为：
+- [关闭一个视图](/zh/doc/Views/Present views/Dismissing a presented view/index.md): 此示例演示了如何使用 Navigation.useDismiss 钩子以编程方式关闭已呈现的视图。当你希望在用户交互（如点击按钮或文本标签）后关闭自定义视图时，这个方法非常有用。
+- [示例](/zh/doc/Views/Present views/Dismissing a presented view/index_example.md)
+- [展示一个简单视图](/zh/doc/Views/Present views/Present a simple view/index.md): 本示例展示了如何使用 Navigation.present 在 Scripting 中展示一个基本的 UI 页面，同时演示了如何使用 NavigationStack 和 navigationTitle 设置导航标题。
+- [示例](/zh/doc/Views/Present views/Present a simple view/index_example.md)
+- [SVG](/zh/doc/Views/SVG.md): SVG 是一个用于显示 SVG 矢量图像的视图组件，支持从以下三种来源加载 SVG 内容： 网络图片 URL本地文件路径内联 SVG 代码 SVG 图像在显示时会作为位图进行渲染（不再支持矢量绘制）。你可以选择以模板图像的方式渲染，从而实现着色功能。
+- [可滚动视图](/zh/doc/Views/Scroll views/index.md): ScrollView 组件用于在可滚动区域中显示其内容。当用户执行滚动手势时，可视区域会随之更新。你可以通过 axes 属性控制滚动方向，支持垂直、水平或双向滚动。
+- [示例](/zh/doc/Views/Scroll views/index_example.md)
+- [ScrollViewReader](/zh/doc/Views/ScrollViewReader.md): ScrollViewReader 组件，用于在脚本中获得对可滚动内容的编程化控制能力，使开发者能够在运行时滚动至任意视图位置，包括列表项、文本节点等。 ScrollViewReader 与 SwiftUI 的行为保持一致：
+开发者通过一个回调函数获得一个 ScrollViewProxy 实例，并可以在任意时机调用 scrollTo(id) 控制滚动视图的位置。 ScrollViewProxy 是提供滚动控制的代理对象，由 ScrollViewReader 在渲染期间自动注入。
+- [搜索](/zh/doc/Views/Search/index.md): Scripting 支持与 SwiftUI 类似的搜索功能。你可以为列表等滚动视图添加搜索栏，控制搜索栏的显示位置、状态，监听输入变化，并动态显示搜索建议。
+- [示例](/zh/doc/Views/Search/index_example.md)
+- [形状](/zh/doc/Views/Shapes/index.md): Scripting 提供了一套形状组件，用于绘制可缩放的矢量图形元素，包括矩形、圆形、椭圆、胶囊形、圆角矩形等。这些图形支持填充、描边、裁剪路径和尺寸控制，可广泛应用于信息展示、装饰背景、自定义进度视图等界面场景。
+- [示例](/zh/doc/Views/Shapes/index_example.md)
+- [键盘](/zh/doc/Views/Text input/Keyboard.md): Keyboard API 与 useKeyboardVisible 钩子一起，可以在 Scripting 应用中与软件键盘交互。您可以检查键盘是否可见、隐藏键盘、监听键盘的可见性变化，并在函数组件中以响应式方式访问当前可见状态。
+- [安全文本输入框（SecureField）](/zh/doc/Views/Text input/SecureField/index.md): SecureField 是 Scripting 提供的安全文本输入框组件，用于输入密码或其他敏感信息。用户输入内容会被自动隐藏，不以明文显示，其行为与 SwiftUI 中的 SecureField 一致。 该组件适用于登录、注册、PIN 验证等需要保护用户隐私的场景。
+- [示例](/zh/doc/Views/Text input/SecureField/index_example.md)
+- [文本输入框（TextField）](/zh/doc/Views/Text input/TextField/index.md): Scripting 提供了与 SwiftUI 中 TextField 相似的文本输入框组件，支持声明式绑定、提示文字、焦点控制、滚动方向和行数限制等功能。 TextField 适用于用户信息填写、搜索、消息输入等各种输入场景，可灵活设置为单行或多行滚动输入。
+- [示例](/zh/doc/Views/Text input/TextField/index_example.md)
+- [时间标签视图](/zh/doc/Views/Time-based label views.md): Scripting 提供了一组便捷的时间标签组件，封装了 SwiftUI 中 Text 的时间样式。这些组件支持在小组件和视图中显示实时更新的日期与时间格式，适用于加载动态数据、显示相对时间、计时器等多种应用场景。
+- [工具栏](/zh/doc/Views/Toolbars/index.md): toolbar 属性用于为导航栏、底部工具栏或键盘附加区域添加自定义操作项。该机制参考了 SwiftUI 中的工具栏 API，允许开发者以声明式方式将按钮、控制组等元素精确地放置在界面的特定位置。 这套系统适用于提供主操作、上下文操作或增强文本输入时的交互体验。
+- [示例](/zh/doc/Views/Toolbars/index_example.md)
+- [视频预览视图（VideoPreviewView）](/zh/doc/Views/VideoPreviewView.md): VideoPreviewView 用于实时展示 VideoRecorder 当前相机会话的预览画面（camera preview）。
+它是 UI 层组件，不负责录制控制逻辑；录制的准备、开始、暂停、恢复与停止由 VideoRecorder 负责。 VideoPreviewView 的核心职责是：将录制器内部的预览输出渲染到界面中，并支持通过通用 View props（如 frame、aspectRatio 等）进行布局。
+- [控件组](/zh/doc/Views/View groupings/ControlGroup.md)
+- [ForEach](/zh/doc/Views/View groupings/ForEach/index.md): ForEach 是 Scripting 中用于渲染可变数量子视图的组件，用于构建动态列表、可编辑列表，以及支持系统级的删除与移动行为。其设计参考 SwiftUI 的 ForEach，并与 Scripting 的 Observable 状态管理系统深度集成。 组件支持两种模式： 旧版模式（已不推荐使用）：count + itemBuilder推荐的现代模式：data: Observable<T[]> + builder
+- [示例](/zh/doc/Views/View groupings/ForEach/iterating.md)
+- [表单](/zh/doc/Views/View groupings/Form.md)
+- [Group](/zh/doc/Views/View groupings/Group.md)
+- [GroupBox](/zh/doc/Views/View groupings/GroupBox.md)
+- [Section](/zh/doc/Views/View groupings/Section.md)
+- [网页视图](/zh/doc/Views/WebView.md)
+- [AccessoryWidgetBackground](/zh/doc/Widget/AccessoryWidgetBackground.md): 一个自适应的背景视图，根据小组件当前的环境提供系统标准外观。
+- [在小组件和灵动岛中使用动画](/zh/doc/Widget/Animation for Widget and LiveActivity.md): 这些API让你在小组件中播放动图或者使用位移和旋转动画。
+- [小组件染色模式适配指南](/zh/doc/Widget/Tinted Mode Adaptation Guide.md): iOS 18 引入了一种新的小组件渲染模式，称为 accented 模式（强调色模式），它会使用系统定义的强调色对小组件的内容进行统一染色。为支持该行为，Scripting app 提供了三个视图修饰符： widgetAccentablewidgetAccentedRenderingModewidgetBackground 这些修饰符让你可以精确控制小组件中哪些部分参与系统的染色逻辑，从而创建更具层次感和适配性的界面。
+- [小组件 API](/zh/doc/Widget/Widget API.md): Widget 类提供了一组静态方法和属性，用于在 Scripting app 中创建、预览和刷新主屏幕小组件。通过此 API，可以渲染小组件 UI，访问用户配置参数，并控制小组件的刷新策略。
+- [小组件色调模式背景](/zh/doc/Widget/Widget Background in Tinted Mode.md): widgetBackground 是一个专用于小组件的视图修饰符，用于在不同的渲染模式下设置背景样式，特别是为适配 iOS 18 的 tinted（强调色）模式而设计。
+- [小组件快速入门](/zh/doc/Widget/Widget Quick Start.md): Scripting 是一款支持使用 TypeScript 和类 React 的 TSX 语法来创建 iOS 主屏幕小组件的应用。你可以在 widget.tsx 文件中使用受 SwiftUI 启发的组件定义小组件的界面。
+
+## 隐私政策
+
+- [隐私政策](/zh/privacy/policy.md)
+- [服务条款与EULA](/zh/privacy/service.md)

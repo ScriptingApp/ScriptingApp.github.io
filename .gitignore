@@ -1,0 +1,20 @@
+# Local
+.DS_Store
+*.local
+*.log*
+
+# Dist
+node_modules
+dist/
+doc_build/
+doc_build_fun/
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+Scripting Documentation
+Scripting Documentation.zip
+doc_build_fun.zip
+doc_build.zip

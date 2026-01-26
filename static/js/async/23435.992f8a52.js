@@ -1,0 +1,1 @@
+"use strict";(self.rspackChunktest=self.rspackChunktest||[]).push([["23435"],{78374(){}}]);
