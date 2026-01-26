@@ -1,6 +1,6 @@
 # Control Widget PRO
 
-***
+## 描述
 
 The `ControlWidget` API enables users to add custom Button or Toggle controls to the iOS Control Center or Lock Screen. Each control is linked to an `AppIntent` to execute custom script logic. The controls support privacy protection, dynamic state labels, and SFSymbols icons.
 
