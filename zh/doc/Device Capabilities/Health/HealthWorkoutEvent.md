@@ -1,4 +1,4 @@
-# 健康锻炼事件（HealthWorkoutEvent） PRO
+# 健康锻炼事件（HealthWorkoutEvent）
 
 `HealthWorkoutEvent` 类用于访问 Apple 健康中记录的锻炼事件。每个事件表示一次锻炼过程中的特定动作或时刻，例如暂停、继续、圈数记录、标记、或自动运动检测。
 

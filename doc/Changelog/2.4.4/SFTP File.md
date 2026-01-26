@@ -1,4 +1,4 @@
-# SFTP File PRO
+# SFTP File
 
 `SFTPFile` represents an opened remote file accessed through an SFTP session.
 It provides low-level operations such as reading, writing, retrieving attributes, and closing the file.

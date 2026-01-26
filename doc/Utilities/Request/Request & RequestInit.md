@@ -1,5 +1,3 @@
-# Request & RequestInit
-
 The `Request` class represents a complete configuration of an HTTP request.
 It can be passed directly to the `fetch()` method or used to clone, modify, or retry an existing request.
 

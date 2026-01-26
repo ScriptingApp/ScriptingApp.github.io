@@ -1,4 +1,4 @@
-# HealthWorkout PRO
+# HealthWorkout
 
 The `HealthWorkout` class provides a high-level interface for accessing and analyzing workout data from Apple Health. A workout represents a full session of physical activity, such as running, swimming, or cycling, recorded between a start and end time, and may include additional events and aggregated statistics.
 

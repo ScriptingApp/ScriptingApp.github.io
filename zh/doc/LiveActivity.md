@@ -1,5 +1,3 @@
-# 实时活动（灵动岛）
-
 `LiveActivity` API 允许你的脚本在 iOS 的锁屏界面以及支持的设备上的动态岛中展示实时数据。通过该 API，你可以创建、更新并结束 Live Activity，同时监听其生命周期状态和系统支持情况。
 
 本文件详细介绍 Scripting app 中的 **LiveActivity API**，包括：

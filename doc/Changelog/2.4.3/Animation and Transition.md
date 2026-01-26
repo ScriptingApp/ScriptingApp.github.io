@@ -1,5 +1,3 @@
-# Animation and Transition
-
 Scripting Animation & Transition System
 
 # Animation Class

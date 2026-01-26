@@ -1,4 +1,4 @@
-# HttpResponseBody（HTTP 响应体） PRO
+# HttpResponseBody（HTTP 响应体）
 
 `HttpResponseBody` 类用于构造 HTTP 响应的主体内容。
 它可以表示文本内容、HTML 页面、二进制数据或任意自定义数据类型，并与 `HttpResponse` 一起使用，用于向客户端返回响应内容。

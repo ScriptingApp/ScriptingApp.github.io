@@ -1,4 +1,4 @@
-# HealthCategoryValue Types PRO
+# HealthCategoryValue Types
 
 This document provides a comprehensive reference for all supported `HealthCategoryValue` enums used with `HealthCategorySample.create()` and related APIs. Each enum represents a specific categorical value associated with a `HealthCategoryType`.
 

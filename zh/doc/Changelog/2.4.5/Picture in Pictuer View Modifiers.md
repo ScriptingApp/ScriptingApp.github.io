@@ -1,4 +1,4 @@
-# Picture in Picture （画中画） PRO
+# Picture in Picture （画中画）
 
 Scripting 提供了一组 PiP（Picture in Picture，画中画）相关的 View Modifiers，用于将任意 SwiftUI View 以系统级 PiP 窗口的形式呈现。
 开发者无需直接接触底层 AVPictureInPicture API，即可完整控制 PiP 的展示、隐藏、交互行为及生命周期。

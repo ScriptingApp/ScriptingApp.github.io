@@ -1,4 +1,4 @@
-# HealthCorrelation PRO
+# HealthCorrelation
 
 The `HealthCorrelation` class represents a group of health samples that are logically related. It provides an interface for accessing and creating correlation records that group multiple health data types together—such as combining dietary intake and blood pressure readings, or linking ovulation tests with menstrual flow records.
 

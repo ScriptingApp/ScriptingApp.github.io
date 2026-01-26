@@ -1,4 +1,4 @@
-# Query Statistics PRO
+# Query Statistics
 
 The `queryStatistics` method retrieves **aggregated statistics** for a specific health quantity type over a defined date range. It can compute metrics such as total sum, average, minimum, maximum, most recent value, and duration, with optional support for breaking down results by source (e.g., device or app).
 

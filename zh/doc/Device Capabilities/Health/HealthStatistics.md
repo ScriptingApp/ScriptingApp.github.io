@@ -1,5 +1,3 @@
-# 健康统计（HealthStatistics） PRO
-
 `HealthStatistics` 类提供了对特定健康数量类型在指定时间范围内的**统计数据访问**。通过此类，你可以获取以下汇总信息：
 
 - 总持续时间（duration）

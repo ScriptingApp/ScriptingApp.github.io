@@ -1,4 +1,4 @@
-# BluetoothCharacteristic PRO
+# BluetoothCharacteristic
 
 The `BluetoothCharacteristic` interface represents a Bluetooth Low Energy (BLE) characteristic, which is the fundamental data unit in a BLE service. A characteristic exposes a specific piece of data and supports operations such as reading, writing, or subscribing to notifications.
 

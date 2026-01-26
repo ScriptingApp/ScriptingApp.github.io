@@ -1,5 +1,3 @@
-# 液态玻璃效果
-
 **GlassEffect、GlassEffectContainer、UIGlass** 等相关 API 基于 SwiftUI 新引入的 Liquid Glass 技术，让开发者能够在脚本中以 TSX 方式使用流体化、动态的玻璃材质效果，并支持过渡动画、匹配几何、联合玻璃区域等高级特性。
 
 ***

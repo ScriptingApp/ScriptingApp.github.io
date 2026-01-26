@@ -1,5 +1,3 @@
-# Set environment values (environments)
-
 The `environments` view modifier allows injecting specific environment values into the current view hierarchy.
 It serves a role similar to SwiftUI’s `.environment()`, but with a more explicit and controlled design tailored for Scripting.
 

@@ -1,4 +1,4 @@
-# 健康心跳序列数据（HealthHeartbeatSeriesSample） PRO
+# 健康心跳序列数据（HealthHeartbeatSeriesSample）
 
 `HealthHeartbeatSeriesSample` 类用于访问 **心跳序列样本（heartbeat series samples）**，它表示一段时间内记录的一系列心跳间隔（RR 间期），通常用于分析心律，识别心律不齐等情况。
 

@@ -1,5 +1,3 @@
-# Use with Toolbar Component
-
 In Scripting, views can populate their navigation bar or toolbar area using either the original `ToolBarProps` object or the declarative component-based API that mirrors SwiftUI’s toolbar system. This document explains in detail how to use the `Toolbar`, `ToolbarItem`, `ToolbarItemGroup`, `ToolbarSpacer`, and `DefaultToolbarItem` components, including parameters, types, and usage patterns.
 
 ***

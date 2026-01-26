@@ -1,4 +1,4 @@
-# 读取心跳序列数据（HealthHeartbeatSeriesSample） PRO
+# 读取心跳序列数据（HealthHeartbeatSeriesSample）
 
 Scripting 应用通过全局函数 `Health.queryHeartbeatSeriesSamples()` 提供对 Apple Health 中**心跳序列数据**的访问。该数据代表 Apple Watch 在锻炼或静息状态下记录的一系列连续心跳间隔（R-R 间隔），可用于分析心律稳定性与频率变化。
 

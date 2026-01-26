@@ -1,4 +1,4 @@
-# HealthStatistics PRO
+# HealthStatistics
 
 The `HealthStatistics` class provides an interface for analyzing **aggregated health quantity data** over a specified time range. It allows you to compute key statistical values such as:
 

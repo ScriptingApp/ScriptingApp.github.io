@@ -1,4 +1,4 @@
-# Reading Quantity Samples PRO
+# Reading Quantity Samples
 
 The Scripting app allows you to query **quantity-based health data**, such as step count, heart rate, body mass, calories burned, distance, and more, using the global `Health.queryQuantitySamples()` API.
 

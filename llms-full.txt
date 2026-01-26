@@ -164,7 +164,7 @@ This allows safe use of APIs suitable for background execution, such as:
 url: /doc/Assistant/Assistant Conversation APIs.md
 ---
 
-# Assistant Conversation APIs PRO
+# Assistant Conversation APIs
 
 The Conversation APIs are used to **start, control, and present a system-hosted Assistant chat session**.
 A conversation corresponds to a **fully managed chat page**, where Scripting handles the UI, streaming output, provider selection, and message lifecycle.
@@ -514,7 +514,7 @@ await Assistant.present()
 url: /doc/Assistant/Assistant Quick Start.md
 ---
 
-# Assistant Quick Start PRO
+# Assistant Quick Start
 
 The Assistant API in Scripting provides three distinct capabilities, each designed for a different type of use case: **structured data**, **streaming output**, and **interactive conversations**.
 
@@ -676,7 +676,7 @@ For deeper details, refer to:
 url: /doc/Assistant/requestStreaming.md
 ---
 
-# requestStreaming PRO
+# requestStreaming
 
 `requestStreaming` requests a **streaming response** from the Assistant.
 Instead of returning a complete result at once, the Assistant emits **chunks incrementally** as the model generates output.
@@ -991,7 +991,7 @@ for await (const chunk of stream) {
 url: /doc/Assistant/requestStructuredData.md
 ---
 
-# requestStructuredData PRO
+# requestStructuredData
 
 `requestStructuredData` requests **structured JSON output** from the assistant that conforms to a provided JSON schema.
 This API is designed for workflows where you want a predictable, programmatically usable result rather than free-form text.
@@ -1301,7 +1301,7 @@ const summary = await Assistant.requestStructuredData<ImageSummary>(
 url: /doc/AssistantTool.md
 ---
 
-# AssistantTool PRO
+# AssistantTool
 
 **Assistant Tool** is a system extension mechanism within the Scripting application that enhances the capabilities of an intelligent assistant (Assistant). By defining and implementing an Assistant Tool, developers can provide the Assistant with auxiliary functionalities such as device capability access, file reading/writing, and data analysis. This improves both the intelligence and practicality of the Assistant.
 
@@ -1357,62 +1357,61 @@ This file declares the basic information and behavior settings of the tool. Belo
 ## 3. Execution Logic Example: `assistant_tool.tsx`
 
 ```tsx
-type RequestCurrentLocationParams = {}
+type RequestCurrentLocationParams = {};
 
-const locationApprovalRequest: AssistantToolApprovalRequestFn<RequestCurrentLocationParams> = async (
-  params,
-) => {
+const locationApprovalRequest: AssistantToolApprovalRequestFn<
+  RequestCurrentLocationParams
+> = async (params) => {
   return {
     message: "The assistant wants to request your current location.",
-    primaryButtonLabel: "Allow"
-  }
-}
+    primaryButtonLabel: "Allow",
+  };
+};
 
-const requestCurrentLocation: AssistantToolExecuteWithApprovalFn<RequestCurrentLocationParams> = async (
-  params,
-  {
-    primaryConfirmed,
-    secondaryConfirmed,
-  }
-) => {
+const requestCurrentLocation: AssistantToolExecuteWithApprovalFn<
+  RequestCurrentLocationParams
+> = async (params, { primaryConfirmed, secondaryConfirmed }) => {
   try {
-    const location = await Location.requestCurrent()
+    const location = await Location.requestCurrent();
     if (location) {
       return {
         success: true,
         message: [
           "The user's current location info:",
           `<latitude>${location.latitude}</latitude>`,
-          `<longitude>${location.longitude}</longitude>`
-        ].join("\n")
-      }
+          `<longitude>${location.longitude}</longitude>`,
+        ].join("\n"),
+      };
     }
     return {
       success: false,
-      message: "Failed to request user's current location, ask user to check the device's location permission."
-    }
+      message:
+        "Failed to request user's current location, ask user to check the device's location permission.",
+    };
   } catch {
     return {
       success: false,
-      message: "Failed to request user's current location, ask user to check the device's location permission."
-    }
+      message:
+        "Failed to request user's current location, ask user to check the device's location permission.",
+    };
   }
-}
+};
 
-const testRequestLocationApprovalFn = AssistantTool.registerApprovalRequest(
-  locationApprovalRequest
-)
+const testRequestLocationApprovalFn =
+  AssistantTool.registerApprovalRequest(locationApprovalRequest);
 
-const testRequestLocationExecuteFn = AssistantTool.registerExecuteToolWithApproval(
-  requestCurrentLocation
-)
+const testRequestLocationExecuteFn =
+  AssistantTool.registerExecuteToolWithApproval(requestCurrentLocation);
 
 // Test the tool in the script editor:
-testRequestLocationApprovalFn({})
-testRequestLocationExecuteFn({}, {
-  primaryConfirmed: true,
-  secondaryConfirmed: false
-})
+testRequestLocationApprovalFn({});
+testRequestLocationExecuteFn(
+  {},
+  {
+    primaryConfirmed: true,
+    secondaryConfirmed: false,
+  },
+);
 ```
 
 ***
@@ -1425,8 +1424,8 @@ Registers a function to request user approval before executing the tool.
 
 ```ts
 function registerApprovalRequest<P>(
-  requestFn: AssistantToolApprovalRequestFn<P>
-): AssistantToolApprovalRequestTestFn<P>
+  requestFn: AssistantToolApprovalRequestFn<P>,
+): AssistantToolApprovalRequestTestFn<P>;
 ```
 
 **Parameters**:
@@ -1447,8 +1446,8 @@ Registers an execution function that requires user approval.
 
 ```ts
 function registerExecuteToolWithApproval<P>(
-  executeFn: AssistantToolExecuteWithApprovalFn<P>
-): AssistantToolExecuteWithApprovalTestFn<P>
+  executeFn: AssistantToolExecuteWithApprovalFn<P>,
+): AssistantToolExecuteWithApprovalTestFn<P>;
 ```
 
 **Parameters**:
@@ -1458,9 +1457,9 @@ function registerExecuteToolWithApproval<P>(
 
 ```ts
 type UserActionForApprovalRequest = {
-  primaryConfirmed: boolean
-  secondaryConfirmed: boolean
-}
+  primaryConfirmed: boolean;
+  secondaryConfirmed: boolean;
+};
 ```
 
 - `scriptEditorProvider`: Same as above.
@@ -1471,8 +1470,8 @@ Returns an object:
 
 ```ts
 {
-  success: boolean
-  message: string
+  success: boolean;
+  message: string;
 }
 ```
 
@@ -1487,8 +1486,8 @@ Registers a tool that does **not** require user approval.
 
 ```ts
 function registerExecuteTool<P>(
-  executeFn: AssistantToolExecuteFn<P>
-): AssistantToolExecuteTestFn<P>
+  executeFn: AssistantToolExecuteFn<P>,
+): AssistantToolExecuteTestFn<P>;
 ```
 
 **Use Case**: Suitable for non-sensitive operations or those that don’t involve device permissions.
@@ -1500,12 +1499,15 @@ function registerExecuteTool<P>(
 Each registration function returns a test function that can be used in the script:
 
 ```ts
-testApprovalRequestFn({ ...params })
-testExecuteFn({ ...params }, {
-  primaryConfirmed: true,
-  secondaryConfirmed: false,
-})
-testExecuteToolFn({ ...params })
+testApprovalRequestFn({ ...params });
+testExecuteFn(
+  { ...params },
+  {
+    primaryConfirmed: true,
+    secondaryConfirmed: false,
+  },
+);
+testExecuteToolFn({ ...params });
 ```
 
 ***
@@ -1543,9 +1545,9 @@ If you don’t want to show an approval prompt, simply use `registerExecuteTool`
 AssistantTool.registerExecuteTool<MyParams>(async (params) => {
   return {
     success: true,
-    message: "Tool executed successfully."
-  }
-})
+    message: "Tool executed successfully.",
+  };
+});
 ```
 
 ***
@@ -1565,8 +1567,6 @@ Assistant Tool is an extensible module provided by the Scripting application, su
 ---
 url: /doc/Changelog/2.4.3/Animation and Transition.md
 ---
-
-# Animation and Transition
 
 Scripting Animation & Transition System
 
@@ -2007,8 +2007,6 @@ animation={{ animation: myAnimation, value: myValue }}
 url: /doc/Changelog/2.4.3/EnvironmentValuesReader.md
 ---
 
-# EnvironmentValuesReader
-
 `EnvironmentValuesReader` is a Scripting component that allows you to read environment values from the current view hierarchy.
 It serves a similar role to SwiftUI’s `@Environment`, but with a more explicit and controlled design:
 **You must specify which environment keys you want to read**, and the component will inject only those values into the `children` callback.
@@ -2249,8 +2247,6 @@ function View() {
 ---
 url: /doc/Changelog/2.4.3/ForEach/index.md
 ---
-
-# ForEach
 
 The `ForEach` component renders a dynamic list of child views. It is used to display collections, create editable lists, and enable system-standard interactions such as swipe-to-delete. It is fully integrated with the Scripting app’s `Observable` state system and mirrors the design of SwiftUI’s `ForEach`.
 
@@ -2517,8 +2513,6 @@ run()
 url: /doc/Changelog/2.4.3/GeometryReader.md
 ---
 
-# GeometryReader
-
 `GeometryReader` in Scripting is the equivalent of SwiftUI’s GeometryReader. It provides layout information about the container in which its content is placed, including size, safe-area insets, and (on supported systems) container corner insets.
 
 This component is essential for building responsive layouts that depend on the parent container’s geometry.
@@ -2728,8 +2722,6 @@ function View() {
 url: /doc/Changelog/2.4.3/LiveActivity View Modifiers.md
 ---
 
-# LiveActivity View Modifiers
-
 Scripting provides two view modifiers that customize the appearance of Live Activities on the Lock Screen. These modifiers control the background tint color of the Live Activity and the foreground color of the system-provided action button.
 
 These properties are designed to match SwiftUI’s Live Activity customization options.
@@ -2842,8 +2834,6 @@ function ActivityView() {
 ---
 url: /doc/Changelog/2.4.3/LiveActivity.md
 ---
-
-# LiveActivity
 
 The `LiveActivity` API enables you to display real-time, dynamic information from your script on the Lock Screen and, where supported, in the Dynamic Island on iOS devices. It provides a structured interface to start, update, and end Live Activities, and observe their state throughout their lifecycle.
 
@@ -3719,7 +3709,7 @@ run()
 url: /doc/Changelog/2.4.3/SSH Client.md
 ---
 
-# SSH Client PRO
+# SSH Client
 
 The `SSHClient` class provides an interface for connecting to a remote SSH server, executing commands, opening TTY or PTY sessions, transferring files via SFTP, and performing multi-hop SSH jumps. It supports both command-based and interactive terminal-based workflows.
 
@@ -4026,8 +4016,6 @@ await ssh.close()
 url: /doc/Changelog/2.4.3/ScrollViewReader.md
 ---
 
-# ScrollViewReader
-
 The **ScrollViewReader** component equivalent to SwiftUI’s ScrollViewReader, allowing scripts to programmatically control scrolling position within scrollable content such as `List` or `ScrollView`.
 
 ***
@@ -4231,8 +4219,6 @@ The animation behavior follows SwiftUI’s animation engine.
 ---
 url: /doc/Changelog/2.4.3/Set environment values (environments).md
 ---
-
-# Set environment values (environments)
 
 The `environments` view modifier allows injecting specific environment values into the current view hierarchy.
 It serves a role similar to SwiftUI’s `.environment()`, but with a more explicit and controlled design tailored for Scripting.
@@ -4565,8 +4551,6 @@ Therefore:
 ---
 url: /doc/Changelog/2.4.3/useObservable.md
 ---
-
-# useObservable
 
 Scripting provides a reactive state system formed by `Observable<T>` and the `useObservable<T>` hook.
 This system drives UI updates, interacts with the animation engine, and aligns closely with SwiftUI’s binding model—enabling future APIs such as `List(selection:)`, `NavigationStack(path:)`, `TextField(text:)`, and more.
@@ -5305,8 +5289,6 @@ This configuration produces:
 url: /doc/Changelog/2.4.4/Glass Effect Transition/index.md
 ---
 
-# Glass Effect Transition
-
 This document provides a comprehensive explanation of **Glass Effect Transitions** in Scripting, including how Liquid Glass materials animate during view changes, how geometry matching works, and how to correctly use `NamespaceReader` to access SwiftUI’s `@Namespace` within TSX code.
 
 Contents include:
@@ -5791,8 +5773,6 @@ run()
 url: /doc/Changelog/2.4.4/Intent.continueInForeground.md
 ---
 
-# Intent.continueInForeground PRO
-
 `Intent.continueInForeground` is an API that leverages the **iOS 26+ AppIntents framework** to request the system to bring the **Scripting app** to the foreground while a Shortcut is running.
 
 This method is used when a script—invoked from Shortcuts—requires full UI interaction within the Scripting app (for example: presenting a form, editing content, picking files, showing a full screen navigation flow, etc.).
@@ -6008,8 +5988,6 @@ This method allows Scripting to support advanced automation flows that seamlessl
 ---
 url: /doc/Changelog/2.4.4/Intent.requestConfirmation.md
 ---
-
-# Intent.requestConfirmation PRO
 
 `Intent.requestConfirmation` pauses script execution and asks the user to confirm an action through a **system-managed confirmation UI**.
 The confirmation interface consists of:
@@ -6234,8 +6212,6 @@ runIntent();
 ---
 url: /doc/Changelog/2.4.4/IntentMemoryStorage.md
 ---
-
-# IntentMemoryStorage
 
 IntentMemoryStorage is an in-memory storage mechanism used inside AppIntent execution environments.
 It allows multiple AppIntents—such as multi-step workflows involving SnippetIntents—to share temporary data.
@@ -6612,8 +6588,6 @@ Both disappear once the system kills the Extension process.
 ---
 url: /doc/Changelog/2.4.4/Liquid Glass Effect/index.md
 ---
-
-# Liquid Glass Effect
 
 Scripting provides full support for the new **Liquid Glass** visual system introduced in iOS 26. This includes `glassEffect`, `GlassEffectContainer`, `UIGlass`, and related geometry-matching and transition APIs. These APIs allow scripts to create rich translucent materials, fluid glass shapes, matched geometry animations, and unioned glass regions directly within TSX.
 
@@ -7360,8 +7334,6 @@ Scenarios where `NamespaceReader` is **not required**:
 url: /doc/Changelog/2.4.4/New List View Modifiers.md
 ---
 
-# New List View Modifiers
-
 # Overview of Properties
 
 | Property                     | Type                                                        | Availability | Description                                                        |   |   |
@@ -8015,8 +7987,6 @@ run()
 url: /doc/Changelog/2.4.4/SFTP Client.md
 ---
 
-# SFTP Client PRO
-
 `SFTPClient` provides access to a remote file system over an SSH connection using the SFTP protocol.
 It supports directory operations, file management, attribute retrieval, and path resolution.
 Files can be opened using `openFile()`, which returns an `SFTPFile` instance for reading and writing.
@@ -8261,7 +8231,7 @@ await sftp.close()
 url: /doc/Changelog/2.4.4/SFTP File.md
 ---
 
-# SFTP File PRO
+# SFTP File
 
 `SFTPFile` represents an opened remote file accessed through an SFTP session.
 It provides low-level operations such as reading, writing, retrieving attributes, and closing the file.
@@ -8419,8 +8389,6 @@ await file.close()
 ---
 url: /doc/Changelog/2.4.4/SnippetIntent.md
 ---
-
-# SnippetIntent PRO
 
 SnippetIntent is a special kind of AppIntent whose purpose is to render **interactive Snippet UI cards** inside the Shortcuts app (iOS 26+).
 
@@ -9283,8 +9251,6 @@ It provides a clearer model, matches modern iOS Tab APIs, and is designed to wor
 ---
 url: /doc/Changelog/2.4.4/Use with Toolbar Component.md
 ---
-
-# Use with Toolbar Component
 
 In Scripting, views can populate their navigation bar or toolbar area using either the original `ToolBarProps` object or the declarative component-based API that mirrors SwiftUI’s toolbar system. This document explains in detail how to use the `Toolbar`, `ToolbarItem`, `ToolbarItemGroup`, `ToolbarSpacer`, and `DefaultToolbarItem` components, including parameters, types, and usage patterns.
 
@@ -10510,7 +10476,7 @@ Always wait until `pipStatus` reaches `didStop` before releasing the player.
 url: /doc/Changelog/2.4.5/AppStore.md
 ---
 
-# AppStore PRO
+# AppStore
 
 The `AppStore` API allows you to display App Store app information **directly inside the Scripting app**, without navigating users away to the system App Store application.
 
@@ -10672,7 +10638,7 @@ function AppList() {
 url: /doc/Changelog/2.4.5/Assistant/Assistant Conversation APIs.md
 ---
 
-# Assistant Conversation APIs PRO
+# Assistant Conversation APIs
 
 The Conversation APIs are used to **start, control, and present a system-hosted Assistant chat session**.
 A conversation corresponds to a **fully managed chat page**, where Scripting handles the UI, streaming output, provider selection, and message lifecycle.
@@ -11022,7 +10988,7 @@ await Assistant.present()
 url: /doc/Changelog/2.4.5/Assistant/Assistant Quick Start.md
 ---
 
-# Assistant Quick Start PRO
+# Assistant Quick Start
 
 The Assistant API in Scripting provides three distinct capabilities, each designed for a different type of use case: **structured data**, **streaming output**, and **interactive conversations**.
 
@@ -11184,7 +11150,7 @@ For deeper details, refer to:
 url: /doc/Changelog/2.4.5/Assistant/requestStreaming.md
 ---
 
-# requestStreaming PRO
+# requestStreaming
 
 `requestStreaming` requests a **streaming response** from the Assistant.
 Instead of returning a complete result at once, the Assistant emits **chunks incrementally** as the model generates output.
@@ -11499,7 +11465,7 @@ for await (const chunk of stream) {
 url: /doc/Changelog/2.4.5/Assistant/requestStructuredData.md
 ---
 
-# requestStructuredData PRO
+# requestStructuredData
 
 `requestStructuredData` requests **structured JSON output** from the assistant that conforms to a provided JSON schema.
 This API is designed for workflows where you want a predictable, programmatically usable result rather than free-form text.
@@ -11808,8 +11774,6 @@ const summary = await Assistant.requestStructuredData<ImageSummary>(
 ---
 url: /doc/Changelog/2.4.5/CalendarEvent.md
 ---
-
-# CalendarEvent
 
 The `CalendarEvent` API enables creating, reading, editing, and managing events in the iOS calendar.
 Developers can configure event details such as title, time, location, participants, recurrence rules, alarms, availability, and structured locations, and can display system-provided interfaces for creating or editing events.
@@ -12229,8 +12193,6 @@ When using location-based alarms, the user must grant the necessary location per
 ---
 url: /doc/Changelog/2.4.5/DateFormatter.md
 ---
-
-# DateFormatter
 
 The `DateFormatter` class provides comprehensive date and time formatting capabilities. It allows converting `Date` objects into localized strings and parsing strings back into `Date` values.
 This API wraps iOS-native date formatting behavior and supports multiple calendars, time zones, localized formats, and custom formatting templates.
@@ -14158,7 +14120,7 @@ run()
 url: /doc/Changelog/2.4.5/Picture in Pictuer View Modifiers.md
 ---
 
-# Picture in Pictuer View Modifiers PRO
+# Picture in Pictuer View Modifiers
 
 Scripting provides a set of Picture in Picture (PiP) view modifiers that allow developers to render any SwiftUI view inside a system PiP window.
 These APIs abstract away the underlying `AVPictureInPicture` implementation and provide a declarative, script-friendly way to control PiP presentation, interaction, and lifecycle.
@@ -14503,8 +14465,6 @@ Lightweight, stable, and continuously visible system-level companion views.
 ---
 url: /doc/Changelog/2.4.5/Reminder.md
 ---
-
-# Reminder
 
 The `Reminder` API provides the ability to create, edit, and manage reminders in the iOS calendar system.
 It supports configuring due dates through `DateComponents`, assigning priorities, adding notes, managing recurrence rules, working with alarms, and tracking completion state.
@@ -15866,7 +15826,7 @@ This separation keeps recording logic deterministic and the UI layer composable.
 url: /doc/Changelog/2.4.5/VideoRecorder.md
 ---
 
-# VideoRecorder PRO
+# VideoRecorder
 
 `VideoRecorder` provides a programmable video recording session in Scripting.
 It encapsulates camera selection, audio/video capture, encoding, pause/resume handling, zoom, focus, torch control, and final file writing.
@@ -19902,7 +19862,7 @@ FileManager.removeFileBookmark(bookmarkName)
 url: /doc/Control Widget.md
 ---
 
-# Control Widget PRO
+# Control Widget
 
 The `ControlWidget` API enables users to add custom Button or Toggle controls to the iOS Control Center or Lock Screen. Each control is linked to an `AppIntent` to execute custom script logic. The controls support privacy protection, dynamic state labels, and SFSymbols icons.
 
@@ -19927,7 +19887,7 @@ Represents a label for a control, including the main label or value label in act
 Renders a button control that executes a script intent when tapped.
 
 ```ts
-function ControlWidgetButton(props: ControlWidgetButtonProps): JSX.Element;
+function ControlWidgetButton(props: ControlWidgetButtonProps): JSX.Element
 ```
 
 ### `ControlWidgetButtonProps`
@@ -19949,9 +19909,7 @@ function ControlWidgetButton(props: ControlWidgetButtonProps): JSX.Element;
 Renders a toggle control that updates a boolean value using a script intent.
 
 ```ts
-function ControlWidgetToggle<T extends { value: boolean }>(
-  props: ControlWidgetToggleProps<T>,
-): JSX.Element;
+function ControlWidgetToggle<T extends { value: boolean }>(props: ControlWidgetToggleProps<T>): JSX.Element
 ```
 
 ### `ControlWidgetToggleProps<T>`
@@ -19997,15 +19955,15 @@ export const ToggleDoorIntent = AppIntentManager.register({
   name: "ToggleDoorIntent",
   protocol: AppIntentProtocol.AppIntent,
   perform: async ({ id, value }: { id: string; value: boolean }) => {
-    await setDoorState(id, value);
-    ControlWidget.reloadToggles();
-  },
-});
+    await setDoorState(id, value)
+    ControlWidget.reloadToggles()
+  }
+})
 
 /// control_widget_toggle.tsx
 async function run() {
-  const doorId = ControlWidget.parameter || "default";
-  const data = await fetchDoorData(doorId);
+  const doorId = ControlWidget.parameter || "default"
+  const data = await fetchDoorData(doorId)
 
   ControlWidget.present(
     <ControlWidgetToggle
@@ -20013,15 +19971,15 @@ async function run() {
       intent={ToggleDoorIntent({ id: doorId, value: !data.doorOpened })}
       label={{
         title: `Door ${doorId}`,
-        systemImage: data.doorOpened ? "door.garage.opened" : "door.garage.closed",
+        systemImage: data.doorOpened ? "door.garage.opened" : "door.garage.closed"
       }}
       activeValueLabel={{ title: "The door is opened" }}
       inactiveValueLabel={{ title: "The door is closed" }}
-    />,
-  );
+    />
+  )
 }
 
-run();
+run()
 ```
 
 ***
@@ -20052,7 +20010,7 @@ Reloads all toggle widgets. Call this after a toggle action to update state.
 url: /doc/Custom Keyboard.md
 ---
 
-# Custom Keyboard PRO
+# Custom Keyboard
 
 The `CustomKeyboard` namespace provides a comprehensive API for building fully custom keyboard UIs in the Scripting app. It allows you to create JSX-based keyboards, insert or modify text, query input state, respond to user interaction, and control keyboard layout or navigation.
 
@@ -20475,7 +20433,7 @@ for (const item of metadata) {
 url: /doc/Device Capabilities/AppStore.md
 ---
 
-# AppStore PRO
+# AppStore
 
 The `AppStore` API allows you to display App Store app information **directly inside the Scripting app**, without navigating users away to the system App Store application.
 
@@ -21215,7 +21173,7 @@ Use the `AudioRecorder` class to easily manage audio recording operations in you
 url: /doc/Device Capabilities/BackgroundKeeper.md
 ---
 
-# BackgroundKeeper PRO
+# BackgroundKeeper
 
 The `BackgroundKeeper` API provides control over background keep-alive behavior in the **Scripting App**, allowing scripts to extend their runtime after the app transitions to the background. This can be useful for maintaining ongoing operations, such as network connections or active processes, for a limited period while the app is not in the foreground.
 
@@ -21341,7 +21299,7 @@ async function runBackgroundTask() {
 url: /doc/Device Capabilities/Bluetooth/BluetoothCentralManager.md
 ---
 
-# BluetoothCentralManager PRO
+# BluetoothCentralManager
 
 The `BluetoothCentralManager` namespace provides core functionality for managing Bluetooth Low Energy (BLE) operations as a central device. It supports scanning, connecting, disconnecting, and retrieving known or connected peripherals. This API is ideal for building custom Bluetooth workflows, interacting with smart devices, wearables, and IoT peripherals.
 
@@ -21598,7 +21556,7 @@ await BluetoothCentralManager.startScan((peripheral) => {
 url: /doc/Device Capabilities/Bluetooth/BluetoothCharacteristic.md
 ---
 
-# BluetoothCharacteristic PRO
+# BluetoothCharacteristic
 
 The `BluetoothCharacteristic` interface represents a Bluetooth Low Energy (BLE) characteristic, which is the fundamental data unit in a BLE service. A characteristic exposes a specific piece of data and supports operations such as reading, writing, or subscribing to notifications.
 
@@ -21744,7 +21702,7 @@ await peripheral.unsubscribe(characteristic)
 url: /doc/Device Capabilities/Bluetooth/BluetoothPeripheral.md
 ---
 
-# BluetoothPeripheral PRO
+# BluetoothPeripheral
 
 The `BluetoothPeripheral` interface represents a Bluetooth Low Energy (BLE) peripheral device. It provides properties and methods for interacting with the device, including connecting, discovering services and characteristics, reading/writing values, and subscribing to notifications.
 
@@ -22004,7 +21962,7 @@ await peripheral.subscribe(characteristic, (error, value) => {
 url: /doc/Device Capabilities/Bluetooth/BluetoothPeripheralManager.md
 ---
 
-# BluetoothPeripheralManager PRO
+# BluetoothPeripheralManager
 
 The `BluetoothPeripheralManager` API enables your device to act as a Bluetooth Low Energy (BLE) peripheral. It allows you to:
 
@@ -22329,7 +22287,7 @@ BluetoothPeripheralManager.onReadCharacteristicValue = async (id, offset, centra
 url: /doc/Device Capabilities/Bluetooth/BluetoothService.md
 ---
 
-# BluetoothService PRO
+# BluetoothService
 
 The `BluetoothService` interface represents a Bluetooth Low Energy (BLE) service. A service is a logical grouping of related characteristics and possibly other included services. Services are used to define the functionality of a peripheral device, such as Heart Rate Monitoring or Battery Level Reporting.
 
@@ -22651,8 +22609,6 @@ for (const calendar of selectedCalendars) {
 ---
 url: /doc/Device Capabilities/CalendarEvent.md
 ---
-
-# CalendarEvent
 
 The `CalendarEvent` API enables creating, reading, editing, and managing events in the iOS calendar.
 Developers can configure event details such as title, time, location, participants, recurrence rules, alarms, availability, and structured locations, and can display system-provided interfaces for creating or editing events.
@@ -24095,7 +24051,7 @@ Location-based alarms work for reminders as well.
 url: /doc/Device Capabilities/FontPicker.md
 ---
 
-# FontPicker PRO
+# FontPicker
 
 The `FontPicker` namespace provides methods for selecting fonts from the system’s available font list.
 It opens the system font picker UI, allowing the user to choose a font, and returns the **PostScript name** of the selected font.
@@ -24264,7 +24220,7 @@ run()
 url: /doc/Device Capabilities/Health/HealthActivitySummary.md
 ---
 
-# HealthActivitySummary PRO
+# HealthActivitySummary
 
 The `HealthActivitySummary` class provides an interface for accessing daily summaries of user activity as recorded by the Apple Health system. This includes move, exercise, and stand metrics, and optionally supports both energy-based and time-based activity move goals.
 
@@ -24390,7 +24346,7 @@ async function showTodaySummary() {
 url: /doc/Device Capabilities/Health/HealthCategorySample.md
 ---
 
-# HealthCategorySample PRO
+# HealthCategorySample
 
 The `HealthCategorySample` class represents an individual category-based health record, such as a sleep session, menstrual flow level, or a test result. These samples are used to store discrete events or conditions over time, usually characterized by a start and end date along with a categorical value.
 
@@ -24524,7 +24480,7 @@ If the value and type do not match, the sample creation will fail and return `nu
 url: /doc/Device Capabilities/Health/HealthCategoryType.md
 ---
 
-# HealthCategoryType PRO
+# HealthCategoryType
 
 The `HealthCategoryType` identifies discrete health-related states or events, often recorded as binary values (e.g., present or not present) or discrete outcomes. These are commonly used for tracking symptoms, reproductive health, audio exposure events, and sleep states.
 
@@ -24685,7 +24641,7 @@ for (const session of results) {
 url: /doc/Device Capabilities/Health/HealthCategoryValue Types.md
 ---
 
-# HealthCategoryValue Types PRO
+# HealthCategoryValue Types
 
 This document provides a comprehensive reference for all supported `HealthCategoryValue` enums used with `HealthCategorySample.create()` and related APIs. Each enum represents a specific categorical value associated with a `HealthCategoryType`.
 
@@ -24951,7 +24907,7 @@ await Health.saveCategorySample(sample)
 url: /doc/Device Capabilities/Health/HealthCharacteristicType.md
 ---
 
-# HealthCharacteristicType PRO
+# HealthCharacteristicType
 
 This section describes enums related to **user health profile attributes** and **activity configuration**, including biological sex, blood type, skin type, wheelchair use, and activity move mode. These enums are used with the `Health` API to retrieve user profile data from HealthKit.
 
@@ -25057,7 +25013,7 @@ if (moveMode === HealthActivityMoveMode.appleMoveTime) {
 url: /doc/Device Capabilities/Health/HealthCorrelation.md
 ---
 
-# HealthCorrelation PRO
+# HealthCorrelation
 
 The `HealthCorrelation` class represents a group of health samples that are logically related. It provides an interface for accessing and creating correlation records that group multiple health data types together—such as combining dietary intake and blood pressure readings, or linking ovulation tests with menstrual flow records.
 
@@ -25169,7 +25125,7 @@ for (const sample of correlation.quantitySamples) {
 url: /doc/Device Capabilities/Health/HealthHeartbeatSeriesSample.md
 ---
 
-# HealthHeartbeatSeriesSample PRO
+# HealthHeartbeatSeriesSample
 
 The `HealthHeartbeatSeriesSample` class provides an interface for accessing **heartbeat series samples**, representing a series of individual heartbeat intervals recorded over time. These samples are typically used for analyzing heart rhythm and detecting irregularities such as atrial fibrillation.
 
@@ -25276,7 +25232,7 @@ async function fetchHeartbeatSeries() {
 url: /doc/Device Capabilities/Health/HealthKit Permission Behavior.md
 ---
 
-# HealthKit Permission Behavior PRO
+# HealthKit Permission Behavior
 
 When using the Health module provided by the Scripting app to access iOS HealthKit data, it's important to understand how HealthKit handles authorization and how Scripting adapts to these behaviors. This document explains the authorization flow, Promise behavior, and best practices for handling missing permissions.
 
@@ -25385,8 +25341,6 @@ Go to **Health app > Data Access & Devices > Scripting**, and make sure the nece
 ---
 url: /doc/Device Capabilities/Health/HealthQuantitySample.md
 ---
-
-# HealthQuantitySample PRO
 
 The `HealthQuantitySample` class represents a single health quantity data point, such as a heart rate measurement, a recorded step count, or a logged calorie value. It provides information about the measurement’s type, time interval, unit, value, and optional metadata.
 
@@ -25566,7 +25520,7 @@ console.log(`Average: ${avg}, Max: ${max}, Recent: ${recent}`)
 url: /doc/Device Capabilities/Health/HealthQuantityType.md
 ---
 
-# HealthQuantityType PRO
+# HealthQuantityType
 
 This document lists all supported `HealthQuantityType` identifiers, categorized by domain. Each type is associated with a measurable health-related metric and can be used to track fitness, vital signs, nutrition, environment, and more.
 
@@ -25788,7 +25742,7 @@ const avg = stat?.averageQuantity(HealthUnit.count().divided(HealthUnit.minute()
 url: /doc/Device Capabilities/Health/HealthStatistics.md
 ---
 
-# HealthStatistics PRO
+# HealthStatistics
 
 The `HealthStatistics` class provides an interface for analyzing **aggregated health quantity data** over a specified time range. It allows you to compute key statistical values such as:
 
@@ -25939,7 +25893,7 @@ console.log("Heart rate from this app:", averageHR)
 url: /doc/Device Capabilities/Health/HealthStatisticsCollection.md
 ---
 
-# HealthStatisticsCollection PRO
+# HealthStatisticsCollection
 
 The `HealthStatisticsCollection` class provides a structured representation of **time-based grouped health statistics**, such as daily, weekly, or monthly summaries. Each entry in the collection corresponds to one interval, and encapsulates its own `HealthStatistics` object.
 
@@ -26032,7 +25986,7 @@ Use `HealthStatisticsCollection` when:
 url: /doc/Device Capabilities/Health/HealthUnit.md
 ---
 
-# HealthUnit PRO
+# HealthUnit
 
 The `HealthUnit` class provides an interface to construct and manipulate various units used in HealthKit. You can create basic units (e.g., grams, meters, liters), apply metric prefixes (e.g., milligrams, kilometers), and perform arithmetic operations like multiplication, division, exponentiation, and inversion.
 
@@ -26258,7 +26212,7 @@ console.log("Energy:", energyUnit)
 url: /doc/Device Capabilities/Health/HealthWorkout.md
 ---
 
-# HealthWorkout PRO
+# HealthWorkout
 
 The `HealthWorkout` class provides a high-level interface for accessing and analyzing workout data from Apple Health. A workout represents a full session of physical activity, such as running, swimming, or cycling, recorded between a start and end time, and may include additional events and aggregated statistics.
 
@@ -26366,7 +26320,7 @@ function displayWorkoutSummary(workout: HealthWorkout) {
 url: /doc/Device Capabilities/Health/HealthWorkoutActivityType.md
 ---
 
-# HealthWorkoutActivityType PRO
+# HealthWorkoutActivityType
 
 Each enum value below includes a description of its purpose and typical use case.
 
@@ -26471,7 +26425,7 @@ const workoutType = HealthWorkoutActivityType.running
 url: /doc/Device Capabilities/Health/HealthWorkoutEvent.md
 ---
 
-# HealthWorkoutEvent PRO
+# HealthWorkoutEvent
 
 The `HealthWorkoutEvent` class provides an interface for accessing workout-related events in Apple Health data. Each event represents a specific moment or action within a workout session, such as when the workout is paused, resumed, or marked with a lap or milestone.
 
@@ -26553,7 +26507,7 @@ function logWorkoutEvent(event: HealthWorkoutEvent) {
 url: /doc/Device Capabilities/Health/Query Statistics Collection.md
 ---
 
-# Query Statistics Collection PRO
+# Query Statistics Collection
 
 The `Health.queryStatisticsCollection()` method retrieves **time-based aggregated statistics** for a given `HealthQuantityType` over a specified date range. It returns a `HealthStatisticsCollection` object, which contains multiple `HealthStatistics` entries aligned to defined time intervals (such as daily, weekly, or monthly).
 
@@ -26636,7 +26590,7 @@ for (const stat of stats) {
 url: /doc/Device Capabilities/Health/Query Statistics.md
 ---
 
-# Query Statistics PRO
+# Query Statistics
 
 The `queryStatistics` method retrieves **aggregated statistics** for a specific health quantity type over a defined date range. It can compute metrics such as total sum, average, minimum, maximum, most recent value, and duration, with optional support for breaking down results by source (e.g., device or app).
 
@@ -26769,7 +26723,7 @@ console.log("App-only Heart Rate:", averageHR)
 url: /doc/Device Capabilities/Health/Reading Activity Summaries.md
 ---
 
-# Reading Activity Summaries PRO
+# Reading Activity Summaries
 
 The Scripting app provides access to **daily activity summary data** from Apple Health using the global function `Health.queryActivitySummaries()`. These summaries represent **Move**, **Exercise**, and **Stand** goals tracked by Apple Watch, along with completion metrics and historical trends.
 
@@ -26892,7 +26846,7 @@ fetchLastWeek()
 url: /doc/Device Capabilities/Health/Reading Category Samples.md
 ---
 
-# Reading Category Samples PRO
+# Reading Category Samples
 
 The Scripting app provides access to **category-based health data** using the global function `Health.queryCategorySamples()`. Category samples represent health-related events or states with a start date, end date, and a discrete value — such as sleep stages, mindful sessions, menstrual flow, and ovulation test results.
 
@@ -27026,7 +26980,7 @@ This API gives you structured access to event-based health records in HealthKit.
 url: /doc/Device Capabilities/Health/Reading Characteristic Data.md
 ---
 
-# Reading Characteristic Data PRO
+# Reading Characteristic Data
 
 HealthKit stores **characteristics** as immutable personal attributes, such as biological sex, date of birth, blood type, skin type, wheelchair usage, and activity move mode. These values are typically entered by the user in the Health app and rarely change.
 
@@ -27208,7 +27162,7 @@ These values are static and reflect the user’s personal configuration in the H
 url: /doc/Device Capabilities/Health/Reading Correlation Data.md
 ---
 
-# Reading Correlation Data PRO
+# Reading Correlation Data
 
 The Scripting app allows you to query **correlated health data** using the global `Health.queryCorrelations()` API. A correlation groups related health samples into a single logical event — such as a blood pressure reading (systolic and diastolic) or a food intake record (calories, protein, etc.).
 
@@ -27362,7 +27316,7 @@ This is useful for composite health records like blood pressure or nutrition int
 url: /doc/Device Capabilities/Health/Reading Heartbeat Series Samples.md
 ---
 
-# Reading Heartbeat Series Samples PRO
+# Reading Heartbeat Series Samples
 
 The Scripting app provides access to **heartbeat series samples** stored in Apple Health using the global API `Health.queryHeartbeatSeriesSamples()`. These samples represent beat-to-beat heartbeat intervals collected during workouts or background monitoring sessions (usually via Apple Watch).
 
@@ -27471,7 +27425,7 @@ This API is useful for **overviewing heart rhythm tracking sessions**, especiall
 url: /doc/Device Capabilities/Health/Reading Quantity Samples.md
 ---
 
-# Reading Quantity Samples PRO
+# Reading Quantity Samples
 
 The Scripting app allows you to query **quantity-based health data**, such as step count, heart rate, body mass, calories burned, distance, and more, using the global `Health.queryQuantitySamples()` API.
 
@@ -27630,7 +27584,7 @@ This API gives you powerful access to time-series health data stored in HealthKi
 url: /doc/Device Capabilities/Health/Reading Workout Samples.md
 ---
 
-# Reading Workout Samples PRO
+# Reading Workout Samples
 
 The Scripting app allows you to retrieve **workout sessions** from HealthKit using the global `Health.queryWorkouts()` function. Workouts represent physical activity sessions such as running, walking, swimming, cycling, strength training, and more.
 
@@ -27779,7 +27733,7 @@ This API is ideal for analyzing exercise history, generating workout summaries, 
 url: /doc/Device Capabilities/Health/Writing Health Category Samples.md
 ---
 
-# Writing Health Category Samples PRO
+# Writing Health Category Samples
 
 The Scripting app allows you to write **categorical health data** to Apple HealthKit using the `HealthCategorySample` class and the `Health.saveCategorySample()` method. Category samples represent discrete health-related events or conditions, such as sleep stages, mindful sessions, menstrual flow, ovulation test results, and more.
 
@@ -27904,7 +27858,7 @@ writeSleepData()
 url: /doc/Device Capabilities/Health/Writing Health Correlation Data.md
 ---
 
-# Writing Health Correlation Data PRO
+# Writing Health Correlation Data
 
 In the Scripting app, you can write **correlated health data** to Apple HealthKit using the global `HealthCorrelation.create()` method and `Health.saveCorrelation()`. A correlation represents a relationship between multiple health samples, such as a blood pressure reading that includes both systolic and diastolic values, or a meal record that includes nutritional quantities.
 
@@ -28061,7 +28015,7 @@ writeBloodPressure()
 url: /doc/Device Capabilities/Health/Writing Health Quantity Samples.md
 ---
 
-# Writing Health Quantity Samples PRO
+# Writing Health Quantity Samples
 
 The Scripting app allows you to write quantity-based health data (such as step count, heart rate, calories, and more) to Apple HealthKit using the `HealthQuantitySample` class and the `Health.saveQuantitySample` method.
 
@@ -32510,8 +32464,6 @@ This example creates a `RecurrenceRule` for an event that occurs every second Tu
 url: /doc/Device Capabilities/Reminder.md
 ---
 
-# Reminder
-
 The `Reminder` API provides the ability to create, edit, and manage reminders in the iOS calendar system.
 It supports configuring due dates through `DateComponents`, assigning priorities, adding notes, managing recurrence rules, working with alarms, and tracking completion state.
 This API is suitable for a wide range of task and schedule reminder scenarios.
@@ -34242,7 +34194,7 @@ run()
 url: /doc/Device Capabilities/Translation.md
 ---
 
-# Translation PRO
+# Translation
 
 The `Translation` API enables text translation between different languages. It supports both individual and batch translation use cases and is available on **iOS 18.0 or later**.
 
@@ -34375,7 +34327,7 @@ console.log(results)
 url: /doc/Device Capabilities/VideoRecorder.md
 ---
 
-# VideoRecorder PRO
+# VideoRecorder
 
 `VideoRecorder` provides a programmable video recording session in Scripting.
 It encapsulates camera selection, audio/video capture, encoding, pause/resume handling, zoom, focus, torch control, and final file writing.
@@ -35619,8 +35571,6 @@ webView.dispose()
 url: /doc/Intent/Intent.continueInForeground.md
 ---
 
-# Intent.continueInForeground PRO
-
 `Intent.continueInForeground` is an API that leverages the **iOS 26+ AppIntents framework** to request the system to bring the **Scripting app** to the foreground while a Shortcut is running.
 
 This method is used when a script—invoked from Shortcuts—requires full UI interaction within the Scripting app (for example: presenting a form, editing content, picking files, showing a full screen navigation flow, etc.).
@@ -35836,8 +35786,6 @@ This method allows Scripting to support advanced automation flows that seamlessl
 ---
 url: /doc/Intent/Intent.requestConfirmation.md
 ---
-
-# Intent.requestConfirmation PRO
 
 `Intent.requestConfirmation` pauses script execution and asks the user to confirm an action through a **system-managed confirmation UI**.
 The confirmation interface consists of:
@@ -36226,8 +36174,6 @@ Steps:
 url: /doc/Intent/SnippetIntent.md
 ---
 
-# SnippetIntent PRO
-
 SnippetIntent is a special kind of AppIntent whose purpose is to render **interactive Snippet UI cards** inside the Shortcuts app (iOS 26+).
 
 Key characteristics:
@@ -36265,9 +36211,9 @@ export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />
-  }
-})
+    return <PickColorView />;
+  },
+});
 ```
 
 Another SnippetIntent:
@@ -36277,9 +36223,9 @@ export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    return <ResultView content={content} />
-  }
-})
+    return <ResultView content={content} />;
+  },
+});
 ```
 
 Requirements:
@@ -36296,27 +36242,29 @@ A SnippetIntent cannot be passed directly to `Script.exit()`.
 It must be wrapped in a `IntentSnippetIntentValue`.
 
 ```tsx
-const snippetValue = Intent.snippetIntent(
-  ShowResultIntent({ content: "Example Text" })
-)
+const snippetValue = Intent.snippetIntent(ShowResultIntent({ content: "Example Text" }));
 
-Script.exit(snippetValue)
+Script.exit(snippetValue);
 ```
 
 ### Type Definition
 
 ```ts
 type SnippetIntentValue = {
-  value?: IntentAttributedTextValue | IntentFileURLValue | IntentJsonValue | IntentTextValue | IntentURLValue | IntentFileValue | null
-  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>
-}
+  value?:
+    | IntentAttributedTextValue
+    | IntentFileURLValue
+    | IntentJsonValue
+    | IntentTextValue
+    | IntentURLValue
+    | IntentFileValue
+    | null;
+  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>;
+};
 
-declare class IntentSnippetIntentValue extends IntentValue<
-  'SnippetIntent',
-  SnippetIntentValue
-> {
-  value: SnippetIntentValue
-  type: 'SnippetIntent'
+declare class IntentSnippetIntentValue extends IntentValue<"SnippetIntent", SnippetIntentValue> {
+  value: SnippetIntentValue;
+  type: "SnippetIntent";
 }
 ```
 
@@ -36358,10 +36306,7 @@ A predefined list of semantic action names used by system UI:
 ### Example
 
 ```tsx
-await Intent.requestConfirmation(
-  "set",
-  PickColorIntent()
-)
+await Intent.requestConfirmation("set", PickColorIntent());
 ```
 
 Execution behavior:
@@ -36419,12 +36364,12 @@ Therefore a cross-Intent state mechanism is required.
 
 ```ts
 namespace IntentMemoryStorage {
-  function get<T>(key: string): T | null
-  function set(key: string, value: any): void
-  function remove(key: string): void
-  function contains(key: string): boolean
-  function clear(): void
-  function keys(): string[]
+  function get<T>(key: string): T | null;
+  function set(key: string, value: any): void;
+  function remove(key: string): void;
+  function contains(key: string): boolean;
+  function clear(): void;
+  function keys(): string[];
 }
 ```
 
@@ -36437,9 +36382,9 @@ namespace IntentMemoryStorage {
 ### Example
 
 ```ts
-IntentMemoryStorage.set("color", "systemBlue")
+IntentMemoryStorage.set("color", "systemBlue");
 
-const color = IntentMemoryStorage.get<Color>("color")
+const color = IntentMemoryStorage.get<Color>("color");
 ```
 
 ### Guidelines
@@ -36463,54 +36408,50 @@ export const SetColorIntent = AppIntentManager.register({
   name: "SetColorIntent",
   protocol: AppIntentProtocol.AppIntent,
   perform: async (color: Color) => {
-    IntentMemoryStorage.set("color", color)
-  }
-})
+    IntentMemoryStorage.set("color", color);
+  },
+});
 
 export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />
-  }
-})
+    return <PickColorView />;
+  },
+});
 
 export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue"
-    return <ResultView content={content} color={color} />
-  }
-})
+    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue";
+    return <ResultView content={content} color={color} />;
+  },
+});
 ```
 
 ## intent.tsx
 
 ```tsx
 async function runIntent() {
-
   // 1. Ask the user to confirm setting the color via Snippet
-  await Intent.requestConfirmation(
-    "set",
-    PickColorIntent()
-  )
+  await Intent.requestConfirmation("set", PickColorIntent());
 
   // 2. Read Shortcuts input
   const textContent =
     Intent.shortcutParameter?.type === "text"
       ? Intent.shortcutParameter.value
-      : "No text parameter from Shortcuts"
+      : "No text parameter from Shortcuts";
 
   // 3. Create final SnippetIntent UI
   const snippetIntentValue = Intent.snippetIntent({
-    snippetIntent: ShowResultIntent({ content: textContent })
-  })
+    snippetIntent: ShowResultIntent({ content: textContent }),
+  });
 
-  Script.exit(snippetIntentValue)
+  Script.exit(snippetIntentValue);
 }
 
-runIntent()
+runIntent();
 ```
 
 ## Shortcuts Flow
@@ -36528,26 +36469,21 @@ runIntent()
 This document introduces all **new** Scripting features added for iOS 26+:
 
 1. **SnippetIntent**
-
    - Registered using `AppIntentManager`
    - Returns TSX UI
    - Requires iOS 26+
 
 2. **Intent.snippetIntent**
-
    - Wraps a SnippetIntent for Script.exit
 
 3. **Intent.requestConfirmation**
-
    - Presents a confirmation Snippet UI
    - Requires SnippetIntent
 
 4. **“Show Snippet Intent” action in Shortcuts**
-
    - Required to display SnippetIntent UI
 
 5. **IntentMemoryStorage**
-
    - Lightweight cross-AppIntent storage
    - Not suitable for large binary/content data
    - Complements multi-step Snippet flows
@@ -36707,8 +36643,6 @@ A toggle switch that triggers an AppIntent when its value changes.
 ---
 url: /doc/LiveActivity.md
 ---
-
-# LiveActivity
 
 The `LiveActivity` API enables you to display real-time, dynamic information from your script on the Lock Screen and, where supported, in the Dynamic Island on iOS devices. It provides a structured interface to start, update, and end Live Activities, and observe their state throughout their lifecycle.
 
@@ -38661,7 +38595,7 @@ function ThemedView() {
 url: /doc/Utilities/Archive.md
 ---
 
-# Archive PRO
+# Archive
 
 The `Archive` class provides a comprehensive interface for working with archive files (such as ZIP).
 It supports reading, creating, updating, and extracting entries from archives, with both **asynchronous** and **synchronous** methods.
@@ -39670,8 +39604,6 @@ const weeklyTrigger = DateComponents.forWeekly(new Date())
 url: /doc/Utilities/DateFormatter.md
 ---
 
-# DateFormatter
-
 The `DateFormatter` class provides comprehensive date and time formatting capabilities. It allows converting `Date` objects into localized strings and parsing strings back into `Date` values.
 This API wraps iOS-native date formatting behavior and supports multiple calendars, time zones, localized formats, and custom formatting templates.
 
@@ -40639,7 +40571,7 @@ type FileStat = {
 url: /doc/Utilities/HttpServer/HttpRequest.md
 ---
 
-# HttpRequest PRO
+# HttpRequest
 
 The `HttpRequest` class represents an HTTP request received by the server.
 It encapsulates all request information, including path, method, headers, body, client address, and parsed parameters.
@@ -40885,7 +40817,7 @@ server.registerHandler("/upload", (req) => {
 url: /doc/Utilities/HttpServer/HttpResponse.md
 ---
 
-# HttpResponse PRO
+# HttpResponse
 
 The `HttpResponse` class represents an HTTP response object returned by the server to the client.
 It defines the response’s status code, headers, and body, and provides convenient factory methods for creating common HTTP responses (e.g., `ok`, `notFound`, `internalServerError`).
@@ -41213,7 +41145,7 @@ server.registerHandler("/api", (req) => {
 url: /doc/Utilities/HttpServer/HttpResponseBody.md
 ---
 
-# HttpResponseBody PRO
+# HttpResponseBody
 
 The `HttpResponseBody` class represents the body content of an HTTP response.
 It can contain text, HTML, binary data, or other forms of content.
@@ -41403,7 +41335,7 @@ server.registerHandler("/partial", (req) => {
 url: /doc/Utilities/HttpServer/HttpServer.md
 ---
 
-# HttpServer PRO
+# HttpServer
 
 The `HttpServer` class provides a lightweight local HTTP server that can handle HTTP requests, serve static files, and manage WebSocket connections. It is commonly used for local debugging, communication between devices, and serving simple web APIs inside scripts.
 
@@ -41686,7 +41618,7 @@ if (error) {
 url: /doc/Utilities/HttpServer/WebSocketSession.md
 ---
 
-# WebSocketSession PRO
+# WebSocketSession
 
 The `WebSocketSession` class represents an active WebSocket connection session.
 It is created automatically when a client connects to a WebSocket endpoint registered via `HttpServer.registerWebsocket()` and enables **bi-directional real-time communication** between the server and the client.
@@ -43486,8 +43418,6 @@ This approach automatically handles the `done` condition for you, resulting in c
 url: /doc/Utilities/Request/Request & RequestInit.md
 ---
 
-# Request & RequestInit
-
 The `Request` class represents a complete configuration of an HTTP request.
 It can be passed directly to the `fetch()` method or used to clone, modify, or retry an existing request.
 
@@ -44401,8 +44331,6 @@ The `fetch()` API in Scripting extends the standard web Fetch interface with nat
 url: /doc/Utilities/SSH/SFTP Client.md
 ---
 
-# SFTP Client PRO
-
 `SFTPClient` provides access to a remote file system over an SSH connection using the SFTP protocol.
 It supports directory operations, file management, attribute retrieval, and path resolution.
 Files can be opened using `openFile()`, which returns an `SFTPFile` instance for reading and writing.
@@ -44647,7 +44575,7 @@ await sftp.close()
 url: /doc/Utilities/SSH/SFTP File.md
 ---
 
-# SFTP File PRO
+# SFTP File
 
 `SFTPFile` represents an opened remote file accessed through an SFTP session.
 It provides low-level operations such as reading, writing, retrieving attributes, and closing the file.
@@ -44806,7 +44734,7 @@ await file.close()
 url: /doc/Utilities/SSH/SSH Authentication Method.md
 ---
 
-# SSH Authentication Method PRO
+# SSH Authentication Method
 
 Represents a method for authenticating with an SSH server. This class provides static methods for creating different types of SSH authentication strategies, including password-based, RSA key, ED25519, and ECDSA (P-256, P-384, P-521) private key authentication.
 
@@ -44977,7 +44905,7 @@ const ssh = await SSHClient.connect({
 url: /doc/Utilities/SSH/SSH Client.md
 ---
 
-# SSH Client PRO
+# SSH Client
 
 The `SSHClient` class provides an interface for connecting to a remote SSH server, executing commands, opening TTY or PTY sessions, transferring files via SFTP, and performing multi-hop SSH jumps. It supports both command-based and interactive terminal-based workflows.
 
@@ -45284,7 +45212,7 @@ await ssh.close()
 url: /doc/Utilities/SSH/TTY Stdin Writer.md
 ---
 
-# TTY Stdin Writer PRO
+# TTY Stdin Writer
 
 Represents a writable input stream for a TTY (teletypewriter) session opened over SSH. This class allows writing text to the remote terminal’s standard input and resizing the terminal window dynamically.
 
@@ -45392,8 +45320,6 @@ await writer.changeSize({
 ---
 url: /doc/Utilities/Storage.md
 ---
-
-# Storage
 
 The `Storage` module provides a lightweight persistent key-value storage system for scripts. It allows scripts to save and retrieve simple typed data as well as binary data (`Data`). All data is persisted asynchronously in the background.
 
@@ -47579,8 +47505,6 @@ setTimeout(() => {
 url: /doc/View Modifiers/Animation and Transition.md
 ---
 
-# Animation and Transition
-
 Scripting Animation & Transition System
 
 # Animation Class
@@ -49239,8 +49163,6 @@ function Example() {
 url: /doc/View Modifiers/Liquid Glass/Glass Effect Transition/index.md
 ---
 
-# Glass Effect Transition
-
 This document provides a comprehensive explanation of **Glass Effect Transitions** in Scripting, including how Liquid Glass materials animate during view changes, how geometry matching works, and how to correctly use `NamespaceReader` to access SwiftUI’s `@Namespace` within TSX code.
 
 Contents include:
@@ -49724,8 +49646,6 @@ run()
 ---
 url: /doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md
 ---
-
-# Liquid Glass Effect
 
 Scripting provides full support for the new **Liquid Glass** visual system introduced in iOS 26. This includes `glassEffect`, `GlassEffectContainer`, `UIGlass`, and related geometry-matching and transition APIs. These APIs allow scripts to create rich translucent materials, fluid glass shapes, matched geometry animations, and unioned glass regions directly within TSX.
 
@@ -50497,8 +50417,6 @@ You can define color in three ways:
 url: /doc/View Modifiers/List and Section View Modifiers/New List View Modifiers.md
 ---
 
-# New List View Modifiers
-
 # Overview of Properties
 
 | Property                     | Type                                                        | Availability | Description                                                        |   |   |
@@ -50721,8 +50639,6 @@ Adds custom UI elements such as buttons or menus to the section header’s trail
 url: /doc/View Modifiers/LiveActivity View Modifiers.md
 ---
 
-# LiveActivity View Modifiers
-
 Scripting provides two view modifiers that customize the appearance of Live Activities on the Lock Screen. These modifiers control the background tint color of the Live Activity and the foreground color of the system-provided action button.
 
 These properties are designed to match SwiftUI’s Live Activity customization options.
@@ -50916,7 +50832,7 @@ In this example:
 url: /doc/View Modifiers/Picture in Pictuer View Modifiers.md
 ---
 
-# Picture in Pictuer View Modifiers PRO
+# Picture in Pictuer View Modifiers
 
 Scripting provides a set of Picture in Picture (PiP) view modifiers that allow developers to render any SwiftUI view inside a system PiP window.
 These APIs abstract away the underlying `AVPictureInPicture` implementation and provide a declarative, script-friendly way to control PiP presentation, interaction, and lifecycle.
@@ -51482,8 +51398,6 @@ url: /doc/View Modifiers/Redaction View Modifiers.md
 
 # Redaction View Modifiers
 
-# Redaction View Modifiers
-
 The Scripting app supports view modifiers for applying redaction to a view hierarchy. Redaction allows views to display placeholder, obscured, or invalidated content, commonly used to indicate loading states, protect sensitive data, or mark content as outdated.
 
 These modifiers closely follow SwiftUI's `redacted(reason:)` and `unredacted()` API behavior.
@@ -51996,8 +51910,6 @@ These modifiers work together to create a responsive, interactive search experie
 ---
 url: /doc/View Modifiers/Set environment values (environments).md
 ---
-
-# Set environment values (environments)
 
 The `environments` view modifier allows injecting specific environment values into the current view hierarchy.
 It serves a role similar to SwiftUI’s `.environment()`, but with a more explicit and controlled design tailored for Scripting.
@@ -57974,8 +57886,6 @@ By adjusting the `toggleStyle`, you control how your toggle looks and feels. Whe
 url: /doc/View Modifiers/toolbar/Use with Toolbar Component.md
 ---
 
-# Use with Toolbar Component
-
 In Scripting, views can populate their navigation bar or toolbar area using either the original `ToolBarProps` object or the declarative component-based API that mirrors SwiftUI’s toolbar system. This document explains in detail how to use the `Toolbar`, `ToolbarItem`, `ToolbarItemGroup`, `ToolbarSpacer`, and `DefaultToolbarItem` components, including parameters, types, and usage patterns.
 
 ***
@@ -61811,8 +61721,6 @@ run()
 url: /doc/Views/Charts/RuleChart/index.md
 ---
 
-# RuleChart
-
 # `RuleChart`
 
 The `RuleChart` component displays a range or duration for each labeled item as a horizontal or vertical rule. It is suitable for visualizing time spans, data ranges, or active periods across categories.
@@ -64833,8 +64741,6 @@ function MyEditor() {
 url: /doc/Views/EnvironmentValuesReader.md
 ---
 
-# EnvironmentValuesReader
-
 `EnvironmentValuesReader` is a Scripting component that allows you to read environment values from the current view hierarchy.
 It serves a similar role to SwiftUI’s `@Environment`, but with a more explicit and controlled design:
 **You must specify which environment keys you want to read**, and the component will inject only those values into the `children` callback.
@@ -65075,8 +64981,6 @@ function View() {
 ---
 url: /doc/Views/GeometryReader.md
 ---
-
-# GeometryReader
 
 `GeometryReader` in Scripting is the equivalent of SwiftUI’s GeometryReader. It provides layout information about the container in which its content is placed, including size, safe-area insets, and (on supported systems) container corner insets.
 
@@ -73843,8 +73747,6 @@ run()
 url: /doc/Views/ScrollViewReader.md
 ---
 
-# ScrollViewReader
-
 The **ScrollViewReader** component equivalent to SwiftUI’s ScrollViewReader, allowing scripts to programmatically control scrolling position within scrollable content such as `List` or `ScrollView`.
 
 ***
@@ -75758,8 +75660,6 @@ run()
 ---
 url: /doc/Views/View groupings/ForEach/index.md
 ---
-
-# ForEach
 
 The `ForEach` component renders a dynamic list of child views. It is used to display collections, create editable lists, and enable system-standard interactions such as swipe-to-delete. It is fully integrated with the Scripting app’s `Observable` state system and mirrors the design of SwiftUI’s `ForEach`.
 

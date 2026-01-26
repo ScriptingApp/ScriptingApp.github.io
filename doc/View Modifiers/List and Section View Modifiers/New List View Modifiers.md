@@ -1,5 +1,3 @@
-# New List View Modifiers
-
 # Overview of Properties
 
 | Property                     | Type                                                        | Availability | Description                                                        |   |   |

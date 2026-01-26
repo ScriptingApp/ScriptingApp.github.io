@@ -1,5 +1,3 @@
-# SnippetIntent PRO
-
 SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。它适用于：
 
 - 多步骤表单式交互

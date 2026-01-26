@@ -1,4 +1,4 @@
-# HealthKit 权限行为 PRO
+# HealthKit 权限行为
 
 在使用 Scripting 提供的 Health 模块访问 iOS 健康数据时，开发者需要了解 iOS HealthKit 特有的授权机制，以及 Scripting API 的行为设计。本说明文档将帮助你正确处理无权限时的情况，并提供开发建议。
 

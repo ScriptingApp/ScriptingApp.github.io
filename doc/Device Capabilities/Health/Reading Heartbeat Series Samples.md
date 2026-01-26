@@ -1,4 +1,4 @@
-# Reading Heartbeat Series Samples PRO
+# Reading Heartbeat Series Samples
 
 The Scripting app provides access to **heartbeat series samples** stored in Apple Health using the global API `Health.queryHeartbeatSeriesSamples()`. These samples represent beat-to-beat heartbeat intervals collected during workouts or background monitoring sessions (usually via Apple Watch).
 

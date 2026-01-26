@@ -1,4 +1,4 @@
-# 健康关联数据（HealthCorrelation） PRO
+# 健康关联数据（HealthCorrelation）
 
 `HealthCorrelation` 类表示一组彼此相关的健康样本。它提供接口用于访问和创建健康关联记录，这些记录将多个健康数据类型组合成一个整体，例如将饮食摄入与血压读数关联，或将排卵测试结果与月经流量数据相关联。
 

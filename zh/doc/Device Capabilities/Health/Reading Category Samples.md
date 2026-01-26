@@ -1,4 +1,4 @@
-# 读取分类数据（HealthCategorySample） PRO
+# 读取分类数据（HealthCategorySample）
 
 Scripting 应用支持通过全局函数 `Health.queryCategorySamples()` 访问 HealthKit 中的**分类健康数据**。分类样本表示某一健康事件或状态的记录，通常包括起止时间和一个离散的状态值，例如：睡眠分析、冥想记录、经期流量、排卵测试结果等。
 

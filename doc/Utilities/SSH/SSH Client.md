@@ -1,4 +1,4 @@
-# SSH Client PRO
+# SSH Client
 
 The `SSHClient` class provides an interface for connecting to a remote SSH server, executing commands, opening TTY or PTY sessions, transferring files via SFTP, and performing multi-hop SSH jumps. It supports both command-based and interactive terminal-based workflows.
 

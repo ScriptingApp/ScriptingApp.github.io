@@ -1,4 +1,4 @@
-# 健康分类值类型（HealthCategoryValue） PRO
+# 健康分类值类型（HealthCategoryValue）
 
 本文档列出了 `HealthCategorySample.create()` 及相关 API 中支持的所有 `HealthCategoryValue` 枚举类型。每个枚举值用于表示特定 `HealthCategoryType` 的分类结果。
 

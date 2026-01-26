@@ -1,4 +1,4 @@
-# HttpResponse（HTTP 响应） PRO
+# HttpResponse（HTTP 响应）
 
 `HttpResponse` 类表示服务器对客户端请求的响应对象。
 它定义了 HTTP 响应的状态码、响应体及头部信息，并提供多种便捷方法生成常见的标准响应（如 `ok`、`notFound`、`internalServerError` 等）。

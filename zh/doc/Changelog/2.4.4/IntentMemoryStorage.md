@@ -1,5 +1,3 @@
-# IntentMemoryStorage
-
 IntentMemoryStorage 是一个用于 **在多个 AppIntent 执行之间保留临时数据** 的内存存储系统。然而，它的生命周期并不严格绑定在单次 AppIntent 或 Script.exit 以上，而是由系统对 Extension 环境（Intent Extension / Widget Extension）的运行状态决定，因此具有一定的非确定性。
 
 以下文档基于你之前确认的完整版结构，并加入系统行为的解释。

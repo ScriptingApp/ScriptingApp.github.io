@@ -1,4 +1,4 @@
-# 健康活动摘要（HealthActivitySummary） PRO
+# 健康活动摘要（HealthActivitySummary）
 
 `HealthActivitySummary` 类用于访问用户每日健康活动的汇总数据，包括活跃能量消耗、锻炼时间、站立小时数等。该类支持不同的移动模式（如消耗能量或移动时间），可用于显示活动圆环的进度或生成自定义的健康日报表。
 

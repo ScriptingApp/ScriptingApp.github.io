@@ -1,4 +1,4 @@
-# BluetoothPeripheralManager PRO
+# BluetoothPeripheralManager
 
 The `BluetoothPeripheralManager` API enables your device to act as a Bluetooth Low Energy (BLE) peripheral. It allows you to:
 

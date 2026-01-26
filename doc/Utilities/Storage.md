@@ -1,5 +1,3 @@
-# Storage
-
 The `Storage` module provides a lightweight persistent key-value storage system for scripts. It allows scripts to save and retrieve simple typed data as well as binary data (`Data`). All data is persisted asynchronously in the background.
 
 By default, all values are stored in the **private domain** of the current script, which means other scripts cannot access them. To share data across multiple scripts, set the `shared: true` option to use the **shared domain** instead.

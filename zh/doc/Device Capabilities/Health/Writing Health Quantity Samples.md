@@ -1,4 +1,4 @@
-# 写入数量型数据（HealthQuantitySample） PRO
+# 写入数量型数据（HealthQuantitySample）
 
 Scripting 应用支持将数量型健康数据（例如步数、心率、体重、卡路里等）写入 Apple 的 HealthKit。你可以使用 `HealthQuantitySample` 类创建数据样本，并通过 `Health.saveQuantitySample()` 方法保存到健康数据库中。
 

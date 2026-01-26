@@ -1,4 +1,4 @@
-# 蓝牙外设管理器 PRO
+# 蓝牙外设管理器
 
 `BluetoothPeripheralManager` 提供将设备作为 BLE 外设运行的能力，允许你：
 

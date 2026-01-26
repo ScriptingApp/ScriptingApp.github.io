@@ -1,4 +1,4 @@
-# AppStore PRO
+# AppStore
 
 `AppStore` API 用于在 **不离开 Scripting 应用** 的情况下，展示 App Store 中某个应用的详情页面。
 该能力基于系统原生的 App Store 展示组件，适合用于实现 **应用推荐、应用收藏夹、关联应用跳转、生态扩展入口** 等场景。

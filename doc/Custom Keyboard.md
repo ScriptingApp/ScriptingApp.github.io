@@ -1,4 +1,4 @@
-# Custom Keyboard PRO
+# Custom Keyboard
 
 The `CustomKeyboard` namespace provides a comprehensive API for building fully custom keyboard UIs in the Scripting app. It allows you to create JSX-based keyboards, insert or modify text, query input state, respond to user interaction, and control keyboard layout or navigation.
 

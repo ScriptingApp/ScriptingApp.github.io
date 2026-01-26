@@ -1,4 +1,4 @@
-# HealthCharacteristicType PRO
+# HealthCharacteristicType
 
 This section describes enums related to **user health profile attributes** and **activity configuration**, including biological sex, blood type, skin type, wheelchair use, and activity move mode. These enums are used with the `Health` API to retrieve user profile data from HealthKit.
 

@@ -1,5 +1,3 @@
-# ForEach
-
 `ForEach` 是 Scripting 中用于渲染可变数量子视图的组件，用于构建动态列表、可编辑列表，以及支持系统级的删除与移动行为。其设计参考 SwiftUI 的 `ForEach`，并与 Scripting 的 `Observable` 状态管理系统深度集成。
 
 组件支持两种模式：

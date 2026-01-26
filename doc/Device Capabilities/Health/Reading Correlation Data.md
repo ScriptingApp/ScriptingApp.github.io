@@ -1,4 +1,4 @@
-# Reading Correlation Data PRO
+# Reading Correlation Data
 
 The Scripting app allows you to query **correlated health data** using the global `Health.queryCorrelations()` API. A correlation groups related health samples into a single logical event — such as a blood pressure reading (systolic and diastolic) or a food intake record (calories, protein, etc.).
 

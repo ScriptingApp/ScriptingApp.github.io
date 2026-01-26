@@ -1,5 +1,3 @@
-# 设置环境变量 (environments)
-
 `environments` 是 Scripting 新增的视图修饰符，用于向当前视图树（View Hierarchy）注入特定的 environment values。
 它的作用与 SwiftUI 的 `.environment()` 类似，但基于 Scripting 的设计进行了显式声明和类型收敛，避免隐式行为。
 

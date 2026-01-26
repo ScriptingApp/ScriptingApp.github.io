@@ -1,5 +1,3 @@
-# IntentMemoryStorage
-
 IntentMemoryStorage is an in-memory storage mechanism used inside AppIntent execution environments.
 It allows multiple AppIntents—such as multi-step workflows involving SnippetIntents—to share temporary data.
 

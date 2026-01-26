@@ -155,7 +155,7 @@ ControlWidget.present(
 url: /zh/doc/Assistant/Assistant Conversation APIs.md
 ---
 
-# 智能助手会话 API PRO
+# 智能助手会话 API
 
 Conversation API 用于**启动、控制和展示一个由系统托管的 Assistant 对话会话**。
 该会话对应一个**完整的聊天页面（Chat Page）**，由 Scripting App 统一管理 UI、状态和模型交互。
@@ -510,7 +510,7 @@ await Assistant.present()
 url: /zh/doc/Assistant/Assistant Quick Start.md
 ---
 
-# 快速了解智能助手 PRO
+# 快速了解智能助手
 
 Scripting 的 Assistant API 提供了三类能力，分别面向 **数据处理**、**流式输出** 和 **交互式聊天** 三种不同使用场景。
 在使用之前，建议先明确你的需求属于哪一类。
@@ -668,7 +668,7 @@ await Assistant.present()
 url: /zh/doc/Assistant/requestStreaming.md
 ---
 
-# 请求流式数据 PRO
+# 请求流式数据
 
 `requestStreaming` 用于向 Assistant 请求**流式输出（Streaming Response）**。
 与一次性返回完整结果不同，该 API 会在模型生成内容的过程中**持续返回数据片段（Chunk）**，调用方可以边接收边处理，从而实现：
@@ -985,7 +985,7 @@ for await (const chunk of stream) {
 url: /zh/doc/Assistant/requestStructuredData.md
 ---
 
-# 请求结构化数据 PRO
+# 请求结构化数据
 
 `requestStructuredData` 用于向 Assistant 请求**严格符合指定 JSON Schema 的结构化 JSON 数据**。
 该 API 适合在你需要**可预测、可直接用于程序逻辑**的数据结果时使用，而不是自由文本。
@@ -1332,7 +1332,7 @@ const summary = await Assistant.requestStructuredData<ImageSummary>(
 url: /zh/doc/AssistantTool.md
 ---
 
-# 智能助手工具 PRO
+# 智能助手工具
 
 Assistant Tool 是 Scripting 应用中为智能助手（Assistant）提供系统功能扩展的机制。通过定义和实现 Assistant Tool，开发者可以为 Assistant 提供设备能力访问、文件读写操作、数据分析处理等辅助功能，提升 Assistant 的智能性和实用性。
 
@@ -2439,8 +2439,6 @@ export function AnimatedList() {
 url: /zh/doc/Changelog/2.4.3/EnvironmentValuesReader.md
 ---
 
-# EnvironmentValuesReader
-
 `EnvironmentValuesReader` 是 Scripting 提供的一个组件，用于读取 SwiftUI 风格的环境值（Environment Values）。
 它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。
 
@@ -2682,8 +2680,6 @@ function View() {
 ---
 url: /zh/doc/Changelog/2.4.3/ForEach/index.md
 ---
-
-# ForEach
 
 `ForEach` 是 Scripting 中用于渲染可变数量子视图的组件，用于构建动态列表、可编辑列表，以及支持系统级的删除与移动行为。其设计参考 SwiftUI 的 `ForEach`，并与 Scripting 的 `Observable` 状态管理系统深度集成。
 
@@ -2940,8 +2936,6 @@ run()
 url: /zh/doc/Changelog/2.4.3/GeometryReader.md
 ---
 
-# GeometryReader
-
 `GeometryReader` 是 Scripting 中与 SwiftUI 等效的几何布局读取组件。
 它能够在视图构建阶段提供当前容器的尺寸、边距、安全区域和角落内边距等信息，使开发者可以根据环境动态布局内容。
 
@@ -3155,8 +3149,6 @@ function View() {
 url: /zh/doc/Changelog/2.4.3/LiveActivity View Modifiers.md
 ---
 
-# 实时活动（LiveActivity）修饰符
-
 Scripting 支持与 SwiftUI 等效的 Live Activity 外观控制修饰符。这些修饰符专门用于 **锁屏（Lock Screen）中的 Live Activity 界面**，用于自定义背景色和系统动作按钮颜色。
 
 通过为 Activity UI 中的 `content` 视图设置这些修饰符，可使 Live Activity 更符合品牌风格或特定活动主题。
@@ -3256,8 +3248,6 @@ function ActivityView() {
 ---
 url: /zh/doc/Changelog/2.4.3/LiveActivity.md
 ---
-
-# 实时活动（灵动岛）
 
 `LiveActivity` API 允许你的脚本在 iOS 的锁屏界面以及支持的设备上的动态岛中展示实时数据。通过该 API，你可以创建、更新并结束 Live Activity，同时监听其生命周期状态和系统支持情况。
 
@@ -4143,7 +4133,7 @@ run()
 url: /zh/doc/Changelog/2.4.3/SSH Client.md
 ---
 
-# SSH 客户端 PRO
+# SSH 客户端
 
 `SSHClient` 类用于连接远程 SSH 服务器，支持执行命令、打开 TTY/PTY 会话、使用 SFTP 进行文件传输，以及通过跳板主机进行多级 SSH 跳转。该类是建立和管理 SSH 会话的核心接口。
 
@@ -4447,8 +4437,6 @@ await ssh.close()
 url: /zh/doc/Changelog/2.4.3/ScrollViewReader.md
 ---
 
-# ScrollViewReader
-
 **ScrollViewReader** 组件，用于在脚本中获得对可滚动内容的编程化控制能力，使开发者能够在运行时滚动至任意视图位置，包括列表项、文本节点等。
 
 ScrollViewReader 与 SwiftUI 的行为保持一致：
@@ -4652,8 +4640,6 @@ withAnimation(() => {
 ---
 url: /zh/doc/Changelog/2.4.3/Set environment values (environments).md
 ---
-
-# 设置环境变量 (environments)
 
 `environments` 是 Scripting 新增的视图修饰符，用于向当前视图树（View Hierarchy）注入特定的 environment values。
 它的作用与 SwiftUI 的 `.environment()` 类似，但基于 Scripting 的设计进行了显式声明和类型收敛，避免隐式行为。
@@ -4997,8 +4983,6 @@ const content = FileManager.readAsStringSync(path)
 ---
 url: /zh/doc/Changelog/2.4.3/useObservable.md
 ---
-
-# useObservable
 
 Scripting 提供一套响应式状态系统，由 `Observable<T>` 与 `useObservable<T>` 组成，用于驱动组件渲染、与动画系统协同工作，并与 SwiftUI 的双向绑定能力保持一致（例如 `List(selection:)`、`NavigationStack(path:)` 等未来扩展接口）。
 
@@ -5728,8 +5712,6 @@ contentShape?: Shape | {
 url: /zh/doc/Changelog/2.4.4/Glass Effect Transition/index.md
 ---
 
-# 玻璃效果过渡效果
-
 Liquid Glass 在 iOS 26 引入了更先进的几何匹配与材质过渡能力。
 Scripting 完整支持这些特性，并通过 `glassEffectTransition`、`glassEffectID`、`glassEffectUnion`、`GlassEffectContainer` 以及 `NamespaceReader` 组合实现自然、顺滑且结构化的玻璃动画体验。
 
@@ -6204,8 +6186,6 @@ run()
 url: /zh/doc/Changelog/2.4.4/Intent.continueInForeground.md
 ---
 
-# Intent.continueInForeground PRO
-
 `Intent.continueInForeground` 用于在脚本从 Shortcuts 中后台执行时，**请求系统将流程转移到 Scripting App 的前台继续运行**。
 此过程需要用户明确确认。
 
@@ -6408,8 +6388,6 @@ runIntent();
 ---
 url: /zh/doc/Changelog/2.4.4/Intent.requestConfirmation.md
 ---
-
-# Intent.requestConfirmation PRO
 
 `Intent.requestConfirmation` 用于在脚本执行过程中，**向用户请求确认某项操作**。
 调用后，系统会暂停脚本执行，并展示一个基于 **SnippetIntent 的 UI** 作为确认界面，同时可显示提示对话内容。
@@ -6627,8 +6605,6 @@ runIntent();
 ---
 url: /zh/doc/Changelog/2.4.4/IntentMemoryStorage.md
 ---
-
-# IntentMemoryStorage
 
 IntentMemoryStorage 是一个用于 **在多个 AppIntent 执行之间保留临时数据** 的内存存储系统。然而，它的生命周期并不严格绑定在单次 AppIntent 或 Script.exit 以上，而是由系统对 Extension 环境（Intent Extension / Widget Extension）的运行状态决定，因此具有一定的非确定性。
 
@@ -7003,8 +6979,6 @@ shared：
 ---
 url: /zh/doc/Changelog/2.4.4/Liquid Glass Effect/index.md
 ---
-
-# 液态玻璃效果
 
 **GlassEffect、GlassEffectContainer、UIGlass** 等相关 API 基于 SwiftUI 新引入的 Liquid Glass 技术，让开发者能够在脚本中以 TSX 方式使用流体化、动态的玻璃材质效果，并支持过渡动画、匹配几何、联合玻璃区域等高级特性。
 
@@ -7748,8 +7722,6 @@ const expanded = useObservable(false)
 url: /zh/doc/Changelog/2.4.4/New List View Modifiers.md
 ---
 
-# 新的 List 视图修饰符
-
 # 属性概览
 
 | 属性名                          | 类型                                                          | 系统要求      | 说明                         |
@@ -8398,8 +8370,6 @@ run()
 url: /zh/doc/Changelog/2.4.4/SFTP Client.md
 ---
 
-# SFTP 客户端 PRO
-
 `SFTPClient` 用于通过 SSH 连接访问远程文件系统，基于 **SFTP 协议**。
 它提供目录操作、文件操作、路径解析等能力，并可通过 `openFile()` 获得更强大的 `SFTPFile` 对象执行读取、写入等低层操作。
 
@@ -8655,8 +8625,6 @@ await sftp.close()
 url: /zh/doc/Changelog/2.4.4/SFTP File.md
 ---
 
-# SFTP 文件 PRO
-
 `SFTPFile` 表示一个已经通过 SFTP 打开的远程文件句柄。
 通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。
 
@@ -8815,8 +8783,6 @@ await file.close()
 ---
 url: /zh/doc/Changelog/2.4.4/SnippetIntent.md
 ---
-
-# SnippetIntent PRO
 
 SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。它适用于：
 
@@ -9115,8 +9081,6 @@ runIntent()
 ---
 url: /zh/doc/Changelog/2.4.4/TabView.md
 ---
-
-# TabView
 
 Scripting 提供了与最新 iOS TabView 体系一致的 API：
 通过 `TabView`、`Tab`、`TabSection` 组织界面结构，使应用能够在 iOS 18+ 环境下完整支持多标签视图、侧边栏标签、可定制布局等。
@@ -9566,8 +9530,6 @@ resetVisibility(): void
 ---
 url: /zh/doc/Changelog/2.4.4/Use with Toolbar Component.md
 ---
-
-# 使用 Toolbar 组件
 
 Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `ToolBarProps` 对象，也支持使用与 SwiftUI 结构一致的 `<Toolbar>`、`<ToolbarItem>`、`<ToolbarItemGroup>`、`<ToolbarSpacer>`、`<DefaultToolbarItem>` 等组件，构建更灵活、更强大的导航栏和工具栏布局。
 
@@ -10858,7 +10820,7 @@ PiP 状态通常按以下顺序变化：
 url: /zh/doc/Changelog/2.4.5/AppStore.md
 ---
 
-# AppStore PRO
+# AppStore
 
 `AppStore` API 用于在 **不离开 Scripting 应用** 的情况下，展示 App Store 中某个应用的详情页面。
 该能力基于系统原生的 App Store 展示组件，适合用于实现 **应用推荐、应用收藏夹、关联应用跳转、生态扩展入口** 等场景。
@@ -11019,7 +10981,7 @@ function AppList() {
 url: /zh/doc/Changelog/2.4.5/Assistant/Assistant Conversation APIs.md
 ---
 
-# 智能助手会话 API PRO
+# 智能助手会话 API
 
 Conversation API 用于**启动、控制和展示一个由系统托管的 Assistant 对话会话**。
 该会话对应一个**完整的聊天页面（Chat Page）**，由 Scripting App 统一管理 UI、状态和模型交互。
@@ -11374,7 +11336,7 @@ await Assistant.present()
 url: /zh/doc/Changelog/2.4.5/Assistant/Assistant Quick Start.md
 ---
 
-# 快速了解智能助手 PRO
+# 快速了解智能助手
 
 Scripting 的 Assistant API 提供了三类能力，分别面向 **数据处理**、**流式输出** 和 **交互式聊天** 三种不同使用场景。
 在使用之前，建议先明确你的需求属于哪一类。
@@ -11532,7 +11494,7 @@ await Assistant.present()
 url: /zh/doc/Changelog/2.4.5/Assistant/requestStreaming.md
 ---
 
-# 请求流式数据 PRO
+# 请求流式数据
 
 `requestStreaming` 用于向 Assistant 请求**流式输出（Streaming Response）**。
 与一次性返回完整结果不同，该 API 会在模型生成内容的过程中**持续返回数据片段（Chunk）**，调用方可以边接收边处理，从而实现：
@@ -11849,7 +11811,7 @@ for await (const chunk of stream) {
 url: /zh/doc/Changelog/2.4.5/Assistant/requestStructuredData.md
 ---
 
-# 请求结构化数据 PRO
+# 请求结构化数据
 
 `requestStructuredData` 用于向 Assistant 请求**严格符合指定 JSON Schema 的结构化 JSON 数据**。
 该 API 适合在你需要**可预测、可直接用于程序逻辑**的数据结果时使用，而不是自由文本。
@@ -12195,8 +12157,6 @@ const summary = await Assistant.requestStructuredData<ImageSummary>(
 ---
 url: /zh/doc/Changelog/2.4.5/CalendarEvent.md
 ---
-
-# 日历事件
 
 `CalendarEvent` API 用于在 iOS 日历中创建、读取、编辑与管理事件。
 开发者可以操作事件的标题、时间、地点、参与者、重复规则、提醒（EventAlarm）、事件可用性以及地理位置信息，并且可以使用系统提供的创建/编辑界面。
@@ -12619,8 +12579,6 @@ console.log("事件已移除")
 ---
 url: /zh/doc/Changelog/2.4.5/DateFormatter.md
 ---
-
-# 日期格式化（DateFormatter）
 
 `DateFormatter` 类用于将 `Date` 类型格式化为字符串，或将字符串解析为 `Date`。
 该类封装了 iOS 的 `DateFormatter` 能力，适用于格式化日期、时间、本地化展示、农历日期展示（通过切换日历）、相对日期显示等场景。
@@ -14559,7 +14517,7 @@ run()
 url: /zh/doc/Changelog/2.4.5/Picture in Pictuer View Modifiers.md
 ---
 
-# Picture in Picture （画中画） PRO
+# Picture in Picture （画中画）
 
 Scripting 提供了一组 PiP（Picture in Picture，画中画）相关的 View Modifiers，用于将任意 SwiftUI View 以系统级 PiP 窗口的形式呈现。
 开发者无需直接接触底层 AVPictureInPicture API，即可完整控制 PiP 的展示、隐藏、交互行为及生命周期。
@@ -14896,8 +14854,6 @@ PiP 的设计目标是：
 ---
 url: /zh/doc/Changelog/2.4.5/Reminder.md
 ---
-
-# 提醒事项
 
 `Reminder` API 用于在 iOS 日历系统中创建、编辑和管理提醒事项。
 它支持通过 `DateComponents` 设置截止日期、管理完成状态、设置优先级、添加备注、配置重复规则，以及使用提醒的各种相关属性，例如闹钟（EventAlarm）、参与者信息、状态检测属性等。
@@ -16239,7 +16195,7 @@ function View() {
 url: /zh/doc/Changelog/2.4.5/VideoRecorder.md
 ---
 
-# 视频录制（VideoRecorder） PRO
+# 视频录制（VideoRecorder）
 
 `VideoRecorder` 用于在 Scripting 中创建和控制一个可编程的视频录制会话，完整封装了相机选择、音视频采集、编码、暂停/恢复、缩放、对焦、补光灯控制以及最终文件写入流程。
 
@@ -20254,7 +20210,7 @@ FileManager.removeFileBookmark(bookmarkName)
 url: /zh/doc/Control Widget.md
 ---
 
-# 控制中心的小组件 PRO
+# 控制中心的小组件
 
 Scripting 支持用户在控制中心或锁屏界面添加按钮（Button）或开关（Toggle）控件，并通过绑定脚本 `AppIntent` 实现自定义逻辑。控件支持状态反馈、图标动态切换、隐私显示控制等能力。
 
@@ -20402,7 +20358,7 @@ run()
 url: /zh/doc/Custom Keyboard.md
 ---
 
-# 自定义键盘 PRO
+# 自定义键盘
 
 `CustomKeyboard` 是 Scripting 提供的全局命名空间，用于开发 iOS 自定义键盘扩展。在 `keyboard.tsx` 脚本中使用该 API，可以渲染自定义键盘 UI，并访问当前输入状态、插入文本、控制光标、监听输入事件、调整高度，并在多个脚本之间导航切换。
 
@@ -20819,7 +20775,7 @@ for (const item of metadata) {
 url: /zh/doc/Device Capabilities/AppStore.md
 ---
 
-# AppStore PRO
+# AppStore
 
 `AppStore` API 用于在 **不离开 Scripting 应用** 的情况下，展示 App Store 中某个应用的详情页面。
 该能力基于系统原生的 App Store 展示组件，适合用于实现 **应用推荐、应用收藏夹、关联应用跳转、生态扩展入口** 等场景。
@@ -21556,7 +21512,7 @@ run()
 url: /zh/doc/Device Capabilities/BackgroundKeeper.md
 ---
 
-# 后台保活 PRO
+# 后台保活
 
 `BackgroundKeeper` API 用于控制 **Scripting App** 的后台保活行为，使脚本在应用切换到后台后，能够在一定时间内继续运行。
 这在需要保持持续操作（如网络连接、数据同步或后台任务）的场景中非常有用。
@@ -21683,7 +21639,7 @@ async function runBackgroundTask() {
 url: /zh/doc/Device Capabilities/Bluetooth/BluetoothCentralManager.md
 ---
 
-# 蓝牙中央设备管理器 PRO
+# 蓝牙中央设备管理器
 
 `BluetoothCentralManager` 提供了用于操作 BLE 中央设备的核心接口，包括扫描附近蓝牙设备、连接外设、获取已知设备、断开连接等能力。适用于实现如外设控制、数据采集、IoT通信等典型蓝牙场景。
 
@@ -21940,7 +21896,7 @@ await BluetoothCentralManager.startScan((peripheral) => {
 url: /zh/doc/Device Capabilities/Bluetooth/BluetoothCharacteristic.md
 ---
 
-# 蓝牙服务特征值 PRO
+# 蓝牙服务特征值
 
 `BluetoothCharacteristic` 表示蓝牙服务（`BluetoothService`）中的一个特征值，是 BLE 设备数据交互的核心单元。每个特征值由唯一 UUID 标识，并定义了支持的操作类型、当前值、通知状态等属性。
 
@@ -22091,7 +22047,7 @@ await peripheral.unsubscribe(characteristic)
 url: /zh/doc/Device Capabilities/Bluetooth/BluetoothPeripheral.md
 ---
 
-# 蓝牙外设 PRO
+# 蓝牙外设
 
 `BluetoothPeripheral` 表示一个 BLE 外围设备对象，支持读取设备信息、连接状态、发现服务与特征值、读取写入数据、订阅通知等。它是蓝牙通信的主要交互对象。
 
@@ -22351,7 +22307,7 @@ await peripheral.subscribe(characteristic, (error, value) => {
 url: /zh/doc/Device Capabilities/Bluetooth/BluetoothPeripheralManager.md
 ---
 
-# 蓝牙外设管理器 PRO
+# 蓝牙外设管理器
 
 `BluetoothPeripheralManager` 提供将设备作为 BLE 外设运行的能力，允许你：
 
@@ -22755,7 +22711,7 @@ BluetoothPeripheralManager.onReadCharacteristicValue = async (id, offset, centra
 url: /zh/doc/Device Capabilities/Bluetooth/BluetoothService.md
 ---
 
-# 蓝牙服务 PRO
+# 蓝牙服务
 
 `BluetoothService` 表示一个 BLE（低功耗蓝牙）服务。服务是外围设备中功能的逻辑分组，包含一个或多个特征值（`Characteristic`），也可以包含对其他服务的引用（包含服务）。
 
@@ -23079,8 +23035,6 @@ for (const calendar of selectedCalendars) {
 ---
 url: /zh/doc/Device Capabilities/CalendarEvent.md
 ---
-
-# 日历事件
 
 `CalendarEvent` API 用于在 iOS 日历中创建、读取、编辑与管理事件。
 开发者可以操作事件的标题、时间、地点、参与者、重复规则、提醒（EventAlarm）、事件可用性以及地理位置信息，并且可以使用系统提供的创建/编辑界面。
@@ -24545,7 +24499,7 @@ await reminder.save()
 url: /zh/doc/Device Capabilities/FontPicker.md
 ---
 
-# FontPicker（字体选择器） PRO
+# FontPicker（字体选择器）
 
 `FontPicker` 命名空间提供了在系统中选择字体的能力。
 它会调用系统字体选择器，让用户从可用字体列表中选取字体，并返回所选字体的 **PostScript 名称**。
@@ -24714,7 +24668,7 @@ run()
 url: /zh/doc/Device Capabilities/Health/HealthActivitySummary.md
 ---
 
-# 健康活动摘要（HealthActivitySummary） PRO
+# 健康活动摘要（HealthActivitySummary）
 
 `HealthActivitySummary` 类用于访问用户每日健康活动的汇总数据，包括活跃能量消耗、锻炼时间、站立小时数等。该类支持不同的移动模式（如消耗能量或移动时间），可用于显示活动圆环的进度或生成自定义的健康日报表。
 
@@ -24834,7 +24788,7 @@ async function showTodaySummary() {
 url: /zh/doc/Device Capabilities/Health/HealthCategorySample.md
 ---
 
-# 健康分类数据（HealthCategorySample） PRO
+# 健康分类数据（HealthCategorySample）
 
 `HealthCategorySample` 表示一条基于分类的健康事件记录，例如睡眠分析、月经流量、排卵测试结果等。每条样本通常具有一个时间区间以及一个类别值，适用于记录健康相关事件的状态或发生情况。
 
@@ -24974,7 +24928,7 @@ const result = HealthCategorySample.create({
 url: /zh/doc/Device Capabilities/Health/HealthCategoryType.md
 ---
 
-# 健康分类数据（HealthCategoryType） PRO
+# 健康分类数据（HealthCategoryType）
 
 `HealthCategoryType` 用于表示离散型的健康状态或事件。它们通常为“是否发生”的记录（如：是否怀孕、是否进行正念训练、是否存在某种症状），适用于症状追踪、睡眠分析、生殖健康记录、环境暴露监测等场景。
 
@@ -25136,7 +25090,7 @@ for (const session of results) {
 url: /zh/doc/Device Capabilities/Health/HealthCategoryValue Types.md
 ---
 
-# 健康分类值类型（HealthCategoryValue） PRO
+# 健康分类值类型（HealthCategoryValue）
 
 本文档列出了 `HealthCategorySample.create()` 及相关 API 中支持的所有 `HealthCategoryValue` 枚举类型。每个枚举值用于表示特定 `HealthCategoryType` 的分类结果。
 
@@ -25402,7 +25356,7 @@ await Health.saveCategorySample(sample)
 url: /zh/doc/Device Capabilities/Health/HealthCharacteristicType.md
 ---
 
-# 健康特征类型（HealthCharacteristicType） PRO
+# 健康特征类型（HealthCharacteristicType）
 
 本文档介绍与 HealthKit 中“个人健康档案”及“活动摘要”相关的枚举类型，主要用于获取或表示用户的静态健康特征信息（如性别、血型、皮肤类型、轮椅使用情况）以及运动模式设定。
 
@@ -25508,7 +25462,7 @@ if (mode === HealthActivityMoveMode.appleMoveTime) {
 url: /zh/doc/Device Capabilities/Health/HealthCorrelation.md
 ---
 
-# 健康关联数据（HealthCorrelation） PRO
+# 健康关联数据（HealthCorrelation）
 
 `HealthCorrelation` 类表示一组彼此相关的健康样本。它提供接口用于访问和创建健康关联记录，这些记录将多个健康数据类型组合成一个整体，例如将饮食摄入与血压读数关联，或将排卵测试结果与月经流量数据相关联。
 
@@ -25620,7 +25574,7 @@ for (const sample of correlation.quantitySamples) {
 url: /zh/doc/Device Capabilities/Health/HealthHeartbeatSeriesSample.md
 ---
 
-# 健康心跳序列数据（HealthHeartbeatSeriesSample） PRO
+# 健康心跳序列数据（HealthHeartbeatSeriesSample）
 
 `HealthHeartbeatSeriesSample` 类用于访问 **心跳序列样本（heartbeat series samples）**，它表示一段时间内记录的一系列心跳间隔（RR 间期），通常用于分析心律，识别心律不齐等情况。
 
@@ -25727,7 +25681,7 @@ async function fetchHeartbeatSeries() {
 url: /zh/doc/Device Capabilities/Health/HealthKit Permission Behavior.md
 ---
 
-# HealthKit 权限行为 PRO
+# HealthKit 权限行为
 
 在使用 Scripting 提供的 Health 模块访问 iOS 健康数据时，开发者需要了解 iOS HealthKit 特有的授权机制，以及 Scripting API 的行为设计。本说明文档将帮助你正确处理无权限时的情况，并提供开发建议。
 
@@ -25835,8 +25789,6 @@ try {
 ---
 url: /zh/doc/Device Capabilities/Health/HealthQuantitySample.md
 ---
-
-# 健康数量型数据（HealthQuantitySample） PRO
 
 `HealthQuantitySample` 表示一条健康数量类型的数据样本，例如一次心率测量、记录的步数或摄入的热量。它包含了关于该数据的类型、数值、时间区间、单位和可选的元数据信息。
 
@@ -26012,7 +25964,7 @@ console.log(`平均: ${avg}, 最大: ${max}, 最近: ${recent}`)
 url: /zh/doc/Device Capabilities/Health/HealthQuantityType.md
 ---
 
-# 健康数量型数据（HealthQuantityType） PRO
+# 健康数量型数据（HealthQuantityType）
 
 `HealthQuantityType` 用于指定你希望读取或写入的健康数据类型。每个标识符代表一种可度量的健康指标，涵盖身体测量、运动、营养、生理信号、环境暴露等多个维度。
 
@@ -26238,8 +26190,6 @@ const avg = stat?.averageQuantity(HealthUnit.count().divided(HealthUnit.minute()
 url: /zh/doc/Device Capabilities/Health/HealthStatistics.md
 ---
 
-# 健康统计（HealthStatistics） PRO
-
 `HealthStatistics` 类提供了对特定健康数量类型在指定时间范围内的**统计数据访问**。通过此类，你可以获取以下汇总信息：
 
 - 总持续时间（duration）
@@ -26394,7 +26344,7 @@ console.log("当前 App 的心率数据：", averageHR)
 url: /zh/doc/Device Capabilities/Health/HealthStatisticsCollection.md
 ---
 
-# 健康统计集合（HealthStatisticsCollection） PRO
+# 健康统计集合（HealthStatisticsCollection）
 
 `HealthStatisticsCollection` 类用于表示按时间分组的健康统计数据集合，如每日、每周或每月的汇总统计。集合中的每一项代表一个时间区间，并对应一个 `HealthStatistics` 实例，包含该时间段内的统计信息。
 
@@ -26489,7 +26439,7 @@ if (stat) {
 url: /zh/doc/Device Capabilities/Health/HealthUnit.md
 ---
 
-# 健康单位（HealthUnit） PRO
+# 健康单位（HealthUnit）
 
 `HealthUnit` 类用于表示 HealthKit 中各种度量单位。你可以使用它来构建基本单位（如公斤、米、升等）、带前缀的单位（如毫克、千米等），并支持进行乘法、除法、次方等单位组合运算。
 
@@ -26714,7 +26664,7 @@ console.log("能量摄入：", energyUnit)
 url: /zh/doc/Device Capabilities/Health/HealthWorkout.md
 ---
 
-# 健康锻炼数据（HealthWorkout） PRO
+# 健康锻炼数据（HealthWorkout）
 
 `HealthWorkout` 类提供了访问和分析 Apple 健康应用中锻炼数据的接口。每个锻炼实例代表一次完整的锻炼会话，包括活动类型、开始与结束时间、持续时长，以及相关的事件与统计数据。
 
@@ -26821,7 +26771,7 @@ function showWorkout(workout: HealthWorkout) {
 url: /zh/doc/Device Capabilities/Health/HealthWorkoutActivityType.md
 ---
 
-# 健康锻炼活动类型（HealthWorkoutActivityType） PRO
+# 健康锻炼活动类型（HealthWorkoutActivityType）
 
 此枚举定义了所有支持的锻炼活动类型，常用于创建或读取 HealthKit 中的健身记录。
 
@@ -26928,7 +26878,7 @@ const workoutType = HealthWorkoutActivityType.running
 url: /zh/doc/Device Capabilities/Health/HealthWorkoutEvent.md
 ---
 
-# 健康锻炼事件（HealthWorkoutEvent） PRO
+# 健康锻炼事件（HealthWorkoutEvent）
 
 `HealthWorkoutEvent` 类用于访问 Apple 健康中记录的锻炼事件。每个事件表示一次锻炼过程中的特定动作或时刻，例如暂停、继续、圈数记录、标记、或自动运动检测。
 
@@ -27014,7 +26964,7 @@ function logWorkoutEvent(event: HealthWorkoutEvent) {
 url: /zh/doc/Device Capabilities/Health/Query Statistics Collection.md
 ---
 
-# 查询统计数据集合（HealthStatisticsCollection） PRO
+# 查询统计数据集合（HealthStatisticsCollection）
 
 `Health.queryStatisticsCollection()` 方法用于按时间区间查询指定 `HealthQuantityType` 类型的**聚合统计数据**，例如每天、每周或每月的步数、心率等。它返回一个 `HealthStatisticsCollection` 实例，其中包含多个按时间间隔对齐的 `HealthStatistics` 对象。
 
@@ -27101,7 +27051,7 @@ for (const stat of stats) {
 url: /zh/doc/Device Capabilities/Health/Query Statistics.md
 ---
 
-# 查询统计数据（HealthStatistics） PRO
+# 查询统计数据（HealthStatistics）
 
 `queryStatistics` 方法用于查询某个健康数量类型在指定时间范围内的**聚合统计数据**，包括：
 
@@ -27243,7 +27193,7 @@ console.log("当前 App 的心率平均值：", averageHR)
 url: /zh/doc/Device Capabilities/Health/Reading Activity Summaries.md
 ---
 
-# 读取活动摘要（HealthActivitySummary） PRO
+# 读取活动摘要（HealthActivitySummary）
 
 Scripting 应用通过全局函数 `Health.queryActivitySummaries()` 提供对 Apple Health 每日活动摘要数据的访问。这些摘要包含 Apple Watch 追踪的 **移动（Move）**、**锻炼（Exercise）** 和 **站立（Stand）** 目标，以及完成情况和历史趋势。
 
@@ -27366,7 +27316,7 @@ fetchLastWeek()
 url: /zh/doc/Device Capabilities/Health/Reading Category Samples.md
 ---
 
-# 读取分类数据（HealthCategorySample） PRO
+# 读取分类数据（HealthCategorySample）
 
 Scripting 应用支持通过全局函数 `Health.queryCategorySamples()` 访问 HealthKit 中的**分类健康数据**。分类样本表示某一健康事件或状态的记录，通常包括起止时间和一个离散的状态值，例如：睡眠分析、冥想记录、经期流量、排卵测试结果等。
 
@@ -27498,7 +27448,7 @@ console.log(`共找到 ${sessions.length} 条冥想记录`)
 url: /zh/doc/Device Capabilities/Health/Reading Characteristic Data.md
 ---
 
-# 读取特征数据 PRO
+# 读取特征数据
 
 HealthKit 中的 **特征数据** 指的是用户个人的静态属性，如出生日期、生物性别、血型、皮肤类型、是否使用轮椅，以及活动移动模式等。这些信息通常由用户在“健康”App 中设置，属于只读数据。
 
@@ -27672,7 +27622,7 @@ await Health.activityMoveMode()
 url: /zh/doc/Device Capabilities/Health/Reading Correlation Data.md
 ---
 
-# 读取关联数据（HealthCorrelation） PRO
+# 读取关联数据（HealthCorrelation）
 
 Scripting 应用支持通过全局 API `Health.queryCorrelations()` 查询 HealthKit 中的**相关健康数据**。相关数据用于表示一组相互关联的健康样本，例如：
 
@@ -27831,7 +27781,7 @@ try {
 url: /zh/doc/Device Capabilities/Health/Reading Heartbeat Series Samples.md
 ---
 
-# 读取心跳序列数据（HealthHeartbeatSeriesSample） PRO
+# 读取心跳序列数据（HealthHeartbeatSeriesSample）
 
 Scripting 应用通过全局函数 `Health.queryHeartbeatSeriesSamples()` 提供对 Apple Health 中**心跳序列数据**的访问。该数据代表 Apple Watch 在锻炼或静息状态下记录的一系列连续心跳间隔（R-R 间隔），可用于分析心律稳定性与频率变化。
 
@@ -27941,7 +27891,7 @@ for (const sample of results) {
 url: /zh/doc/Device Capabilities/Health/Reading Quantity Samples.md
 ---
 
-# 读取数量型数据（HealthQuantitySample） PRO
+# 读取数量型数据（HealthQuantitySample）
 
 Scripting 应用支持通过全局 API `Health.queryQuantitySamples()` 查询 HealthKit 中的**数量型健康数据**，例如步数、心率、体重、卡路里、距离等。
 
@@ -28094,7 +28044,7 @@ try {
 url: /zh/doc/Device Capabilities/Health/Reading Workout Samples.md
 ---
 
-# 读取锻炼数据（HealthWorkout） PRO
+# 读取锻炼数据（HealthWorkout）
 
 Scripting 应用支持通过全局函数 `Health.queryWorkouts()` 从 HealthKit 查询**锻炼记录**。Workout 表示一次完整的身体活动，如跑步、步行、游泳、骑行、力量训练等。
 
@@ -28244,7 +28194,7 @@ for (const event of workout.workoutEvents || []) {
 url: /zh/doc/Device Capabilities/Health/Writing Health Category Samples.md
 ---
 
-# 写入分类数据（HealthCategorySample） PRO
+# 写入分类数据（HealthCategorySample）
 
 Scripting 应用支持将分类健康数据（如睡眠状态、冥想记录、月经流量、排卵测试结果等）写入 Apple HealthKit。你可以通过 `HealthCategorySample` 类创建分类数据样本，并使用 `Health.saveCategorySample()` 方法将其保存到健康数据库中。
 
@@ -28368,7 +28318,7 @@ writeSleepData()
 url: /zh/doc/Device Capabilities/Health/Writing Health Correlation Data.md
 ---
 
-# 写入关联数据（HealthCorrelation） PRO
+# 写入关联数据（HealthCorrelation）
 
 Scripting 应用允许你使用全局 API `HealthCorrelation.create()` 和 `Health.saveCorrelation()` 向 Apple HealthKit 写入**相关健康数据**。相关数据表示多个健康样本之间的逻辑关联，例如：
 
@@ -28530,7 +28480,7 @@ writeBloodPressure()
 url: /zh/doc/Device Capabilities/Health/Writing Health Quantity Samples.md
 ---
 
-# 写入数量型数据（HealthQuantitySample） PRO
+# 写入数量型数据（HealthQuantitySample）
 
 Scripting 应用支持将数量型健康数据（例如步数、心率、体重、卡路里等）写入 Apple 的 HealthKit。你可以使用 `HealthQuantitySample` 类创建数据样本，并通过 `Health.saveQuantitySample()` 方法保存到健康数据库中。
 
@@ -33012,8 +32962,6 @@ await event.save()
 url: /zh/doc/Device Capabilities/Reminder.md
 ---
 
-# 提醒事项
-
 `Reminder` API 用于在 iOS 日历系统中创建、编辑和管理提醒事项。
 它支持通过 `DateComponents` 设置截止日期、管理完成状态、设置优先级、添加备注、配置重复规则，以及使用提醒的各种相关属性，例如闹钟（EventAlarm）、参与者信息、状态检测属性等。
 
@@ -34742,7 +34690,7 @@ run()
 url: /zh/doc/Device Capabilities/Translation.md
 ---
 
-# 翻译 PRO
+# 翻译
 
 `Translation` API 提供了将文本在不同语言之间翻译的能力，支持单条文本和批量文本的翻译，适用于 **iOS 18.0 及以上系统**。
 
@@ -34875,7 +34823,7 @@ console.log(results)
 url: /zh/doc/Device Capabilities/VideoRecorder.md
 ---
 
-# 视频录制（VideoRecorder） PRO
+# 视频录制（VideoRecorder）
 
 `VideoRecorder` 用于在 Scripting 中创建和控制一个可编程的视频录制会话，完整封装了相机选择、音视频采集、编码、暂停/恢复、缩放、对焦、补光灯控制以及最终文件写入流程。
 
@@ -36114,8 +36062,6 @@ webView.dispose()
 url: /zh/doc/Intent/Intent.continueInForeground.md
 ---
 
-# Intent.continueInForeground PRO
-
 `Intent.continueInForeground` 用于在脚本从 Shortcuts 中后台执行时，**请求系统将流程转移到 Scripting App 的前台继续运行**。
 此过程需要用户明确确认。
 
@@ -36318,8 +36264,6 @@ runIntent();
 ---
 url: /zh/doc/Intent/Intent.requestConfirmation.md
 ---
-
-# Intent.requestConfirmation PRO
 
 `Intent.requestConfirmation` 用于在脚本执行过程中，**向用户请求确认某项操作**。
 调用后，系统会暂停脚本执行，并展示一个基于 **SnippetIntent 的 UI** 作为确认界面，同时可显示提示对话内容。
@@ -36698,8 +36642,6 @@ run()
 ---
 url: /zh/doc/Intent/SnippetIntent.md
 ---
-
-# SnippetIntent PRO
 
 SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。它适用于：
 
@@ -37148,8 +37090,6 @@ Widget.present(<WidgetView />)
 ---
 url: /zh/doc/LiveActivity.md
 ---
-
-# 实时活动（灵动岛）
 
 `LiveActivity` API 允许你的脚本在 iOS 的锁屏界面以及支持的设备上的动态岛中展示实时数据。通过该 API，你可以创建、更新并结束 Live Activity，同时监听其生命周期状态和系统支持情况。
 
@@ -39123,7 +39063,7 @@ function ThemedView() {
 url: /zh/doc/Utilities/Archive.md
 ---
 
-# Archive（归档） PRO
+# Archive（归档）
 
 `Archive` 类用于读取、创建与修改压缩归档文件（如 ZIP 格式）。
 它支持以同步或异步的方式向归档中添加文件、目录或从归档中提取文件内容。
@@ -40113,8 +40053,6 @@ const weekly = DateComponents.forWeekly(new Date())
 url: /zh/doc/Utilities/DateFormatter.md
 ---
 
-# 日期格式化（DateFormatter）
-
 `DateFormatter` 类用于将 `Date` 类型格式化为字符串，或将字符串解析为 `Date`。
 该类封装了 iOS 的 `DateFormatter` 能力，适用于格式化日期、时间、本地化展示、农历日期展示（通过切换日历）、相对日期显示等场景。
 
@@ -41058,7 +40996,7 @@ type FileStat = {
 url: /zh/doc/Utilities/HttpServer/HttpRequest.md
 ---
 
-# HttpRequest（HTTP 请求） PRO
+# HttpRequest（HTTP 请求）
 
 `HttpRequest` 类表示一个由客户端发往服务器的 HTTP 请求对象。它封装了请求的路径、方法、头部、请求体、来源地址以及解析后的参数信息，可在服务器的路由处理函数中使用。
 
@@ -41302,7 +41240,7 @@ server.registerHandler("/upload", (req) => {
 url: /zh/doc/Utilities/HttpServer/HttpResponse.md
 ---
 
-# HttpResponse（HTTP 响应） PRO
+# HttpResponse（HTTP 响应）
 
 `HttpResponse` 类表示服务器对客户端请求的响应对象。
 它定义了 HTTP 响应的状态码、响应体及头部信息，并提供多种便捷方法生成常见的标准响应（如 `ok`、`notFound`、`internalServerError` 等）。
@@ -41630,7 +41568,7 @@ server.registerHandler("/api", (req) => {
 url: /zh/doc/Utilities/HttpServer/HttpResponseBody.md
 ---
 
-# HttpResponseBody（HTTP 响应体） PRO
+# HttpResponseBody（HTTP 响应体）
 
 `HttpResponseBody` 类用于构造 HTTP 响应的主体内容。
 它可以表示文本内容、HTML 页面、二进制数据或任意自定义数据类型，并与 `HttpResponse` 一起使用，用于向客户端返回响应内容。
@@ -41813,7 +41751,7 @@ server.registerHandler("/partial", (req) => {
 url: /zh/doc/Utilities/HttpServer/HttpServer.md
 ---
 
-# HttpServer（HTTP 服务器） PRO
+# HttpServer（HTTP 服务器）
 
 `HttpServer` 类提供了在本地或局域网中启动一个轻量级 HTTP 服务器的能力，可用于处理 HTTP 请求、静态文件服务、WebSocket 通信等场景。该类在脚本中常用于本地 Web 调试、远程控制、设备通信等。
 
@@ -42092,7 +42030,7 @@ if (error) {
 url: /zh/doc/Utilities/HttpServer/WebSocketSession.md
 ---
 
-# WebSocketSession（WebSocket 会话） PRO
+# WebSocketSession（WebSocket 会话）
 
 `WebSocketSession` 类表示一个已建立的 WebSocket 连接会话。
 它由服务器端的 `HttpServer.registerWebsocket()` 注册的处理函数自动创建，用于与客户端进行双向实时通信。
@@ -43870,8 +43808,6 @@ for await (const chunk of response.body) {
 url: /zh/doc/Utilities/Request/Request & RequestInit.md
 ---
 
-# Request 和 RequestInit
-
 `Request` 类表示一次 HTTP 请求的完整配置。
 它可作为 `fetch()` 方法的参数使用，也可用于克隆、修改或重试请求。
 
@@ -44788,8 +44724,6 @@ await fetch("https://api.example.com/status", {
 url: /zh/doc/Utilities/SSH/SFTP Client.md
 ---
 
-# SFTP 客户端 PRO
-
 `SFTPClient` 用于通过 SSH 连接访问远程文件系统，基于 **SFTP 协议**。
 它提供目录操作、文件操作、路径解析等能力，并可通过 `openFile()` 获得更强大的 `SFTPFile` 对象执行读取、写入等低层操作。
 
@@ -45045,8 +44979,6 @@ await sftp.close()
 url: /zh/doc/Utilities/SSH/SFTP File.md
 ---
 
-# SFTP 文件 PRO
-
 `SFTPFile` 表示一个已经通过 SFTP 打开的远程文件句柄。
 通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。
 
@@ -45206,7 +45138,7 @@ await file.close()
 url: /zh/doc/Utilities/SSH/SSH Authentication Method.md
 ---
 
-# SSH 认证方法 PRO
+# SSH 认证方法
 
 表示 SSH 身份验证方法。该类提供多个静态方法用于创建不同类型的 SSH 身份验证方式，包括基于密码、RSA 私钥、ED25519 私钥，以及 ECDSA（P-256、P-384、P-521）私钥的认证方式。
 
@@ -45379,7 +45311,7 @@ const ssh = await SSHClient.connect({
 url: /zh/doc/Utilities/SSH/SSH Client.md
 ---
 
-# SSH 客户端 PRO
+# SSH 客户端
 
 `SSHClient` 类用于连接远程 SSH 服务器，支持执行命令、打开 TTY/PTY 会话、使用 SFTP 进行文件传输，以及通过跳板主机进行多级 SSH 跳转。该类是建立和管理 SSH 会话的核心接口。
 
@@ -45683,7 +45615,7 @@ await ssh.close()
 url: /zh/doc/Utilities/SSH/TTY Stdin Writer.md
 ---
 
-# TTY 标准输入写入器 PRO
+# TTY 标准输入写入器
 
 表示一个可写的 TTY（终端）标准输入流，用于通过 SSH 建立的伪终端（PTY）或 TTY 会话。该类支持将数据写入远程终端的 `stdin`，以及动态调整终端窗口大小。
 
@@ -45792,8 +45724,6 @@ await writer.changeSize({
 ---
 url: /zh/doc/Utilities/Storage.md
 ---
-
-# 本地存储
 
 `Storage` 模块为脚本提供轻量级的持久化存储能力。
 开发者可以在脚本中保存与读取简单的数据类型（如字符串、数字、布尔值、JSON 对象）以及二进制数据（`Data`）。
@@ -50080,8 +50010,6 @@ function Example() {
 url: /zh/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index.md
 ---
 
-# 玻璃效果过渡效果
-
 Liquid Glass 在 iOS 26 引入了更先进的几何匹配与材质过渡能力。
 Scripting 完整支持这些特性，并通过 `glassEffectTransition`、`glassEffectID`、`glassEffectUnion`、`GlassEffectContainer` 以及 `NamespaceReader` 组合实现自然、顺滑且结构化的玻璃动画体验。
 
@@ -50555,8 +50483,6 @@ run()
 ---
 url: /zh/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md
 ---
-
-# 液态玻璃效果
 
 **GlassEffect、GlassEffectContainer、UIGlass** 等相关 API 基于 SwiftUI 新引入的 Liquid Glass 技术，让开发者能够在脚本中以 TSX 方式使用流体化、动态的玻璃材质效果，并支持过渡动画、匹配几何、联合玻璃区域等高级特性。
 
@@ -51305,8 +51231,6 @@ listSectionSeparatorTint?: Color | {
 url: /zh/doc/View Modifiers/List and Section View Modifiers/New List View Modifiers.md
 ---
 
-# 新的 List 视图修饰符
-
 # 属性概览
 
 | 属性名                          | 类型                                                          | 系统要求      | 说明                         |
@@ -51523,8 +51447,6 @@ sectionActions?: VirtualNode
 url: /zh/doc/View Modifiers/LiveActivity View Modifiers.md
 ---
 
-# 实时活动（LiveActivity）修饰符
-
 Scripting 支持与 SwiftUI 等效的 Live Activity 外观控制修饰符。这些修饰符专门用于 **锁屏（Lock Screen）中的 Live Activity 界面**，用于自定义背景色和系统动作按钮颜色。
 
 通过为 Activity UI 中的 `content` 视图设置这些修饰符，可使 Live Activity 更符合品牌风格或特定活动主题。
@@ -51704,7 +51626,7 @@ navigationBarBackButtonHidden?: boolean
 url: /zh/doc/View Modifiers/Picture in Pictuer View Modifiers.md
 ---
 
-# Picture in Picture （画中画） PRO
+# Picture in Picture （画中画）
 
 Scripting 提供了一组 PiP（Picture in Picture，画中画）相关的 View Modifiers，用于将任意 SwiftUI View 以系统级 PiP 窗口的形式呈现。
 开发者无需直接接触底层 AVPictureInPicture API，即可完整控制 PiP 的展示、隐藏、交互行为及生命周期。
@@ -52749,8 +52671,6 @@ searchCompletion?: string
 ---
 url: /zh/doc/View Modifiers/Set environment values (environments).md
 ---
-
-# 设置环境变量 (environments)
 
 `environments` 是 Scripting 新增的视图修饰符，用于向当前视图树（View Hierarchy）注入特定的 environment values。
 它的作用与 SwiftUI 的 `.environment()` 类似，但基于 Scripting 的设计进行了显式声明和类型收敛，避免隐式行为。
@@ -58882,8 +58802,6 @@ url: /zh/doc/View Modifiers/toggleStyle.md
 ---
 url: /zh/doc/View Modifiers/toolbar/Use with Toolbar Component.md
 ---
-
-# 使用 Toolbar 组件
 
 Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `ToolBarProps` 对象，也支持使用与 SwiftUI 结构一致的 `<Toolbar>`、`<ToolbarItem>`、`<ToolbarItemGroup>`、`<ToolbarSpacer>`、`<DefaultToolbarItem>` 等组件，构建更灵活、更强大的导航栏和工具栏布局。
 
@@ -65821,8 +65739,6 @@ function MyEditor() {
 url: /zh/doc/Views/EnvironmentValuesReader.md
 ---
 
-# EnvironmentValuesReader
-
 `EnvironmentValuesReader` 是 Scripting 提供的一个组件，用于读取 SwiftUI 风格的环境值（Environment Values）。
 它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。
 
@@ -66064,8 +65980,6 @@ function View() {
 ---
 url: /zh/doc/Views/GeometryReader.md
 ---
-
-# GeometryReader
 
 `GeometryReader` 是 Scripting 中与 SwiftUI 等效的几何布局读取组件。
 它能够在视图构建阶段提供当前容器的尺寸、边距、安全区域和角落内边距等信息，使开发者可以根据环境动态布局内容。
@@ -73521,8 +73435,6 @@ run()
 url: /zh/doc/Views/Navigation/TabView/TabView.md
 ---
 
-# TabView
-
 Scripting 提供了与最新 iOS TabView 体系一致的 API：
 通过 `TabView`、`Tab`、`TabSection` 组织界面结构，使应用能够在 iOS 18+ 环境下完整支持多标签视图、侧边栏标签、可定制布局等。
 
@@ -74741,8 +74653,6 @@ run()
 ---
 url: /zh/doc/Views/ScrollViewReader.md
 ---
-
-# ScrollViewReader
 
 **ScrollViewReader** 组件，用于在脚本中获得对可滚动内容的编程化控制能力，使开发者能够在运行时滚动至任意视图位置，包括列表项、文本节点等。
 
@@ -76621,8 +76531,6 @@ run()
 ---
 url: /zh/doc/Views/View groupings/ForEach/index.md
 ---
-
-# ForEach
 
 `ForEach` 是 Scripting 中用于渲染可变数量子视图的组件，用于构建动态列表、可编辑列表，以及支持系统级的删除与移动行为。其设计参考 SwiftUI 的 `ForEach`，并与 Scripting 的 `Observable` 状态管理系统深度集成。
 

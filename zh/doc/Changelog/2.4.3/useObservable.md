@@ -1,5 +1,3 @@
-# useObservable
-
 Scripting 提供一套响应式状态系统，由 `Observable<T>` 与 `useObservable<T>` 组成，用于驱动组件渲染、与动画系统协同工作，并与 SwiftUI 的双向绑定能力保持一致（例如 `List(selection:)`、`NavigationStack(path:)` 等未来扩展接口）。
 
 ***

@@ -1,4 +1,4 @@
-# 读取关联数据（HealthCorrelation） PRO
+# 读取关联数据（HealthCorrelation）
 
 Scripting 应用支持通过全局 API `Health.queryCorrelations()` 查询 HealthKit 中的**相关健康数据**。相关数据用于表示一组相互关联的健康样本，例如：
 

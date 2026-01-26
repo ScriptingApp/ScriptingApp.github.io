@@ -1,4 +1,4 @@
-# HealthUnit PRO
+# HealthUnit
 
 The `HealthUnit` class provides an interface to construct and manipulate various units used in HealthKit. You can create basic units (e.g., grams, meters, liters), apply metric prefixes (e.g., milligrams, kilometers), and perform arithmetic operations like multiplication, division, exponentiation, and inversion.
 

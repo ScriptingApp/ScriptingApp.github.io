@@ -1,5 +1,3 @@
-# CalendarEvent
-
 The `CalendarEvent` API enables creating, reading, editing, and managing events in the iOS calendar.
 Developers can configure event details such as title, time, location, participants, recurrence rules, alarms, availability, and structured locations, and can display system-provided interfaces for creating or editing events.
 

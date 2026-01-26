@@ -1,5 +1,3 @@
-# DateFormatter
-
 The `DateFormatter` class provides comprehensive date and time formatting capabilities. It allows converting `Date` objects into localized strings and parsing strings back into `Date` values.
 This API wraps iOS-native date formatting behavior and supports multiple calendars, time zones, localized formats, and custom formatting templates.
 

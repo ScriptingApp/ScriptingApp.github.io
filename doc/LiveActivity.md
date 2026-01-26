@@ -1,5 +1,3 @@
-# LiveActivity
-
 The `LiveActivity` API enables you to display real-time, dynamic information from your script on the Lock Screen and, where supported, in the Dynamic Island on iOS devices. It provides a structured interface to start, update, and end Live Activities, and observe their state throughout their lifecycle.
 
 This document provides a complete guide to using the **LiveActivity API** in the Scripting app, including:

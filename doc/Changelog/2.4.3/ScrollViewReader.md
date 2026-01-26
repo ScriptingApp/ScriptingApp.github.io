@@ -1,5 +1,3 @@
-# ScrollViewReader
-
 The **ScrollViewReader** component equivalent to SwiftUI’s ScrollViewReader, allowing scripts to programmatically control scrolling position within scrollable content such as `List` or `ScrollView`.
 
 ***

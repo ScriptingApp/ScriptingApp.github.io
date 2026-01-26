@@ -1,5 +1,3 @@
-# 使用 Toolbar 组件
-
 Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `ToolBarProps` 对象，也支持使用与 SwiftUI 结构一致的 `<Toolbar>`、`<ToolbarItem>`、`<ToolbarItemGroup>`、`<ToolbarSpacer>`、`<DefaultToolbarItem>` 等组件，构建更灵活、更强大的导航栏和工具栏布局。
 
 这些组件能够提供更精细的控制，允许开发者像 SwiftUI 一样以声明式方式编排工具栏内容，并为复杂布局提供更高可读性和可维护性。

@@ -1,5 +1,3 @@
-# 日期格式化（DateFormatter）
-
 `DateFormatter` 类用于将 `Date` 类型格式化为字符串，或将字符串解析为 `Date`。
 该类封装了 iOS 的 `DateFormatter` 能力，适用于格式化日期、时间、本地化展示、农历日期展示（通过切换日历）、相对日期显示等场景。
 

@@ -1,4 +1,4 @@
-# Assistant Conversation APIs PRO
+# Assistant Conversation APIs
 
 The Conversation APIs are used to **start, control, and present a system-hosted Assistant chat session**.
 A conversation corresponds to a **fully managed chat page**, where Scripting handles the UI, streaming output, provider selection, and message lifecycle.

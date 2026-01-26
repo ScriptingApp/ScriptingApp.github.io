@@ -1,5 +1,3 @@
-# Liquid Glass Effect
-
 Scripting provides full support for the new **Liquid Glass** visual system introduced in iOS 26. This includes `glassEffect`, `GlassEffectContainer`, `UIGlass`, and related geometry-matching and transition APIs. These APIs allow scripts to create rich translucent materials, fluid glass shapes, matched geometry animations, and unioned glass regions directly within TSX.
 
 This document explains how the Liquid Glass APIs are used in Scripting, including:

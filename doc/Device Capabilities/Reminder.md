@@ -1,5 +1,3 @@
-# Reminder
-
 The `Reminder` API provides the ability to create, edit, and manage reminders in the iOS calendar system.
 It supports configuring due dates through `DateComponents`, assigning priorities, adding notes, managing recurrence rules, working with alarms, and tracking completion state.
 This API is suitable for a wide range of task and schedule reminder scenarios.

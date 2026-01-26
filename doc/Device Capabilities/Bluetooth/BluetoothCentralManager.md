@@ -1,4 +1,4 @@
-# BluetoothCentralManager PRO
+# BluetoothCentralManager
 
 The `BluetoothCentralManager` namespace provides core functionality for managing Bluetooth Low Energy (BLE) operations as a central device. It supports scanning, connecting, disconnecting, and retrieving known or connected peripherals. This API is ideal for building custom Bluetooth workflows, interacting with smart devices, wearables, and IoT peripherals.
 

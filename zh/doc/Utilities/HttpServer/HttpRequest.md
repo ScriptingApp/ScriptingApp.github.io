@@ -1,4 +1,4 @@
-# HttpRequest（HTTP 请求） PRO
+# HttpRequest（HTTP 请求）
 
 `HttpRequest` 类表示一个由客户端发往服务器的 HTTP 请求对象。它封装了请求的路径、方法、头部、请求体、来源地址以及解析后的参数信息，可在服务器的路由处理函数中使用。
 

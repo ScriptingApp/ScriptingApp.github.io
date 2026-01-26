@@ -1,4 +1,4 @@
-# 健康特征类型（HealthCharacteristicType） PRO
+# 健康特征类型（HealthCharacteristicType）
 
 本文档介绍与 HealthKit 中“个人健康档案”及“活动摘要”相关的枚举类型，主要用于获取或表示用户的静态健康特征信息（如性别、血型、皮肤类型、轮椅使用情况）以及运动模式设定。
 

@@ -1,4 +1,4 @@
-# Writing Health Category Samples PRO
+# Writing Health Category Samples
 
 The Scripting app allows you to write **categorical health data** to Apple HealthKit using the `HealthCategorySample` class and the `Health.saveCategorySample()` method. Category samples represent discrete health-related events or conditions, such as sleep stages, mindful sessions, menstrual flow, ovulation test results, and more.
 

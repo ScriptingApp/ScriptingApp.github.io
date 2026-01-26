@@ -1,4 +1,4 @@
-# 写入分类数据（HealthCategorySample） PRO
+# 写入分类数据（HealthCategorySample）
 
 Scripting 应用支持将分类健康数据（如睡眠状态、冥想记录、月经流量、排卵测试结果等）写入 Apple HealthKit。你可以通过 `HealthCategorySample` 类创建分类数据样本，并使用 `Health.saveCategorySample()` 方法将其保存到健康数据库中。
 

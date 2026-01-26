@@ -1,5 +1,3 @@
-# useObservable
-
 Scripting provides a reactive state system formed by `Observable<T>` and the `useObservable<T>` hook.
 This system drives UI updates, interacts with the animation engine, and aligns closely with SwiftUI’s binding model—enabling future APIs such as `List(selection:)`, `NavigationStack(path:)`, `TextField(text:)`, and more.
 

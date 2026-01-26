@@ -1,4 +1,4 @@
-# HealthWorkoutActivityType PRO
+# HealthWorkoutActivityType
 
 Each enum value below includes a description of its purpose and typical use case.
 

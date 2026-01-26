@@ -1,5 +1,3 @@
-# Intent.continueInForeground PRO
-
 `Intent.continueInForeground` is an API that leverages the **iOS 26+ AppIntents framework** to request the system to bring the **Scripting app** to the foreground while a Shortcut is running.
 
 This method is used when a script—invoked from Shortcuts—requires full UI interaction within the Scripting app (for example: presenting a form, editing content, picking files, showing a full screen navigation flow, etc.).

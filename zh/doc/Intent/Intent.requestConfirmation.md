@@ -1,5 +1,3 @@
-# Intent.requestConfirmation PRO
-
 `Intent.requestConfirmation` 用于在脚本执行过程中，**向用户请求确认某项操作**。
 调用后，系统会暂停脚本执行，并展示一个基于 **SnippetIntent 的 UI** 作为确认界面，同时可显示提示对话内容。
 

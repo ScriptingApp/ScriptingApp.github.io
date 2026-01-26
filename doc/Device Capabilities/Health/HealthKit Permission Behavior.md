@@ -1,4 +1,4 @@
-# HealthKit Permission Behavior PRO
+# HealthKit Permission Behavior
 
 When using the Health module provided by the Scripting app to access iOS HealthKit data, it's important to understand how HealthKit handles authorization and how Scripting adapts to these behaviors. This document explains the authorization flow, Promise behavior, and best practices for handling missing permissions.
 

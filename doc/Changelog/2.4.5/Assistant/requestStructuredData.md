@@ -1,4 +1,4 @@
-# requestStructuredData PRO
+# requestStructuredData
 
 `requestStructuredData` requests **structured JSON output** from the assistant that conforms to a provided JSON schema.
 This API is designed for workflows where you want a predictable, programmatically usable result rather than free-form text.

@@ -1,4 +1,4 @@
-# Writing Health Quantity Samples PRO
+# Writing Health Quantity Samples
 
 The Scripting app allows you to write quantity-based health data (such as step count, heart rate, calories, and more) to Apple HealthKit using the `HealthQuantitySample` class and the `Health.saveQuantitySample` method.
 

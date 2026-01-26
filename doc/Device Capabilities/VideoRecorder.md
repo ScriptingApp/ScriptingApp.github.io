@@ -1,4 +1,4 @@
-# VideoRecorder PRO
+# VideoRecorder
 
 `VideoRecorder` provides a programmable video recording session in Scripting.
 It encapsulates camera selection, audio/video capture, encoding, pause/resume handling, zoom, focus, torch control, and final file writing.

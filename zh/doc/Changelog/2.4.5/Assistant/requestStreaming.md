@@ -1,4 +1,4 @@
-# 请求流式数据 PRO
+# 请求流式数据
 
 `requestStreaming` 用于向 Assistant 请求**流式输出（Streaming Response）**。
 与一次性返回完整结果不同，该 API 会在模型生成内容的过程中**持续返回数据片段（Chunk）**，调用方可以边接收边处理，从而实现：

@@ -1,4 +1,4 @@
-# Archive PRO
+# Archive
 
 The `Archive` class provides a comprehensive interface for working with archive files (such as ZIP).
 It supports reading, creating, updating, and extracting entries from archives, with both **asynchronous** and **synchronous** methods.

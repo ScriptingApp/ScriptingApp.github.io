@@ -1,4 +1,4 @@
-# Query Statistics Collection PRO
+# Query Statistics Collection
 
 The `Health.queryStatisticsCollection()` method retrieves **time-based aggregated statistics** for a given `HealthQuantityType` over a specified date range. It returns a `HealthStatisticsCollection` object, which contains multiple `HealthStatistics` entries aligned to defined time intervals (such as daily, weekly, or monthly).
 

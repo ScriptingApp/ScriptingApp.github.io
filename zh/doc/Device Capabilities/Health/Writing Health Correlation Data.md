@@ -1,4 +1,4 @@
-# 写入关联数据（HealthCorrelation） PRO
+# 写入关联数据（HealthCorrelation）
 
 Scripting 应用允许你使用全局 API `HealthCorrelation.create()` 和 `Health.saveCorrelation()` 向 Apple HealthKit 写入**相关健康数据**。相关数据表示多个健康样本之间的逻辑关联，例如：
 

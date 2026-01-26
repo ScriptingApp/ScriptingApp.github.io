@@ -1,5 +1,3 @@
-# 玻璃效果过渡效果
-
 Liquid Glass 在 iOS 26 引入了更先进的几何匹配与材质过渡能力。
 Scripting 完整支持这些特性，并通过 `glassEffectTransition`、`glassEffectID`、`glassEffectUnion`、`GlassEffectContainer` 以及 `NamespaceReader` 组合实现自然、顺滑且结构化的玻璃动画体验。
 

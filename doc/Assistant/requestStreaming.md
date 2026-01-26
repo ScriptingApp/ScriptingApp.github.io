@@ -1,4 +1,4 @@
-# requestStreaming PRO
+# requestStreaming
 
 `requestStreaming` requests a **streaming response** from the Assistant.
 Instead of returning a complete result at once, the Assistant emits **chunks incrementally** as the model generates output.

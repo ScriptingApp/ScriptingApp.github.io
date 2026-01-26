@@ -1,4 +1,4 @@
-# HealthHeartbeatSeriesSample PRO
+# HealthHeartbeatSeriesSample
 
 The `HealthHeartbeatSeriesSample` class provides an interface for accessing **heartbeat series samples**, representing a series of individual heartbeat intervals recorded over time. These samples are typically used for analyzing heart rhythm and detecting irregularities such as atrial fibrillation.
 

@@ -1,4 +1,4 @@
-# 健康统计集合（HealthStatisticsCollection） PRO
+# 健康统计集合（HealthStatisticsCollection）
 
 `HealthStatisticsCollection` 类用于表示按时间分组的健康统计数据集合，如每日、每周或每月的汇总统计。集合中的每一项代表一个时间区间，并对应一个 `HealthStatistics` 实例，包含该时间段内的统计信息。
 

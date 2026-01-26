@@ -1,5 +1,3 @@
-# LiveActivity View Modifiers
-
 Scripting provides two view modifiers that customize the appearance of Live Activities on the Lock Screen. These modifiers control the background tint color of the Live Activity and the foreground color of the system-provided action button.
 
 These properties are designed to match SwiftUI’s Live Activity customization options.

@@ -1,4 +1,4 @@
-# 健康分类数据（HealthCategoryType） PRO
+# 健康分类数据（HealthCategoryType）
 
 `HealthCategoryType` 用于表示离散型的健康状态或事件。它们通常为“是否发生”的记录（如：是否怀孕、是否进行正念训练、是否存在某种症状），适用于症状追踪、睡眠分析、生殖健康记录、环境暴露监测等场景。
 

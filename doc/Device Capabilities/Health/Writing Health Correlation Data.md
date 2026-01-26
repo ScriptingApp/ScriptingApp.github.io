@@ -1,4 +1,4 @@
-# Writing Health Correlation Data PRO
+# Writing Health Correlation Data
 
 In the Scripting app, you can write **correlated health data** to Apple HealthKit using the global `HealthCorrelation.create()` method and `Health.saveCorrelation()`. A correlation represents a relationship between multiple health samples, such as a blood pressure reading that includes both systolic and diastolic values, or a meal record that includes nutritional quantities.
 

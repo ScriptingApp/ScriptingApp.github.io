@@ -1,4 +1,4 @@
-# WebSocketSession（WebSocket 会话） PRO
+# WebSocketSession（WebSocket 会话）
 
 `WebSocketSession` 类表示一个已建立的 WebSocket 连接会话。
 它由服务器端的 `HttpServer.registerWebsocket()` 注册的处理函数自动创建，用于与客户端进行双向实时通信。

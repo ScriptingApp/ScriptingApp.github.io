@@ -1,4 +1,4 @@
-# BackgroundKeeper PRO
+# BackgroundKeeper
 
 The `BackgroundKeeper` API provides control over background keep-alive behavior in the **Scripting App**, allowing scripts to extend their runtime after the app transitions to the background. This can be useful for maintaining ongoing operations, such as network connections or active processes, for a limited period while the app is not in the foreground.
 

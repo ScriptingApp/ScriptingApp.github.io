@@ -1,4 +1,4 @@
-# 智能助手会话 API PRO
+# 智能助手会话 API
 
 Conversation API 用于**启动、控制和展示一个由系统托管的 Assistant 对话会话**。
 该会话对应一个**完整的聊天页面（Chat Page）**，由 Scripting App 统一管理 UI、状态和模型交互。

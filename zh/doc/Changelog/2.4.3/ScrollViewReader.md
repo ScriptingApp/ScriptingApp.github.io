@@ -1,5 +1,3 @@
-# ScrollViewReader
-
 **ScrollViewReader** 组件，用于在脚本中获得对可滚动内容的编程化控制能力，使开发者能够在运行时滚动至任意视图位置，包括列表项、文本节点等。
 
 ScrollViewReader 与 SwiftUI 的行为保持一致：

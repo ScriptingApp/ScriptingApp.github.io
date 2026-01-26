@@ -1,5 +1,3 @@
-# GeometryReader
-
 `GeometryReader` 是 Scripting 中与 SwiftUI 等效的几何布局读取组件。
 它能够在视图构建阶段提供当前容器的尺寸、边距、安全区域和角落内边距等信息，使开发者可以根据环境动态布局内容。
 

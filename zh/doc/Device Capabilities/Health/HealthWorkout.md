@@ -1,4 +1,4 @@
-# 健康锻炼数据（HealthWorkout） PRO
+# 健康锻炼数据（HealthWorkout）
 
 `HealthWorkout` 类提供了访问和分析 Apple 健康应用中锻炼数据的接口。每个锻炼实例代表一次完整的锻炼会话，包括活动类型、开始与结束时间、持续时长，以及相关的事件与统计数据。
 

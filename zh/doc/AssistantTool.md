@@ -1,4 +1,4 @@
-# 智能助手工具 PRO
+# 智能助手工具
 
 Assistant Tool 是 Scripting 应用中为智能助手（Assistant）提供系统功能扩展的机制。通过定义和实现 Assistant Tool，开发者可以为 Assistant 提供设备能力访问、文件读写操作、数据分析处理等辅助功能，提升 Assistant 的智能性和实用性。
 

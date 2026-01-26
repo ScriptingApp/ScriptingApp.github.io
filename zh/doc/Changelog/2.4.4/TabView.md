@@ -1,5 +1,3 @@
-# TabView
-
 Scripting 提供了与最新 iOS TabView 体系一致的 API：
 通过 `TabView`、`Tab`、`TabSection` 组织界面结构，使应用能够在 iOS 18+ 环境下完整支持多标签视图、侧边栏标签、可定制布局等。
 

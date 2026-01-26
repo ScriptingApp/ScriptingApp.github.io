@@ -1,5 +1,3 @@
-# Intent.continueInForeground PRO
-
 `Intent.continueInForeground` 用于在脚本从 Shortcuts 中后台执行时，**请求系统将流程转移到 Scripting App 的前台继续运行**。
 此过程需要用户明确确认。
 

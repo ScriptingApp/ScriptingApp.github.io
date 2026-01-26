@@ -1,4 +1,4 @@
-# HttpResponse PRO
+# HttpResponse
 
 The `HttpResponse` class represents an HTTP response object returned by the server to the client.
 It defines the response’s status code, headers, and body, and provides convenient factory methods for creating common HTTP responses (e.g., `ok`, `notFound`, `internalServerError`).

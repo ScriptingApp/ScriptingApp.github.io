@@ -1,4 +1,4 @@
-# HttpServer PRO
+# HttpServer
 
 The `HttpServer` class provides a lightweight local HTTP server that can handle HTTP requests, serve static files, and manage WebSocket connections. It is commonly used for local debugging, communication between devices, and serving simple web APIs inside scripts.
 

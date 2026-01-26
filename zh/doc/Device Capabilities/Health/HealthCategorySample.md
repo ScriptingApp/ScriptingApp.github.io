@@ -1,4 +1,4 @@
-# 健康分类数据（HealthCategorySample） PRO
+# 健康分类数据（HealthCategorySample）
 
 `HealthCategorySample` 表示一条基于分类的健康事件记录，例如睡眠分析、月经流量、排卵测试结果等。每条样本通常具有一个时间区间以及一个类别值，适用于记录健康相关事件的状态或发生情况。
 

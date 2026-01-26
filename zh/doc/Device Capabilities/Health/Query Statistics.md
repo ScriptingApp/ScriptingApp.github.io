@@ -1,4 +1,4 @@
-# 查询统计数据（HealthStatistics） PRO
+# 查询统计数据（HealthStatistics）
 
 `queryStatistics` 方法用于查询某个健康数量类型在指定时间范围内的**聚合统计数据**，包括：
 

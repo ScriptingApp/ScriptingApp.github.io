@@ -1,4 +1,4 @@
-# HealthStatisticsCollection PRO
+# HealthStatisticsCollection
 
 The `HealthStatisticsCollection` class provides a structured representation of **time-based grouped health statistics**, such as daily, weekly, or monthly summaries. Each entry in the collection corresponds to one interval, and encapsulates its own `HealthStatistics` object.
 

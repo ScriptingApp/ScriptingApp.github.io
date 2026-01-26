@@ -1,4 +1,4 @@
-# 读取数量型数据（HealthQuantitySample） PRO
+# 读取数量型数据（HealthQuantitySample）
 
 Scripting 应用支持通过全局 API `Health.queryQuantitySamples()` 查询 HealthKit 中的**数量型健康数据**，例如步数、心率、体重、卡路里、距离等。
 

@@ -1,4 +1,4 @@
-# BluetoothPeripheral PRO
+# BluetoothPeripheral
 
 The `BluetoothPeripheral` interface represents a Bluetooth Low Energy (BLE) peripheral device. It provides properties and methods for interacting with the device, including connecting, discovering services and characteristics, reading/writing values, and subscribing to notifications.
 

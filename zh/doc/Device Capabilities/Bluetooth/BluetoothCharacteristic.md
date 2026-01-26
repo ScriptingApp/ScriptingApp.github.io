@@ -1,4 +1,4 @@
-# 蓝牙服务特征值 PRO
+# 蓝牙服务特征值
 
 `BluetoothCharacteristic` 表示蓝牙服务（`BluetoothService`）中的一个特征值，是 BLE 设备数据交互的核心单元。每个特征值由唯一 UUID 标识，并定义了支持的操作类型、当前值、通知状态等属性。
 

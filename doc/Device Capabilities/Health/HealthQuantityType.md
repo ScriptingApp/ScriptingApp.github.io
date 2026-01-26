@@ -1,4 +1,4 @@
-# HealthQuantityType PRO
+# HealthQuantityType
 
 This document lists all supported `HealthQuantityType` identifiers, categorized by domain. Each type is associated with a measurable health-related metric and can be used to track fitness, vital signs, nutrition, environment, and more.
 

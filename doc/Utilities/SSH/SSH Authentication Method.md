@@ -1,4 +1,4 @@
-# SSH Authentication Method PRO
+# SSH Authentication Method
 
 Represents a method for authenticating with an SSH server. This class provides static methods for creating different types of SSH authentication strategies, including password-based, RSA key, ED25519, and ECDSA (P-256, P-384, P-521) private key authentication.
 

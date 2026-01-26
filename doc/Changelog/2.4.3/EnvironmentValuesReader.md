@@ -1,5 +1,3 @@
-# EnvironmentValuesReader
-
 `EnvironmentValuesReader` is a Scripting component that allows you to read environment values from the current view hierarchy.
 It serves a similar role to SwiftUI’s `@Environment`, but with a more explicit and controlled design:
 **You must specify which environment keys you want to read**, and the component will inject only those values into the `children` callback.

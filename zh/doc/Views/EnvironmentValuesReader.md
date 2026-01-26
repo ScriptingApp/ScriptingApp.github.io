@@ -1,5 +1,3 @@
-# EnvironmentValuesReader
-
 `EnvironmentValuesReader` 是 Scripting 提供的一个组件，用于读取 SwiftUI 风格的环境值（Environment Values）。
 它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。
 

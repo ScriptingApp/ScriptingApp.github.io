@@ -1,4 +1,4 @@
-# HttpRequest PRO
+# HttpRequest
 
 The `HttpRequest` class represents an HTTP request received by the server.
 It encapsulates all request information, including path, method, headers, body, client address, and parsed parameters.

@@ -1,5 +1,3 @@
-# SnippetIntent PRO
-
 SnippetIntent is a special kind of AppIntent whose purpose is to render **interactive Snippet UI cards** inside the Shortcuts app (iOS 26+).
 
 Key characteristics:

@@ -1,4 +1,4 @@
-# WebSocketSession PRO
+# WebSocketSession
 
 The `WebSocketSession` class represents an active WebSocket connection session.
 It is created automatically when a client connects to a WebSocket endpoint registered via `HttpServer.registerWebsocket()` and enables **bi-directional real-time communication** between the server and the client.

@@ -1,4 +1,4 @@
-# BluetoothService PRO
+# BluetoothService
 
 The `BluetoothService` interface represents a Bluetooth Low Energy (BLE) service. A service is a logical grouping of related characteristics and possibly other included services. Services are used to define the functionality of a peripheral device, such as Heart Rate Monitoring or Battery Level Reporting.
 

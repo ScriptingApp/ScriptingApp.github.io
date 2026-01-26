@@ -1,4 +1,4 @@
-# AppStore PRO
+# AppStore
 
 The `AppStore` API allows you to display App Store app information **directly inside the Scripting app**, without navigating users away to the system App Store application.
 

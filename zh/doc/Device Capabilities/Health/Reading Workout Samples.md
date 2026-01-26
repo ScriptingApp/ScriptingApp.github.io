@@ -1,4 +1,4 @@
-# 读取锻炼数据（HealthWorkout） PRO
+# 读取锻炼数据（HealthWorkout）
 
 Scripting 应用支持通过全局函数 `Health.queryWorkouts()` 从 HealthKit 查询**锻炼记录**。Workout 表示一次完整的身体活动，如跑步、步行、游泳、骑行、力量训练等。
 

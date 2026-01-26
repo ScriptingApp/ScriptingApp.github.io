@@ -1,5 +1,3 @@
-# HealthQuantitySample PRO
-
 The `HealthQuantitySample` class represents a single health quantity data point, such as a heart rate measurement, a recorded step count, or a logged calorie value. It provides information about the measurement’s type, time interval, unit, value, and optional metadata.
 
 This class is the base for more specialized subclasses: `HealthCumulativeQuantitySample` and `HealthDiscreteQuantitySample`.

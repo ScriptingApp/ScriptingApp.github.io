@@ -1,5 +1,3 @@
-# Request 和 RequestInit
-
 `Request` 类表示一次 HTTP 请求的完整配置。
 它可作为 `fetch()` 方法的参数使用，也可用于克隆、修改或重试请求。
 

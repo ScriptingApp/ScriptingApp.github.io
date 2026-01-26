@@ -1,4 +1,4 @@
-# HealthWorkoutEvent PRO
+# HealthWorkoutEvent
 
 The `HealthWorkoutEvent` class provides an interface for accessing workout-related events in Apple Health data. Each event represents a specific moment or action within a workout session, such as when the workout is paused, resumed, or marked with a lap or milestone.
 

@@ -1,4 +1,4 @@
-# FontPicker PRO
+# FontPicker
 
 The `FontPicker` namespace provides methods for selecting fonts from the system’s available font list.
 It opens the system font picker UI, allowing the user to choose a font, and returns the **PostScript name** of the selected font.

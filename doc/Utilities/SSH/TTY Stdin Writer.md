@@ -1,4 +1,4 @@
-# TTY Stdin Writer PRO
+# TTY Stdin Writer
 
 Represents a writable input stream for a TTY (teletypewriter) session opened over SSH. This class allows writing text to the remote terminal’s standard input and resizing the terminal window dynamically.
 

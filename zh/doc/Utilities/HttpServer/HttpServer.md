@@ -1,4 +1,4 @@
-# HttpServer（HTTP 服务器） PRO
+# HttpServer（HTTP 服务器）
 
 `HttpServer` 类提供了在本地或局域网中启动一个轻量级 HTTP 服务器的能力，可用于处理 HTTP 请求、静态文件服务、WebSocket 通信等场景。该类在脚本中常用于本地 Web 调试、远程控制、设备通信等。
 

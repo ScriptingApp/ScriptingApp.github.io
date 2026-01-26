@@ -1,4 +1,4 @@
-# HealthActivitySummary PRO
+# HealthActivitySummary
 
 The `HealthActivitySummary` class provides an interface for accessing daily summaries of user activity as recorded by the Apple Health system. This includes move, exercise, and stand metrics, and optionally supports both energy-based and time-based activity move goals.
 

@@ -1,4 +1,4 @@
-# 查询统计数据集合（HealthStatisticsCollection） PRO
+# 查询统计数据集合（HealthStatisticsCollection）
 
 `Health.queryStatisticsCollection()` 方法用于按时间区间查询指定 `HealthQuantityType` 类型的**聚合统计数据**，例如每天、每周或每月的步数、心率等。它返回一个 `HealthStatisticsCollection` 实例，其中包含多个按时间间隔对齐的 `HealthStatistics` 对象。
 

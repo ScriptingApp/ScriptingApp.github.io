@@ -1,4 +1,4 @@
-# Reading Characteristic Data PRO
+# Reading Characteristic Data
 
 HealthKit stores **characteristics** as immutable personal attributes, such as biological sex, date of birth, blood type, skin type, wheelchair usage, and activity move mode. These values are typically entered by the user in the Health app and rarely change.
 

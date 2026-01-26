@@ -1,4 +1,4 @@
-# Picture in Pictuer View Modifiers PRO
+# Picture in Pictuer View Modifiers
 
 Scripting provides a set of Picture in Picture (PiP) view modifiers that allow developers to render any SwiftUI view inside a system PiP window.
 These APIs abstract away the underlying `AVPictureInPicture` implementation and provide a declarative, script-friendly way to control PiP presentation, interaction, and lifecycle.

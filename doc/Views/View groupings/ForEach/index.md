@@ -1,5 +1,3 @@
-# ForEach
-
 The `ForEach` component renders a dynamic list of child views. It is used to display collections, create editable lists, and enable system-standard interactions such as swipe-to-delete. It is fully integrated with the Scripting app’s `Observable` state system and mirrors the design of SwiftUI’s `ForEach`.
 
 `ForEach` supports two usage modes:

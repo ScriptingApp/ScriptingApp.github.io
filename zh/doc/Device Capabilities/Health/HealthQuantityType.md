@@ -1,4 +1,4 @@
-# 健康数量型数据（HealthQuantityType） PRO
+# 健康数量型数据（HealthQuantityType）
 
 `HealthQuantityType` 用于指定你希望读取或写入的健康数据类型。每个标识符代表一种可度量的健康指标，涵盖身体测量、运动、营养、生理信号、环境暴露等多个维度。
 

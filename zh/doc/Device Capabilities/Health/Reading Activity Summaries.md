@@ -1,4 +1,4 @@
-# 读取活动摘要（HealthActivitySummary） PRO
+# 读取活动摘要（HealthActivitySummary）
 
 Scripting 应用通过全局函数 `Health.queryActivitySummaries()` 提供对 Apple Health 每日活动摘要数据的访问。这些摘要包含 Apple Watch 追踪的 **移动（Move）**、**锻炼（Exercise）** 和 **站立（Stand）** 目标，以及完成情况和历史趋势。
 

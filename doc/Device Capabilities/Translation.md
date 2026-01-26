@@ -1,4 +1,4 @@
-# Translation PRO
+# Translation
 
 The `Translation` API enables text translation between different languages. It supports both individual and batch translation use cases and is available on **iOS 18.0 or later**.
 

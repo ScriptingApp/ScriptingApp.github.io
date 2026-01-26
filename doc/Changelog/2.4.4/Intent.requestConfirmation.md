@@ -1,5 +1,3 @@
-# Intent.requestConfirmation PRO
-
 `Intent.requestConfirmation` pauses script execution and asks the user to confirm an action through a **system-managed confirmation UI**.
 The confirmation interface consists of:
 

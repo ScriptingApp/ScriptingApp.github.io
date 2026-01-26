@@ -1,4 +1,4 @@
-# Reading Category Samples PRO
+# Reading Category Samples
 
 The Scripting app provides access to **category-based health data** using the global function `Health.queryCategorySamples()`. Category samples represent health-related events or states with a start date, end date, and a discrete value — such as sleep stages, mindful sessions, menstrual flow, and ovulation test results.
 

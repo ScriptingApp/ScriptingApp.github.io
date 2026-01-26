@@ -1,4 +1,4 @@
-# 健康锻炼活动类型（HealthWorkoutActivityType） PRO
+# 健康锻炼活动类型（HealthWorkoutActivityType）
 
 此枚举定义了所有支持的锻炼活动类型，常用于创建或读取 HealthKit 中的健身记录。
 

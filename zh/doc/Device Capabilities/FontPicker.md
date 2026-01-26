@@ -1,4 +1,4 @@
-# FontPicker（字体选择器） PRO
+# FontPicker（字体选择器）
 
 `FontPicker` 命名空间提供了在系统中选择字体的能力。
 它会调用系统字体选择器，让用户从可用字体列表中选取字体，并返回所选字体的 **PostScript 名称**。

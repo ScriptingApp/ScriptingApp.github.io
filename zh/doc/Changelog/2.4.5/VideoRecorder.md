@@ -1,4 +1,4 @@
-# 视频录制（VideoRecorder） PRO
+# 视频录制（VideoRecorder）
 
 `VideoRecorder` 用于在 Scripting 中创建和控制一个可编程的视频录制会话，完整封装了相机选择、音视频采集、编码、暂停/恢复、缩放、对焦、补光灯控制以及最终文件写入流程。
 

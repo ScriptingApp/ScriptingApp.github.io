@@ -1,4 +1,4 @@
-# HttpResponseBody PRO
+# HttpResponseBody
 
 The `HttpResponseBody` class represents the body content of an HTTP response.
 It can contain text, HTML, binary data, or other forms of content.

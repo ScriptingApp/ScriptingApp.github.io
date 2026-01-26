@@ -1,4 +1,4 @@
-# Reading Activity Summaries PRO
+# Reading Activity Summaries
 
 The Scripting app provides access to **daily activity summary data** from Apple Health using the global function `Health.queryActivitySummaries()`. These summaries represent **Move**, **Exercise**, and **Stand** goals tracked by Apple Watch, along with completion metrics and historical trends.
 

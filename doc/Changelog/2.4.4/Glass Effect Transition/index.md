@@ -1,5 +1,3 @@
-# Glass Effect Transition
-
 This document provides a comprehensive explanation of **Glass Effect Transitions** in Scripting, including how Liquid Glass materials animate during view changes, how geometry matching works, and how to correctly use `NamespaceReader` to access SwiftUI’s `@Namespace` within TSX code.
 
 Contents include:

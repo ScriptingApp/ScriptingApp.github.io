@@ -1,5 +1,3 @@
-# GeometryReader
-
 `GeometryReader` in Scripting is the equivalent of SwiftUI’s GeometryReader. It provides layout information about the container in which its content is placed, including size, safe-area insets, and (on supported systems) container corner insets.
 
 This component is essential for building responsive layouts that depend on the parent container’s geometry.

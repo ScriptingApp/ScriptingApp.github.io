@@ -1,4 +1,4 @@
-# 请求结构化数据 PRO
+# 请求结构化数据
 
 `requestStructuredData` 用于向 Assistant 请求**严格符合指定 JSON Schema 的结构化 JSON 数据**。
 该 API 适合在你需要**可预测、可直接用于程序逻辑**的数据结果时使用，而不是自由文本。

@@ -1,5 +1,3 @@
-# 实时活动（LiveActivity）修饰符
-
 Scripting 支持与 SwiftUI 等效的 Live Activity 外观控制修饰符。这些修饰符专门用于 **锁屏（Lock Screen）中的 Live Activity 界面**，用于自定义背景色和系统动作按钮颜色。
 
 通过为 Activity UI 中的 `content` 视图设置这些修饰符，可使 Live Activity 更符合品牌风格或特定活动主题。

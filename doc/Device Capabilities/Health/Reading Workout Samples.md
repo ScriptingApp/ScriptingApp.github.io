@@ -1,4 +1,4 @@
-# Reading Workout Samples PRO
+# Reading Workout Samples
 
 The Scripting app allows you to retrieve **workout sessions** from HealthKit using the global `Health.queryWorkouts()` function. Workouts represent physical activity sessions such as running, walking, swimming, cycling, strength training, and more.
 

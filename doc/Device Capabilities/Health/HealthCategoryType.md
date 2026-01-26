@@ -1,4 +1,4 @@
-# HealthCategoryType PRO
+# HealthCategoryType
 
 The `HealthCategoryType` identifies discrete health-related states or events, often recorded as binary values (e.g., present or not present) or discrete outcomes. These are commonly used for tracking symptoms, reproductive health, audio exposure events, and sleep states.
 

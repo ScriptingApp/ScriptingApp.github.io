@@ -1,4 +1,4 @@
-# Control Widget PRO
+# Control Widget
 
 The `ControlWidget` API enables users to add custom Button or Toggle controls to the iOS Control Center or Lock Screen. Each control is linked to an `AppIntent` to execute custom script logic. The controls support privacy protection, dynamic state labels, and SFSymbols icons.
 
@@ -23,7 +23,7 @@ Represents a label for a control, including the main label or value label in act
 Renders a button control that executes a script intent when tapped.
 
 ```ts
-function ControlWidgetButton(props: ControlWidgetButtonProps): JSX.Element;
+function ControlWidgetButton(props: ControlWidgetButtonProps): JSX.Element
 ```
 
 ### `ControlWidgetButtonProps`
@@ -45,9 +45,7 @@ function ControlWidgetButton(props: ControlWidgetButtonProps): JSX.Element;
 Renders a toggle control that updates a boolean value using a script intent.
 
 ```ts
-function ControlWidgetToggle<T extends { value: boolean }>(
-  props: ControlWidgetToggleProps<T>,
-): JSX.Element;
+function ControlWidgetToggle<T extends { value: boolean }>(props: ControlWidgetToggleProps<T>): JSX.Element
 ```
 
 ### `ControlWidgetToggleProps<T>`
@@ -93,15 +91,15 @@ export const ToggleDoorIntent = AppIntentManager.register({
   name: "ToggleDoorIntent",
   protocol: AppIntentProtocol.AppIntent,
   perform: async ({ id, value }: { id: string; value: boolean }) => {
-    await setDoorState(id, value);
-    ControlWidget.reloadToggles();
-  },
-});
+    await setDoorState(id, value)
+    ControlWidget.reloadToggles()
+  }
+})
 
 /// control_widget_toggle.tsx
 async function run() {
-  const doorId = ControlWidget.parameter || "default";
-  const data = await fetchDoorData(doorId);
+  const doorId = ControlWidget.parameter || "default"
+  const data = await fetchDoorData(doorId)
 
   ControlWidget.present(
     <ControlWidgetToggle
@@ -109,15 +107,15 @@ async function run() {
       intent={ToggleDoorIntent({ id: doorId, value: !data.doorOpened })}
       label={{
         title: `Door ${doorId}`,
-        systemImage: data.doorOpened ? "door.garage.opened" : "door.garage.closed",
+        systemImage: data.doorOpened ? "door.garage.opened" : "door.garage.closed"
       }}
       activeValueLabel={{ title: "The door is opened" }}
       inactiveValueLabel={{ title: "The door is closed" }}
-    />,
-  );
+    />
+  )
 }
 
-run();
+run()
 ```
 
 ***

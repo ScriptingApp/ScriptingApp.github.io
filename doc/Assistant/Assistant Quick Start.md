@@ -1,4 +1,4 @@
-# Assistant Quick Start PRO
+# Assistant Quick Start
 
 The Assistant API in Scripting provides three distinct capabilities, each designed for a different type of use case: **structured data**, **streaming output**, and **interactive conversations**.
 

@@ -1,5 +1,3 @@
-# SFTP Client PRO
-
 `SFTPClient` provides access to a remote file system over an SSH connection using the SFTP protocol.
 It supports directory operations, file management, attribute retrieval, and path resolution.
 Files can be opened using `openFile()`, which returns an `SFTPFile` instance for reading and writing.
