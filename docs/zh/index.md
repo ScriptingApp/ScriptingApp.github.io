@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: 开始
-      link: /doc/Quick%20Start
+      link: /zh/doc/Quick%20Start
     - theme: alt
       text: 下载
       link: https://apps.apple.com/app/apple-store/id6479691128
