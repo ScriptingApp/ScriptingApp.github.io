@@ -1,5 +1,7 @@
 # Redaction View Modifiers
 
+## Redaction View Modifiers
+
 The Scripting app supports view modifiers for applying redaction to a view hierarchy. Redaction allows views to display placeholder, obscured, or invalidated content, commonly used to indicate loading states, protect sensitive data, or mark content as outdated.
 
 These modifiers closely follow SwiftUI's `redacted(reason:)` and `unredacted()` API behavior.
@@ -21,7 +23,7 @@ Redaction visually alters the view and its descendants to reflect the current co
 ### Enum: `RedactedReason`
 
 ```ts
-type RedactedReason = "placeholder" | "invalidated" | "privacy"
+type RedactedReason = "placeholder" | "invalidated" | "privacy";
 ```
 
 - **`placeholder`**: Displays generic placeholder visuals, typically used during loading.
@@ -31,11 +33,7 @@ type RedactedReason = "placeholder" | "invalidated" | "privacy"
 ### Example
 
 ```tsx
-<Text
-  redacted={"placeholder"}
->
-  Loading text...
-</Text>
+<Text redacted={"placeholder"}>Loading text...</Text>
 ```
 
 In this example, the text will be displayed as a placeholder until real data is available.

@@ -1,3 +1,5 @@
+# ForEach
+
 The `ForEach` component renders a dynamic list of child views. It is used to display collections, create editable lists, and enable system-standard interactions such as swipe-to-delete. It is fully integrated with the Scripting app’s `Observable` state system and mirrors the design of SwiftUI’s `ForEach`.
 
 `ForEach` supports two usage modes:
@@ -7,7 +9,7 @@ The `ForEach` component renders a dynamic list of child views. It is used to dis
 
 ***
 
-# 1. Type Definitions
+## 1. Type Definitions
 
 ## ForEachDeprecatedProps (Not Recommended)
 
@@ -43,7 +45,7 @@ To disable item movement, pass `null`.
 
 ***
 
-# 2. ForEachProps (Recommended)
+## 2. ForEachProps (Recommended)
 
 ```ts
 type ForEachProps<T extends { id: string }> =
@@ -90,7 +92,7 @@ When used inside a `List`, these actions automatically map to system-standard in
 
 ***
 
-# 3. ForEachComponent Interface
+## 3. ForEachComponent Interface
 
 ```ts
 interface ForEachComponent {
@@ -102,7 +104,7 @@ The component is generic and supports any item type containing an `id`.
 
 ***
 
-# 4. Enabling System-Standard Deletion (Example)
+## 4. Enabling System-Standard Deletion (Example)
 
 When `ForEach` is placed inside a `List`, using `data` and `builder` will automatically activate swipe-to-delete. The only requirement is that each item has a unique `id`.
 
@@ -114,7 +116,7 @@ function View() {
     ["Apple", "Bananer", "Papaya", "Mango"].map((name, index) => ({
       id: index.toString(),
       name,
-    }))
+    })),
   );
 
   return (
@@ -133,7 +135,7 @@ function View() {
 
 ***
 
-# 5. Best Practices and Usage Guidelines
+## 5. Best Practices and Usage Guidelines
 
 ### 1. Prefer the `data: Observable<T[]>` API
 

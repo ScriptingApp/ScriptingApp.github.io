@@ -2439,6 +2439,8 @@ export function AnimatedList() {
 url: /zh/doc/Changelog/2.4.3/EnvironmentValuesReader.md
 ---
 
+# EnvironmentValuesReader
+
 `EnvironmentValuesReader` 是 Scripting 提供的一个组件，用于读取 SwiftUI 风格的环境值（Environment Values）。
 它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。
 
@@ -2447,24 +2449,24 @@ url: /zh/doc/Changelog/2.4.3/EnvironmentValuesReader.md
 
 ***
 
-# EnvironmentValues 类型
+## EnvironmentValues 类型
 
 ```ts
 type EnvironmentValues = {
-    colorScheme: ColorScheme;
-    colorSchemeContrast: ColorSchemeContrast;
-    displayScale: number;
-    horizontalSizeClass: UserInterfaceSizeClass | null;
-    verticalSizeClass: UserInterfaceSizeClass | null;
-    dismiss: () => void;
-    dismissSearch: () => void;
-    editMode: EditMode | null;
-    widgetRenderingMode: WidgetRenderingMode;
-    showsWidgetContainerBackground: boolean;
-    isSearching: boolean;
-    isPresented: boolean;
-    activityFamily: "small" | "medium";
-    tabViewBottomAccessoryPlacement: 'expanded' | 'inline';
+  colorScheme: ColorScheme;
+  colorSchemeContrast: ColorSchemeContrast;
+  displayScale: number;
+  horizontalSizeClass: UserInterfaceSizeClass | null;
+  verticalSizeClass: UserInterfaceSizeClass | null;
+  dismiss: () => void;
+  dismissSearch: () => void;
+  editMode: EditMode | null;
+  widgetRenderingMode: WidgetRenderingMode;
+  showsWidgetContainerBackground: boolean;
+  isSearching: boolean;
+  isPresented: boolean;
+  activityFamily: "small" | "medium";
+  tabViewBottomAccessoryPlacement: "expanded" | "inline";
 };
 ```
 
@@ -2571,24 +2573,24 @@ type EnvironmentValues = {
 类型：`'expanded' | 'inline'`
 说明：当前 TabView 的底部辅助栏的显示方式，同 SwiftUI 中的 `tabViewBottomAccessoryPlacement`。
 
-# EnvironmentValuesReader 组件
+## EnvironmentValuesReader 组件
 
 ```ts
 type EnvironmentValuesReaderProps = {
-    /**
-     * The keys to read from the environment values.
-     */
-    keys: Array<keyof EnvironmentValues>;
-    /**
-     * The callback function to render the children, it will be called with the environment values.
-     */
-    children: (values: EnvironmentValues) => VirtualNode;
+  /**
+   * The keys to read from the environment values.
+   */
+  keys: Array<keyof EnvironmentValues>;
+  /**
+   * The callback function to render the children, it will be called with the environment values.
+   */
+  children: (values: EnvironmentValues) => VirtualNode;
 };
 ```
 
 ***
 
-# Props 说明
+## Props 说明
 
 ## keys
 
@@ -2607,7 +2609,7 @@ type EnvironmentValuesReaderProps = {
 
 ***
 
-# 组件定义
+## 组件定义
 
 ```ts
 declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReaderProps>;
@@ -2615,24 +2617,26 @@ declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReader
 
 ***
 
-# 使用示例
+## 使用示例
 
 ## 示例：读取 colorScheme 和 displayScale
 
 ```tsx
-import { EnvironmentValuesReader, Text, VStack } from "scripting"
+import { EnvironmentValuesReader, Text, VStack } from "scripting";
 
 function View() {
-  return <EnvironmentValuesReader
-    keys={["colorScheme", "displayScale"]}
-  >
-    {(env) => {
-      return <VStack>
-        <Text>Color Scheme: {env.colorScheme}</Text>
-        <Text>Scale: {env.displayScale}</Text>
-      </VStack>
-    }}
-  </EnvironmentValuesReader>
+  return (
+    <EnvironmentValuesReader keys={["colorScheme", "displayScale"]}>
+      {(env) => {
+        return (
+          <VStack>
+            <Text>Color Scheme: {env.colorScheme}</Text>
+            <Text>Scale: {env.displayScale}</Text>
+          </VStack>
+        );
+      }}
+    </EnvironmentValuesReader>
+  );
 }
 ```
 
@@ -2643,10 +2647,7 @@ function View() {
 ```tsx
 <EnvironmentValuesReader keys={["dismiss"]}>
   {(env) => {
-    return <Button
-      title="Close"
-      action={() => env.dismiss()}
-    />
+    return <Button title="Close" action={() => env.dismiss()} />;
   }}
 </EnvironmentValuesReader>
 ```
@@ -2658,15 +2659,15 @@ function View() {
 ```tsx
 <EnvironmentValuesReader keys={["horizontalSizeClass"]}>
   {(env) => {
-    const compact = env.horizontalSizeClass === "compact"
-    return compact ? <Text>Compact Layout</Text> : <Text>Regular Layout</Text>
+    const compact = env.horizontalSizeClass === "compact";
+    return compact ? <Text>Compact Layout</Text> : <Text>Regular Layout</Text>;
   }}
 </EnvironmentValuesReader>
 ```
 
 ***
 
-# 使用注意事项
+## 使用注意事项
 
 1. **必须显式指定 keys**，否则不会读取任何 environment 值。
 2. 每次所指定的 environment key 发生变化时，`children()` 会重新渲染。
@@ -2681,6 +2682,8 @@ function View() {
 url: /zh/doc/Changelog/2.4.3/ForEach/index.md
 ---
 
+# ForEach
+
 `ForEach` 是 Scripting 中用于渲染可变数量子视图的组件，用于构建动态列表、可编辑列表，以及支持系统级的删除与移动行为。其设计参考 SwiftUI 的 `ForEach`，并与 Scripting 的 `Observable` 状态管理系统深度集成。
 
 组件支持两种模式：
@@ -2690,7 +2693,7 @@ url: /zh/doc/Changelog/2.4.3/ForEach/index.md
 
 ***
 
-# 1. 类型定义
+## 1. 类型定义
 
 ## ForEachDeprecatedProps（已不推荐）
 
@@ -2726,7 +2729,7 @@ type ForEachDeprecatedProps = {
 
 ***
 
-# 2. ForEachProps（推荐使用）
+## 2. ForEachProps（推荐使用）
 
 ```ts
 type ForEachProps<T extends { id: string }> =
@@ -2772,7 +2775,7 @@ type ForEachProps<T extends { id: string }> =
 
 ***
 
-# 3. ForEachComponent 接口
+## 3. ForEachComponent 接口
 
 ```ts
 interface ForEachComponent {
@@ -2784,7 +2787,7 @@ interface ForEachComponent {
 
 ***
 
-# 4. 系统级删除交互示例
+## 4. 系统级删除交互示例
 
 当 `ForEach` 放在 `List` 内部，并使用 `data + builder` 模式时，系统会自动启用 swipe-to-delete，只需正确提供 `id` 和编辑能力。
 
@@ -2796,7 +2799,7 @@ function View() {
     ["Apple", "Bananer", "Papaya", "Mango"].map((name, index) => ({
       id: index.toString(),
       name,
-    }))
+    })),
   );
 
   return (
@@ -2815,7 +2818,7 @@ function View() {
 
 ***
 
-# 5. 使用建议与最佳实践
+## 5. 使用建议与最佳实践
 
 ### 1. 推荐使用 `data: Observable<T[]>` 方案
 
@@ -2936,6 +2939,8 @@ run()
 url: /zh/doc/Changelog/2.4.3/GeometryReader.md
 ---
 
+# GeometryReader
+
 `GeometryReader` 是 Scripting 中与 SwiftUI 等效的几何布局读取组件。
 它能够在视图构建阶段提供当前容器的尺寸、边距、安全区域和角落内边距等信息，使开发者可以根据环境动态布局内容。
 
@@ -2943,7 +2948,7 @@ url: /zh/doc/Changelog/2.4.3/GeometryReader.md
 
 ***
 
-# GeometryProxy
+## GeometryProxy
 
 当 `GeometryReader` 构建其子内容时，会将一个 `GeometryProxy` 实例传递给 `children` 回调。开发者可以使用此对象访问与当前容器相关的布局信息。
 
@@ -2951,26 +2956,26 @@ url: /zh/doc/Changelog/2.4.3/GeometryReader.md
 interface GeometryProxy {
   readonly size: Size;
   readonly safeAreaInsets: {
-      leading: number;
-      top: number;
-      trailing: number;
-      bottom: number;
+    leading: number;
+    top: number;
+    trailing: number;
+    bottom: number;
   };
   /**
    * Requires iOS 26.0+.
    */
   readonly containerCornerInsets: {
-      bottomLeading: Size;
-      bottomTrailing: Size;
-      topLeading: Size;
-      topTrailing: Size;
+    bottomLeading: Size;
+    bottomTrailing: Size;
+    topLeading: Size;
+    topTrailing: Size;
   } | null;
 }
 ```
 
 ***
 
-# GeometryProxy 属性说明
+## GeometryProxy 属性说明
 
 ## 1. size
 
@@ -2984,16 +2989,16 @@ readonly size: Size
 
 ```ts
 type Size = {
-  width: number
-  height: number
-}
+  width: number;
+  height: number;
+};
 ```
 
 ### 示例
 
 ```tsx
-proxy.size.width
-proxy.size.height
+proxy.size.width;
+proxy.size.height;
 ```
 
 用于动态计算子视图布局，例如宽高比、自适应排版等。
@@ -3044,7 +3049,7 @@ readonly containerCornerInsets: {
 
 ***
 
-# GeometryReader
+## GeometryReader
 
 ```ts
 type GeometryReaderProps = {
@@ -3061,7 +3066,7 @@ declare const GeometryReader: FunctionComponent<GeometryReaderProps>;
 
 ***
 
-# 工作机制
+## 工作机制
 
 1. GeometryReader 占据父布局中的位置，并在布局阶段获取当前容器的尺寸与安全区域信息。
 2. 将 `GeometryProxy` 注入给 `children(proxy)` 回调。
@@ -3071,74 +3076,75 @@ declare const GeometryReader: FunctionComponent<GeometryReaderProps>;
 
 ***
 
-# 示例：居中布局
+## 示例：居中布局
 
 ```tsx
-import { GeometryReader, Text, VStack } from "scripting"
+import { GeometryReader, Text, VStack } from "scripting";
 
 function View() {
-  return <GeometryReader>
-    {(proxy) => {
-      return <VStack
-        frame={{
-          width: proxy.size.width,
-          height: proxy.size.height,
-          alignment: "center"
-        }}
-      >
-        <Text>Hello Geometry</Text>
-        <Text>
-          width: {proxy.size.width}
-        </Text>
-        <Text>
-          height: {proxy.size.height}
-        </Text>
-      </VStack>
-    }}
-  </GeometryReader>
+  return (
+    <GeometryReader>
+      {(proxy) => {
+        return (
+          <VStack
+            frame={{
+              width: proxy.size.width,
+              height: proxy.size.height,
+              alignment: "center",
+            }}>
+            <Text>Hello Geometry</Text>
+            <Text>width: {proxy.size.width}</Text>
+            <Text>height: {proxy.size.height}</Text>
+          </VStack>
+        );
+      }}
+    </GeometryReader>
+  );
 }
 ```
 
 ***
 
-# 示例：根据安全区域调整布局
+## 示例：根据安全区域调整布局
 
 ```tsx
 <GeometryReader>
   {(proxy) => {
-    return <VStack
-      padding={{
-        top: proxy.safeAreaInsets.top,
-        bottom: proxy.safeAreaInsets.bottom
-      }}
-    >
-      <Text>Content inside safe area.</Text>
-    </VStack>
+    return (
+      <VStack
+        padding={{
+          top: proxy.safeAreaInsets.top,
+          bottom: proxy.safeAreaInsets.bottom,
+        }}>
+        <Text>Content inside safe area.</Text>
+      </VStack>
+    );
   }}
 </GeometryReader>
 ```
 
 ***
 
-# 示例（iOS 26+）：读取 containerCornerInsets
+## 示例（iOS 26+）：读取 containerCornerInsets
 
 ```tsx
 <GeometryReader>
   {(proxy) => {
-    const corners = proxy.containerCornerInsets
-    return <Text>
-      {corners == null
-        ? "Corner insets not available"
-        : `Top Leading Corner: ${corners.topLeading.width}, ${corners.topLeading.height}`
-      }
-    </Text>
+    const corners = proxy.containerCornerInsets;
+    return (
+      <Text>
+        {corners == null
+          ? "Corner insets not available"
+          : `Top Leading Corner: ${corners.topLeading.width}, ${corners.topLeading.height}`}
+      </Text>
+    );
   }}
 </GeometryReader>
 ```
 
 ***
 
-# 使用建议
+## 使用建议
 
 - 在需要响应容器尺寸时使用 GeometryReader，例如图片缩放、动态布局、等比布局。
 - 避免将大量复杂布局放入 GeometryReader 内，可能影响性能（同 SwiftUI）。
@@ -3149,13 +3155,15 @@ function View() {
 url: /zh/doc/Changelog/2.4.3/LiveActivity View Modifiers.md
 ---
 
+# 实时活动（LiveActivity）修饰符
+
 Scripting 支持与 SwiftUI 等效的 Live Activity 外观控制修饰符。这些修饰符专门用于 **锁屏（Lock Screen）中的 Live Activity 界面**，用于自定义背景色和系统动作按钮颜色。
 
 通过为 Activity UI 中的 `content` 视图设置这些修饰符，可使 Live Activity 更符合品牌风格或特定活动主题。
 
 ***
 
-# 修饰符定义
+## 修饰符定义
 
 ```ts
 /**
@@ -3177,7 +3185,7 @@ activitySystemActionForegroundColor?: Color | {
 
 ***
 
-# 属性说明
+## 属性说明
 
 ## 1. activityBackgroundTint
 
@@ -3209,7 +3217,7 @@ activitySystemActionForegroundColor?: Color | {
 
 ***
 
-# 示例：在 Live Activity UI Builder 中使用
+## 示例：在 Live Activity UI Builder 中使用
 
 Live Activity 的 UI builder 必须返回包含多个区域（content / compactLeading / compactTrailing / minimal等）的对象结构。
 
@@ -3237,7 +3245,7 @@ function ActivityView() {
 
 ***
 
-# 使用说明
+## 使用说明
 
 - **修饰符仅在 Live Activity UI 中有效**，并且只影响 **锁屏界面** 的外观。
 - 必须在 Live Activity UI builder 的 `content` 中使用。
@@ -3248,6 +3256,8 @@ function ActivityView() {
 ---
 url: /zh/doc/Changelog/2.4.3/LiveActivity.md
 ---
+
+# 实时活动（灵动岛）
 
 `LiveActivity` API 允许你的脚本在 iOS 的锁屏界面以及支持的设备上的动态岛中展示实时数据。通过该 API，你可以创建、更新并结束 Live Activity，同时监听其生命周期状态和系统支持情况。
 
@@ -3264,7 +3274,7 @@ url: /zh/doc/Changelog/2.4.3/LiveActivity.md
 
 ***
 
-# 1. Live Activity 概念理解
+## 1. Live Activity 概念理解
 
 Live Activity 展示在以下区域：
 
@@ -3288,7 +3298,7 @@ Live Activity 展示在以下区域：
 
 ***
 
-# 2. Live Activity 状态类型
+## 2. Live Activity 状态类型
 
 ```ts
 type LiveActivityState = "active" | "dismissed" | "ended" | "stale";
@@ -3303,7 +3313,7 @@ type LiveActivityState = "active" | "dismissed" | "ended" | "stale";
 
 ***
 
-# 3. LiveActivityDetail 类型
+## 3. LiveActivityDetail 类型
 
 ```ts
 type LiveActivityDetail = {
@@ -3316,7 +3326,7 @@ type LiveActivityDetail = {
 
 ***
 
-# 4. LiveActivity UI 构建类型
+## 4. LiveActivity UI 构建类型
 
 ## 4.1 LiveActivityUIProps
 
@@ -3339,7 +3349,7 @@ type LiveActivityUIProps = {
 
 ***
 
-# 5. 注册 Live Activity UI
+## 5. 注册 Live Activity UI
 
 Live Activity 必须放在单独的文件中，例如 `live_activity.tsx`：
 
@@ -3383,7 +3393,7 @@ export const MyLiveActivity = LiveActivity.register("MyLiveActivity", builder);
 
 ***
 
-# 6. 在脚本中使用 Live Activity
+## 6. 在脚本中使用 Live Activity
 
 下面展示如何启动、更新、监听状态并结束 Live Activity。
 
@@ -3468,7 +3478,7 @@ run();
 
 ***
 
-# 7. LiveActivity 类 API 说明
+## 7. LiveActivity 类 API 说明
 
 ## 7.1 start(contentState, options?)
 
@@ -3576,7 +3586,7 @@ static endAllActivities(options?)
 
 ***
 
-# 8. Live Activity UI 组件
+## 8. Live Activity UI 组件
 
 | 组件                             | 描述         |
 | ------------------------------ | ---------- |
@@ -3590,7 +3600,7 @@ static endAllActivities(options?)
 
 ***
 
-# 9. 注意事项与最佳实践
+## 9. 注意事项与最佳实践
 
 ## 9.1 必须 JSON 可序列化
 
@@ -3623,7 +3633,7 @@ BackgroundKeeper.keepAlive();
 
 ***
 
-# 10. 完整示例（简化版）
+## 10. 完整示例（简化版）
 
 ```tsx
 const activity = MyLiveActivity();
@@ -3635,7 +3645,7 @@ await activity.update({ mins: 5 });
 await activity.end({ mins: 0 }, { dismissTimeInterval: 0 });
 ```
 
-# 11. 注意事项
+## 11. 注意事项
 
 - Live Activity 的启动是异步的，需要等到 `start` 返回 `true` 时才能调用 `update` 和 `end`
 - Live Activity 不能访问 Documents 和 iCloud 目录，只能访问 app group 目录，如果你想要访问文件或者渲染图片，必须把文件或图片保存到 `FileManager.appGroupDocumentsDirectory` 目录中。 比如渲染图片，你保存到 `FileManager.appGroupDocumentsDirectory` 中， 再通过 `<Image filePath={Path.join(FileManager.appGroupDocumentsDirectory, 'example.png')} />` 渲染
@@ -4437,6 +4447,8 @@ await ssh.close()
 url: /zh/doc/Changelog/2.4.3/ScrollViewReader.md
 ---
 
+# ScrollViewReader
+
 **ScrollViewReader** 组件，用于在脚本中获得对可滚动内容的编程化控制能力，使开发者能够在运行时滚动至任意视图位置，包括列表项、文本节点等。
 
 ScrollViewReader 与 SwiftUI 的行为保持一致：
@@ -4444,13 +4456,13 @@ ScrollViewReader 与 SwiftUI 的行为保持一致：
 
 ***
 
-# ScrollViewProxy
+## ScrollViewProxy
 
 `ScrollViewProxy` 是提供滚动控制的代理对象，由 `ScrollViewReader` 在渲染期间自动注入。
 
 ```ts
 interface ScrollViewProxy {
-    scrollTo: (id: string | number, anchor?: KeywordPoint | Point) => void;
+  scrollTo: (id: string | number, anchor?: KeywordPoint | Point) => void;
 }
 ```
 
@@ -4463,10 +4475,10 @@ interface ScrollViewProxy {
 
 #### 参数说明
 
-| 参数     | 类型             | 必须       | 说明 |                                         |
-| ------ | -------------- | -------- | -- | --------------------------------------- |
-| id     | `string`       | `number` | 是  | 要滚动到的目标元素的唯一标识符。通常对应 `<View key="xxx">` |
-| anchor | `KeywordPoint` | `Point`  | 否  | 滚动目标在可视区域中的对齐方式。可为字符串关键字或坐标点。           |
+\| 参数   | 类型           | 必须     | 说明 |
+\| ------ | -------------- | -------- | ---- | ----------------------------------------------------------- |
+\| id     | `string`       | `number` | 是   | 要滚动到的目标元素的唯一标识符。通常对应 `<View key="xxx">` |
+\| anchor | `KeywordPoint` | `Point`  | 否   | 滚动目标在可视区域中的对齐方式。可为字符串关键字或坐标点。  |
 
 ### KeywordPoint 类型
 
@@ -4482,22 +4494,22 @@ interface ScrollViewProxy {
 
 ```ts
 type Point = {
-  x: number
-  y: number
-}
+  x: number;
+  y: number;
+};
 ```
 
 ***
 
-# ScrollViewReader
+## ScrollViewReader
 
 ScrollViewReader 用于包裹可滚动内容，并提供一个 `scrollViewProxy` 以控制内部滚动。
 
 ```ts
 type ScrollViewReaderProps = {
-    children: (scrollViewProxy: ScrollViewProxy) => VirtualNode
+  children: (scrollViewProxy: ScrollViewProxy) => VirtualNode;
 };
-declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>
+declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>;
 ```
 
 ## Props 说明
@@ -4508,7 +4520,7 @@ declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>
 
 ***
 
-# 使用说明
+## 使用说明
 
 1. **ScrollViewReader 必须包裹 List、ScrollView 等可滚动组件**。
 2. **回调中的 proxy 只在视图构建阶段提供一次**，开发者可利用 `useRef` 保存。
@@ -4518,7 +4530,7 @@ declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>
 
 ***
 
-# 基础示例
+## 基础示例
 
 下面是一个完整的使用示例，包括滚动到指定元素以及使用动画的方式。
 
@@ -4535,73 +4547,68 @@ import {
   VStack,
   useRef,
   ScrollViewProxy,
-  withAnimation
-} from "scripting"
+  withAnimation,
+} from "scripting";
 
 function Item({ index }: { index: number }) {
-  return <Text>
-    Item - {index}
-  </Text>
+  return <Text>Item - {index}</Text>;
 }
 
 function View() {
-  const dismiss = Navigation.useDismiss()
-  const proxyRef = useRef<ScrollViewProxy>()
+  const dismiss = Navigation.useDismiss();
+  const proxyRef = useRef<ScrollViewProxy>();
 
-  return <NavigationStack>
-    <VStack navigationTitle="ScrollViewReader">
+  return (
+    <NavigationStack>
+      <VStack navigationTitle="ScrollViewReader">
+        <ScrollViewReader>
+          {(proxy) => {
+            // 记录 proxy 实例，供按钮点击时使用
+            proxyRef.current = proxy;
 
-      <ScrollViewReader>
-        {(proxy) => {
-          // 记录 proxy 实例，供按钮点击时使用
-          proxyRef.current = proxy
+            return (
+              <List>
+                {new Array(100).fill(0).map((_, index) => (
+                  <Item key={index} index={index} />
+                ))}
+                <Text key="bottom">Bottom</Text>
+              </List>
+            );
+          }}
+        </ScrollViewReader>
 
-          return <List>
-            {new Array(100).fill(0).map((_, index) =>
-              <Item
-                key={index}
-                index={index}
-              />
-            )}
-            <Text key="bottom">
-              Bottom
-            </Text>
-          </List>
-        }}
-      </ScrollViewReader>
+        <Button
+          title="跳转"
+          action={() => {
+            if (proxyRef.current == null) {
+              console.log("no proxy found");
+              return;
+            }
 
-      <Button
-        title="跳转"
-        action={() => {
-          if (proxyRef.current == null) {
-            console.log("no proxy found")
-            return
-          }
+            const index = (Math.random() * 100) | 0;
 
-          const index = Math.random() * 100 | 0
-
-          withAnimation(() => {
-            proxyRef.current?.scrollTo(index, "bottom")
-            // proxyRef.current?.scrollTo("bottom", "bottom")
-          })
-        }}
-      />
-
-    </VStack>
-  </NavigationStack>
+            withAnimation(() => {
+              proxyRef.current?.scrollTo(index, "bottom");
+              // proxyRef.current?.scrollTo("bottom", "bottom")
+            });
+          }}
+        />
+      </VStack>
+    </NavigationStack>
+  );
 }
 
 async function run() {
-  await Navigation.present(<View />)
-  Script.exit()
+  await Navigation.present(<View />);
+  Script.exit();
 }
 
-run()
+run();
 ```
 
 ***
 
-# 关于 ID（key）匹配的说明
+## 关于 ID（key）匹配的说明
 
 `scrollTo(id)` 依赖于内部节点的 `key` 属性。
 以下配置都可作为滚动目标：
@@ -4614,21 +4621,21 @@ run()
 
 ***
 
-# 动画支持
+## 动画支持
 
 ScrollViewReader 支持结合 `withAnimation` 来进行平滑滚动。例如：
 
 ```tsx
 withAnimation(() => {
-  proxy.scrollTo("target", "center")
-})
+  proxy.scrollTo("target", "center");
+});
 ```
 
 在动画块中触发滚动，将获得平滑过渡。
 
 ***
 
-# 注意事项
+## 注意事项
 
 1. **必须在 ScrollViewReader 回调中记录 proxy**，否则外部无法访问。
 2. **必须确保目标元素存在并有唯一 id**，否则无法滚到目标位置。
@@ -4640,6 +4647,8 @@ withAnimation(() => {
 ---
 url: /zh/doc/Changelog/2.4.3/Set environment values (environments).md
 ---
+
+# 设置环境变量 (environments)
 
 `environments` 是 Scripting 新增的视图修饰符，用于向当前视图树（View Hierarchy）注入特定的 environment values。
 它的作用与 SwiftUI 的 `.environment()` 类似，但基于 Scripting 的设计进行了显式声明和类型收敛，避免隐式行为。
@@ -4653,7 +4662,7 @@ url: /zh/doc/Changelog/2.4.3/Set environment values (environments).md
 
 ***
 
-# 修饰符定义
+## 修饰符定义
 
 ```ts
 environments?: {
@@ -4664,7 +4673,7 @@ environments?: {
 
 ***
 
-# 一、editMode（编辑模式）
+## 一、editMode（编辑模式）
 
 `editMode` 用于设置当前视图树中所有支持编辑模式的组件的编辑状态。
 
@@ -4678,12 +4687,12 @@ environments?: {
 
 ```ts
 class EditMode {
-  readonly value: "active" | "inactive" | "transient" | "unknown"
-  readonly isEditing: boolean
+  readonly value: "active" | "inactive" | "transient" | "unknown";
+  readonly isEditing: boolean;
 
-  static active(): EditMode
-  static inactive(): EditMode
-  static transient(): EditMode
+  static active(): EditMode;
+  static inactive(): EditMode;
+  static transient(): EditMode;
 }
 ```
 
@@ -4728,7 +4737,7 @@ const editMode = useObservable(() => EditMode.active())
 
 ***
 
-# 二、openURL（自定义 URL 打开行为）
+## 二、openURL（自定义 URL 打开行为）
 
 `openURL` environment 允许为当前视图树定义一套自定义的 URL 打开逻辑。
 这会覆盖如 `<Link>`、`Text(url:)` 等组件的默认行为。
@@ -4747,21 +4756,21 @@ openURL?: (url: string) => OpenURLActionResult;
 
 ***
 
-# OpenURLActionResult
+## OpenURLActionResult
 
 自定义 URL 打开逻辑的返回类型。
 
 ```ts
 class OpenURLActionResult {
-  type: string
+  type: string;
 
-  static handled(): OpenURLActionResult
-  static discarded(): OpenURLActionResult
+  static handled(): OpenURLActionResult;
+  static discarded(): OpenURLActionResult;
 
   static systemAction(options?: {
-    url?: string
-    prefersInApp: boolean // Requires iOS26.0+
-  }): OpenURLActionResult
+    url?: string;
+    prefersInApp: boolean; // Requires iOS26.0+
+  }): OpenURLActionResult;
 }
 ```
 
@@ -4783,14 +4792,13 @@ class OpenURLActionResult {
     openURL: (url) => {
       return OpenURLActionResult.systemAction({
         url,
-        prefersInApp: false
-      })
-    }
-  }}
->
-  {urls.map(url =>
+        prefersInApp: false,
+      });
+    },
+  }}>
+  {urls.map((url) => (
     <Link url={url}>{url}</Link>
-  )}
+  ))}
 </Group>
 ```
 
@@ -4801,7 +4809,7 @@ class OpenURLActionResult {
 
 ***
 
-# 使用总结
+## 使用总结
 
 | environment key | 类型                             | 作用范围      | 使用场景         |
 | --------------- | ------------------------------ | --------- | ------------ |
@@ -4810,7 +4818,7 @@ class OpenURLActionResult {
 
 ***
 
-# 完整示例：同时使用 editMode 与 openURL
+## 完整示例：同时使用 editMode 与 openURL
 
 ```tsx
 const editMode = useObservable(() => EditMode.inactive())
@@ -4846,7 +4854,7 @@ const editMode = useObservable(() => EditMode.inactive())
 
 ***
 
-# 注意事项
+## 注意事项
 
 1. `environments` 为局部作用域，仅影响其子视图。
 2. `editMode` 必须是 `Observable<EditMode>` 才能触发界面更新。
@@ -4984,11 +4992,13 @@ const content = FileManager.readAsStringSync(path)
 url: /zh/doc/Changelog/2.4.3/useObservable.md
 ---
 
+# useObservable
+
 Scripting 提供一套响应式状态系统，由 `Observable<T>` 与 `useObservable<T>` 组成，用于驱动组件渲染、与动画系统协同工作，并与 SwiftUI 的双向绑定能力保持一致（例如 `List(selection:)`、`NavigationStack(path:)` 等未来扩展接口）。
 
 ***
 
-# 1. Observable\<T>
+## 1. Observable\<T>
 
 `Observable<T>` 是一个可观察的数据容器，当 `.value` 更新时，会触发依赖该值的 UI 自动重新渲染。
 
@@ -5034,7 +5044,7 @@ observable.setValue(newValue);
 
 ***
 
-# 2. useObservable\<T>
+## 2. useObservable\<T>
 
 `useObservable<T>` 是在组件内部创建本地状态的 Hook。
 返回值为 `Observable<T>`，用于驱动 UI 更新。
@@ -5071,7 +5081,7 @@ const user = useObservable(() => createDefaultUser());
 
 ***
 
-# 3. 在 UI 中使用 Observable
+## 3. 在 UI 中使用 Observable
 
 在组件中，只需读取 `.value`：
 
@@ -5089,7 +5099,7 @@ const user = useObservable(() => createDefaultUser());
 
 ***
 
-# 4. 与动画协同工作
+## 4. 与动画协同工作
 
 Observable 是动画触发源。
 支持以下场景：
@@ -5136,7 +5146,7 @@ animation={{
 
 ***
 
-# 5. 与 SwiftUI Binding 风格的 API 对接（扩展能力）
+## 5. 与 SwiftUI Binding 风格的 API 对接（扩展能力）
 
 Observable 将作为未来 Scripting 的标准双向绑定机制，用于支持 SwiftUI 风格的 API，例如：
 
@@ -5164,7 +5174,7 @@ const path = useObservable<string[]>([])
 
 ***
 
-# 6. ForEach：推荐使用 Observable 数据源
+## 6. ForEach：推荐使用 Observable 数据源
 
 为了获得更接近 SwiftUI 的体验，推荐使用：
 
@@ -5200,7 +5210,7 @@ const items = useObservable([
 
 ***
 
-# 7. 综合示例
+## 7. 综合示例
 
 ```tsx
 export function Demo() {
@@ -5248,7 +5258,7 @@ export function Demo() {
 
 ***
 
-# 8. 总结
+## 8. 总结
 
 - `Observable<T>` 是 Scripting 中的核心响应式数据结构
 - `useObservable` 在组件内创建状态，支持任意类型 T
@@ -5712,6 +5722,8 @@ contentShape?: Shape | {
 url: /zh/doc/Changelog/2.4.4/Glass Effect Transition/index.md
 ---
 
+# 玻璃效果过渡效果
+
 Liquid Glass 在 iOS 26 引入了更先进的几何匹配与材质过渡能力。
 Scripting 完整支持这些特性，并通过 `glassEffectTransition`、`glassEffectID`、`glassEffectUnion`、`GlassEffectContainer` 以及 `NamespaceReader` 组合实现自然、顺滑且结构化的玻璃动画体验。
 
@@ -5727,12 +5739,12 @@ Scripting 完整支持这些特性，并通过 `glassEffectTransition`、`glassE
 
 ***
 
-# 1. 概述：什么是 Glass Effect Transition
+## 1. 概述：什么是 Glass Effect Transition
 
 `glassEffectTransition` 用于指定 Liquid Glass 在视图出现、消失或布局变化期间应如何过渡。
 
 ```ts
-type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
+type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
 ```
 
 Glass Effect Transition 控制三个核心内容：
@@ -5745,12 +5757,12 @@ Glass Effect Transition 控制三个核心内容：
 
 ***
 
-# 2. 三种过渡类型
+## 2. 三种过渡类型
 
 ## 2.1 identity（无过渡）
 
 ```tsx
-glassEffectTransition="identity"
+glassEffectTransition = "identity";
 ```
 
 含义：
@@ -5769,7 +5781,7 @@ glassEffectTransition="identity"
 ## 2.2 materialize（材质出现动画）
 
 ```tsx
-glassEffectTransition="materialize"
+glassEffectTransition = "materialize";
 ```
 
 特点：
@@ -5789,7 +5801,7 @@ glassEffectTransition="materialize"
 ## 2.3 matchedGeometry（匹配几何）
 
 ```tsx
-glassEffectTransition="matchedGeometry"
+glassEffectTransition = "matchedGeometry";
 ```
 
 特点：
@@ -5808,7 +5820,7 @@ glassEffectTransition="matchedGeometry"
 
 ***
 
-# 3. glassEffectID 与 namespace：匹配几何的核心
+## 3. glassEffectID 与 namespace：匹配几何的核心
 
 ## 3.1 为什么需要 ID？
 
@@ -5857,7 +5869,7 @@ SwiftUI 的 matchedGeometry 效果依赖 `@Namespace`，在 Scripting 中我们�
 
 ***
 
-# 4. glassEffectUnion：玻璃材质的联合区域
+## 4. glassEffectUnion：玻璃材质的联合区域
 
 除了匹配几何形状外，Liquid Glass 还能把多个玻璃区域合并为一个连续材质区域：
 
@@ -5878,42 +5890,44 @@ glassEffectUnion={{
 
 ***
 
-# 5. 示例解析
+## 5. 示例解析
 
 以下示例展示菜单在两种布局之间切换，并使用动画呈现玻璃过渡：
 
 ```tsx
-isAlternativeMenu.value
-  ? <>
-      <Button
-        title="Home"
-        glassEffectID={{id:1, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-      <Button
-        title="Settings"
-        glassEffectID={{id:2, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-    </>
-  : <>
-      <Button
-        title="Edit"
-        glassEffectID={{id:1, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-      <Button
-        title="Erase"
-        glassEffectID={{id:3, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-        glassEffectTransition="materialize"
-      />
-      <Button
-        title="Delete"
-        glassEffectID={{id:2, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-    </>
+isAlternativeMenu.value ? (
+  <>
+    <Button
+      title="Home"
+      glassEffectID={{ id: 1, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+    <Button
+      title="Settings"
+      glassEffectID={{ id: 2, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+  </>
+) : (
+  <>
+    <Button
+      title="Edit"
+      glassEffectID={{ id: 1, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+    <Button
+      title="Erase"
+      glassEffectID={{ id: 3, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+      glassEffectTransition="materialize"
+    />
+    <Button
+      title="Delete"
+      glassEffectID={{ id: 2, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+  </>
+);
 ```
 
 重点说明：
@@ -5934,7 +5948,7 @@ isAlternativeMenu.value
 ### 4. Erase 设置了 materialize
 
 ```tsx
-glassEffectTransition="materialize"
+glassEffectTransition = "materialize";
 ```
 
 它不会尝试匹配几何，而是用材质淡入淡出的动画。
@@ -5956,7 +5970,7 @@ glassEffectTransition="materialize"
 
 ***
 
-# 6. NamespaceReader：Scripting 如何暴露 @Namespace
+## 6. NamespaceReader：Scripting 如何暴露 @Namespace
 
 在 SwiftUI 中：
 
@@ -5995,23 +6009,21 @@ glassEffectID={{ id: x, namespace }}
 
 ***
 
-# 7. 动画触发方式（withAnimation）
+## 7. 动画触发方式（withAnimation）
 
 玻璃过渡不会自行动画，必须使用动画触发状态切换：
 
 ```tsx
 withAnimation(() => {
-  isAlternativeMenu.setValue(
-    !isAlternativeMenu.value
-  )
-})
+  isAlternativeMenu.setValue(!isAlternativeMenu.value);
+});
 ```
 
 匹配几何、材质出现动画等会自动附着到这次动画事务中。
 
 ***
 
-# 8. 最佳实践
+## 8. 最佳实践
 
 ### 1. 所有参与动画的视图必须在同一个 GlassEffectContainer
 
@@ -6035,7 +6047,7 @@ withAnimation(() => {
 
 ***
 
-# 9. 总结
+## 9. 总结
 
 Glass Effect Transition 是 iOS 26 Liquid Glass 系统的核心特性之一，它让玻璃材质在视图切换中具备几何匹配、材质渐变与联合区域动画。
 
@@ -6186,6 +6198,8 @@ run()
 url: /zh/doc/Changelog/2.4.4/Intent.continueInForeground.md
 ---
 
+# Intent.continueInForeground
+
 `Intent.continueInForeground` 用于在脚本从 Shortcuts 中后台执行时，**请求系统将流程转移到 Scripting App 的前台继续运行**。
 此过程需要用户明确确认。
 
@@ -6207,20 +6221,20 @@ url: /zh/doc/Changelog/2.4.4/Intent.continueInForeground.md
 
 ***
 
-# API 定义
+## API 定义
 
 ```ts
 function continueInForeground(
   dialog?: Dialog | null,
   options?: {
     alwaysConfirm?: boolean;
-  }
+  },
 ): Promise<void>;
 ```
 
 ***
 
-# 参数说明
+## 参数说明
 
 ## dialog?: Dialog | null
 
@@ -6276,7 +6290,7 @@ type Dialog =
 
 ***
 
-# 执行流程
+## 执行流程
 
 执行 `await Intent.continueInForeground(...)` 时：
 
@@ -6285,7 +6299,6 @@ type Dialog =
 2. 系统弹出确认对话框
 
 3. 用户选择：
-
    - **确认** → 打开 Scripting App → 脚本继续
    - **取消** → 脚本立即终止
 
@@ -6295,14 +6308,13 @@ type Dialog =
 
 ***
 
-# 典型应用场景
+## 典型应用场景
 
 推荐在以下场景调用：
 
 - 需要展示完整的导航界面或交互表单（如示例中的 TextField）
 - 需要使用 `Navigation.present` 呈现 UI
 - 需要 App 内操作如：
-
   - 预览文件
   - 编辑长文本
   - 选择复杂数据
@@ -6315,7 +6327,7 @@ type Dialog =
 
 ***
 
-# 完整示例代码
+## 完整示例代码
 
 以下示例展示如何从 Shortcuts 通过 `continueInForeground` 切换到 Scripting App 前台，然后展示 UI 让用户输入文本，输入结束后再返回 Shortcuts。
 
@@ -6375,7 +6387,7 @@ runIntent();
 
 ***
 
-# 注意事项与最佳实践
+## 注意事项与最佳实践
 
 - **必须运行在 iOS 26+**，否则会抛出异常或行为不可用。
 - 若脚本依赖用户输入、复杂 UI 或操作，请使用该 API 触发前台模式。
@@ -6388,6 +6400,8 @@ runIntent();
 ---
 url: /zh/doc/Changelog/2.4.4/Intent.requestConfirmation.md
 ---
+
+# Intent.requestConfirmation
 
 `Intent.requestConfirmation` 用于在脚本执行过程中，**向用户请求确认某项操作**。
 调用后，系统会暂停脚本执行，并展示一个基于 **SnippetIntent 的 UI** 作为确认界面，同时可显示提示对话内容。
@@ -6403,7 +6417,7 @@ url: /zh/doc/Changelog/2.4.4/Intent.requestConfirmation.md
 
 ***
 
-# API 定义
+## API 定义
 
 ```ts
 function requestConfirmation(
@@ -6412,13 +6426,13 @@ function requestConfirmation(
   options?: {
     dialog?: Dialog;
     showDialogAsPrompt?: boolean;
-  }
+  },
 ): Promise<void>;
 ```
 
 ***
 
-# 参数说明
+## 参数说明
 
 ## actionName: ConfirmationActionName
 
@@ -6504,7 +6518,7 @@ type Dialog =
 
 ***
 
-# 执行流程
+## 执行流程
 
 调用 `await Intent.requestConfirmation(...)` 时脚本执行顺序如下：
 
@@ -6513,7 +6527,6 @@ type Dialog =
 2. 系统展示确认界面（SnippetIntent UI + 可选 dialog 文案）
 
 3. 用户进行交互：
-
    - **确认** → Promise resolve，脚本继续
    - **取消** → 脚本终止执行
 
@@ -6523,7 +6536,7 @@ type Dialog =
 
 ***
 
-# 使用场景
+## 使用场景
 
 以下场景推荐使用 `requestConfirmation`：
 
@@ -6539,7 +6552,7 @@ type Dialog =
 
 ***
 
-# 完整示例代码
+## 完整示例代码
 
 以下示例展示如何使用 `requestConfirmation` 请求用户确认一次颜色选择，并在确认后继续执行脚本。
 
@@ -6583,7 +6596,7 @@ runIntent();
 
 ***
 
-# 注意事项与最佳实践
+## 注意事项与最佳实践
 
 - **必须运行在 iOS 26+**
   提前检查系统版本或优雅降级。
@@ -6606,13 +6619,15 @@ runIntent();
 url: /zh/doc/Changelog/2.4.4/IntentMemoryStorage.md
 ---
 
+# IntentMemoryStorage
+
 IntentMemoryStorage 是一个用于 **在多个 AppIntent 执行之间保留临时数据** 的内存存储系统。然而，它的生命周期并不严格绑定在单次 AppIntent 或 Script.exit 以上，而是由系统对 Extension 环境（Intent Extension / Widget Extension）的运行状态决定，因此具有一定的非确定性。
 
 以下文档基于你之前确认的完整版结构，并加入系统行为的解释。
 
 ***
 
-# 概述
+## 概述
 
 在 Scripting 中，每个 AppIntent 都运行在其所属脚本的 **脚本执行上下文（Script Execution Context）** 中。当 AppIntent 的 `perform()` 执行完成，或在 `intent.tsx` 中调用 `Script.exit()` 时，当前 AppIntent 的执行流程会结束。
 
@@ -6640,7 +6655,7 @@ MemoryStorage 的本质是：
 
 ***
 
-# 作用范围（Scopes）
+## 作用范围（Scopes）
 
 IntentMemoryStorage 提供两类存储区域：
 
@@ -6669,14 +6684,14 @@ IntentMemoryStorage 提供两类存储区域：
 
 ***
 
-# Extension 生命周期与 JS Context 行为
+## Extension 生命周期与 JS Context 行为
 
 ## 情况一：在 Shortcuts 中运行 Intent
 
 - Shortcuts 执行完成后：
-
   - 当前 JS Context 会被销毁
   - 当前 AppIntent 执行结束
+
 - 但：**IntentMemoryStorage 不一定被销毁**
   因为系统未必会立即销毁 Intent Extension
 
@@ -6687,13 +6702,13 @@ IntentMemoryStorage 提供两类存储区域：
 例：
 
 ```ts
-IntentMemoryStorage.set("color", "red")
+IntentMemoryStorage.set("color", "red");
 ```
 
 下一次 Shortcut 再运行时：
 
 ```ts
-const c = IntentMemoryStorage.get("color")
+const c = IntentMemoryStorage.get("color");
 ```
 
 可能仍然得到 `"red"`。
@@ -6742,16 +6757,16 @@ MemoryStorage 的生命周期与 **Extension 进程生命周期** 完全一致�
 
 ***
 
-# API 定义
+## API 定义
 
 ```ts
 namespace IntentMemoryStorage {
-  function get<T>(key: string, options?: { shared?: boolean }): T | null
-  function set(key: string, value: any, options?: { shared?: boolean }): void
-  function remove(key: string, options?: { shared?: boolean }): void
-  function contains(key: string, options?: { shared?: boolean }): boolean
-  function clear(): void
-  function keys(): string[]
+  function get<T>(key: string, options?: { shared?: boolean }): T | null;
+  function set(key: string, value: any, options?: { shared?: boolean }): void;
+  function remove(key: string, options?: { shared?: boolean }): void;
+  function contains(key: string, options?: { shared?: boolean }): boolean;
+  function clear(): void;
+  function keys(): string[];
 }
 ```
 
@@ -6762,12 +6777,12 @@ namespace IntentMemoryStorage {
 
 ***
 
-# API 详细说明
+## API 详细说明
 
 ## get
 
 ```ts
-function get<T>(key: string, options?: { shared?: boolean }): T | null
+function get<T>(key: string, options?: { shared?: boolean }): T | null;
 ```
 
 读取键值。注意：
@@ -6778,13 +6793,13 @@ function get<T>(key: string, options?: { shared?: boolean }): T | null
 脚本级：
 
 ```ts
-const color = IntentMemoryStorage.get<string>("color")
+const color = IntentMemoryStorage.get<string>("color");
 ```
 
 shared：
 
 ```ts
-const token = IntentMemoryStorage.get<string>("token", { shared: true })
+const token = IntentMemoryStorage.get<string>("token", { shared: true });
 ```
 
 ***
@@ -6792,7 +6807,7 @@ const token = IntentMemoryStorage.get<string>("token", { shared: true })
 ## set
 
 ```ts
-function set(key: string, value: any, options?: { shared?: boolean }): void
+function set(key: string, value: any, options?: { shared?: boolean }): void;
 ```
 
 写入存储区域。
@@ -6800,13 +6815,13 @@ function set(key: string, value: any, options?: { shared?: boolean }): void
 脚本级：
 
 ```ts
-IntentMemoryStorage.set("color", "systemBlue")
+IntentMemoryStorage.set("color", "systemBlue");
 ```
 
 shared：
 
 ```ts
-IntentMemoryStorage.set("sessionID", "abc123", { shared: true })
+IntentMemoryStorage.set("sessionID", "abc123", { shared: true });
 ```
 
 ***
@@ -6814,7 +6829,7 @@ IntentMemoryStorage.set("sessionID", "abc123", { shared: true })
 ## remove
 
 ```ts
-function remove(key: string, options?: { shared?: boolean }): void
+function remove(key: string, options?: { shared?: boolean }): void;
 ```
 
 删除键值。
@@ -6822,13 +6837,13 @@ function remove(key: string, options?: { shared?: boolean }): void
 脚本级：
 
 ```ts
-IntentMemoryStorage.remove("color")
+IntentMemoryStorage.remove("color");
 ```
 
 shared：
 
 ```ts
-IntentMemoryStorage.remove("sessionID", { shared: true })
+IntentMemoryStorage.remove("sessionID", { shared: true });
 ```
 
 ***
@@ -6836,7 +6851,7 @@ IntentMemoryStorage.remove("sessionID", { shared: true })
 ## contains
 
 ```ts
-function contains(key: string, options?: { shared?: boolean }): boolean
+function contains(key: string, options?: { shared?: boolean }): boolean;
 ```
 
 检查键是否存在。
@@ -6847,7 +6862,7 @@ function contains(key: string, options?: { shared?: boolean }): boolean
 ## clear
 
 ```ts
-function clear(): void
+function clear(): void;
 ```
 
 清空脚本级存储。
@@ -6858,14 +6873,14 @@ shared 区域不会被清空。
 ## keys
 
 ```ts
-function keys(): string[]
+function keys(): string[];
 ```
 
 返回脚本级存储的 key 列表。
 
 ***
 
-# 使用场景
+## 使用场景
 
 ## 脚本级（默认）
 
@@ -6878,7 +6893,7 @@ function keys(): string[]
 示例：
 
 ```ts
-IntentMemoryStorage.set("step", 2)
+IntentMemoryStorage.set("step", 2);
 ```
 
 ***
@@ -6894,12 +6909,12 @@ IntentMemoryStorage.set("step", 2)
 示例：
 
 ```ts
-IntentMemoryStorage.set("workflowID", "xyz", { shared: true })
+IntentMemoryStorage.set("workflowID", "xyz", { shared: true });
 ```
 
 ***
 
-# 不适用用途
+## 不适用用途
 
 - 不保证一定存在
 - 不保证一定被清理
@@ -6914,14 +6929,14 @@ IntentMemoryStorage.set("workflowID", "xyz", { shared: true })
 
 ***
 
-# 示例
+## 示例
 
 ## 脚本级示例
 
 ```ts
-IntentMemoryStorage.set("color", "red")
+IntentMemoryStorage.set("color", "red");
 
-const color = IntentMemoryStorage.get<string>("color")
+const color = IntentMemoryStorage.get<string>("color");
 ```
 
 ***
@@ -6931,18 +6946,18 @@ const color = IntentMemoryStorage.get<string>("color")
 Script A：
 
 ```ts
-IntentMemoryStorage.set("sessionID", "12345", { shared: true })
+IntentMemoryStorage.set("sessionID", "12345", { shared: true });
 ```
 
 Script B：
 
 ```ts
-const id = IntentMemoryStorage.get<string>("sessionID", { shared: true })
+const id = IntentMemoryStorage.get<string>("sessionID", { shared: true });
 ```
 
 ***
 
-# 存储结构示例
+## 存储结构示例
 
 脚本级：
 
@@ -6963,15 +6978,18 @@ shared：
 
 ***
 
-# 最佳实践
+## 最佳实践
 
 - 不保证 MemoryStorage 一定存在或一定被清理
-- 不要用于关键数据
-- 不要用于大数据存储
-- 对 shared 使用清晰命名，例如：
 
+- 不要用于关键数据
+
+- 不要用于大数据存储
+
+- 对 shared 使用清晰命名，例如：
   - `"global.sessionID"`
   - `"workflow.status"`
+
 - 在依赖该存储前考虑数据可能不存在
 
 
@@ -6979,6 +6997,8 @@ shared：
 ---
 url: /zh/doc/Changelog/2.4.4/Liquid Glass Effect/index.md
 ---
+
+# 液态玻璃效果
 
 **GlassEffect、GlassEffectContainer、UIGlass** 等相关 API 基于 SwiftUI 新引入的 Liquid Glass 技术，让开发者能够在脚本中以 TSX 方式使用流体化、动态的玻璃材质效果，并支持过渡动画、匹配几何、联合玻璃区域等高级特性。
 
@@ -6996,7 +7016,7 @@ Liquid Glass 是 iOS 26 新增的视觉效果系统，用于创建带有流动�
 
 ***
 
-# 2. GlassEffect 基础用法
+## 2. GlassEffect 基础用法
 
 所有支持玻璃效果的视图，都可以通过 `glassEffect` 修饰符添加 Liquid Glass 材质。
 
@@ -7004,23 +7024,27 @@ Liquid Glass 是 iOS 26 新增的视觉效果系统，用于创建带有流动�
 
 ```ts
 type GlassProps = {
-  glassEffect?: boolean | UIGlass | Shape | {
-      glass: UIGlass
-      shape: Shape
-  }
+  glassEffect?:
+    | boolean
+    | UIGlass
+    | Shape
+    | {
+        glass: UIGlass;
+        shape: Shape;
+      };
 
-  glassEffectTransition?: GlassEffectTransition
+  glassEffectTransition?: GlassEffectTransition;
 
   glassEffectID?: {
-      id: string | number
-      namespace: NamespaceID
-  }
+    id: string | number;
+    namespace: NamespaceID;
+  };
 
   glassEffectUnion?: {
-      id: string | number
-      namespace: NamespaceID
-  }
-}
+    id: string | number;
+    namespace: NamespaceID;
+  };
+};
 ```
 
 ***
@@ -7052,7 +7076,7 @@ glassEffect 有四种主要使用方式：
 ### 方式三：设置玻璃的形状（Shape）
 
 ```tsx
-<Text glassEffect={{ glass: UIGlass.regular(), shape: { type: 'rect', cornerRadius: 10 } }}>
+<Text glassEffect={{ glass: UIGlass.regular(), shape: { type: "rect", cornerRadius: 10 } }}>
   Foo
 </Text>
 ```
@@ -7062,10 +7086,9 @@ glassEffect 有四种主要使用方式：
 ```tsx
 <Text
   glassEffect={{
-    type: 'rect',
-    cornerRadius: 10
-  }}
->
+    type: "rect",
+    cornerRadius: 10,
+  }}>
   Foo
 </Text>
 ```
@@ -7084,7 +7107,7 @@ glassEffect 有四种主要使用方式：
 
 ***
 
-# 3. UIGlass 类
+## 3. UIGlass 类
 
 `UIGlass` 用于描述玻璃材质本身，可以选用内置材质或链式组合属性。
 
@@ -7111,10 +7134,10 @@ glassEffect={UIGlass.regular().interactive().tint("red")}
 
 ***
 
-# 4. GlassEffectTransition（玻璃过渡动画）
+## 4. GlassEffectTransition（玻璃过渡动画）
 
 ```ts
-type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
+type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
 ```
 
 ### 三种模式说明
@@ -7128,10 +7151,7 @@ type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
 ### 使用方式
 
 ```tsx
-<Text 
-  glassEffect
-  glassEffectTransition="materialize"
->
+<Text glassEffect glassEffectTransition="materialize">
   Foo
 </Text>
 ```
@@ -7140,7 +7160,7 @@ matchedGeometry 通常需要配合 `glassEffectID` 或 `glassEffectUnion` 使用
 
 ***
 
-# 5. glassEffectID 与 glassEffectUnion
+## 5. glassEffectID 与 glassEffectUnion
 
 Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched geometry 动画或合并多块玻璃区域。
 
@@ -7151,10 +7171,7 @@ Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched g
 为玻璃效果赋予唯一的 ID，用于 matchedGeometry 动画。
 
 ```tsx
-<Text
-  glassEffect
-  glassEffectID={{ id: "avatar", namespace }}
->
+<Text glassEffect glassEffectID={{ id: "avatar", namespace }}>
   Foo
 </Text>
 ```
@@ -7168,17 +7185,14 @@ Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched g
 用于将多个玻璃效果统一为一个更大区域。
 
 ```tsx
-<Text
-  glassEffect
-  glassEffectUnion={{ id: 1, namespace }}
-/>
+<Text glassEffect glassEffectUnion={{ id: 1, namespace }} />
 ```
 
 多个视图的玻璃材质将被合并，形成更一致的视觉区域。
 
 ***
 
-# 6. GlassEffectContainer
+## 6. GlassEffectContainer
 
 `GlassEffectContainer` 是用于组织和管理玻璃效果的容器。容器内部的所有 glassEffect 视图，都能参与几何匹配、联合效果和过渡动画。
 
@@ -7203,7 +7217,7 @@ GlassEffectContainer 不需要额外参数，但提供了玻璃效果组织空�
 
 ***
 
-# 7. 按钮的玻璃样式 buttonStyle
+## 7. 按钮的玻璃样式 buttonStyle
 
 Scripting 在 iOS 26 提供新增按钮样式：
 
@@ -7227,7 +7241,7 @@ Scripting 在 iOS 26 提供新增按钮样式：
 
 ***
 
-# 8. 实战示例说明
+## 8. 实战示例说明
 
 以下示例展示完整的用法，包括：
 
@@ -7260,7 +7274,7 @@ Scripting 在 iOS 26 提供新增按钮样式：
 
 ***
 
-# 9. 使用建议与最佳实践
+## 9. 使用建议与最佳实践
 
 ### 1. 大量玻璃视图应包裹在同一个 GlassEffectContainer
 
@@ -7722,7 +7736,9 @@ const expanded = useObservable(false)
 url: /zh/doc/Changelog/2.4.4/New List View Modifiers.md
 ---
 
-# 属性概览
+# 新的 List 视图修饰符
+
+## 属性概览
 
 | 属性名                          | 类型                                                          | 系统要求      | 说明                         |
 | ---------------------------- | ----------------------------------------------------------- | --------- | -------------------------- |
@@ -7733,7 +7749,7 @@ url: /zh/doc/Changelog/2.4.4/New List View Modifiers.md
 
 ***
 
-# 1. listSectionIndexVisibility
+## 1. listSectionIndexVisibility
 
 ```ts
 /**
@@ -7759,12 +7775,11 @@ listSectionIndexVisibility?: Visibility
 <List listSectionIndexVisibility="visible">
   <ForEach
     data={groups}
-    builder={group => (
-      <Section
-        header={<Text>{group.title}</Text>}
-        sectionIndexLabel={group.title}
-      >
-        {group.items.map(item => <Text key={item}>{item}</Text>)}
+    builder={(group) => (
+      <Section header={<Text>{group.title}</Text>} sectionIndexLabel={group.title}>
+        {group.items.map((item) => (
+          <Text key={item}>{item}</Text>
+        ))}
       </Section>
     )}
   />
@@ -7773,7 +7788,7 @@ listSectionIndexVisibility?: Visibility
 
 ***
 
-# 2. listSectionMargins
+## 2. listSectionMargins
 
 ```ts
 /**
@@ -7836,7 +7851,7 @@ listSectionMargins={{
 
 ***
 
-# 3. sectionIndexLabel
+## 3. sectionIndexLabel
 
 ```ts
 /**
@@ -7853,10 +7868,7 @@ sectionIndexLabel?: string
 ### 示例
 
 ```tsx
-<Section
-  header={<Text>A</Text>}
-  sectionIndexLabel="A"
->
+<Section header={<Text>A</Text>} sectionIndexLabel="A">
   <Text>Adam</Text>
   <Text>Ana</Text>
 </Section>
@@ -7864,7 +7876,7 @@ sectionIndexLabel?: string
 
 ***
 
-# 4. sectionActions
+## 4. sectionActions
 
 ```ts
 /**
@@ -7883,10 +7895,7 @@ sectionActions?: VirtualNode
 ```tsx
 <Section
   header={<Text>Downloads</Text>}
-  sectionActions={
-    <Button title="Refresh" action={() => doRefresh()} />
-  }
->
+  sectionActions={<Button title="Refresh" action={() => doRefresh()} />}>
   <Text>File 1</Text>
   <Text>File 2</Text>
 </Section>
@@ -7902,30 +7911,30 @@ sectionActions?: VirtualNode
       <Button title="Upload All" action={() => uploadAll()} />
       <Button title="Delete All" action={() => deleteAll()} />
     </Menu>
-  }
->
-  {photos.map(photo => <Text key={photo.id}>{photo.name}</Text>)}
+  }>
+  {photos.map((photo) => (
+    <Text key={photo.id}>{photo.name}</Text>
+  ))}
 </Section>
 ```
 
 ***
 
-# 完整示例
+## 完整示例
 
 ```tsx
 <List listSectionIndexVisibility="visible">
   <ForEach
     data={groups}
-    builder={group => (
+    builder={(group) => (
       <Section
         header={<Text>{group.title}</Text>}
         sectionIndexLabel={group.title}
         listSectionMargins={12}
-        sectionActions={
-          <Button title="Refresh" action={() => refreshGroup(group)} />
-        }
-      >
-        {group.items.map(item => <Text key={item}>{item}</Text>)}
+        sectionActions={<Button title="Refresh" action={() => refreshGroup(group)} />}>
+        {group.items.map((item) => (
+          <Text key={item}>{item}</Text>
+        ))}
       </Section>
     )}
   />
@@ -8370,13 +8379,15 @@ run()
 url: /zh/doc/Changelog/2.4.4/SFTP Client.md
 ---
 
+# SFTP 客户端
+
 `SFTPClient` 用于通过 SSH 连接访问远程文件系统，基于 **SFTP 协议**。
 它提供目录操作、文件操作、路径解析等能力，并可通过 `openFile()` 获得更强大的 `SFTPFile` 对象执行读取、写入等低层操作。
 
 该类实例通常由：
 
 ```ts
-const sftp = await ssh.openSFTP()
+const sftp = await ssh.openSFTP();
 ```
 
 返回。
@@ -8409,7 +8420,7 @@ const sftp = await ssh.openSFTP()
 #### 示例：
 
 ```ts
-await sftp.close()
+await sftp.close();
 ```
 
 ***
@@ -8444,7 +8455,7 @@ await sftp.close()
 #### 示例：
 
 ```ts
-const items = await sftp.readDirectory("/var/log")
+const items = await sftp.readDirectory("/var/log");
 ```
 
 ***
@@ -8464,7 +8475,7 @@ const items = await sftp.readDirectory("/var/log")
 #### 示例：
 
 ```ts
-await sftp.createDirectory("/home/user/new-folder")
+await sftp.createDirectory("/home/user/new-folder");
 ```
 
 ***
@@ -8484,7 +8495,7 @@ await sftp.createDirectory("/home/user/new-folder")
 #### 示例：
 
 ```ts
-await sftp.removeDirectory("/home/user/empty-dir")
+await sftp.removeDirectory("/home/user/empty-dir");
 ```
 
 ***
@@ -8505,7 +8516,7 @@ await sftp.removeDirectory("/home/user/empty-dir")
 #### 示例：
 
 ```ts
-await sftp.rename("/home/user/a.txt", "/home/user/b.txt")
+await sftp.rename("/home/user/a.txt", "/home/user/b.txt");
 ```
 
 ***
@@ -8530,7 +8541,7 @@ await sftp.rename("/home/user/a.txt", "/home/user/b.txt")
 #### 示例：
 
 ```ts
-const attrs = await sftp.getAttributes("/etc/hosts")
+const attrs = await sftp.getAttributes("/etc/hosts");
 ```
 
 ***
@@ -8557,9 +8568,9 @@ const attrs = await sftp.getAttributes("/etc/hosts")
 #### 示例：
 
 ```ts
-const file = await sftp.openFile("/home/user/log.txt", ["read"])
-const data = await file.readAll()
-await file.close()
+const file = await sftp.openFile("/home/user/log.txt", ["read"]);
+const data = await file.readAll();
+await file.close();
 ```
 
 ***
@@ -8575,7 +8586,7 @@ await file.close()
 #### 示例：
 
 ```ts
-await sftp.remove("/home/user/old.txt")
+await sftp.remove("/home/user/old.txt");
 ```
 
 ***
@@ -8587,36 +8598,36 @@ await sftp.remove("/home/user/old.txt")
 #### 示例：
 
 ```ts
-const real = await sftp.getRealPath("~/documents")
+const real = await sftp.getRealPath("~/documents");
 ```
 
 ***
 
-# 使用示例
+## 使用示例
 
 ```ts
 const ssh = await SSHClient.connect({
   host: "192.168.1.10",
-  authenticationMethod: SSHAuthenticationMethod.passwordBased("user", "pass")
-})
+  authenticationMethod: SSHAuthenticationMethod.passwordBased("user", "pass"),
+});
 
-const sftp = await ssh.openSFTP()
+const sftp = await ssh.openSFTP();
 
 // 查看目录内容
-const list = await sftp.readDirectory("/home/user")
+const list = await sftp.readDirectory("/home/user");
 
 // 打开文件读取
-const file = await sftp.openFile("/home/user/info.txt", "read")
-const data = await file.readAll()
-await file.close()
+const file = await sftp.openFile("/home/user/info.txt", "read");
+const data = await file.readAll();
+await file.close();
 
 // 创建目录
-await sftp.createDirectory("/home/user/new-folder")
+await sftp.createDirectory("/home/user/new-folder");
 
 // 删除文件
-await sftp.remove("/home/user/temp.txt")
+await sftp.remove("/home/user/temp.txt");
 
-await sftp.close()
+await sftp.close();
 ```
 
 
@@ -8625,13 +8636,15 @@ await sftp.close()
 url: /zh/doc/Changelog/2.4.4/SFTP File.md
 ---
 
+# SFTP 文件
+
 `SFTPFile` 表示一个已经通过 SFTP 打开的远程文件句柄。
 通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。
 
 实例通常通过：
 
 ```ts
-const file = await sftp.openFile(path, flags)
+const file = await sftp.openFile(path, flags);
 ```
 
 获得。
@@ -8655,7 +8668,7 @@ const file = await sftp.openFile(path, flags)
 
 ***
 
-# `readAttributes(): Promise<FileAttributes>`
+## `readAttributes(): Promise<FileAttributes>`
 
 读取文件的元数据属性。
 
@@ -8677,13 +8690,13 @@ const file = await sftp.openFile(path, flags)
 ### 示例：
 
 ```ts
-const attrs = await file.readAttributes()
-console.log(attrs.size)
+const attrs = await file.readAttributes();
+console.log(attrs.size);
 ```
 
 ***
 
-# `read(options?: { from?: number, length?: number }): Promise<Data>`
+## `read(options?: { from?: number, length?: number }): Promise<Data>`
 
 按指定范围读取文件内容。
 
@@ -8699,12 +8712,12 @@ console.log(attrs.size)
 ### 示例：
 
 ```ts
-const data = await file.read({ from: 100, length: 50 })
+const data = await file.read({ from: 100, length: 50 });
 ```
 
 ***
 
-# `readAll(): Promise<Data>`
+## `readAll(): Promise<Data>`
 
 读取文件的全部内容。
 
@@ -8715,12 +8728,12 @@ const data = await file.read({ from: 100, length: 50 })
 ### 示例：
 
 ```ts
-const data = await file.readAll()
+const data = await file.readAll();
 ```
 
 ***
 
-# `write(data: Data, at?: number): Promise<void>`
+## `write(data: Data, at?: number): Promise<void>`
 
 向文件写入数据。
 
@@ -8728,9 +8741,7 @@ const data = await file.readAll()
 
 - `data`：要写入的二进制数据
 - `at?`：写入的起始偏移（字节）。
-
   - 若未提供，则根据 flags 的模式决定：
-
     - 若使用 `"append"` 打开，则追加到文件末尾
     - 若使用 `"write"` 打开，则从当前偏移或默认 0 写入
 
@@ -8741,12 +8752,12 @@ const data = await file.readAll()
 ### 示例：
 
 ```ts
-await file.write(Data.fromRawString("Hello world"))
+await file.write(Data.fromRawString("Hello world"));
 ```
 
 ***
 
-# `close(): Promise<void>`
+## `close(): Promise<void>`
 
 关闭文件句柄。
 关闭后，`isActive` 将变为 `false`，无法继续读写。
@@ -8754,28 +8765,28 @@ await file.write(Data.fromRawString("Hello world"))
 ### 示例：
 
 ```ts
-await file.close()
+await file.close();
 ```
 
 ***
 
-# 使用示例
+## 使用示例
 
 ```ts
 // 打开文件（读取模式）
-const file = await sftp.openFile("/home/user/info.txt", ["read"])
+const file = await sftp.openFile("/home/user/info.txt", ["read"]);
 
 // 获取文件属性
-const attrs = await file.readAttributes()
+const attrs = await file.readAttributes();
 
 // 读取内容
-const allData = await file.readAll()
+const allData = await file.readAll();
 
 // 部分读取
-const partial = await file.read({ from: 50, length: 100 })
+const partial = await file.read({ from: 50, length: 100 });
 
 // 关闭文件
-await file.close()
+await file.close();
 ```
 
 
@@ -8783,6 +8794,8 @@ await file.close()
 ---
 url: /zh/doc/Changelog/2.4.4/SnippetIntent.md
 ---
+
+# SnippetIntent
 
 SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。它适用于：
 
@@ -8801,7 +8814,7 @@ SnippetIntent 特点如下：
 
 ***
 
-# 系统要求
+## 系统要求
 
 **SnippetIntent 只能在 iOS 26 及以上系统运行。**
 
@@ -8814,7 +8827,7 @@ SnippetIntent 特点如下：
 
 ***
 
-# 注册 SnippetIntent（app\_intents.tsx）
+## 注册 SnippetIntent（app\_intents.tsx）
 
 在 `app_intents.tsx` 中声明 SnippetIntent：
 
@@ -8823,9 +8836,9 @@ export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />
-  }
-})
+    return <PickColorView />;
+  },
+});
 ```
 
 再例如：
@@ -8835,9 +8848,9 @@ export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    return <ResultView content={content} />
-  }
-})
+    return <ResultView content={content} />;
+  },
+});
 ```
 
 要求：
@@ -8848,7 +8861,7 @@ export const ShowResultIntent = AppIntentManager.register({
 
 ***
 
-# SnippetIntent 返回值封装：Intent.snippetIntent
+## SnippetIntent 返回值封装：Intent.snippetIntent
 
 SnippetIntent 不能直接作为 JS 返回值，必须通过 `Intent.snippetIntent()` 包装成 `IntentSnippetIntentValue`。
 
@@ -8856,27 +8869,31 @@ SnippetIntent 不能直接作为 JS 返回值，必须通过 `Intent.snippetInte
 const snippetValue = Intent.snippetIntent({
   value: Intent.text("Some value returning for Shortcuts"),
   snippetIntent: ShowResultIntent({
-    content: "Example Text"
-  })
-})
+    content: "Example Text",
+  }),
+});
 
-Script.exit(snippetValue)
+Script.exit(snippetValue);
 ```
 
 ### 类型定义
 
 ```ts
 type SnippetIntentValue = {
-  value?: IntentAttributedTextValue | IntentFileURLValue | IntentJsonValue | IntentTextValue | IntentURLValue | IntentFileValue | null
-  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>
-}
+  value?:
+    | IntentAttributedTextValue
+    | IntentFileURLValue
+    | IntentJsonValue
+    | IntentTextValue
+    | IntentURLValue
+    | IntentFileValue
+    | null;
+  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>;
+};
 
-declare class IntentSnippetIntentValue extends IntentValue<
-  'SnippetIntent',
-  SnippetIntentValue
-> {
-  value: SnippetIntentValue
-  type: 'SnippetIntent'
+declare class IntentSnippetIntentValue extends IntentValue<"SnippetIntent", SnippetIntentValue> {
+  value: SnippetIntentValue;
+  type: "SnippetIntent";
 }
 ```
 
@@ -8884,7 +8901,7 @@ declare class IntentSnippetIntentValue extends IntentValue<
 
 ***
 
-# Snippet 确认界面：Intent.requestConfirmation
+## Snippet 确认界面：Intent.requestConfirmation
 
 SnippetIntent 支持在执行逻辑中先请求用户确认某个操作。此能力同样基于 iOS 26。
 
@@ -8906,7 +8923,7 @@ Intent.requestConfirmation(
 示例值：
 
 ```
-"add" | "addData" | "book" | "buy" | "call" | "checkIn" | 
+"add" | "addData" | "book" | "buy" | "call" | "checkIn" |
 "continue" | "create" | "do" | "download" | "filter" |
 "find" | "get" | "go" | "log" | "open" | "order" |
 "pay" | "play" | "playSound" | "post" | "request" |
@@ -8918,10 +8935,7 @@ Intent.requestConfirmation(
 ### 示例
 
 ```tsx
-await Intent.requestConfirmation(
-  "set",
-  PickColorIntent()
-)
+await Intent.requestConfirmation("set", PickColorIntent());
 ```
 
 效果：
@@ -8932,7 +8946,7 @@ await Intent.requestConfirmation(
 
 ***
 
-# Shortcuts 的「Show Snippet Intent」动作（iOS 26+）
+## Shortcuts 的「Show Snippet Intent」动作（iOS 26+）
 
 Shortcuts 在 iOS 26 新增动作：
 
@@ -8957,7 +8971,7 @@ Shortcuts 在 iOS 26 新增动作：
 
 ***
 
-# IntentMemoryStorage — 跨 AppIntent 状态共享
+## IntentMemoryStorage — 跨 AppIntent 状态共享
 
 ## 1. 为什么需要 IntentMemoryStorage
 
@@ -8982,12 +8996,12 @@ API 定义：
 
 ```ts
 namespace IntentMemoryStorage {
-  function get<T>(key: string): T | null
-  function set(key: string, value: any): void
-  function remove(key: string): void
-  function contains(key: string): boolean
-  function clear(): void
-  function keys(): string[]
+  function get<T>(key: string): T | null;
+  function set(key: string, value: any): void;
+  function remove(key: string): void;
+  function contains(key: string): boolean;
+  function clear(): void;
+  function keys(): string[];
 }
 ```
 
@@ -9000,16 +9014,15 @@ namespace IntentMemoryStorage {
 ### 示例：存储用户颜色选择
 
 ```ts
-IntentMemoryStorage.set("color", "systemBlue")
+IntentMemoryStorage.set("color", "systemBlue");
 
-const color = IntentMemoryStorage.get<Color>("color")
+const color = IntentMemoryStorage.get<Color>("color");
 ```
 
 ### 建议
 
 - 不要存储大型数据（如大图像、长文本）
 - 大型数据请使用：
-
   - `Storage`（持久键值存储）
   - `FileManager` 写入 appGroupDocumentsDirectory
 
@@ -9017,7 +9030,7 @@ IntentMemoryStorage 适合作为临时状态共享，不适合当作数据库使
 
 ***
 
-# 完整示例（iOS 26+）
+## 完整示例（iOS 26+）
 
 ## app\_intents.tsx
 
@@ -9026,54 +9039,50 @@ export const SetColorIntent = AppIntentManager.register({
   name: "SetColorIntent",
   protocol: AppIntentProtocol.AppIntent,
   perform: async (color: Color) => {
-    IntentMemoryStorage.set("color", color)
-  }
-})
+    IntentMemoryStorage.set("color", color);
+  },
+});
 
 export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />
-  }
-})
+    return <PickColorView />;
+  },
+});
 
 export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue"
-    return <ResultView content={content} color={color} />
-  }
-})
+    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue";
+    return <ResultView content={content} color={color} />;
+  },
+});
 ```
 
 ## intent.tsx
 
 ```tsx
 async function runIntent() {
-
   // 1. 通过 Snippet 请求用户确认颜色
-  await Intent.requestConfirmation(
-    "set",
-    PickColorIntent()
-  )
+  await Intent.requestConfirmation("set", PickColorIntent());
 
   // 2. 从 Shortcuts 输入中读取文本
   const textContent =
     Intent.shortcutParameter?.type === "text"
       ? Intent.shortcutParameter.value
-      : "No text parameter from Shortcuts"
+      : "No text parameter from Shortcuts";
 
   // 3. 创建 SnippetIntent 返回结果
   const snippetIntentValue = Intent.snippetIntent({
-    snippetIntent: ShowResultIntent({ content: textContent })
-  })
+    snippetIntent: ShowResultIntent({ content: textContent }),
+  });
 
-  Script.exit(snippetIntentValue)
+  Script.exit(snippetIntentValue);
 }
 
-runIntent()
+runIntent();
 ```
 
 
@@ -9082,6 +9091,8 @@ runIntent()
 url: /zh/doc/Changelog/2.4.4/TabView.md
 ---
 
+# TabView
+
 Scripting 提供了与最新 iOS TabView 体系一致的 API：
 通过 `TabView`、`Tab`、`TabSection` 组织界面结构，使应用能够在 iOS 18+ 环境下完整支持多标签视图、侧边栏标签、可定制布局等。
 
@@ -9089,7 +9100,7 @@ Scripting 提供了与最新 iOS TabView 体系一致的 API：
 
 ***
 
-# 一、基础结构：TabView + Tab
+## 一、基础结构：TabView + Tab
 
 在最基本的形式中，`TabView` 作为容器，内部包含多个 `Tab`。
 每个 `Tab` 定义：
@@ -9104,36 +9115,23 @@ Scripting 提供了与最新 iOS TabView 体系一致的 API：
 
 ```tsx
 function RootView() {
-  const selection = useObservable<number>(0)
+  const selection = useObservable<number>(0);
 
   return (
     <TabView selection={selection}>
-      <Tab
-        title="首页"
-        systemImage="house.fill"
-        value={0}
-      >
+      <Tab title="首页" systemImage="house.fill" value={0}>
         <HomeView />
       </Tab>
 
-      <Tab
-        title="搜索"
-        systemImage="magnifyingglass"
-        value={1}
-        role="search"
-      >
+      <Tab title="搜索" systemImage="magnifyingglass" value={1} role="search">
         <SearchView />
       </Tab>
 
-      <Tab
-        title="设置"
-        systemImage="gearshape.fill"
-        value={2}
-      >
+      <Tab title="设置" systemImage="gearshape.fill" value={2}>
         <SettingsView />
       </Tab>
     </TabView>
-  )
+  );
 }
 ```
 
@@ -9145,7 +9143,7 @@ function RootView() {
 
 ***
 
-# 二、使用 TabSection 组织分组标签
+## 二、使用 TabSection 组织分组标签
 
 当 Tab 数量较多、需要按功能分类、需要在侧边栏中显示复杂结构时，可以使用 `TabSection`。
 
@@ -9199,8 +9197,7 @@ TabView
         </Text>
       </VStack>
     </HStack>
-  }
->
+  }>
   <Tab title="项目 A" systemImage="doc.fill" value="projectA">
     <ProjectAView />
   </Tab>
@@ -9209,7 +9206,7 @@ TabView
 
 ***
 
-# 三、TabSection 的高级能力：布局、操作区、拖拽与可见性
+## 三、TabSection 的高级能力：布局、操作区、拖拽与可见性
 
 `TabSection` 提供了丰富的分组级配置，让 Tab 分组的呈现方式更加灵活。
 
@@ -9238,10 +9235,7 @@ TabView
 ```tsx
 <TabSection
   title="列表"
-  sectionActions={
-    <Button title="添加" systemImage="plus" action={addItem} />
-  }
->
+  sectionActions={<Button title="添加" systemImage="plus" action={addItem} />}>
   ...
 </TabSection>
 ```
@@ -9271,15 +9265,14 @@ TabView
   customizationID="file-section"
   customizationBehavior="reorderable"
   draggable="file-section"
-  dropDestination={items => handleDrop(items)}
->
+  dropDestination={(items) => handleDrop(items)}>
   ...
 </TabSection>
 ```
 
 ***
 
-# 四、TabView 级别的高级配置
+## 四、TabView 级别的高级配置
 
 TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26）。
 
@@ -9309,10 +9302,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 示例：
 
 ```tsx
-<TabView
-  selection={selection}
-  tabBarMinimizeBehavior="onScrollDown"
->
+<TabView selection={selection} tabBarMinimizeBehavior="onScrollDown">
   ...
 </TabView>
 ```
@@ -9332,8 +9322,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
       <Spacer />
       <Button title="知道了" action={dismiss} />
     </HStack>
-  }
->
+  }>
   ...
 </TabView>
 ```
@@ -9350,10 +9339,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 与 `role="search"` 搭配使用：
 
 ```tsx
-<TabView
-  selection={selection}
-  tabViewSearchActivation="searchTabSelection"
->
+<TabView selection={selection} tabViewSearchActivation="searchTabSelection">
   ...
 </TabView>
 ```
@@ -9375,15 +9361,14 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
   selection={selection}
   tabViewSidebarHeader={<UserHeader />}
   tabViewSidebarFooter={<SettingsButton />}
-  tabViewSidebarBottomBar={<UpgradeButton />}
->
+  tabViewSidebarBottomBar={<UpgradeButton />}>
   ...
 </TabView>
 ```
 
 ***
 
-# 五、TabViewCustomization：标签页可定制化体系（重点补充）
+## 五、TabViewCustomization：标签页可定制化体系（重点补充）
 
 `TabViewCustomization` 是一个可序列化的状态对象，用于存储和恢复用户对 Tab 布局的自定义行为，包括：
 
@@ -9396,7 +9381,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 它通常放在 TabView 根视图中，通过：
 
 ```tsx
-tabViewCustomization={customizationState}
+tabViewCustomization = { customizationState };
 ```
 
 来注入。
@@ -9406,32 +9391,32 @@ tabViewCustomization={customizationState}
 创建方式通常是：
 
 ```tsx
-const customization = useObservable<TabViewCustomization >(() => {
-  const data = Storage.get('tab_customization')
+const customization = useObservable<TabViewCustomization>(() => {
+  const data = Storage.get("tab_customization");
   if (data) {
-    return TabViewCustomization.fromData(data) ?? new TabViewCustomization()
+    return TabViewCustomization.fromData(data) ?? new TabViewCustomization();
   }
-  return new TabViewCustomization()
-})
+  return new TabViewCustomization();
+});
 
 useEffect(() => {
   const listener = (newValue: TabViewCustomization) => {
-    const data = newValue.toData()
+    const data = newValue.toData();
     if (data) {
-      Storage.set('tab_customization', data)
+      Storage.set("tab_customization", data);
     }
-  }
-  customization.subscribe(listener)
+  };
+  customization.subscribe(listener);
   return () => {
-    customization.unsubscribe(listener)
-  }
-}, [])
+    customization.unsubscribe(listener);
+  };
+}, []);
 ```
 
 如需创建一个新的空自定义对象，可使用：
 
 ```tsx
-const customizationState = useObservable(() => new TabViewCustomization())
+const customizationState = useObservable(() => new TabViewCustomization());
 ```
 
 ## 2. 保存自定义内容
@@ -9439,8 +9424,8 @@ const customizationState = useObservable(() => new TabViewCustomization())
 你可以将用户调整后的 Tab 布局序列化保存：
 
 ```tsx
-const data = customization.value?.toData()
-Storage.set('tab_customization', data)
+const data = customization.value?.toData();
+Storage.set("tab_customization", data);
 ```
 
 `toData()` 会将内部状态转换为可存储的 `Data` 对象。
@@ -9454,10 +9439,10 @@ getSection(id: string): TabViewCustomizationSection | null
 `TabSection` 通常带有 `customizationID`，这样就可以获取特定分组并操作它：
 
 ```tsx
-const section = customization.value?.getSection('file-section')
+const section = customization.value?.getSection("file-section");
 
-section?.tabOrder        // 一个包含 tab ID 顺序的数组，或 null
-section?.resetTabOrder() // 重置排序
+section?.tabOrder; // 一个包含 tab ID 顺序的数组，或 null
+section?.resetTabOrder(); // 重置排序
 ```
 
 场景示例：
@@ -9475,10 +9460,10 @@ getTab(id: string): TabViewCustomizationTab | null
 可通过 Tab 的 `customizationID` 获取并调整其可见性：
 
 ```tsx
-const tab = customization.value?.getTab('important-tab')
+const tab = customization.value?.getTab("important-tab");
 
-tab?.tabBarVisibility         // Visibility 类型
-tab.sidebarVisibility = 'hidden'
+tab?.tabBarVisibility; // Visibility 类型
+tab.sidebarVisibility = "hidden";
 ```
 
 适用场景：
@@ -9505,15 +9490,15 @@ resetVisibility(): void
 <Button
   title="恢复默认"
   action={() => {
-    customization.value?.resetSectionOrder()
-    customization.value?.resetVisibility()
+    customization.value?.resetSectionOrder();
+    customization.value?.resetVisibility();
   }}
 />
 ```
 
 ***
 
-# 六、与旧的 tabItem 写法的关系
+## 六、与旧的 tabItem 写法的关系
 
 此文档采用全新的结构化写法：
 
@@ -9531,26 +9516,20 @@ resetVisibility(): void
 url: /zh/doc/Changelog/2.4.4/Use with Toolbar Component.md
 ---
 
+# 使用 Toolbar 组件
+
 Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `ToolBarProps` 对象，也支持使用与 SwiftUI 结构一致的 `<Toolbar>`、`<ToolbarItem>`、`<ToolbarItemGroup>`、`<ToolbarSpacer>`、`<DefaultToolbarItem>` 等组件，构建更灵活、更强大的导航栏和工具栏布局。
 
 这些组件能够提供更精细的控制，允许开发者像 SwiftUI 一样以声明式方式编排工具栏内容，并为复杂布局提供更高可读性和可维护性。
 
 ***
 
-# 基本概念
+## 基本概念
 
 工具栏组件始终通过视图的 `toolbar` 属性使用：
 
 ```tsx
-<List
-  toolbar={
-    <Toolbar>
-      {/* 工具栏项 */}
-    </Toolbar>
-  }
->
-  {/* 主内容 */}
-</List>
+<List toolbar={<Toolbar>{/* 工具栏项 */}</Toolbar>}>{/* 主内容 */}</List>
 ```
 
 `toolbar` 可以接受：
@@ -9562,7 +9541,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# Toolbar
+## Toolbar
 
 `Toolbar` 组件是工具栏的容器，用于包含多个工具栏项。它本身不定义位置，内部的 `ToolbarItem` 或 `ToolbarItemGroup` 决定实际布局。
 
@@ -9579,15 +9558,14 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
         <Button title="完成" action={() => handleDone()} />
       </ToolbarItem>
     </Toolbar>
-  }
->
+  }>
   {/* 主内容 */}
 </List>
 ```
 
 ***
 
-# ToolbarItem
+## ToolbarItem
 
 `ToolbarItem` 表示放置在工具栏指定位置的单个项目。
 
@@ -9610,7 +9588,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# ToolbarItemGroup
+## ToolbarItemGroup
 
 `ToolbarItemGroup` 用于在同一位置放置多个工具栏项目，所有子项目将作为一组呈现。
 
@@ -9634,7 +9612,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# ToolbarSpacer
+## ToolbarSpacer
 
 `ToolbarSpacer` 用于在工具栏项之间添加空白区域，适合需要自定义布局的场景。
 
@@ -9666,7 +9644,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# DefaultToolbarItem
+## DefaultToolbarItem
 
 ```ts
 type ToolbarDefaultItemKind = "sidebarToggle" | "search" | "title";
@@ -9698,14 +9676,13 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ***
 
-# 综合示例：使用 Toolbar 构建复杂工具栏
+## 综合示例：使用 Toolbar 构建复杂工具栏
 
 ```tsx
 <NavigationStack>
   <List
     toolbar={
       <Toolbar>
-
         {/* 左侧导航按钮 */}
         <ToolbarItem placement="navigation">
           <Button title="返回" action={Navigation.useDismiss()} />
@@ -9727,10 +9704,8 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
         <ToolbarItem placement="bottomBar">
           <Button title="帮助" action={showHelp} />
         </ToolbarItem>
-
       </Toolbar>
-    }
-  >
+    }>
     {/* 主内容 */}
   </List>
 </NavigationStack>
@@ -9740,7 +9715,7 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ***
 
-# 与 ToolBarProps 的关系
+## 与 ToolBarProps 的关系
 
 在 API 层面：
 
@@ -9753,7 +9728,7 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ***
 
-# 总结
+## 总结
 
 Toolbar 组件提供了高度灵活的工具栏布局能力，包括：
 
@@ -12158,12 +12133,14 @@ const summary = await Assistant.requestStructuredData<ImageSummary>(
 url: /zh/doc/Changelog/2.4.5/CalendarEvent.md
 ---
 
+# 日历事件
+
 `CalendarEvent` API 用于在 iOS 日历中创建、读取、编辑与管理事件。
 开发者可以操作事件的标题、时间、地点、参与者、重复规则、提醒（EventAlarm）、事件可用性以及地理位置信息，并且可以使用系统提供的创建/编辑界面。
 
 ***
 
-# 一、类型说明
+## 一、类型说明
 
 ## EventParticipant
 
@@ -12238,7 +12215,7 @@ url: /zh/doc/Changelog/2.4.5/CalendarEvent.md
 
 ***
 
-# 二、EventAlarm（事件提醒）
+## 二、EventAlarm（事件提醒）
 
 CalendarEvent 支持添加多个 `EventAlarm`，包括：
 
@@ -12250,7 +12227,7 @@ CalendarEvent 支持添加多个 `EventAlarm`，包括：
 
 ***
 
-# 三、CalendarEvent 类
+## 三、CalendarEvent 类
 
 ## 构造函数
 
@@ -12262,7 +12239,7 @@ new(): CalendarEvent
 
 ***
 
-# 四、属性说明
+## 四、属性说明
 
 ## 基本信息
 
@@ -12395,7 +12372,7 @@ new(): CalendarEvent
 
 ***
 
-# 五、实例方法
+## 五、实例方法
 
 ## 1. 提醒管理
 
@@ -12446,7 +12423,7 @@ new(): CalendarEvent
 
 ***
 
-# 六、静态方法
+## 六、静态方法
 
 ## `getAll(startDate: Date, endDate: Date, calendars?: Calendar[]): Promise<CalendarEvent[]>`
 
@@ -12466,20 +12443,20 @@ new(): CalendarEvent
 
 ***
 
-# 七、使用示例
+## 七、使用示例
 
 ## 1. 创建并保存事件
 
 ```ts
-const defaultCalendar = await Calendar.defaultForEvents()
-const event = new CalendarEvent()
-event.title = "团队会议"
-event.calendar = defaultCalendar!
-event.startDate = new Date("2024-01-15T09:00:00")
-event.endDate = new Date("2024-01-15T10:00:00")
-event.location = "会议室"
+const defaultCalendar = await Calendar.defaultForEvents();
+const event = new CalendarEvent();
+event.title = "团队会议";
+event.calendar = defaultCalendar!;
+event.startDate = new Date("2024-01-15T09:00:00");
+event.endDate = new Date("2024-01-15T10:00:00");
+event.location = "会议室";
 
-await event.save()
+await event.save();
 ```
 
 ***
@@ -12492,10 +12469,10 @@ const rule = RecurrenceRule.create({
   interval: 1,
   daysOfTheWeek: ["monday", "wednesday", "friday"],
   end: RecurrenceEnd.fromDate(new Date("2024-12-31")),
-})
+});
 
-event.addRecurrenceRule(rule)
-await event.save()
+event.addRecurrenceRule(rule);
+await event.save();
 ```
 
 ***
@@ -12503,9 +12480,9 @@ await event.save()
 ## 3. 添加提醒（Alarm）
 
 ```ts
-const alarm = EventAlarm.fromRelativeOffset(-600)
-event.addAlarm(alarm)
-await event.save()
+const alarm = EventAlarm.fromRelativeOffset(-600);
+event.addAlarm(alarm);
+await event.save();
 ```
 
 ***
@@ -12513,13 +12490,10 @@ await event.save()
 ## 4. 获取日期范围内的事件
 
 ```ts
-const events = await CalendarEvent.getAll(
-  new Date("2024-01-01"),
-  new Date("2024-01-31")
- )
+const events = await CalendarEvent.getAll(new Date("2024-01-01"), new Date("2024-01-31"));
 
 for (const e of events) {
-  console.log(`事件: ${e.title} 开始时间: ${e.startDate}`)
+  console.log(`事件: ${e.title} 开始时间: ${e.startDate}`);
 }
 ```
 
@@ -12528,9 +12502,9 @@ for (const e of events) {
 ## 5. 使用事件创建界面
 
 ```ts
-const created = await CalendarEvent.presentCreateView()
+const created = await CalendarEvent.presentCreateView();
 if (created) {
-  console.log("新事件已创建:", created.title)
+  console.log("新事件已创建:", created.title);
 }
 ```
 
@@ -12539,8 +12513,8 @@ if (created) {
 ## 6. 编辑事件
 
 ```ts
-const result = await event.presentEditView()
-console.log("编辑操作:", result)
+const result = await event.presentEditView();
+console.log("编辑操作:", result);
 ```
 
 ***
@@ -12548,13 +12522,13 @@ console.log("编辑操作:", result)
 ## 7. 删除事件
 
 ```ts
-await event.remove()
-console.log("事件已移除")
+await event.remove();
+console.log("事件已移除");
 ```
 
 ***
 
-# 八、补充说明
+## 八、补充说明
 
 ### 时区处理
 
@@ -12580,12 +12554,14 @@ console.log("事件已移除")
 url: /zh/doc/Changelog/2.4.5/DateFormatter.md
 ---
 
+# 日期格式化（DateFormatter）
+
 `DateFormatter` 类用于将 `Date` 类型格式化为字符串，或将字符串解析为 `Date`。
 该类封装了 iOS 的 `DateFormatter` 能力，适用于格式化日期、时间、本地化展示、农历日期展示（通过切换日历）、相对日期显示等场景。
 
 ***
 
-# 枚举与类型定义
+## 枚举与类型定义
 
 ## DateFormatterStyle
 
@@ -12654,7 +12630,7 @@ url: /zh/doc/Changelog/2.4.5/DateFormatter.md
 
 ***
 
-# 类：DateFormatter
+## 类：DateFormatter
 
 ## 初始化
 
@@ -12664,7 +12640,7 @@ url: /zh/doc/Changelog/2.4.5/DateFormatter.md
 
 ***
 
-# 静态方法
+## 静态方法
 
 ## `DateFormatter.localizedString(date, options)`
 
@@ -12695,7 +12671,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ***
 
-# 实例方法
+## 实例方法
 
 ## `string(date: Date): string`
 
@@ -12719,7 +12695,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ***
 
-# 属性说明
+## 属性说明
 
 以下为所有可配置属性的功能说明。
 
@@ -12842,7 +12818,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ***
 
-# 示例代码
+## 示例代码
 
 以下示例展示如何使用 `DateFormatter` 进行多种日期格式化场景。
 
@@ -12851,14 +12827,14 @@ static dateFormat(template: string, locale?: string): string | null
 ## 示例一：使用 dateStyle 和 timeStyle 进行本地化格式化
 
 ```tsx
-import { DateFormatter } from "scripting"
+import { DateFormatter } from "scripting";
 
-const df = new DateFormatter()
-df.locale = "zh_CN"
-df.dateStyle = DateFormatterStyle.full
-df.timeStyle = DateFormatterStyle.short
+const df = new DateFormatter();
+df.locale = "zh_CN";
+df.dateStyle = DateFormatterStyle.full;
+df.timeStyle = DateFormatterStyle.short;
 
-const result = df.string(new Date())
+const result = df.string(new Date());
 // 输出示例： "2025年12月12日 星期五 下午3:20"
 ```
 
@@ -12867,13 +12843,13 @@ const result = df.string(new Date())
 ## 示例二：自定义日期格式模板
 
 ```tsx
-const df = new DateFormatter()
-df.locale = "en_US"
-df.dateFormat = "yyyy-MM-dd HH:mm"
+const df = new DateFormatter();
+df.locale = "en_US";
+df.dateFormat = "yyyy-MM-dd HH:mm";
 
-df.timeZone = "Asia/Shanghai"
+df.timeZone = "Asia/Shanghai";
 
-const str = df.string(new Date())
+const str = df.string(new Date());
 // 输出示例： "2025-12-12 15:20"
 ```
 
@@ -12882,13 +12858,13 @@ const str = df.string(new Date())
 ## 示例三：使用农历格式化（chinese calendar）
 
 ```tsx
-const df = new DateFormatter()
+const df = new DateFormatter();
 
-df.calendar = "chinese"
-df.locale = "zh_CN"
-df.dateFormat = "yyyy年MM月dd日 EEEE"
+df.calendar = "chinese";
+df.locale = "zh_CN";
+df.dateFormat = "yyyy年MM月dd日 EEEE";
 
-const lunar = df.string(new Date())
+const lunar = df.string(new Date());
 // 输出示例： "四十三年十月廿二日 星期五"
 ```
 
@@ -12897,10 +12873,10 @@ const lunar = df.string(new Date())
 ## 示例四：解析字符串为日期
 
 ```tsx
-const df = new DateFormatter()
-df.dateFormat = "yyyy/MM/dd HH:mm"
+const df = new DateFormatter();
+df.dateFormat = "yyyy/MM/dd HH:mm";
 
-const date = df.date("2025/12/12 08:00")
+const date = df.date("2025/12/12 08:00");
 ```
 
 ***
@@ -12908,13 +12884,13 @@ const date = df.date("2025/12/12 08:00")
 ## 示例五：使用模板生成本地化格式
 
 ```tsx
-const df = new DateFormatter()
-df.locale = "zh_CN"
+const df = new DateFormatter();
+df.locale = "zh_CN";
 
 // 自动设置为符合中文习惯的格式，例如 "12月12日"
-df.setLocalizedDateFormatFromTemplate("MMdd")
+df.setLocalizedDateFormatFromTemplate("MMdd");
 
-const str = df.string(new Date())
+const str = df.string(new Date());
 ```
 
 ***
@@ -12924,8 +12900,8 @@ const str = df.string(new Date())
 ```tsx
 const str = DateFormatter.localizedString(new Date(), {
   dateStyle: DateFormatterStyle.medium,
-  timeStyle: DateFormatterStyle.short
-})
+  timeStyle: DateFormatterStyle.short,
+});
 ```
 
 
@@ -14855,6 +14831,8 @@ PiP 的设计目标是：
 url: /zh/doc/Changelog/2.4.5/Reminder.md
 ---
 
+# 提醒事项
+
 `Reminder` API 用于在 iOS 日历系统中创建、编辑和管理提醒事项。
 它支持通过 `DateComponents` 设置截止日期、管理完成状态、设置优先级、添加备注、配置重复规则，以及使用提醒的各种相关属性，例如闹钟（EventAlarm）、参与者信息、状态检测属性等。
 
@@ -14866,7 +14844,7 @@ url: /zh/doc/Changelog/2.4.5/Reminder.md
 
 ***
 
-# 一、属性说明
+## 一、属性说明
 
 ### identifier: string
 
@@ -14993,7 +14971,7 @@ url: /zh/doc/Changelog/2.4.5/Reminder.md
 
 ***
 
-# 二、实例方法
+## 二、实例方法
 
 ### addAlarm(alarm: EventAlarm): void
 
@@ -15026,7 +15004,7 @@ url: /zh/doc/Changelog/2.4.5/Reminder.md
 
 ***
 
-# 三、静态方法
+## 三、静态方法
 
 ### `Reminder.getAll(calendars?: Calendar[]): Promise<Reminder[]>`
 
@@ -15071,14 +15049,14 @@ url: /zh/doc/Changelog/2.4.5/Reminder.md
 
 ***
 
-# 四、示例
+## 四、示例
 
 ## 使用 DateComponents 设置提醒
 
 ```ts
-const reminder = new Reminder()
-reminder.title = "准备会议资料"
-reminder.notes = "周一会议前完成"
+const reminder = new Reminder();
+reminder.title = "准备会议资料";
+reminder.notes = "周一会议前完成";
 
 reminder.dueDateComponents = new DateComponents({
   year: 2025,
@@ -15086,10 +15064,10 @@ reminder.dueDateComponents = new DateComponents({
   day: 6,
   hour: 9,
   minute: 30,
-})
+});
 
-reminder.priority = 2
-await reminder.save()
+reminder.priority = 2;
+await reminder.save();
 ```
 
 ***
@@ -15101,7 +15079,7 @@ reminder.dueDateComponents = new DateComponents({
   year: 2025,
   month: 10,
   day: 6,
-})
+});
 ```
 
 ***
@@ -15109,8 +15087,8 @@ reminder.dueDateComponents = new DateComponents({
 ## 从 Date 创建 DateComponents
 
 ```ts
-const now = new Date()
-reminder.dueDateComponents = DateComponents.fromDate(now)
+const now = new Date();
+reminder.dueDateComponents = DateComponents.fromDate(now);
 ```
 
 ***
@@ -15118,9 +15096,9 @@ reminder.dueDateComponents = DateComponents.fromDate(now)
 ## 获取提醒事项
 
 ```ts
-const reminders = await Reminder.getAll()
+const reminders = await Reminder.getAll();
 for (const r of reminders) {
-  console.log(`提醒：${r.title}`)
+  console.log(`提醒：${r.title}`);
 }
 ```
 
@@ -15132,7 +15110,7 @@ for (const r of reminders) {
 const incompletes = await Reminder.getIncompletes({
   startDate: new Date("2025-01-01"),
   endDate: new Date("2025-01-31"),
-})
+});
 ```
 
 ***
@@ -15140,8 +15118,8 @@ const incompletes = await Reminder.getIncompletes({
 ## 标记提醒完成
 
 ```ts
-reminder.isCompleted = true
-await reminder.save()
+reminder.isCompleted = true;
+await reminder.save();
 ```
 
 ***
@@ -15149,12 +15127,12 @@ await reminder.save()
 ## 删除提醒
 
 ```ts
-await reminder.remove()
+await reminder.remove();
 ```
 
 ***
 
-# 五、补充说明
+## 五、补充说明
 
 ### 日期管理
 
@@ -23036,12 +23014,14 @@ for (const calendar of selectedCalendars) {
 url: /zh/doc/Device Capabilities/CalendarEvent.md
 ---
 
+# 日历事件
+
 `CalendarEvent` API 用于在 iOS 日历中创建、读取、编辑与管理事件。
 开发者可以操作事件的标题、时间、地点、参与者、重复规则、提醒（EventAlarm）、事件可用性以及地理位置信息，并且可以使用系统提供的创建/编辑界面。
 
 ***
 
-# 一、类型说明
+## 一、类型说明
 
 ## EventParticipant
 
@@ -23116,7 +23096,7 @@ url: /zh/doc/Device Capabilities/CalendarEvent.md
 
 ***
 
-# 二、EventAlarm（事件提醒）
+## 二、EventAlarm（事件提醒）
 
 CalendarEvent 支持添加多个 `EventAlarm`，包括：
 
@@ -23128,7 +23108,7 @@ CalendarEvent 支持添加多个 `EventAlarm`，包括：
 
 ***
 
-# 三、CalendarEvent 类
+## 三、CalendarEvent 类
 
 ## 构造函数
 
@@ -23140,7 +23120,7 @@ new(): CalendarEvent
 
 ***
 
-# 四、属性说明
+## 四、属性说明
 
 ## 基本信息
 
@@ -23273,7 +23253,7 @@ new(): CalendarEvent
 
 ***
 
-# 五、实例方法
+## 五、实例方法
 
 ## 1. 提醒管理
 
@@ -23324,7 +23304,7 @@ new(): CalendarEvent
 
 ***
 
-# 六、静态方法
+## 六、静态方法
 
 ## `getAll(startDate: Date, endDate: Date, calendars?: Calendar[]): Promise<CalendarEvent[]>`
 
@@ -23344,20 +23324,20 @@ new(): CalendarEvent
 
 ***
 
-# 七、使用示例
+## 七、使用示例
 
 ## 1. 创建并保存事件
 
 ```ts
-const defaultCalendar = await Calendar.defaultForEvents()
-const event = new CalendarEvent()
-event.title = "团队会议"
-event.calendar = defaultCalendar!
-event.startDate = new Date("2024-01-15T09:00:00")
-event.endDate = new Date("2024-01-15T10:00:00")
-event.location = "会议室"
+const defaultCalendar = await Calendar.defaultForEvents();
+const event = new CalendarEvent();
+event.title = "团队会议";
+event.calendar = defaultCalendar!;
+event.startDate = new Date("2024-01-15T09:00:00");
+event.endDate = new Date("2024-01-15T10:00:00");
+event.location = "会议室";
 
-await event.save()
+await event.save();
 ```
 
 ***
@@ -23370,10 +23350,10 @@ const rule = RecurrenceRule.create({
   interval: 1,
   daysOfTheWeek: ["monday", "wednesday", "friday"],
   end: RecurrenceEnd.fromDate(new Date("2024-12-31")),
-})
+});
 
-event.addRecurrenceRule(rule)
-await event.save()
+event.addRecurrenceRule(rule);
+await event.save();
 ```
 
 ***
@@ -23381,9 +23361,9 @@ await event.save()
 ## 3. 添加提醒（Alarm）
 
 ```ts
-const alarm = EventAlarm.fromRelativeOffset(-600)
-event.addAlarm(alarm)
-await event.save()
+const alarm = EventAlarm.fromRelativeOffset(-600);
+event.addAlarm(alarm);
+await event.save();
 ```
 
 ***
@@ -23391,13 +23371,10 @@ await event.save()
 ## 4. 获取日期范围内的事件
 
 ```ts
-const events = await CalendarEvent.getAll(
-  new Date("2024-01-01"),
-  new Date("2024-01-31")
- )
+const events = await CalendarEvent.getAll(new Date("2024-01-01"), new Date("2024-01-31"));
 
 for (const e of events) {
-  console.log(`事件: ${e.title} 开始时间: ${e.startDate}`)
+  console.log(`事件: ${e.title} 开始时间: ${e.startDate}`);
 }
 ```
 
@@ -23406,9 +23383,9 @@ for (const e of events) {
 ## 5. 使用事件创建界面
 
 ```ts
-const created = await CalendarEvent.presentCreateView()
+const created = await CalendarEvent.presentCreateView();
 if (created) {
-  console.log("新事件已创建:", created.title)
+  console.log("新事件已创建:", created.title);
 }
 ```
 
@@ -23417,8 +23394,8 @@ if (created) {
 ## 6. 编辑事件
 
 ```ts
-const result = await event.presentEditView()
-console.log("编辑操作:", result)
+const result = await event.presentEditView();
+console.log("编辑操作:", result);
 ```
 
 ***
@@ -23426,13 +23403,13 @@ console.log("编辑操作:", result)
 ## 7. 删除事件
 
 ```ts
-await event.remove()
-console.log("事件已移除")
+await event.remove();
+console.log("事件已移除");
 ```
 
 ***
 
-# 八、补充说明
+## 八、补充说明
 
 ### 时区处理
 
@@ -25790,6 +25767,8 @@ try {
 url: /zh/doc/Device Capabilities/Health/HealthQuantitySample.md
 ---
 
+# 健康数量型数据（HealthQuantitySample）
+
 `HealthQuantitySample` 表示一条健康数量类型的数据样本，例如一次心率测量、记录的步数或摄入的热量。它包含了关于该数据的类型、数值、时间区间、单位和可选的元数据信息。
 
 该类是两个更具体子类的基类：
@@ -25839,8 +25818,8 @@ url: /zh/doc/Device Capabilities/Health/HealthQuantitySample.md
 **示例：**
 
 ```ts
-const bpm = sample.quantityValue(HealthUnit.count().divided(HealthUnit.minute()))
-console.log(`心率: ${bpm} 次/分钟`)
+const bpm = sample.quantityValue(HealthUnit.count().divided(HealthUnit.minute()));
+console.log(`心率: ${bpm} 次/分钟`);
 ```
 
 ***
@@ -25872,18 +25851,18 @@ console.log(`心率: ${bpm} 次/分钟`)
 
 ```ts
 const sample = HealthQuantitySample.create({
-  type: 'stepCount',
-  startDate: new Date('2025-07-01T09:00:00'),
-  endDate: new Date('2025-07-01T09:01:00'),
+  type: "stepCount",
+  startDate: new Date("2025-07-01T09:00:00"),
+  endDate: new Date("2025-07-01T09:01:00"),
   value: 200,
   unit: HealthUnit.count(),
-  metadata: { source: 'manualEntry' }
-})
+  metadata: { source: "manualEntry" },
+});
 ```
 
 ***
 
-# 子类：HealthCumulativeQuantitySample
+## 子类：HealthCumulativeQuantitySample
 
 `HealthCumulativeQuantitySample` 表示累计型的健康数据，例如总步数、总距离或总能量消耗等。
 
@@ -25902,8 +25881,8 @@ const sample = HealthQuantitySample.create({
 **示例：**
 
 ```ts
-const totalKcal = cumulativeSample.sumQuantity(HealthUnit.kilocalorie())
-console.log(`总活动能量: ${totalKcal} 千卡`)
+const totalKcal = cumulativeSample.sumQuantity(HealthUnit.kilocalorie());
+console.log(`总活动能量: ${totalKcal} 千卡`);
 ```
 
 ### `quantityValue(unit: HealthUnit): number`
@@ -25912,7 +25891,7 @@ console.log(`总活动能量: ${totalKcal} 千卡`)
 
 ***
 
-# 子类：HealthDiscreteQuantitySample
+## 子类：HealthDiscreteQuantitySample
 
 `HealthDiscreteQuantitySample` 表示一系列离散时间点上的测量值，例如心率、步数或温度变化等。
 
@@ -25934,10 +25913,10 @@ console.log(`总活动能量: ${totalKcal} 千卡`)
 **示例：**
 
 ```ts
-const avg = discreteSample.averageQuantity(HealthUnit.count())
-const max = discreteSample.maximumQuantity(HealthUnit.count())
-const recent = discreteSample.mostRecentQuantity(HealthUnit.count())
-console.log(`平均: ${avg}, 最大: ${max}, 最近: ${recent}`)
+const avg = discreteSample.averageQuantity(HealthUnit.count());
+const max = discreteSample.maximumQuantity(HealthUnit.count());
+const recent = discreteSample.mostRecentQuantity(HealthUnit.count());
+console.log(`平均: ${avg}, 最大: ${max}, 最近: ${recent}`);
 ```
 
 ***
@@ -26190,6 +26169,8 @@ const avg = stat?.averageQuantity(HealthUnit.count().divided(HealthUnit.minute()
 url: /zh/doc/Device Capabilities/Health/HealthStatistics.md
 ---
 
+# 健康统计（HealthStatistics）
+
 `HealthStatistics` 类提供了对特定健康数量类型在指定时间范围内的**统计数据访问**。通过此类，你可以获取以下汇总信息：
 
 - 总持续时间（duration）
@@ -26276,24 +26257,24 @@ url: /zh/doc/Device Capabilities/Health/HealthStatistics.md
 const stats = await Health.queryStatistics({
   type: "stepCount",
   startDate: new Date("2025-07-01"),
-  endDate: new Date("2025-07-02")
-})
+  endDate: new Date("2025-07-02"),
+});
 
-const totalSteps = stats.sumQuantity(HealthUnit.count())
-const average = stats.averageQuantity(HealthUnit.count())
-const mostRecent = stats.mostRecentQuantity(HealthUnit.count())
-const recentInterval = stats.mostRecentQuantityDateInterval()
+const totalSteps = stats.sumQuantity(HealthUnit.count());
+const average = stats.averageQuantity(HealthUnit.count());
+const mostRecent = stats.mostRecentQuantity(HealthUnit.count());
+const recentInterval = stats.mostRecentQuantityDateInterval();
 
-console.log("步数统计：")
-console.log("总步数：", totalSteps)
-console.log("平均步数：", average)
-console.log("最近记录：", mostRecent)
-console.log("记录时间区间：", recentInterval)
+console.log("步数统计：");
+console.log("总步数：", totalSteps);
+console.log("平均步数：", average);
+console.log("最近记录：", mostRecent);
+console.log("记录时间区间：", recentInterval);
 ```
 
 ***
 
-# `HealthSource` 类
+## `HealthSource` 类
 
 `HealthSource` 表示一个健康数据的来源，如某个 app 或设备（例如 iPhone、Apple Watch 等）。
 
@@ -32962,6 +32943,8 @@ await event.save()
 url: /zh/doc/Device Capabilities/Reminder.md
 ---
 
+# 提醒事项
+
 `Reminder` API 用于在 iOS 日历系统中创建、编辑和管理提醒事项。
 它支持通过 `DateComponents` 设置截止日期、管理完成状态、设置优先级、添加备注、配置重复规则，以及使用提醒的各种相关属性，例如闹钟（EventAlarm）、参与者信息、状态检测属性等。
 
@@ -32973,7 +32956,7 @@ url: /zh/doc/Device Capabilities/Reminder.md
 
 ***
 
-# 一、属性说明
+## 一、属性说明
 
 ### identifier: string
 
@@ -33100,7 +33083,7 @@ url: /zh/doc/Device Capabilities/Reminder.md
 
 ***
 
-# 二、实例方法
+## 二、实例方法
 
 ### addAlarm(alarm: EventAlarm): void
 
@@ -33133,7 +33116,7 @@ url: /zh/doc/Device Capabilities/Reminder.md
 
 ***
 
-# 三、静态方法
+## 三、静态方法
 
 ### `Reminder.getAll(calendars?: Calendar[]): Promise<Reminder[]>`
 
@@ -33178,14 +33161,14 @@ url: /zh/doc/Device Capabilities/Reminder.md
 
 ***
 
-# 四、示例
+## 四、示例
 
 ## 使用 DateComponents 设置提醒
 
 ```ts
-const reminder = new Reminder()
-reminder.title = "准备会议资料"
-reminder.notes = "周一会议前完成"
+const reminder = new Reminder();
+reminder.title = "准备会议资料";
+reminder.notes = "周一会议前完成";
 
 reminder.dueDateComponents = new DateComponents({
   year: 2025,
@@ -33193,10 +33176,10 @@ reminder.dueDateComponents = new DateComponents({
   day: 6,
   hour: 9,
   minute: 30,
-})
+});
 
-reminder.priority = 2
-await reminder.save()
+reminder.priority = 2;
+await reminder.save();
 ```
 
 ***
@@ -33208,7 +33191,7 @@ reminder.dueDateComponents = new DateComponents({
   year: 2025,
   month: 10,
   day: 6,
-})
+});
 ```
 
 ***
@@ -33216,8 +33199,8 @@ reminder.dueDateComponents = new DateComponents({
 ## 从 Date 创建 DateComponents
 
 ```ts
-const now = new Date()
-reminder.dueDateComponents = DateComponents.fromDate(now)
+const now = new Date();
+reminder.dueDateComponents = DateComponents.fromDate(now);
 ```
 
 ***
@@ -33225,9 +33208,9 @@ reminder.dueDateComponents = DateComponents.fromDate(now)
 ## 获取提醒事项
 
 ```ts
-const reminders = await Reminder.getAll()
+const reminders = await Reminder.getAll();
 for (const r of reminders) {
-  console.log(`提醒：${r.title}`)
+  console.log(`提醒：${r.title}`);
 }
 ```
 
@@ -33239,7 +33222,7 @@ for (const r of reminders) {
 const incompletes = await Reminder.getIncompletes({
   startDate: new Date("2025-01-01"),
   endDate: new Date("2025-01-31"),
-})
+});
 ```
 
 ***
@@ -33247,8 +33230,8 @@ const incompletes = await Reminder.getIncompletes({
 ## 标记提醒完成
 
 ```ts
-reminder.isCompleted = true
-await reminder.save()
+reminder.isCompleted = true;
+await reminder.save();
 ```
 
 ***
@@ -33256,12 +33239,12 @@ await reminder.save()
 ## 删除提醒
 
 ```ts
-await reminder.remove()
+await reminder.remove();
 ```
 
 ***
 
-# 五、补充说明
+## 五、补充说明
 
 ### 日期管理
 
@@ -36062,6 +36045,8 @@ webView.dispose()
 url: /zh/doc/Intent/Intent.continueInForeground.md
 ---
 
+# Intent.continueInForeground
+
 `Intent.continueInForeground` 用于在脚本从 Shortcuts 中后台执行时，**请求系统将流程转移到 Scripting App 的前台继续运行**。
 此过程需要用户明确确认。
 
@@ -36083,20 +36068,20 @@ url: /zh/doc/Intent/Intent.continueInForeground.md
 
 ***
 
-# API 定义
+## API 定义
 
 ```ts
 function continueInForeground(
   dialog?: Dialog | null,
   options?: {
     alwaysConfirm?: boolean;
-  }
+  },
 ): Promise<void>;
 ```
 
 ***
 
-# 参数说明
+## 参数说明
 
 ## dialog?: Dialog | null
 
@@ -36152,7 +36137,7 @@ type Dialog =
 
 ***
 
-# 执行流程
+## 执行流程
 
 执行 `await Intent.continueInForeground(...)` 时：
 
@@ -36161,7 +36146,6 @@ type Dialog =
 2. 系统弹出确认对话框
 
 3. 用户选择：
-
    - **确认** → 打开 Scripting App → 脚本继续
    - **取消** → 脚本立即终止
 
@@ -36171,14 +36155,13 @@ type Dialog =
 
 ***
 
-# 典型应用场景
+## 典型应用场景
 
 推荐在以下场景调用：
 
 - 需要展示完整的导航界面或交互表单（如示例中的 TextField）
 - 需要使用 `Navigation.present` 呈现 UI
 - 需要 App 内操作如：
-
   - 预览文件
   - 编辑长文本
   - 选择复杂数据
@@ -36191,7 +36174,7 @@ type Dialog =
 
 ***
 
-# 完整示例代码
+## 完整示例代码
 
 以下示例展示如何从 Shortcuts 通过 `continueInForeground` 切换到 Scripting App 前台，然后展示 UI 让用户输入文本，输入结束后再返回 Shortcuts。
 
@@ -36251,7 +36234,7 @@ runIntent();
 
 ***
 
-# 注意事项与最佳实践
+## 注意事项与最佳实践
 
 - **必须运行在 iOS 26+**，否则会抛出异常或行为不可用。
 - 若脚本依赖用户输入、复杂 UI 或操作，请使用该 API 触发前台模式。
@@ -36264,6 +36247,8 @@ runIntent();
 ---
 url: /zh/doc/Intent/Intent.requestConfirmation.md
 ---
+
+# Intent.requestConfirmation
 
 `Intent.requestConfirmation` 用于在脚本执行过程中，**向用户请求确认某项操作**。
 调用后，系统会暂停脚本执行，并展示一个基于 **SnippetIntent 的 UI** 作为确认界面，同时可显示提示对话内容。
@@ -36279,7 +36264,7 @@ url: /zh/doc/Intent/Intent.requestConfirmation.md
 
 ***
 
-# API 定义
+## API 定义
 
 ```ts
 function requestConfirmation(
@@ -36288,13 +36273,13 @@ function requestConfirmation(
   options?: {
     dialog?: Dialog;
     showDialogAsPrompt?: boolean;
-  }
+  },
 ): Promise<void>;
 ```
 
 ***
 
-# 参数说明
+## 参数说明
 
 ## actionName: ConfirmationActionName
 
@@ -36380,7 +36365,7 @@ type Dialog =
 
 ***
 
-# 执行流程
+## 执行流程
 
 调用 `await Intent.requestConfirmation(...)` 时脚本执行顺序如下：
 
@@ -36389,7 +36374,6 @@ type Dialog =
 2. 系统展示确认界面（SnippetIntent UI + 可选 dialog 文案）
 
 3. 用户进行交互：
-
    - **确认** → Promise resolve，脚本继续
    - **取消** → 脚本终止执行
 
@@ -36399,7 +36383,7 @@ type Dialog =
 
 ***
 
-# 使用场景
+## 使用场景
 
 以下场景推荐使用 `requestConfirmation`：
 
@@ -36415,7 +36399,7 @@ type Dialog =
 
 ***
 
-# 完整示例代码
+## 完整示例代码
 
 以下示例展示如何使用 `requestConfirmation` 请求用户确认一次颜色选择，并在确认后继续执行脚本。
 
@@ -36459,7 +36443,7 @@ runIntent();
 
 ***
 
-# 注意事项与最佳实践
+## 注意事项与最佳实践
 
 - **必须运行在 iOS 26+**
   提前检查系统版本或优雅降级。
@@ -36643,6 +36627,8 @@ run()
 url: /zh/doc/Intent/SnippetIntent.md
 ---
 
+# SnippetIntent
+
 SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。它适用于：
 
 - 多步骤表单式交互
@@ -36660,7 +36646,7 @@ SnippetIntent 特点如下：
 
 ***
 
-# 系统要求
+## 系统要求
 
 **SnippetIntent 只能在 iOS 26 及以上系统运行。**
 
@@ -36673,7 +36659,7 @@ SnippetIntent 特点如下：
 
 ***
 
-# 注册 SnippetIntent（app\_intents.tsx）
+## 注册 SnippetIntent（app\_intents.tsx）
 
 在 `app_intents.tsx` 中声明 SnippetIntent：
 
@@ -36682,9 +36668,9 @@ export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />
-  }
-})
+    return <PickColorView />;
+  },
+});
 ```
 
 再例如：
@@ -36694,9 +36680,9 @@ export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    return <ResultView content={content} />
-  }
-})
+    return <ResultView content={content} />;
+  },
+});
 ```
 
 要求：
@@ -36707,7 +36693,7 @@ export const ShowResultIntent = AppIntentManager.register({
 
 ***
 
-# SnippetIntent 返回值封装：Intent.snippetIntent
+## SnippetIntent 返回值封装：Intent.snippetIntent
 
 SnippetIntent 不能直接作为 JS 返回值，必须通过 `Intent.snippetIntent()` 包装成 `IntentSnippetIntentValue`。
 
@@ -36715,27 +36701,31 @@ SnippetIntent 不能直接作为 JS 返回值，必须通过 `Intent.snippetInte
 const snippetValue = Intent.snippetIntent({
   value: Intent.text("Some value returning for Shortcuts"),
   snippetIntent: ShowResultIntent({
-    content: "Example Text"
-  })
-})
+    content: "Example Text",
+  }),
+});
 
-Script.exit(snippetValue)
+Script.exit(snippetValue);
 ```
 
 ### 类型定义
 
 ```ts
 type SnippetIntentValue = {
-  value?: IntentAttributedTextValue | IntentFileURLValue | IntentJsonValue | IntentTextValue | IntentURLValue | IntentFileValue | null
-  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>
-}
+  value?:
+    | IntentAttributedTextValue
+    | IntentFileURLValue
+    | IntentJsonValue
+    | IntentTextValue
+    | IntentURLValue
+    | IntentFileValue
+    | null;
+  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>;
+};
 
-declare class IntentSnippetIntentValue extends IntentValue<
-  'SnippetIntent',
-  SnippetIntentValue
-> {
-  value: SnippetIntentValue
-  type: 'SnippetIntent'
+declare class IntentSnippetIntentValue extends IntentValue<"SnippetIntent", SnippetIntentValue> {
+  value: SnippetIntentValue;
+  type: "SnippetIntent";
 }
 ```
 
@@ -36743,7 +36733,7 @@ declare class IntentSnippetIntentValue extends IntentValue<
 
 ***
 
-# Snippet 确认界面：Intent.requestConfirmation
+## Snippet 确认界面：Intent.requestConfirmation
 
 SnippetIntent 支持在执行逻辑中先请求用户确认某个操作。此能力同样基于 iOS 26。
 
@@ -36765,7 +36755,7 @@ Intent.requestConfirmation(
 示例值：
 
 ```
-"add" | "addData" | "book" | "buy" | "call" | "checkIn" | 
+"add" | "addData" | "book" | "buy" | "call" | "checkIn" |
 "continue" | "create" | "do" | "download" | "filter" |
 "find" | "get" | "go" | "log" | "open" | "order" |
 "pay" | "play" | "playSound" | "post" | "request" |
@@ -36777,10 +36767,7 @@ Intent.requestConfirmation(
 ### 示例
 
 ```tsx
-await Intent.requestConfirmation(
-  "set",
-  PickColorIntent()
-)
+await Intent.requestConfirmation("set", PickColorIntent());
 ```
 
 效果：
@@ -36791,7 +36778,7 @@ await Intent.requestConfirmation(
 
 ***
 
-# Shortcuts 的「Show Snippet Intent」动作（iOS 26+）
+## Shortcuts 的「Show Snippet Intent」动作（iOS 26+）
 
 Shortcuts 在 iOS 26 新增动作：
 
@@ -36816,7 +36803,7 @@ Shortcuts 在 iOS 26 新增动作：
 
 ***
 
-# IntentMemoryStorage — 跨 AppIntent 状态共享
+## IntentMemoryStorage — 跨 AppIntent 状态共享
 
 ## 1. 为什么需要 IntentMemoryStorage
 
@@ -36841,12 +36828,12 @@ API 定义：
 
 ```ts
 namespace IntentMemoryStorage {
-  function get<T>(key: string): T | null
-  function set(key: string, value: any): void
-  function remove(key: string): void
-  function contains(key: string): boolean
-  function clear(): void
-  function keys(): string[]
+  function get<T>(key: string): T | null;
+  function set(key: string, value: any): void;
+  function remove(key: string): void;
+  function contains(key: string): boolean;
+  function clear(): void;
+  function keys(): string[];
 }
 ```
 
@@ -36859,16 +36846,15 @@ namespace IntentMemoryStorage {
 ### 示例：存储用户颜色选择
 
 ```ts
-IntentMemoryStorage.set("color", "systemBlue")
+IntentMemoryStorage.set("color", "systemBlue");
 
-const color = IntentMemoryStorage.get<Color>("color")
+const color = IntentMemoryStorage.get<Color>("color");
 ```
 
 ### 建议
 
 - 不要存储大型数据（如大图像、长文本）
 - 大型数据请使用：
-
   - `Storage`（持久键值存储）
   - `FileManager` 写入 appGroupDocumentsDirectory
 
@@ -36876,7 +36862,7 @@ IntentMemoryStorage 适合作为临时状态共享，不适合当作数据库使
 
 ***
 
-# 完整示例（iOS 26+）
+## 完整示例（iOS 26+）
 
 ## app\_intents.tsx
 
@@ -36885,54 +36871,50 @@ export const SetColorIntent = AppIntentManager.register({
   name: "SetColorIntent",
   protocol: AppIntentProtocol.AppIntent,
   perform: async (color: Color) => {
-    IntentMemoryStorage.set("color", color)
-  }
-})
+    IntentMemoryStorage.set("color", color);
+  },
+});
 
 export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />
-  }
-})
+    return <PickColorView />;
+  },
+});
 
 export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue"
-    return <ResultView content={content} color={color} />
-  }
-})
+    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue";
+    return <ResultView content={content} color={color} />;
+  },
+});
 ```
 
 ## intent.tsx
 
 ```tsx
 async function runIntent() {
-
   // 1. 通过 Snippet 请求用户确认颜色
-  await Intent.requestConfirmation(
-    "set",
-    PickColorIntent()
-  )
+  await Intent.requestConfirmation("set", PickColorIntent());
 
   // 2. 从 Shortcuts 输入中读取文本
   const textContent =
     Intent.shortcutParameter?.type === "text"
       ? Intent.shortcutParameter.value
-      : "No text parameter from Shortcuts"
+      : "No text parameter from Shortcuts";
 
   // 3. 创建 SnippetIntent 返回结果
   const snippetIntentValue = Intent.snippetIntent({
-    snippetIntent: ShowResultIntent({ content: textContent })
-  })
+    snippetIntent: ShowResultIntent({ content: textContent }),
+  });
 
-  Script.exit(snippetIntentValue)
+  Script.exit(snippetIntentValue);
 }
 
-runIntent()
+runIntent();
 ```
 
 
@@ -37091,6 +37073,8 @@ Widget.present(<WidgetView />)
 url: /zh/doc/LiveActivity.md
 ---
 
+# 实时活动（灵动岛）
+
 `LiveActivity` API 允许你的脚本在 iOS 的锁屏界面以及支持的设备上的动态岛中展示实时数据。通过该 API，你可以创建、更新并结束 Live Activity，同时监听其生命周期状态和系统支持情况。
 
 本文件详细介绍 Scripting app 中的 **LiveActivity API**，包括：
@@ -37106,7 +37090,7 @@ url: /zh/doc/LiveActivity.md
 
 ***
 
-# 1. Live Activity 概念理解
+## 1. Live Activity 概念理解
 
 Live Activity 展示在以下区域：
 
@@ -37130,7 +37114,7 @@ Live Activity 展示在以下区域：
 
 ***
 
-# 2. Live Activity 状态类型
+## 2. Live Activity 状态类型
 
 ```ts
 type LiveActivityState = "active" | "dismissed" | "ended" | "stale";
@@ -37145,7 +37129,7 @@ type LiveActivityState = "active" | "dismissed" | "ended" | "stale";
 
 ***
 
-# 3. LiveActivityDetail 类型
+## 3. LiveActivityDetail 类型
 
 ```ts
 type LiveActivityDetail = {
@@ -37158,7 +37142,7 @@ type LiveActivityDetail = {
 
 ***
 
-# 4. LiveActivity UI 构建类型
+## 4. LiveActivity UI 构建类型
 
 ## 4.1 LiveActivityUIProps
 
@@ -37181,7 +37165,7 @@ type LiveActivityUIProps = {
 
 ***
 
-# 5. 注册 Live Activity UI
+## 5. 注册 Live Activity UI
 
 Live Activity 必须放在单独的文件中，例如 `live_activity.tsx`：
 
@@ -37225,7 +37209,7 @@ export const MyLiveActivity = LiveActivity.register("MyLiveActivity", builder);
 
 ***
 
-# 6. 在脚本中使用 Live Activity
+## 6. 在脚本中使用 Live Activity
 
 下面展示如何启动、更新、监听状态并结束 Live Activity。
 
@@ -37310,7 +37294,7 @@ run();
 
 ***
 
-# 7. LiveActivity 类 API 说明
+## 7. LiveActivity 类 API 说明
 
 ## 7.1 start(contentState, options?)
 
@@ -37418,7 +37402,7 @@ static endAllActivities(options?)
 
 ***
 
-# 8. Live Activity UI 组件
+## 8. Live Activity UI 组件
 
 | 组件                             | 描述         |
 | ------------------------------ | ---------- |
@@ -37432,7 +37416,7 @@ static endAllActivities(options?)
 
 ***
 
-# 9. 注意事项与最佳实践
+## 9. 注意事项与最佳实践
 
 ## 9.1 必须 JSON 可序列化
 
@@ -37465,7 +37449,7 @@ BackgroundKeeper.keepAlive();
 
 ***
 
-# 10. 完整示例（简化版）
+## 10. 完整示例（简化版）
 
 ```tsx
 const activity = MyLiveActivity();
@@ -37477,7 +37461,7 @@ await activity.update({ mins: 5 });
 await activity.end({ mins: 0 }, { dismissTimeInterval: 0 });
 ```
 
-# 11. 注意事项
+## 11. 注意事项
 
 - Live Activity 的启动是异步的，需要等到 `start` 返回 `true` 时才能调用 `update` 和 `end`
 - Live Activity 不能访问 Documents 和 iCloud 目录，只能访问 app group 目录，如果你想要访问文件或者渲染图片，必须把文件或图片保存到 `FileManager.appGroupDocumentsDirectory` 目录中。 比如渲染图片，你保存到 `FileManager.appGroupDocumentsDirectory` 中， 再通过 `<Image filePath={Path.join(FileManager.appGroupDocumentsDirectory, 'example.png')} />` 渲染
@@ -40053,12 +40037,14 @@ const weekly = DateComponents.forWeekly(new Date())
 url: /zh/doc/Utilities/DateFormatter.md
 ---
 
+# 日期格式化（DateFormatter）
+
 `DateFormatter` 类用于将 `Date` 类型格式化为字符串，或将字符串解析为 `Date`。
 该类封装了 iOS 的 `DateFormatter` 能力，适用于格式化日期、时间、本地化展示、农历日期展示（通过切换日历）、相对日期显示等场景。
 
 ***
 
-# 枚举与类型定义
+## 枚举与类型定义
 
 ## DateFormatterStyle
 
@@ -40127,7 +40113,7 @@ url: /zh/doc/Utilities/DateFormatter.md
 
 ***
 
-# 类：DateFormatter
+## 类：DateFormatter
 
 ## 初始化
 
@@ -40137,7 +40123,7 @@ url: /zh/doc/Utilities/DateFormatter.md
 
 ***
 
-# 静态方法
+## 静态方法
 
 ## `DateFormatter.localizedString(date, options)`
 
@@ -40168,7 +40154,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ***
 
-# 实例方法
+## 实例方法
 
 ## `string(date: Date): string`
 
@@ -40192,7 +40178,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ***
 
-# 属性说明
+## 属性说明
 
 以下为所有可配置属性的功能说明。
 
@@ -40315,7 +40301,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ***
 
-# 示例代码
+## 示例代码
 
 以下示例展示如何使用 `DateFormatter` 进行多种日期格式化场景。
 
@@ -40324,14 +40310,14 @@ static dateFormat(template: string, locale?: string): string | null
 ## 示例一：使用 dateStyle 和 timeStyle 进行本地化格式化
 
 ```tsx
-import { DateFormatter } from "scripting"
+import { DateFormatter } from "scripting";
 
-const df = new DateFormatter()
-df.locale = "zh_CN"
-df.dateStyle = DateFormatterStyle.full
-df.timeStyle = DateFormatterStyle.short
+const df = new DateFormatter();
+df.locale = "zh_CN";
+df.dateStyle = DateFormatterStyle.full;
+df.timeStyle = DateFormatterStyle.short;
 
-const result = df.string(new Date())
+const result = df.string(new Date());
 // 输出示例： "2025年12月12日 星期五 下午3:20"
 ```
 
@@ -40340,13 +40326,13 @@ const result = df.string(new Date())
 ## 示例二：自定义日期格式模板
 
 ```tsx
-const df = new DateFormatter()
-df.locale = "en_US"
-df.dateFormat = "yyyy-MM-dd HH:mm"
+const df = new DateFormatter();
+df.locale = "en_US";
+df.dateFormat = "yyyy-MM-dd HH:mm";
 
-df.timeZone = "Asia/Shanghai"
+df.timeZone = "Asia/Shanghai";
 
-const str = df.string(new Date())
+const str = df.string(new Date());
 // 输出示例： "2025-12-12 15:20"
 ```
 
@@ -40355,13 +40341,13 @@ const str = df.string(new Date())
 ## 示例三：使用农历格式化（chinese calendar）
 
 ```tsx
-const df = new DateFormatter()
+const df = new DateFormatter();
 
-df.calendar = "chinese"
-df.locale = "zh_CN"
-df.dateFormat = "yyyy年MM月dd日 EEEE"
+df.calendar = "chinese";
+df.locale = "zh_CN";
+df.dateFormat = "yyyy年MM月dd日 EEEE";
 
-const lunar = df.string(new Date())
+const lunar = df.string(new Date());
 // 输出示例： "四十三年十月廿二日 星期五"
 ```
 
@@ -40370,10 +40356,10 @@ const lunar = df.string(new Date())
 ## 示例四：解析字符串为日期
 
 ```tsx
-const df = new DateFormatter()
-df.dateFormat = "yyyy/MM/dd HH:mm"
+const df = new DateFormatter();
+df.dateFormat = "yyyy/MM/dd HH:mm";
 
-const date = df.date("2025/12/12 08:00")
+const date = df.date("2025/12/12 08:00");
 ```
 
 ***
@@ -40381,13 +40367,13 @@ const date = df.date("2025/12/12 08:00")
 ## 示例五：使用模板生成本地化格式
 
 ```tsx
-const df = new DateFormatter()
-df.locale = "zh_CN"
+const df = new DateFormatter();
+df.locale = "zh_CN";
 
 // 自动设置为符合中文习惯的格式，例如 "12月12日"
-df.setLocalizedDateFormatFromTemplate("MMdd")
+df.setLocalizedDateFormatFromTemplate("MMdd");
 
-const str = df.string(new Date())
+const str = df.string(new Date());
 ```
 
 ***
@@ -40397,8 +40383,8 @@ const str = df.string(new Date())
 ```tsx
 const str = DateFormatter.localizedString(new Date(), {
   dateStyle: DateFormatterStyle.medium,
-  timeStyle: DateFormatterStyle.short
-})
+  timeStyle: DateFormatterStyle.short,
+});
 ```
 
 
@@ -43808,6 +43794,8 @@ for await (const chunk of response.body) {
 url: /zh/doc/Utilities/Request/Request & RequestInit.md
 ---
 
+# Request 和 RequestInit
+
 `Request` 类表示一次 HTTP 请求的完整配置。
 它可作为 `fetch()` 方法的参数使用，也可用于克隆、修改或重试请求。
 
@@ -43824,20 +43812,20 @@ url: /zh/doc/Utilities/Request/Request & RequestInit.md
 
 ```ts
 class Request {
-  url: string
-  method: string
-  headers: Headers
-  body?: Data | FormData | string | ArrayBuffer
-  allowInsecureRequest?: boolean
-  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>
-  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean> // 已废弃
-  timeout?: DurationInSeconds
-  signal?: AbortSignal
-  cancelToken?: CancelToken // 已废弃
-  debugLabel?: string
+  url: string;
+  method: string;
+  headers: Headers;
+  body?: Data | FormData | string | ArrayBuffer;
+  allowInsecureRequest?: boolean;
+  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>;
+  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean>; // 已废弃
+  timeout?: DurationInSeconds;
+  signal?: AbortSignal;
+  cancelToken?: CancelToken; // 已废弃
+  debugLabel?: string;
 
-  constructor(input: string | Request, init?: RequestInit)
-  clone(): Request
+  constructor(input: string | Request, init?: RequestInit);
+  clone(): Request;
 }
 ```
 
@@ -43852,10 +43840,10 @@ class Request {
 
 #### 参数
 
-| 参数        | 类型            | 说明                       |                                 |
-| --------- | ------------- | ------------------------ | ------------------------------- |
-| **input** | `string`      | `Request`                | 要请求的 URL，或一个现有的 Request 对象用于克隆。 |
-| **init**  | `RequestInit` | 可选的初始化参数，用于配置请求的行为（见下文）。 |                                 |
+\| 参数      | 类型          | 说明                                             |
+\| --------- | ------------- | ------------------------------------------------ | ------------------------------------------------- |
+\| **input** | `string`      | `Request`                                        | 要请求的 URL，或一个现有的 Request 对象用于克隆。 |
+\| **init**  | `RequestInit` | 可选的初始化参数，用于配置请求的行为（见下文）。 |
 
 ***
 
@@ -43890,11 +43878,11 @@ class Request {
 const req1 = new Request("https://api.example.com/user", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ name: "Alice" })
-})
+  body: JSON.stringify({ name: "Alice" }),
+});
 
-const req2 = req1.clone()
-console.log(req2.method) // "POST"
+const req2 = req1.clone();
+console.log(req2.method); // "POST"
 ```
 
 ***
@@ -43907,14 +43895,14 @@ console.log(req2.method) // "POST"
 const request = new Request("https://api.example.com/data", {
   method: "GET",
   headers: {
-    "Accept": "application/json",
+    Accept: "application/json",
   },
-  debugLabel: "Fetch User Data"
-})
+  debugLabel: "Fetch User Data",
+});
 
-const response = await fetch(request)
-const result = await response.json()
-console.log(result)
+const response = await fetch(request);
+const result = await response.json();
+console.log(result);
 ```
 
 ***
@@ -43927,10 +43915,10 @@ const request = new Request("https://api.example.com/upload", {
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ fileId: "abc123" }),
   timeout: 15,
-})
+});
 
-const response = await fetch(request)
-console.log(await response.text())
+const response = await fetch(request);
+console.log(await response.text());
 ```
 
 ***
@@ -43941,18 +43929,18 @@ console.log(await response.text())
 const base = new Request("https://api.example.com/posts", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-})
+});
 
-const cloned = base.clone()
-cloned.headers.set("Authorization", "Bearer token-123")
-cloned.debugLabel = "Authorized Upload"
+const cloned = base.clone();
+cloned.headers.set("Authorization", "Bearer token-123");
+cloned.debugLabel = "Authorized Upload";
 
-await fetch(cloned)
+await fetch(cloned);
 ```
 
 ***
 
-# RequestInit 类型
+## RequestInit 类型
 
 `RequestInit` 是一个用于配置请求参数的对象类型，常用于 `fetch()` 或 `Request` 构造函数中。
 它与浏览器的标准 Fetch API 相同，但 Scripting 扩展了若干字段。
@@ -43963,17 +43951,17 @@ await fetch(cloned)
 
 ```ts
 type RequestInit = {
-  method?: string
-  headers?: HeadersInit
-  body?: Data | FormData | string | ArrayBuffer
-  allowInsecureRequest?: boolean
-  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>
-  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean> // 已废弃
-  timeout?: DurationInSeconds
-  signal?: AbortSignal
-  cancelToken?: CancelToken // 已废弃
-  debugLabel?: string
-}
+  method?: string;
+  headers?: HeadersInit;
+  body?: Data | FormData | string | ArrayBuffer;
+  allowInsecureRequest?: boolean;
+  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>;
+  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean>; // 已废弃
+  timeout?: DurationInSeconds;
+  signal?: AbortSignal;
+  cancelToken?: CancelToken; // 已废弃
+  debugLabel?: string;
+};
 ```
 
 ***
@@ -44006,7 +43994,7 @@ const response = await fetch("https://example.com/data", {
   body: JSON.stringify({ id: 123 }),
   timeout: 10,
   debugLabel: "Upload JSON",
-})
+});
 ```
 
 ***
@@ -44031,11 +44019,11 @@ const response = await fetch("https://example.com/data", {
 ```tsx
 const response = await fetch("https://example.com/start", {
   handleRedirect: async (newRequest) => {
-    console.log("收到重定向:", newRequest.url)
-    if (newRequest.url.includes("blocked")) return null
-    return newRequest
+    console.log("收到重定向:", newRequest.url);
+    if (newRequest.url.includes("blocked")) return null;
+    return newRequest;
   },
-})
+});
 ```
 
 ***
@@ -44045,8 +44033,8 @@ const response = await fetch("https://example.com/start", {
 ```tsx
 const response = await fetch("http://insecure.example.com/data", {
   allowInsecureRequest: true,
-})
-console.log(await response.text())
+});
+console.log(await response.text());
 ```
 
 ***
@@ -44056,7 +44044,7 @@ console.log(await response.text())
 ```tsx
 await fetch("https://example.com/api/ping", {
   debugLabel: "Ping Request",
-})
+});
 // 调试面板中将显示标签 “Ping Request”
 ```
 
@@ -44078,12 +44066,12 @@ await fetch("https://example.com/api/ping", {
 
 ```ts
 interface RedirectRequest {
-  method: string
-  url: string
-  headers: Record<string, string>
-  cookies: Cookie[]
-  body?: Data
-  timeout?: number
+  method: string;
+  url: string;
+  headers: Record<string, string>;
+  cookies: Cookie[];
+  body?: Data;
+  timeout?: number;
 }
 ```
 
@@ -44122,19 +44110,19 @@ interface RedirectRequest {
 ```tsx
 const response = await fetch("https://example.com/start", {
   handleRedirect: async (redirect) => {
-    console.log("即将重定向至:", redirect.url)
+    console.log("即将重定向至:", redirect.url);
 
     // 如果跳转到外部域名，则阻止
     if (!redirect.url.startsWith("https://example.com")) {
-      console.warn("阻止外部重定向:", redirect.url)
-      return null
+      console.warn("阻止外部重定向:", redirect.url);
+      return null;
     }
 
     // 向重定向请求添加授权头
-    redirect.headers["Authorization"] = "Bearer my-token"
-    return redirect
+    redirect.headers["Authorization"] = "Bearer my-token";
+    return redirect;
   },
-})
+});
 ```
 
 ***
@@ -44146,12 +44134,12 @@ const response = await fetch("https://api.example.com/login", {
   handleRedirect: async (redirect) => {
     // 如果重定向目标为 POST 接口，则保持原始请求体
     if (redirect.url.includes("/finalize")) {
-      redirect.method = "POST"
-      redirect.body = Data.fromRawString("action=confirm", "utf-8")
+      redirect.method = "POST";
+      redirect.body = Data.fromRawString("action=confirm", "utf-8");
     }
-    return redirect
+    return redirect;
   },
-})
+});
 ```
 
 ***
@@ -44724,13 +44712,15 @@ await fetch("https://api.example.com/status", {
 url: /zh/doc/Utilities/SSH/SFTP Client.md
 ---
 
+# SFTP 客户端
+
 `SFTPClient` 用于通过 SSH 连接访问远程文件系统，基于 **SFTP 协议**。
 它提供目录操作、文件操作、路径解析等能力，并可通过 `openFile()` 获得更强大的 `SFTPFile` 对象执行读取、写入等低层操作。
 
 该类实例通常由：
 
 ```ts
-const sftp = await ssh.openSFTP()
+const sftp = await ssh.openSFTP();
 ```
 
 返回。
@@ -44763,7 +44753,7 @@ const sftp = await ssh.openSFTP()
 #### 示例：
 
 ```ts
-await sftp.close()
+await sftp.close();
 ```
 
 ***
@@ -44798,7 +44788,7 @@ await sftp.close()
 #### 示例：
 
 ```ts
-const items = await sftp.readDirectory("/var/log")
+const items = await sftp.readDirectory("/var/log");
 ```
 
 ***
@@ -44818,7 +44808,7 @@ const items = await sftp.readDirectory("/var/log")
 #### 示例：
 
 ```ts
-await sftp.createDirectory("/home/user/new-folder")
+await sftp.createDirectory("/home/user/new-folder");
 ```
 
 ***
@@ -44838,7 +44828,7 @@ await sftp.createDirectory("/home/user/new-folder")
 #### 示例：
 
 ```ts
-await sftp.removeDirectory("/home/user/empty-dir")
+await sftp.removeDirectory("/home/user/empty-dir");
 ```
 
 ***
@@ -44859,7 +44849,7 @@ await sftp.removeDirectory("/home/user/empty-dir")
 #### 示例：
 
 ```ts
-await sftp.rename("/home/user/a.txt", "/home/user/b.txt")
+await sftp.rename("/home/user/a.txt", "/home/user/b.txt");
 ```
 
 ***
@@ -44884,7 +44874,7 @@ await sftp.rename("/home/user/a.txt", "/home/user/b.txt")
 #### 示例：
 
 ```ts
-const attrs = await sftp.getAttributes("/etc/hosts")
+const attrs = await sftp.getAttributes("/etc/hosts");
 ```
 
 ***
@@ -44911,9 +44901,9 @@ const attrs = await sftp.getAttributes("/etc/hosts")
 #### 示例：
 
 ```ts
-const file = await sftp.openFile("/home/user/log.txt", ["read"])
-const data = await file.readAll()
-await file.close()
+const file = await sftp.openFile("/home/user/log.txt", ["read"]);
+const data = await file.readAll();
+await file.close();
 ```
 
 ***
@@ -44929,7 +44919,7 @@ await file.close()
 #### 示例：
 
 ```ts
-await sftp.remove("/home/user/old.txt")
+await sftp.remove("/home/user/old.txt");
 ```
 
 ***
@@ -44941,36 +44931,36 @@ await sftp.remove("/home/user/old.txt")
 #### 示例：
 
 ```ts
-const real = await sftp.getRealPath("~/documents")
+const real = await sftp.getRealPath("~/documents");
 ```
 
 ***
 
-# 使用示例
+## 使用示例
 
 ```ts
 const ssh = await SSHClient.connect({
   host: "192.168.1.10",
-  authenticationMethod: SSHAuthenticationMethod.passwordBased("user", "pass")
-})
+  authenticationMethod: SSHAuthenticationMethod.passwordBased("user", "pass"),
+});
 
-const sftp = await ssh.openSFTP()
+const sftp = await ssh.openSFTP();
 
 // 查看目录内容
-const list = await sftp.readDirectory("/home/user")
+const list = await sftp.readDirectory("/home/user");
 
 // 打开文件读取
-const file = await sftp.openFile("/home/user/info.txt", "read")
-const data = await file.readAll()
-await file.close()
+const file = await sftp.openFile("/home/user/info.txt", "read");
+const data = await file.readAll();
+await file.close();
 
 // 创建目录
-await sftp.createDirectory("/home/user/new-folder")
+await sftp.createDirectory("/home/user/new-folder");
 
 // 删除文件
-await sftp.remove("/home/user/temp.txt")
+await sftp.remove("/home/user/temp.txt");
 
-await sftp.close()
+await sftp.close();
 ```
 
 
@@ -44979,13 +44969,15 @@ await sftp.close()
 url: /zh/doc/Utilities/SSH/SFTP File.md
 ---
 
+# SFTP 文件
+
 `SFTPFile` 表示一个已经通过 SFTP 打开的远程文件句柄。
 通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。
 
 实例通常通过：
 
 ```ts
-const file = await sftp.openFile(path, flags)
+const file = await sftp.openFile(path, flags);
 ```
 
 获得。
@@ -45009,7 +45001,7 @@ const file = await sftp.openFile(path, flags)
 
 ***
 
-# `readAttributes(): Promise<FileAttributes>`
+## `readAttributes(): Promise<FileAttributes>`
 
 读取文件的元数据属性。
 
@@ -45031,13 +45023,13 @@ const file = await sftp.openFile(path, flags)
 ### 示例：
 
 ```ts
-const attrs = await file.readAttributes()
-console.log(attrs.size)
+const attrs = await file.readAttributes();
+console.log(attrs.size);
 ```
 
 ***
 
-# `read(options?: { from?: number, length?: number }): Promise<Data>`
+## `read(options?: { from?: number, length?: number }): Promise<Data>`
 
 按指定范围读取文件内容。
 
@@ -45053,12 +45045,12 @@ console.log(attrs.size)
 ### 示例：
 
 ```ts
-const data = await file.read({ from: 100, length: 50 })
+const data = await file.read({ from: 100, length: 50 });
 ```
 
 ***
 
-# `readAll(): Promise<Data>`
+## `readAll(): Promise<Data>`
 
 读取文件的全部内容。
 
@@ -45069,12 +45061,12 @@ const data = await file.read({ from: 100, length: 50 })
 ### 示例：
 
 ```ts
-const data = await file.readAll()
+const data = await file.readAll();
 ```
 
 ***
 
-# `write(data: Data, at?: number): Promise<void>`
+## `write(data: Data, at?: number): Promise<void>`
 
 向文件写入数据。
 
@@ -45082,9 +45074,7 @@ const data = await file.readAll()
 
 - `data`：要写入的二进制数据
 - `at?`：写入的起始偏移（字节）。
-
   - 若未提供，则根据 flags 的模式决定：
-
     - 若使用 `"append"` 打开，则追加到文件末尾
     - 若使用 `"write"` 打开，则从当前偏移或默认 0 写入
 
@@ -45095,12 +45085,12 @@ const data = await file.readAll()
 ### 示例：
 
 ```ts
-await file.write(Data.fromRawString("Hello world"))
+await file.write(Data.fromRawString("Hello world"));
 ```
 
 ***
 
-# `close(): Promise<void>`
+## `close(): Promise<void>`
 
 关闭文件句柄。
 关闭后，`isActive` 将变为 `false`，无法继续读写。
@@ -45108,28 +45098,28 @@ await file.write(Data.fromRawString("Hello world"))
 ### 示例：
 
 ```ts
-await file.close()
+await file.close();
 ```
 
 ***
 
-# 使用示例
+## 使用示例
 
 ```ts
 // 打开文件（读取模式）
-const file = await sftp.openFile("/home/user/info.txt", ["read"])
+const file = await sftp.openFile("/home/user/info.txt", ["read"]);
 
 // 获取文件属性
-const attrs = await file.readAttributes()
+const attrs = await file.readAttributes();
 
 // 读取内容
-const allData = await file.readAll()
+const allData = await file.readAll();
 
 // 部分读取
-const partial = await file.read({ from: 50, length: 100 })
+const partial = await file.read({ from: 50, length: 100 });
 
 // 关闭文件
-await file.close()
+await file.close();
 ```
 
 
@@ -45725,6 +45715,8 @@ await writer.changeSize({
 url: /zh/doc/Utilities/Storage.md
 ---
 
+# 本地存储
+
 `Storage` 模块为脚本提供轻量级的持久化存储能力。
 开发者可以在脚本中保存与读取简单的数据类型（如字符串、数字、布尔值、JSON 对象）以及二进制数据（`Data`）。
 
@@ -45735,7 +45727,7 @@ url: /zh/doc/Utilities/Storage.md
 
 ***
 
-# 支持的数据类型
+## 支持的数据类型
 
 Storage 支持以下类型的数据：
 
@@ -45749,7 +45741,7 @@ Storage 支持以下类型的数据：
 
 ***
 
-# 存储域说明
+## 存储域说明
 
 | 类型          | 默认                    | 可访问性     | 适用场景                  |
 | ----------- | --------------------- | -------- | --------------------- |
@@ -45758,12 +45750,12 @@ Storage 支持以下类型的数据：
 
 ***
 
-# API 参考
+## API 参考
 
 ## 1. `Storage.set(key, value, options?)`
 
 ```ts
-function set<T>(key: string, value: T, options?: { shared: boolean }): boolean
+function set<T>(key: string, value: T, options?: { shared: boolean }): boolean;
 ```
 
 将值保存到持久化存储中。支持 `string`、`number`、`boolean` 和 `JSON` 类型。
@@ -45785,7 +45777,7 @@ function set<T>(key: string, value: T, options?: { shared: boolean }): boolean
 ## 2. `Storage.get(key, options?)`
 
 ```ts
-function get<T>(key: string, options?: { shared: boolean }): T | null
+function get<T>(key: string, options?: { shared: boolean }): T | null;
 ```
 
 读取已保存的值。如果不存在，返回 `null`。
@@ -45806,7 +45798,7 @@ function get<T>(key: string, options?: { shared: boolean }): T | null
 ## 3. `Storage.setData(key, data, options?)`
 
 ```ts
-function setData(key: string, data: Data, options?: { shared: boolean }): void
+function setData(key: string, data: Data, options?: { shared: boolean }): void;
 ```
 
 保存二进制数据 `Data` 到持久化存储。
@@ -45820,7 +45812,7 @@ function setData(key: string, data: Data, options?: { shared: boolean }): void
 ## 4. `Storage.getData(key, options?)`
 
 ```ts
-function getData(key: string, options?: { shared: boolean }): Data | null
+function getData(key: string, options?: { shared: boolean }): Data | null;
 ```
 
 读取保存的二进制数据。不存在时返回 `null`。
@@ -45830,7 +45822,7 @@ function getData(key: string, options?: { shared: boolean }): Data | null
 ## 5. `Storage.remove(key, options?)`
 
 ```ts
-function remove(key: string, options?: { shared: boolean }): void
+function remove(key: string, options?: { shared: boolean }): void;
 ```
 
 移除指定键的数据。
@@ -45840,7 +45832,7 @@ function remove(key: string, options?: { shared: boolean }): void
 ## 6. `Storage.contains(key, options?)`
 
 ```ts
-function contains(key: string, options?: { shared: boolean }): boolean
+function contains(key: string, options?: { shared: boolean }): boolean;
 ```
 
 检测存储中是否包含某个键。
@@ -45850,7 +45842,7 @@ function contains(key: string, options?: { shared: boolean }): boolean
 ## 7. `Storage.clear()`
 
 ```ts
-function clear(): void
+function clear(): void;
 ```
 
 清空所有存储的键值对。
@@ -45861,23 +45853,23 @@ function clear(): void
 ## 8. `Storage.keys()`
 
 ```ts
-function keys(): string[]
+function keys(): string[];
 ```
 
 返回当前存储域中所有键名数组。
 
 ***
 
-# 使用示例
+## 使用示例
 
 ## 示例 1：保存与读取简单类型
 
 ```ts
-import { Storage } from "scripting"
+import { Storage } from "scripting";
 
-Storage.set("username", "Thom")
-const name = Storage.get<string>("username")
-console.log(name) // "Thom"
+Storage.set("username", "Thom");
+const name = Storage.get<string>("username");
+console.log(name); // "Thom"
 ```
 
 ***
@@ -45887,11 +45879,11 @@ console.log(name) // "Thom"
 ```ts
 Storage.set("profile", {
   name: "Alice",
-  age: 30
-})
+  age: 30,
+});
 
-const profile = Storage.get<{ name: string; age: number }>("profile")
-console.log(profile?.age) // 30
+const profile = Storage.get<{ name: string; age: number }>("profile");
+console.log(profile?.age); // 30
 ```
 
 ***
@@ -45899,13 +45891,13 @@ console.log(profile?.age) // 30
 ## 示例 3：保存与读取 Data
 
 ```ts
-import { Data, Storage } from "scripting"
+import { Data, Storage } from "scripting";
 
-const bytes = Data.fromUTF8("hello")
-Storage.setData("payload", bytes)
+const bytes = Data.fromUTF8("hello");
+Storage.setData("payload", bytes);
 
-const result = Storage.getData("payload")
-console.log(result?.toUTF8()) // "hello"
+const result = Storage.getData("payload");
+console.log(result?.toUTF8()); // "hello"
 ```
 
 ***
@@ -45913,10 +45905,10 @@ console.log(result?.toUTF8()) // "hello"
 ## 示例 4：使用 shared 共享数据
 
 ```ts
-Storage.set("theme", "dark", { shared: true })
+Storage.set("theme", "dark", { shared: true });
 
-const value = Storage.get<string>("theme", { shared: true })
-console.log(value) // "dark"
+const value = Storage.get<string>("theme", { shared: true });
+console.log(value); // "dark"
 ```
 
 ***
@@ -45925,7 +45917,7 @@ console.log(value) // "dark"
 
 ```ts
 if (Storage.contains("token")) {
-  Storage.remove("token")
+  Storage.remove("token");
 }
 ```
 
@@ -45934,12 +45926,12 @@ if (Storage.contains("token")) {
 ## 示例 6：获取所有键
 
 ```ts
-console.log(Storage.keys()) // ["username", "profile", ...]
+console.log(Storage.keys()); // ["username", "profile", ...]
 ```
 
 ***
 
-# 注意事项
+## 注意事项
 
 1. 所有写入操作异步持久化，但 API 会立即返回成功与否。
 2. `Data` 类型不能通过 `Storage.set()` 保存，必须使用 `setData()`。
@@ -50010,6 +50002,8 @@ function Example() {
 url: /zh/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index.md
 ---
 
+# 玻璃效果过渡效果
+
 Liquid Glass 在 iOS 26 引入了更先进的几何匹配与材质过渡能力。
 Scripting 完整支持这些特性，并通过 `glassEffectTransition`、`glassEffectID`、`glassEffectUnion`、`GlassEffectContainer` 以及 `NamespaceReader` 组合实现自然、顺滑且结构化的玻璃动画体验。
 
@@ -50025,12 +50019,12 @@ Scripting 完整支持这些特性，并通过 `glassEffectTransition`、`glassE
 
 ***
 
-# 1. 概述：什么是 Glass Effect Transition
+## 1. 概述：什么是 Glass Effect Transition
 
 `glassEffectTransition` 用于指定 Liquid Glass 在视图出现、消失或布局变化期间应如何过渡。
 
 ```ts
-type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
+type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
 ```
 
 Glass Effect Transition 控制三个核心内容：
@@ -50043,12 +50037,12 @@ Glass Effect Transition 控制三个核心内容：
 
 ***
 
-# 2. 三种过渡类型
+## 2. 三种过渡类型
 
 ## 2.1 identity（无过渡）
 
 ```tsx
-glassEffectTransition="identity"
+glassEffectTransition = "identity";
 ```
 
 含义：
@@ -50067,7 +50061,7 @@ glassEffectTransition="identity"
 ## 2.2 materialize（材质出现动画）
 
 ```tsx
-glassEffectTransition="materialize"
+glassEffectTransition = "materialize";
 ```
 
 特点：
@@ -50087,7 +50081,7 @@ glassEffectTransition="materialize"
 ## 2.3 matchedGeometry（匹配几何）
 
 ```tsx
-glassEffectTransition="matchedGeometry"
+glassEffectTransition = "matchedGeometry";
 ```
 
 特点：
@@ -50106,7 +50100,7 @@ glassEffectTransition="matchedGeometry"
 
 ***
 
-# 3. glassEffectID 与 namespace：匹配几何的核心
+## 3. glassEffectID 与 namespace：匹配几何的核心
 
 ## 3.1 为什么需要 ID？
 
@@ -50155,7 +50149,7 @@ SwiftUI 的 matchedGeometry 效果依赖 `@Namespace`，在 Scripting 中我们�
 
 ***
 
-# 4. glassEffectUnion：玻璃材质的联合区域
+## 4. glassEffectUnion：玻璃材质的联合区域
 
 除了匹配几何形状外，Liquid Glass 还能把多个玻璃区域合并为一个连续材质区域：
 
@@ -50176,42 +50170,44 @@ glassEffectUnion={{
 
 ***
 
-# 5. 示例解析
+## 5. 示例解析
 
 以下示例展示菜单在两种布局之间切换，并使用动画呈现玻璃过渡：
 
 ```tsx
-isAlternativeMenu.value
-  ? <>
-      <Button
-        title="Home"
-        glassEffectID={{id:1, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-      <Button
-        title="Settings"
-        glassEffectID={{id:2, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-    </>
-  : <>
-      <Button
-        title="Edit"
-        glassEffectID={{id:1, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-      <Button
-        title="Erase"
-        glassEffectID={{id:3, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-        glassEffectTransition="materialize"
-      />
-      <Button
-        title="Delete"
-        glassEffectID={{id:2, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-    </>
+isAlternativeMenu.value ? (
+  <>
+    <Button
+      title="Home"
+      glassEffectID={{ id: 1, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+    <Button
+      title="Settings"
+      glassEffectID={{ id: 2, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+  </>
+) : (
+  <>
+    <Button
+      title="Edit"
+      glassEffectID={{ id: 1, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+    <Button
+      title="Erase"
+      glassEffectID={{ id: 3, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+      glassEffectTransition="materialize"
+    />
+    <Button
+      title="Delete"
+      glassEffectID={{ id: 2, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+  </>
+);
 ```
 
 重点说明：
@@ -50232,7 +50228,7 @@ isAlternativeMenu.value
 ### 4. Erase 设置了 materialize
 
 ```tsx
-glassEffectTransition="materialize"
+glassEffectTransition = "materialize";
 ```
 
 它不会尝试匹配几何，而是用材质淡入淡出的动画。
@@ -50254,7 +50250,7 @@ glassEffectTransition="materialize"
 
 ***
 
-# 6. NamespaceReader：Scripting 如何暴露 @Namespace
+## 6. NamespaceReader：Scripting 如何暴露 @Namespace
 
 在 SwiftUI 中：
 
@@ -50293,23 +50289,21 @@ glassEffectID={{ id: x, namespace }}
 
 ***
 
-# 7. 动画触发方式（withAnimation）
+## 7. 动画触发方式（withAnimation）
 
 玻璃过渡不会自行动画，必须使用动画触发状态切换：
 
 ```tsx
 withAnimation(() => {
-  isAlternativeMenu.setValue(
-    !isAlternativeMenu.value
-  )
-})
+  isAlternativeMenu.setValue(!isAlternativeMenu.value);
+});
 ```
 
 匹配几何、材质出现动画等会自动附着到这次动画事务中。
 
 ***
 
-# 8. 最佳实践
+## 8. 最佳实践
 
 ### 1. 所有参与动画的视图必须在同一个 GlassEffectContainer
 
@@ -50333,7 +50327,7 @@ withAnimation(() => {
 
 ***
 
-# 9. 总结
+## 9. 总结
 
 Glass Effect Transition 是 iOS 26 Liquid Glass 系统的核心特性之一，它让玻璃材质在视图切换中具备几何匹配、材质渐变与联合区域动画。
 
@@ -50484,6 +50478,8 @@ run()
 url: /zh/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md
 ---
 
+# 液态玻璃效果
+
 **GlassEffect、GlassEffectContainer、UIGlass** 等相关 API 基于 SwiftUI 新引入的 Liquid Glass 技术，让开发者能够在脚本中以 TSX 方式使用流体化、动态的玻璃材质效果，并支持过渡动画、匹配几何、联合玻璃区域等高级特性。
 
 ***
@@ -50500,7 +50496,7 @@ Liquid Glass 是 iOS 26 新增的视觉效果系统，用于创建带有流动�
 
 ***
 
-# 2. GlassEffect 基础用法
+## 2. GlassEffect 基础用法
 
 所有支持玻璃效果的视图，都可以通过 `glassEffect` 修饰符添加 Liquid Glass 材质。
 
@@ -50508,23 +50504,27 @@ Liquid Glass 是 iOS 26 新增的视觉效果系统，用于创建带有流动�
 
 ```ts
 type GlassProps = {
-  glassEffect?: boolean | UIGlass | Shape | {
-      glass: UIGlass
-      shape: Shape
-  }
+  glassEffect?:
+    | boolean
+    | UIGlass
+    | Shape
+    | {
+        glass: UIGlass;
+        shape: Shape;
+      };
 
-  glassEffectTransition?: GlassEffectTransition
+  glassEffectTransition?: GlassEffectTransition;
 
   glassEffectID?: {
-      id: string | number
-      namespace: NamespaceID
-  }
+    id: string | number;
+    namespace: NamespaceID;
+  };
 
   glassEffectUnion?: {
-      id: string | number
-      namespace: NamespaceID
-  }
-}
+    id: string | number;
+    namespace: NamespaceID;
+  };
+};
 ```
 
 ***
@@ -50556,7 +50556,7 @@ glassEffect 有四种主要使用方式：
 ### 方式三：设置玻璃的形状（Shape）
 
 ```tsx
-<Text glassEffect={{ glass: UIGlass.regular(), shape: { type: 'rect', cornerRadius: 10 } }}>
+<Text glassEffect={{ glass: UIGlass.regular(), shape: { type: "rect", cornerRadius: 10 } }}>
   Foo
 </Text>
 ```
@@ -50566,10 +50566,9 @@ glassEffect 有四种主要使用方式：
 ```tsx
 <Text
   glassEffect={{
-    type: 'rect',
-    cornerRadius: 10
-  }}
->
+    type: "rect",
+    cornerRadius: 10,
+  }}>
   Foo
 </Text>
 ```
@@ -50588,7 +50587,7 @@ glassEffect 有四种主要使用方式：
 
 ***
 
-# 3. UIGlass 类
+## 3. UIGlass 类
 
 `UIGlass` 用于描述玻璃材质本身，可以选用内置材质或链式组合属性。
 
@@ -50615,10 +50614,10 @@ glassEffect={UIGlass.regular().interactive().tint("red")}
 
 ***
 
-# 4. GlassEffectTransition（玻璃过渡动画）
+## 4. GlassEffectTransition（玻璃过渡动画）
 
 ```ts
-type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
+type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
 ```
 
 ### 三种模式说明
@@ -50632,10 +50631,7 @@ type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
 ### 使用方式
 
 ```tsx
-<Text 
-  glassEffect
-  glassEffectTransition="materialize"
->
+<Text glassEffect glassEffectTransition="materialize">
   Foo
 </Text>
 ```
@@ -50644,7 +50640,7 @@ matchedGeometry 通常需要配合 `glassEffectID` 或 `glassEffectUnion` 使用
 
 ***
 
-# 5. glassEffectID 与 glassEffectUnion
+## 5. glassEffectID 与 glassEffectUnion
 
 Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched geometry 动画或合并多块玻璃区域。
 
@@ -50655,10 +50651,7 @@ Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched g
 为玻璃效果赋予唯一的 ID，用于 matchedGeometry 动画。
 
 ```tsx
-<Text
-  glassEffect
-  glassEffectID={{ id: "avatar", namespace }}
->
+<Text glassEffect glassEffectID={{ id: "avatar", namespace }}>
   Foo
 </Text>
 ```
@@ -50672,17 +50665,14 @@ Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched g
 用于将多个玻璃效果统一为一个更大区域。
 
 ```tsx
-<Text
-  glassEffect
-  glassEffectUnion={{ id: 1, namespace }}
-/>
+<Text glassEffect glassEffectUnion={{ id: 1, namespace }} />
 ```
 
 多个视图的玻璃材质将被合并，形成更一致的视觉区域。
 
 ***
 
-# 6. GlassEffectContainer
+## 6. GlassEffectContainer
 
 `GlassEffectContainer` 是用于组织和管理玻璃效果的容器。容器内部的所有 glassEffect 视图，都能参与几何匹配、联合效果和过渡动画。
 
@@ -50707,7 +50697,7 @@ GlassEffectContainer 不需要额外参数，但提供了玻璃效果组织空�
 
 ***
 
-# 7. 按钮的玻璃样式 buttonStyle
+## 7. 按钮的玻璃样式 buttonStyle
 
 Scripting 在 iOS 26 提供新增按钮样式：
 
@@ -50731,7 +50721,7 @@ Scripting 在 iOS 26 提供新增按钮样式：
 
 ***
 
-# 8. 实战示例说明
+## 8. 实战示例说明
 
 以下示例展示完整的用法，包括：
 
@@ -50764,7 +50754,7 @@ Scripting 在 iOS 26 提供新增按钮样式：
 
 ***
 
-# 9. 使用建议与最佳实践
+## 9. 使用建议与最佳实践
 
 ### 1. 大量玻璃视图应包裹在同一个 GlassEffectContainer
 
@@ -51231,7 +51221,9 @@ listSectionSeparatorTint?: Color | {
 url: /zh/doc/View Modifiers/List and Section View Modifiers/New List View Modifiers.md
 ---
 
-# 属性概览
+# 新的 List 视图修饰符
+
+## 属性概览
 
 | 属性名                          | 类型                                                          | 系统要求      | 说明                         |
 | ---------------------------- | ----------------------------------------------------------- | --------- | -------------------------- |
@@ -51242,7 +51234,7 @@ url: /zh/doc/View Modifiers/List and Section View Modifiers/New List View Modifi
 
 ***
 
-# 1. listSectionIndexVisibility
+## 1. listSectionIndexVisibility
 
 ```ts
 /**
@@ -51268,12 +51260,11 @@ listSectionIndexVisibility?: Visibility
 <List listSectionIndexVisibility="visible">
   <ForEach
     data={groups}
-    builder={group => (
-      <Section
-        header={<Text>{group.title}</Text>}
-        sectionIndexLabel={group.title}
-      >
-        {group.items.map(item => <Text key={item}>{item}</Text>)}
+    builder={(group) => (
+      <Section header={<Text>{group.title}</Text>} sectionIndexLabel={group.title}>
+        {group.items.map((item) => (
+          <Text key={item}>{item}</Text>
+        ))}
       </Section>
     )}
   />
@@ -51282,7 +51273,7 @@ listSectionIndexVisibility?: Visibility
 
 ***
 
-# 2. listSectionMargins
+## 2. listSectionMargins
 
 ```ts
 /**
@@ -51345,7 +51336,7 @@ listSectionMargins={{
 
 ***
 
-# 3. sectionIndexLabel
+## 3. sectionIndexLabel
 
 ```ts
 /**
@@ -51362,10 +51353,7 @@ sectionIndexLabel?: string
 ### 示例
 
 ```tsx
-<Section
-  header={<Text>A</Text>}
-  sectionIndexLabel="A"
->
+<Section header={<Text>A</Text>} sectionIndexLabel="A">
   <Text>Adam</Text>
   <Text>Ana</Text>
 </Section>
@@ -51373,7 +51361,7 @@ sectionIndexLabel?: string
 
 ***
 
-# 4. sectionActions
+## 4. sectionActions
 
 ```ts
 /**
@@ -51392,10 +51380,7 @@ sectionActions?: VirtualNode
 ```tsx
 <Section
   header={<Text>Downloads</Text>}
-  sectionActions={
-    <Button title="Refresh" action={() => doRefresh()} />
-  }
->
+  sectionActions={<Button title="Refresh" action={() => doRefresh()} />}>
   <Text>File 1</Text>
   <Text>File 2</Text>
 </Section>
@@ -51411,30 +51396,30 @@ sectionActions?: VirtualNode
       <Button title="Upload All" action={() => uploadAll()} />
       <Button title="Delete All" action={() => deleteAll()} />
     </Menu>
-  }
->
-  {photos.map(photo => <Text key={photo.id}>{photo.name}</Text>)}
+  }>
+  {photos.map((photo) => (
+    <Text key={photo.id}>{photo.name}</Text>
+  ))}
 </Section>
 ```
 
 ***
 
-# 完整示例
+## 完整示例
 
 ```tsx
 <List listSectionIndexVisibility="visible">
   <ForEach
     data={groups}
-    builder={group => (
+    builder={(group) => (
       <Section
         header={<Text>{group.title}</Text>}
         sectionIndexLabel={group.title}
         listSectionMargins={12}
-        sectionActions={
-          <Button title="Refresh" action={() => refreshGroup(group)} />
-        }
-      >
-        {group.items.map(item => <Text key={item}>{item}</Text>)}
+        sectionActions={<Button title="Refresh" action={() => refreshGroup(group)} />}>
+        {group.items.map((item) => (
+          <Text key={item}>{item}</Text>
+        ))}
       </Section>
     )}
   />
@@ -51447,13 +51432,15 @@ sectionActions?: VirtualNode
 url: /zh/doc/View Modifiers/LiveActivity View Modifiers.md
 ---
 
+# 实时活动（LiveActivity）修饰符
+
 Scripting 支持与 SwiftUI 等效的 Live Activity 外观控制修饰符。这些修饰符专门用于 **锁屏（Lock Screen）中的 Live Activity 界面**，用于自定义背景色和系统动作按钮颜色。
 
 通过为 Activity UI 中的 `content` 视图设置这些修饰符，可使 Live Activity 更符合品牌风格或特定活动主题。
 
 ***
 
-# 修饰符定义
+## 修饰符定义
 
 ```ts
 /**
@@ -51475,7 +51462,7 @@ activitySystemActionForegroundColor?: Color | {
 
 ***
 
-# 属性说明
+## 属性说明
 
 ## 1. activityBackgroundTint
 
@@ -51507,7 +51494,7 @@ activitySystemActionForegroundColor?: Color | {
 
 ***
 
-# 示例：在 Live Activity UI Builder 中使用
+## 示例：在 Live Activity UI Builder 中使用
 
 Live Activity 的 UI builder 必须返回包含多个区域（content / compactLeading / compactTrailing / minimal等）的对象结构。
 
@@ -51535,7 +51522,7 @@ function ActivityView() {
 
 ***
 
-# 使用说明
+## 使用说明
 
 - **修饰符仅在 Live Activity UI 中有效**，并且只影响 **锁屏界面** 的外观。
 - 必须在 Live Activity UI builder 的 `content` 中使用。
@@ -52672,6 +52659,8 @@ searchCompletion?: string
 url: /zh/doc/View Modifiers/Set environment values (environments).md
 ---
 
+# 设置环境变量 (environments)
+
 `environments` 是 Scripting 新增的视图修饰符，用于向当前视图树（View Hierarchy）注入特定的 environment values。
 它的作用与 SwiftUI 的 `.environment()` 类似，但基于 Scripting 的设计进行了显式声明和类型收敛，避免隐式行为。
 
@@ -52684,7 +52673,7 @@ url: /zh/doc/View Modifiers/Set environment values (environments).md
 
 ***
 
-# 修饰符定义
+## 修饰符定义
 
 ```ts
 environments?: {
@@ -52695,7 +52684,7 @@ environments?: {
 
 ***
 
-# 一、editMode（编辑模式）
+## 一、editMode（编辑模式）
 
 `editMode` 用于设置当前视图树中所有支持编辑模式的组件的编辑状态。
 
@@ -52709,12 +52698,12 @@ environments?: {
 
 ```ts
 class EditMode {
-  readonly value: "active" | "inactive" | "transient" | "unknown"
-  readonly isEditing: boolean
+  readonly value: "active" | "inactive" | "transient" | "unknown";
+  readonly isEditing: boolean;
 
-  static active(): EditMode
-  static inactive(): EditMode
-  static transient(): EditMode
+  static active(): EditMode;
+  static inactive(): EditMode;
+  static transient(): EditMode;
 }
 ```
 
@@ -52759,7 +52748,7 @@ const editMode = useObservable(() => EditMode.active())
 
 ***
 
-# 二、openURL（自定义 URL 打开行为）
+## 二、openURL（自定义 URL 打开行为）
 
 `openURL` environment 允许为当前视图树定义一套自定义的 URL 打开逻辑。
 这会覆盖如 `<Link>`、`Text(url:)` 等组件的默认行为。
@@ -52778,21 +52767,21 @@ openURL?: (url: string) => OpenURLActionResult;
 
 ***
 
-# OpenURLActionResult
+## OpenURLActionResult
 
 自定义 URL 打开逻辑的返回类型。
 
 ```ts
 class OpenURLActionResult {
-  type: string
+  type: string;
 
-  static handled(): OpenURLActionResult
-  static discarded(): OpenURLActionResult
+  static handled(): OpenURLActionResult;
+  static discarded(): OpenURLActionResult;
 
   static systemAction(options?: {
-    url?: string
-    prefersInApp: boolean // Requires iOS26.0+
-  }): OpenURLActionResult
+    url?: string;
+    prefersInApp: boolean; // Requires iOS26.0+
+  }): OpenURLActionResult;
 }
 ```
 
@@ -52814,14 +52803,13 @@ class OpenURLActionResult {
     openURL: (url) => {
       return OpenURLActionResult.systemAction({
         url,
-        prefersInApp: false
-      })
-    }
-  }}
->
-  {urls.map(url =>
+        prefersInApp: false,
+      });
+    },
+  }}>
+  {urls.map((url) => (
     <Link url={url}>{url}</Link>
-  )}
+  ))}
 </Group>
 ```
 
@@ -52832,7 +52820,7 @@ class OpenURLActionResult {
 
 ***
 
-# 使用总结
+## 使用总结
 
 | environment key | 类型                             | 作用范围      | 使用场景         |
 | --------------- | ------------------------------ | --------- | ------------ |
@@ -52841,7 +52829,7 @@ class OpenURLActionResult {
 
 ***
 
-# 完整示例：同时使用 editMode 与 openURL
+## 完整示例：同时使用 editMode 与 openURL
 
 ```tsx
 const editMode = useObservable(() => EditMode.inactive())
@@ -52877,7 +52865,7 @@ const editMode = useObservable(() => EditMode.inactive())
 
 ***
 
-# 注意事项
+## 注意事项
 
 1. `environments` 为局部作用域，仅影响其子视图。
 2. `editMode` 必须是 `Observable<EditMode>` 才能触发界面更新。
@@ -58803,26 +58791,20 @@ url: /zh/doc/View Modifiers/toggleStyle.md
 url: /zh/doc/View Modifiers/toolbar/Use with Toolbar Component.md
 ---
 
+# 使用 Toolbar 组件
+
 Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `ToolBarProps` 对象，也支持使用与 SwiftUI 结构一致的 `<Toolbar>`、`<ToolbarItem>`、`<ToolbarItemGroup>`、`<ToolbarSpacer>`、`<DefaultToolbarItem>` 等组件，构建更灵活、更强大的导航栏和工具栏布局。
 
 这些组件能够提供更精细的控制，允许开发者像 SwiftUI 一样以声明式方式编排工具栏内容，并为复杂布局提供更高可读性和可维护性。
 
 ***
 
-# 基本概念
+## 基本概念
 
 工具栏组件始终通过视图的 `toolbar` 属性使用：
 
 ```tsx
-<List
-  toolbar={
-    <Toolbar>
-      {/* 工具栏项 */}
-    </Toolbar>
-  }
->
-  {/* 主内容 */}
-</List>
+<List toolbar={<Toolbar>{/* 工具栏项 */}</Toolbar>}>{/* 主内容 */}</List>
 ```
 
 `toolbar` 可以接受：
@@ -58834,7 +58816,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# Toolbar
+## Toolbar
 
 `Toolbar` 组件是工具栏的容器，用于包含多个工具栏项。它本身不定义位置，内部的 `ToolbarItem` 或 `ToolbarItemGroup` 决定实际布局。
 
@@ -58851,15 +58833,14 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
         <Button title="完成" action={() => handleDone()} />
       </ToolbarItem>
     </Toolbar>
-  }
->
+  }>
   {/* 主内容 */}
 </List>
 ```
 
 ***
 
-# ToolbarItem
+## ToolbarItem
 
 `ToolbarItem` 表示放置在工具栏指定位置的单个项目。
 
@@ -58882,7 +58863,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# ToolbarItemGroup
+## ToolbarItemGroup
 
 `ToolbarItemGroup` 用于在同一位置放置多个工具栏项目，所有子项目将作为一组呈现。
 
@@ -58906,7 +58887,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# ToolbarSpacer
+## ToolbarSpacer
 
 `ToolbarSpacer` 用于在工具栏项之间添加空白区域，适合需要自定义布局的场景。
 
@@ -58938,7 +58919,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# DefaultToolbarItem
+## DefaultToolbarItem
 
 ```ts
 type ToolbarDefaultItemKind = "sidebarToggle" | "search" | "title";
@@ -58970,14 +58951,13 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ***
 
-# 综合示例：使用 Toolbar 构建复杂工具栏
+## 综合示例：使用 Toolbar 构建复杂工具栏
 
 ```tsx
 <NavigationStack>
   <List
     toolbar={
       <Toolbar>
-
         {/* 左侧导航按钮 */}
         <ToolbarItem placement="navigation">
           <Button title="返回" action={Navigation.useDismiss()} />
@@ -58999,10 +58979,8 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
         <ToolbarItem placement="bottomBar">
           <Button title="帮助" action={showHelp} />
         </ToolbarItem>
-
       </Toolbar>
-    }
-  >
+    }>
     {/* 主内容 */}
   </List>
 </NavigationStack>
@@ -59012,7 +58990,7 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ***
 
-# 与 ToolBarProps 的关系
+## 与 ToolBarProps 的关系
 
 在 API 层面：
 
@@ -59025,7 +59003,7 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ***
 
-# 总结
+## 总结
 
 Toolbar 组件提供了高度灵活的工具栏布局能力，包括：
 
@@ -65529,91 +65507,91 @@ url: /zh/doc/Views/Displaying text/index_example.md
 # 示例
 
 ```tsx
-import { Label, List, Markdown, Navigation, NavigationStack, Script, Section, Text, VStack } from "scripting"
+import {
+  Label,
+  List,
+  Markdown,
+  Navigation,
+  NavigationStack,
+  Script,
+  Section,
+  Text,
+  VStack,
+} from "scripting";
 
 function View() {
-  return <NavigationStack>
-    <List>
-      <Section title={"Text"}>
-        <VStack>
-          <Text
-            font={"title"}
-            foregroundStyle={"systemRed"}
-          >
-            Title
-          </Text>
-          <Text
-            font={"body"}
-            foregroundStyle={"systemBlue"}
-          >Hello Scripting!</Text>
-          <Text
-            foregroundStyle={"systemGreen"}
-            font={"footnote"}
-            italic
-          >
-            This is a footnote.
-          </Text>
-        </VStack>
-      </Section>
+  return (
+    <NavigationStack>
+      <List>
+        <Section title={"Text"}>
+          <VStack>
+            <Text font={"title"} foregroundStyle={"systemRed"}>
+              Title
+            </Text>
+            <Text font={"body"} foregroundStyle={"systemBlue"}>
+              Hello Scripting!
+            </Text>
+            <Text foregroundStyle={"systemGreen"} font={"footnote"} italic>
+              This is a footnote.
+            </Text>
+          </VStack>
+        </Section>
 
-      <Section title="AttributedString">
-        <Text
-          attributedString={`This is regular text.
+        <Section title="AttributedString">
+          <Text
+            attributedString={`This is regular text.
 * This is **bold** text, this is *italic* text, and this is ***bold, italic*** text.
 ~~A strikethrough example~~
 \`Monospaced works too\`
 Visit Apple: [click here](https://apple.com)`}
-        />
-      </Section>
+          />
+        </Section>
 
-      <Section title={"Label"}>
-        <Label
-          title={"Hello world"}
-          systemImage={"globe"}
-        />
-      </Section>
+        <Section title={"Label"}>
+          <Label title={"Hello world"} systemImage={"globe"} />
+        </Section>
 
-      <Section title={"Markdown"}>
-        <Markdown
-          content={`
-# Scripting App
+        <Section title={"Markdown"}>
+          <Markdown
+            content={`
+## Scripting App
 Run your *ideas* quickly **with** scripts.
       `}
-        />
-      </Section>
+          />
+        </Section>
 
-      <Section title={"RichText"}>
-        <Text
-          font={16}
-          styledText={{
-            content: [
-              "I agree the ",
-              {
-                content: "Terms",
-                foregroundColor: "systemOrange",
-                underlineColor: "systemBlue",
-                bold: true,
-                onTapGesture: () => {
-                  Dialog.alert({
-                    message: "OK!"
-                  })
-                }
-              }
-            ]
-          }}
-        />
-      </Section>
-
-    </List>
-  </NavigationStack>
+        <Section title={"RichText"}>
+          <Text
+            font={16}
+            styledText={{
+              content: [
+                "I agree the ",
+                {
+                  content: "Terms",
+                  foregroundColor: "systemOrange",
+                  underlineColor: "systemBlue",
+                  bold: true,
+                  onTapGesture: () => {
+                    Dialog.alert({
+                      message: "OK!",
+                    });
+                  },
+                },
+              ],
+            }}
+          />
+        </Section>
+      </List>
+    </NavigationStack>
+  );
 }
 
 async function run() {
-  await Navigation.present(<View />)
-  Script.exit()
+  await Navigation.present(<View />);
+  Script.exit();
 }
 
-run()
+run();
 ```
 
 
@@ -65739,6 +65717,8 @@ function MyEditor() {
 url: /zh/doc/Views/EnvironmentValuesReader.md
 ---
 
+# EnvironmentValuesReader
+
 `EnvironmentValuesReader` 是 Scripting 提供的一个组件，用于读取 SwiftUI 风格的环境值（Environment Values）。
 它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。
 
@@ -65747,24 +65727,24 @@ url: /zh/doc/Views/EnvironmentValuesReader.md
 
 ***
 
-# EnvironmentValues 类型
+## EnvironmentValues 类型
 
 ```ts
 type EnvironmentValues = {
-    colorScheme: ColorScheme;
-    colorSchemeContrast: ColorSchemeContrast;
-    displayScale: number;
-    horizontalSizeClass: UserInterfaceSizeClass | null;
-    verticalSizeClass: UserInterfaceSizeClass | null;
-    dismiss: () => void;
-    dismissSearch: () => void;
-    editMode: EditMode | null;
-    widgetRenderingMode: WidgetRenderingMode;
-    showsWidgetContainerBackground: boolean;
-    isSearching: boolean;
-    isPresented: boolean;
-    activityFamily: "small" | "medium";
-    tabViewBottomAccessoryPlacement: 'expanded' | 'inline';
+  colorScheme: ColorScheme;
+  colorSchemeContrast: ColorSchemeContrast;
+  displayScale: number;
+  horizontalSizeClass: UserInterfaceSizeClass | null;
+  verticalSizeClass: UserInterfaceSizeClass | null;
+  dismiss: () => void;
+  dismissSearch: () => void;
+  editMode: EditMode | null;
+  widgetRenderingMode: WidgetRenderingMode;
+  showsWidgetContainerBackground: boolean;
+  isSearching: boolean;
+  isPresented: boolean;
+  activityFamily: "small" | "medium";
+  tabViewBottomAccessoryPlacement: "expanded" | "inline";
 };
 ```
 
@@ -65871,24 +65851,24 @@ type EnvironmentValues = {
 类型：`'expanded' | 'inline'`
 说明：当前 TabView 的底部辅助栏的显示方式，同 SwiftUI 中的 `tabViewBottomAccessoryPlacement`。
 
-# EnvironmentValuesReader 组件
+## EnvironmentValuesReader 组件
 
 ```ts
 type EnvironmentValuesReaderProps = {
-    /**
-     * The keys to read from the environment values.
-     */
-    keys: Array<keyof EnvironmentValues>;
-    /**
-     * The callback function to render the children, it will be called with the environment values.
-     */
-    children: (values: EnvironmentValues) => VirtualNode;
+  /**
+   * The keys to read from the environment values.
+   */
+  keys: Array<keyof EnvironmentValues>;
+  /**
+   * The callback function to render the children, it will be called with the environment values.
+   */
+  children: (values: EnvironmentValues) => VirtualNode;
 };
 ```
 
 ***
 
-# Props 说明
+## Props 说明
 
 ## keys
 
@@ -65907,7 +65887,7 @@ type EnvironmentValuesReaderProps = {
 
 ***
 
-# 组件定义
+## 组件定义
 
 ```ts
 declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReaderProps>;
@@ -65915,24 +65895,26 @@ declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReader
 
 ***
 
-# 使用示例
+## 使用示例
 
 ## 示例：读取 colorScheme 和 displayScale
 
 ```tsx
-import { EnvironmentValuesReader, Text, VStack } from "scripting"
+import { EnvironmentValuesReader, Text, VStack } from "scripting";
 
 function View() {
-  return <EnvironmentValuesReader
-    keys={["colorScheme", "displayScale"]}
-  >
-    {(env) => {
-      return <VStack>
-        <Text>Color Scheme: {env.colorScheme}</Text>
-        <Text>Scale: {env.displayScale}</Text>
-      </VStack>
-    }}
-  </EnvironmentValuesReader>
+  return (
+    <EnvironmentValuesReader keys={["colorScheme", "displayScale"]}>
+      {(env) => {
+        return (
+          <VStack>
+            <Text>Color Scheme: {env.colorScheme}</Text>
+            <Text>Scale: {env.displayScale}</Text>
+          </VStack>
+        );
+      }}
+    </EnvironmentValuesReader>
+  );
 }
 ```
 
@@ -65943,10 +65925,7 @@ function View() {
 ```tsx
 <EnvironmentValuesReader keys={["dismiss"]}>
   {(env) => {
-    return <Button
-      title="Close"
-      action={() => env.dismiss()}
-    />
+    return <Button title="Close" action={() => env.dismiss()} />;
   }}
 </EnvironmentValuesReader>
 ```
@@ -65958,15 +65937,15 @@ function View() {
 ```tsx
 <EnvironmentValuesReader keys={["horizontalSizeClass"]}>
   {(env) => {
-    const compact = env.horizontalSizeClass === "compact"
-    return compact ? <Text>Compact Layout</Text> : <Text>Regular Layout</Text>
+    const compact = env.horizontalSizeClass === "compact";
+    return compact ? <Text>Compact Layout</Text> : <Text>Regular Layout</Text>;
   }}
 </EnvironmentValuesReader>
 ```
 
 ***
 
-# 使用注意事项
+## 使用注意事项
 
 1. **必须显式指定 keys**，否则不会读取任何 environment 值。
 2. 每次所指定的 environment key 发生变化时，`children()` 会重新渲染。
@@ -65981,6 +65960,8 @@ function View() {
 url: /zh/doc/Views/GeometryReader.md
 ---
 
+# GeometryReader
+
 `GeometryReader` 是 Scripting 中与 SwiftUI 等效的几何布局读取组件。
 它能够在视图构建阶段提供当前容器的尺寸、边距、安全区域和角落内边距等信息，使开发者可以根据环境动态布局内容。
 
@@ -65988,7 +65969,7 @@ url: /zh/doc/Views/GeometryReader.md
 
 ***
 
-# GeometryProxy
+## GeometryProxy
 
 当 `GeometryReader` 构建其子内容时，会将一个 `GeometryProxy` 实例传递给 `children` 回调。开发者可以使用此对象访问与当前容器相关的布局信息。
 
@@ -65996,26 +65977,26 @@ url: /zh/doc/Views/GeometryReader.md
 interface GeometryProxy {
   readonly size: Size;
   readonly safeAreaInsets: {
-      leading: number;
-      top: number;
-      trailing: number;
-      bottom: number;
+    leading: number;
+    top: number;
+    trailing: number;
+    bottom: number;
   };
   /**
    * Requires iOS 26.0+.
    */
   readonly containerCornerInsets: {
-      bottomLeading: Size;
-      bottomTrailing: Size;
-      topLeading: Size;
-      topTrailing: Size;
+    bottomLeading: Size;
+    bottomTrailing: Size;
+    topLeading: Size;
+    topTrailing: Size;
   } | null;
 }
 ```
 
 ***
 
-# GeometryProxy 属性说明
+## GeometryProxy 属性说明
 
 ## 1. size
 
@@ -66029,16 +66010,16 @@ readonly size: Size
 
 ```ts
 type Size = {
-  width: number
-  height: number
-}
+  width: number;
+  height: number;
+};
 ```
 
 ### 示例
 
 ```tsx
-proxy.size.width
-proxy.size.height
+proxy.size.width;
+proxy.size.height;
 ```
 
 用于动态计算子视图布局，例如宽高比、自适应排版等。
@@ -66089,7 +66070,7 @@ readonly containerCornerInsets: {
 
 ***
 
-# GeometryReader
+## GeometryReader
 
 ```ts
 type GeometryReaderProps = {
@@ -66106,7 +66087,7 @@ declare const GeometryReader: FunctionComponent<GeometryReaderProps>;
 
 ***
 
-# 工作机制
+## 工作机制
 
 1. GeometryReader 占据父布局中的位置，并在布局阶段获取当前容器的尺寸与安全区域信息。
 2. 将 `GeometryProxy` 注入给 `children(proxy)` 回调。
@@ -66116,74 +66097,75 @@ declare const GeometryReader: FunctionComponent<GeometryReaderProps>;
 
 ***
 
-# 示例：居中布局
+## 示例：居中布局
 
 ```tsx
-import { GeometryReader, Text, VStack } from "scripting"
+import { GeometryReader, Text, VStack } from "scripting";
 
 function View() {
-  return <GeometryReader>
-    {(proxy) => {
-      return <VStack
-        frame={{
-          width: proxy.size.width,
-          height: proxy.size.height,
-          alignment: "center"
-        }}
-      >
-        <Text>Hello Geometry</Text>
-        <Text>
-          width: {proxy.size.width}
-        </Text>
-        <Text>
-          height: {proxy.size.height}
-        </Text>
-      </VStack>
-    }}
-  </GeometryReader>
+  return (
+    <GeometryReader>
+      {(proxy) => {
+        return (
+          <VStack
+            frame={{
+              width: proxy.size.width,
+              height: proxy.size.height,
+              alignment: "center",
+            }}>
+            <Text>Hello Geometry</Text>
+            <Text>width: {proxy.size.width}</Text>
+            <Text>height: {proxy.size.height}</Text>
+          </VStack>
+        );
+      }}
+    </GeometryReader>
+  );
 }
 ```
 
 ***
 
-# 示例：根据安全区域调整布局
+## 示例：根据安全区域调整布局
 
 ```tsx
 <GeometryReader>
   {(proxy) => {
-    return <VStack
-      padding={{
-        top: proxy.safeAreaInsets.top,
-        bottom: proxy.safeAreaInsets.bottom
-      }}
-    >
-      <Text>Content inside safe area.</Text>
-    </VStack>
+    return (
+      <VStack
+        padding={{
+          top: proxy.safeAreaInsets.top,
+          bottom: proxy.safeAreaInsets.bottom,
+        }}>
+        <Text>Content inside safe area.</Text>
+      </VStack>
+    );
   }}
 </GeometryReader>
 ```
 
 ***
 
-# 示例（iOS 26+）：读取 containerCornerInsets
+## 示例（iOS 26+）：读取 containerCornerInsets
 
 ```tsx
 <GeometryReader>
   {(proxy) => {
-    const corners = proxy.containerCornerInsets
-    return <Text>
-      {corners == null
-        ? "Corner insets not available"
-        : `Top Leading Corner: ${corners.topLeading.width}, ${corners.topLeading.height}`
-      }
-    </Text>
+    const corners = proxy.containerCornerInsets;
+    return (
+      <Text>
+        {corners == null
+          ? "Corner insets not available"
+          : `Top Leading Corner: ${corners.topLeading.width}, ${corners.topLeading.height}`}
+      </Text>
+    );
   }}
 </GeometryReader>
 ```
 
 ***
 
-# 使用建议
+## 使用建议
 
 - 在需要响应容器尺寸时使用 GeometryReader，例如图片缩放、动态布局、等比布局。
 - 避免将大量复杂布局放入 GeometryReader 内，可能影响性能（同 SwiftUI）。
@@ -71096,7 +71078,7 @@ url: /zh/doc/Views/Markdown.md
 ## 导入方式
 
 ```ts
-import { Markdown } from 'scripting'
+import { Markdown } from "scripting";
 ```
 
 ***
@@ -71149,10 +71131,7 @@ import { Markdown } from 'scripting'
 - `'wwdc18'`
 
 ````tsx
-<Markdown
-  content="```js\nconsole.log('Hello')\n```"
-  highlighterTheme="wwdc18"
-/>
+<Markdown content="```js\nconsole.log('Hello')\n```" highlighterTheme="wwdc18" />
 ````
 
 ***
@@ -71189,7 +71168,7 @@ import { Markdown } from 'scripting'
 ```tsx
 <Markdown
   content={`
-# 欢迎使用 Scripting
+## 欢迎使用 Scripting
 
 以下是一个简单的示例：
 
@@ -73435,6 +73414,8 @@ run()
 url: /zh/doc/Views/Navigation/TabView/TabView.md
 ---
 
+# TabView
+
 Scripting 提供了与最新 iOS TabView 体系一致的 API：
 通过 `TabView`、`Tab`、`TabSection` 组织界面结构，使应用能够在 iOS 18+ 环境下完整支持多标签视图、侧边栏标签、可定制布局等。
 
@@ -73442,7 +73423,7 @@ Scripting 提供了与最新 iOS TabView 体系一致的 API：
 
 ***
 
-# 一、基础结构：TabView + Tab
+## 一、基础结构：TabView + Tab
 
 在最基本的形式中，`TabView` 作为容器，内部包含多个 `Tab`。
 每个 `Tab` 定义：
@@ -73457,36 +73438,23 @@ Scripting 提供了与最新 iOS TabView 体系一致的 API：
 
 ```tsx
 function RootView() {
-  const selection = useObservable<number>(0)
+  const selection = useObservable<number>(0);
 
   return (
     <TabView selection={selection}>
-      <Tab
-        title="首页"
-        systemImage="house.fill"
-        value={0}
-      >
+      <Tab title="首页" systemImage="house.fill" value={0}>
         <HomeView />
       </Tab>
 
-      <Tab
-        title="搜索"
-        systemImage="magnifyingglass"
-        value={1}
-        role="search"
-      >
+      <Tab title="搜索" systemImage="magnifyingglass" value={1} role="search">
         <SearchView />
       </Tab>
 
-      <Tab
-        title="设置"
-        systemImage="gearshape.fill"
-        value={2}
-      >
+      <Tab title="设置" systemImage="gearshape.fill" value={2}>
         <SettingsView />
       </Tab>
     </TabView>
-  )
+  );
 }
 ```
 
@@ -73498,7 +73466,7 @@ function RootView() {
 
 ***
 
-# 二、使用 TabSection 组织分组标签
+## 二、使用 TabSection 组织分组标签
 
 当 Tab 数量较多、需要按功能分类、需要在侧边栏中显示复杂结构时，可以使用 `TabSection`。
 
@@ -73552,8 +73520,7 @@ TabView
         </Text>
       </VStack>
     </HStack>
-  }
->
+  }>
   <Tab title="项目 A" systemImage="doc.fill" value="projectA">
     <ProjectAView />
   </Tab>
@@ -73562,7 +73529,7 @@ TabView
 
 ***
 
-# 三、TabSection 的高级能力：布局、操作区、拖拽与可见性
+## 三、TabSection 的高级能力：布局、操作区、拖拽与可见性
 
 `TabSection` 提供了丰富的分组级配置，让 Tab 分组的呈现方式更加灵活。
 
@@ -73591,10 +73558,7 @@ TabView
 ```tsx
 <TabSection
   title="列表"
-  sectionActions={
-    <Button title="添加" systemImage="plus" action={addItem} />
-  }
->
+  sectionActions={<Button title="添加" systemImage="plus" action={addItem} />}>
   ...
 </TabSection>
 ```
@@ -73624,15 +73588,14 @@ TabView
   customizationID="file-section"
   customizationBehavior="reorderable"
   draggable="file-section"
-  dropDestination={items => handleDrop(items)}
->
+  dropDestination={(items) => handleDrop(items)}>
   ...
 </TabSection>
 ```
 
 ***
 
-# 四、TabView 级别的高级配置
+## 四、TabView 级别的高级配置
 
 TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26）。
 
@@ -73662,10 +73625,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 示例：
 
 ```tsx
-<TabView
-  selection={selection}
-  tabBarMinimizeBehavior="onScrollDown"
->
+<TabView selection={selection} tabBarMinimizeBehavior="onScrollDown">
   ...
 </TabView>
 ```
@@ -73685,8 +73645,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
       <Spacer />
       <Button title="知道了" action={dismiss} />
     </HStack>
-  }
->
+  }>
   ...
 </TabView>
 ```
@@ -73703,10 +73662,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 与 `role="search"` 搭配使用：
 
 ```tsx
-<TabView
-  selection={selection}
-  tabViewSearchActivation="searchTabSelection"
->
+<TabView selection={selection} tabViewSearchActivation="searchTabSelection">
   ...
 </TabView>
 ```
@@ -73728,15 +73684,14 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
   selection={selection}
   tabViewSidebarHeader={<UserHeader />}
   tabViewSidebarFooter={<SettingsButton />}
-  tabViewSidebarBottomBar={<UpgradeButton />}
->
+  tabViewSidebarBottomBar={<UpgradeButton />}>
   ...
 </TabView>
 ```
 
 ***
 
-# 五、TabViewCustomization：标签页可定制化体系（重点补充）
+## 五、TabViewCustomization：标签页可定制化体系（重点补充）
 
 `TabViewCustomization` 是一个可序列化的状态对象，用于存储和恢复用户对 Tab 布局的自定义行为，包括：
 
@@ -73749,7 +73704,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 它通常放在 TabView 根视图中，通过：
 
 ```tsx
-tabViewCustomization={customizationState}
+tabViewCustomization = { customizationState };
 ```
 
 来注入。
@@ -73759,32 +73714,32 @@ tabViewCustomization={customizationState}
 创建方式通常是：
 
 ```tsx
-const customization = useObservable<TabViewCustomization >(() => {
-  const data = Storage.get('tab_customization')
+const customization = useObservable<TabViewCustomization>(() => {
+  const data = Storage.get("tab_customization");
   if (data) {
-    return TabViewCustomization.fromData(data) ?? new TabViewCustomization()
+    return TabViewCustomization.fromData(data) ?? new TabViewCustomization();
   }
-  return new TabViewCustomization()
-})
+  return new TabViewCustomization();
+});
 
 useEffect(() => {
   const listener = (newValue: TabViewCustomization) => {
-    const data = newValue.toData()
+    const data = newValue.toData();
     if (data) {
-      Storage.set('tab_customization', data)
+      Storage.set("tab_customization", data);
     }
-  }
-  customization.subscribe(listener)
+  };
+  customization.subscribe(listener);
   return () => {
-    customization.unsubscribe(listener)
-  }
-}, [])
+    customization.unsubscribe(listener);
+  };
+}, []);
 ```
 
 如需创建一个新的空自定义对象，可使用：
 
 ```tsx
-const customizationState = useObservable(() => new TabViewCustomization())
+const customizationState = useObservable(() => new TabViewCustomization());
 ```
 
 ## 2. 保存自定义内容
@@ -73792,8 +73747,8 @@ const customizationState = useObservable(() => new TabViewCustomization())
 你可以将用户调整后的 Tab 布局序列化保存：
 
 ```tsx
-const data = customization.value?.toData()
-Storage.set('tab_customization', data)
+const data = customization.value?.toData();
+Storage.set("tab_customization", data);
 ```
 
 `toData()` 会将内部状态转换为可存储的 `Data` 对象。
@@ -73807,10 +73762,10 @@ getSection(id: string): TabViewCustomizationSection | null
 `TabSection` 通常带有 `customizationID`，这样就可以获取特定分组并操作它：
 
 ```tsx
-const section = customization.value?.getSection('file-section')
+const section = customization.value?.getSection("file-section");
 
-section?.tabOrder        // 一个包含 tab ID 顺序的数组，或 null
-section?.resetTabOrder() // 重置排序
+section?.tabOrder; // 一个包含 tab ID 顺序的数组，或 null
+section?.resetTabOrder(); // 重置排序
 ```
 
 场景示例：
@@ -73828,10 +73783,10 @@ getTab(id: string): TabViewCustomizationTab | null
 可通过 Tab 的 `customizationID` 获取并调整其可见性：
 
 ```tsx
-const tab = customization.value?.getTab('important-tab')
+const tab = customization.value?.getTab("important-tab");
 
-tab?.tabBarVisibility         // Visibility 类型
-tab.sidebarVisibility = 'hidden'
+tab?.tabBarVisibility; // Visibility 类型
+tab.sidebarVisibility = "hidden";
 ```
 
 适用场景：
@@ -73858,15 +73813,15 @@ resetVisibility(): void
 <Button
   title="恢复默认"
   action={() => {
-    customization.value?.resetSectionOrder()
-    customization.value?.resetVisibility()
+    customization.value?.resetSectionOrder();
+    customization.value?.resetVisibility();
   }}
 />
 ```
 
 ***
 
-# 六、与旧的 tabItem 写法的关系
+## 六、与旧的 tabItem 写法的关系
 
 此文档采用全新的结构化写法：
 
@@ -74654,6 +74609,8 @@ run()
 url: /zh/doc/Views/ScrollViewReader.md
 ---
 
+# ScrollViewReader
+
 **ScrollViewReader** 组件，用于在脚本中获得对可滚动内容的编程化控制能力，使开发者能够在运行时滚动至任意视图位置，包括列表项、文本节点等。
 
 ScrollViewReader 与 SwiftUI 的行为保持一致：
@@ -74661,13 +74618,13 @@ ScrollViewReader 与 SwiftUI 的行为保持一致：
 
 ***
 
-# ScrollViewProxy
+## ScrollViewProxy
 
 `ScrollViewProxy` 是提供滚动控制的代理对象，由 `ScrollViewReader` 在渲染期间自动注入。
 
 ```ts
 interface ScrollViewProxy {
-    scrollTo: (id: string | number, anchor?: KeywordPoint | Point) => void;
+  scrollTo: (id: string | number, anchor?: KeywordPoint | Point) => void;
 }
 ```
 
@@ -74680,10 +74637,10 @@ interface ScrollViewProxy {
 
 #### 参数说明
 
-| 参数     | 类型             | 必须       | 说明 |                                         |
-| ------ | -------------- | -------- | -- | --------------------------------------- |
-| id     | `string`       | `number` | 是  | 要滚动到的目标元素的唯一标识符。通常对应 `<View key="xxx">` |
-| anchor | `KeywordPoint` | `Point`  | 否  | 滚动目标在可视区域中的对齐方式。可为字符串关键字或坐标点。           |
+\| 参数   | 类型           | 必须     | 说明 |
+\| ------ | -------------- | -------- | ---- | ----------------------------------------------------------- |
+\| id     | `string`       | `number` | 是   | 要滚动到的目标元素的唯一标识符。通常对应 `<View key="xxx">` |
+\| anchor | `KeywordPoint` | `Point`  | 否   | 滚动目标在可视区域中的对齐方式。可为字符串关键字或坐标点。  |
 
 ### KeywordPoint 类型
 
@@ -74699,22 +74656,22 @@ interface ScrollViewProxy {
 
 ```ts
 type Point = {
-  x: number
-  y: number
-}
+  x: number;
+  y: number;
+};
 ```
 
 ***
 
-# ScrollViewReader
+## ScrollViewReader
 
 ScrollViewReader 用于包裹可滚动内容，并提供一个 `scrollViewProxy` 以控制内部滚动。
 
 ```ts
 type ScrollViewReaderProps = {
-    children: (scrollViewProxy: ScrollViewProxy) => VirtualNode
+  children: (scrollViewProxy: ScrollViewProxy) => VirtualNode;
 };
-declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>
+declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>;
 ```
 
 ## Props 说明
@@ -74725,7 +74682,7 @@ declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>
 
 ***
 
-# 使用说明
+## 使用说明
 
 1. **ScrollViewReader 必须包裹 List、ScrollView 等可滚动组件**。
 2. **回调中的 proxy 只在视图构建阶段提供一次**，开发者可利用 `useRef` 保存。
@@ -74735,7 +74692,7 @@ declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>
 
 ***
 
-# 基础示例
+## 基础示例
 
 下面是一个完整的使用示例，包括滚动到指定元素以及使用动画的方式。
 
@@ -74752,73 +74709,68 @@ import {
   VStack,
   useRef,
   ScrollViewProxy,
-  withAnimation
-} from "scripting"
+  withAnimation,
+} from "scripting";
 
 function Item({ index }: { index: number }) {
-  return <Text>
-    Item - {index}
-  </Text>
+  return <Text>Item - {index}</Text>;
 }
 
 function View() {
-  const dismiss = Navigation.useDismiss()
-  const proxyRef = useRef<ScrollViewProxy>()
+  const dismiss = Navigation.useDismiss();
+  const proxyRef = useRef<ScrollViewProxy>();
 
-  return <NavigationStack>
-    <VStack navigationTitle="ScrollViewReader">
+  return (
+    <NavigationStack>
+      <VStack navigationTitle="ScrollViewReader">
+        <ScrollViewReader>
+          {(proxy) => {
+            // 记录 proxy 实例，供按钮点击时使用
+            proxyRef.current = proxy;
 
-      <ScrollViewReader>
-        {(proxy) => {
-          // 记录 proxy 实例，供按钮点击时使用
-          proxyRef.current = proxy
+            return (
+              <List>
+                {new Array(100).fill(0).map((_, index) => (
+                  <Item key={index} index={index} />
+                ))}
+                <Text key="bottom">Bottom</Text>
+              </List>
+            );
+          }}
+        </ScrollViewReader>
 
-          return <List>
-            {new Array(100).fill(0).map((_, index) =>
-              <Item
-                key={index}
-                index={index}
-              />
-            )}
-            <Text key="bottom">
-              Bottom
-            </Text>
-          </List>
-        }}
-      </ScrollViewReader>
+        <Button
+          title="跳转"
+          action={() => {
+            if (proxyRef.current == null) {
+              console.log("no proxy found");
+              return;
+            }
 
-      <Button
-        title="跳转"
-        action={() => {
-          if (proxyRef.current == null) {
-            console.log("no proxy found")
-            return
-          }
+            const index = (Math.random() * 100) | 0;
 
-          const index = Math.random() * 100 | 0
-
-          withAnimation(() => {
-            proxyRef.current?.scrollTo(index, "bottom")
-            // proxyRef.current?.scrollTo("bottom", "bottom")
-          })
-        }}
-      />
-
-    </VStack>
-  </NavigationStack>
+            withAnimation(() => {
+              proxyRef.current?.scrollTo(index, "bottom");
+              // proxyRef.current?.scrollTo("bottom", "bottom")
+            });
+          }}
+        />
+      </VStack>
+    </NavigationStack>
+  );
 }
 
 async function run() {
-  await Navigation.present(<View />)
-  Script.exit()
+  await Navigation.present(<View />);
+  Script.exit();
 }
 
-run()
+run();
 ```
 
 ***
 
-# 关于 ID（key）匹配的说明
+## 关于 ID（key）匹配的说明
 
 `scrollTo(id)` 依赖于内部节点的 `key` 属性。
 以下配置都可作为滚动目标：
@@ -74831,21 +74783,21 @@ run()
 
 ***
 
-# 动画支持
+## 动画支持
 
 ScrollViewReader 支持结合 `withAnimation` 来进行平滑滚动。例如：
 
 ```tsx
 withAnimation(() => {
-  proxy.scrollTo("target", "center")
-})
+  proxy.scrollTo("target", "center");
+});
 ```
 
 在动画块中触发滚动，将获得平滑过渡。
 
 ***
 
-# 注意事项
+## 注意事项
 
 1. **必须在 ScrollViewReader 回调中记录 proxy**，否则外部无法访问。
 2. **必须确保目标元素存在并有唯一 id**，否则无法滚到目标位置。
@@ -76532,6 +76484,8 @@ run()
 url: /zh/doc/Views/View groupings/ForEach/index.md
 ---
 
+# ForEach
+
 `ForEach` 是 Scripting 中用于渲染可变数量子视图的组件，用于构建动态列表、可编辑列表，以及支持系统级的删除与移动行为。其设计参考 SwiftUI 的 `ForEach`，并与 Scripting 的 `Observable` 状态管理系统深度集成。
 
 组件支持两种模式：
@@ -76541,7 +76495,7 @@ url: /zh/doc/Views/View groupings/ForEach/index.md
 
 ***
 
-# 1. 类型定义
+## 1. 类型定义
 
 ## ForEachDeprecatedProps（已不推荐）
 
@@ -76577,7 +76531,7 @@ type ForEachDeprecatedProps = {
 
 ***
 
-# 2. ForEachProps（推荐使用）
+## 2. ForEachProps（推荐使用）
 
 ```ts
 type ForEachProps<T extends { id: string }> =
@@ -76623,7 +76577,7 @@ type ForEachProps<T extends { id: string }> =
 
 ***
 
-# 3. ForEachComponent 接口
+## 3. ForEachComponent 接口
 
 ```ts
 interface ForEachComponent {
@@ -76635,7 +76589,7 @@ interface ForEachComponent {
 
 ***
 
-# 4. 系统级删除交互示例
+## 4. 系统级删除交互示例
 
 当 `ForEach` 放在 `List` 内部，并使用 `data + builder` 模式时，系统会自动启用 swipe-to-delete，只需正确提供 `id` 和编辑能力。
 
@@ -76647,7 +76601,7 @@ function View() {
     ["Apple", "Bananer", "Papaya", "Mango"].map((name, index) => ({
       id: index.toString(),
       name,
-    }))
+    })),
   );
 
   return (
@@ -76666,7 +76620,7 @@ function View() {
 
 ***
 
-# 5. 使用建议与最佳实践
+## 5. 使用建议与最佳实践
 
 ### 1. 推荐使用 `data: Observable<T[]>` 方案
 

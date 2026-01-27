@@ -1,9 +1,11 @@
+# 日历事件
+
 `CalendarEvent` API 用于在 iOS 日历中创建、读取、编辑与管理事件。
 开发者可以操作事件的标题、时间、地点、参与者、重复规则、提醒（EventAlarm）、事件可用性以及地理位置信息，并且可以使用系统提供的创建/编辑界面。
 
 ***
 
-# 一、类型说明
+## 一、类型说明
 
 ## EventParticipant
 
@@ -78,7 +80,7 @@
 
 ***
 
-# 二、EventAlarm（事件提醒）
+## 二、EventAlarm（事件提醒）
 
 CalendarEvent 支持添加多个 `EventAlarm`，包括：
 
@@ -90,7 +92,7 @@ CalendarEvent 支持添加多个 `EventAlarm`，包括：
 
 ***
 
-# 三、CalendarEvent 类
+## 三、CalendarEvent 类
 
 ## 构造函数
 
@@ -102,7 +104,7 @@ new(): CalendarEvent
 
 ***
 
-# 四、属性说明
+## 四、属性说明
 
 ## 基本信息
 
@@ -235,7 +237,7 @@ new(): CalendarEvent
 
 ***
 
-# 五、实例方法
+## 五、实例方法
 
 ## 1. 提醒管理
 
@@ -286,7 +288,7 @@ new(): CalendarEvent
 
 ***
 
-# 六、静态方法
+## 六、静态方法
 
 ## `getAll(startDate: Date, endDate: Date, calendars?: Calendar[]): Promise<CalendarEvent[]>`
 
@@ -306,20 +308,20 @@ new(): CalendarEvent
 
 ***
 
-# 七、使用示例
+## 七、使用示例
 
 ## 1. 创建并保存事件
 
 ```ts
-const defaultCalendar = await Calendar.defaultForEvents()
-const event = new CalendarEvent()
-event.title = "团队会议"
-event.calendar = defaultCalendar!
-event.startDate = new Date("2024-01-15T09:00:00")
-event.endDate = new Date("2024-01-15T10:00:00")
-event.location = "会议室"
+const defaultCalendar = await Calendar.defaultForEvents();
+const event = new CalendarEvent();
+event.title = "团队会议";
+event.calendar = defaultCalendar!;
+event.startDate = new Date("2024-01-15T09:00:00");
+event.endDate = new Date("2024-01-15T10:00:00");
+event.location = "会议室";
 
-await event.save()
+await event.save();
 ```
 
 ***
@@ -332,10 +334,10 @@ const rule = RecurrenceRule.create({
   interval: 1,
   daysOfTheWeek: ["monday", "wednesday", "friday"],
   end: RecurrenceEnd.fromDate(new Date("2024-12-31")),
-})
+});
 
-event.addRecurrenceRule(rule)
-await event.save()
+event.addRecurrenceRule(rule);
+await event.save();
 ```
 
 ***
@@ -343,9 +345,9 @@ await event.save()
 ## 3. 添加提醒（Alarm）
 
 ```ts
-const alarm = EventAlarm.fromRelativeOffset(-600)
-event.addAlarm(alarm)
-await event.save()
+const alarm = EventAlarm.fromRelativeOffset(-600);
+event.addAlarm(alarm);
+await event.save();
 ```
 
 ***
@@ -353,13 +355,10 @@ await event.save()
 ## 4. 获取日期范围内的事件
 
 ```ts
-const events = await CalendarEvent.getAll(
-  new Date("2024-01-01"),
-  new Date("2024-01-31")
- )
+const events = await CalendarEvent.getAll(new Date("2024-01-01"), new Date("2024-01-31"));
 
 for (const e of events) {
-  console.log(`事件: ${e.title} 开始时间: ${e.startDate}`)
+  console.log(`事件: ${e.title} 开始时间: ${e.startDate}`);
 }
 ```
 
@@ -368,9 +367,9 @@ for (const e of events) {
 ## 5. 使用事件创建界面
 
 ```ts
-const created = await CalendarEvent.presentCreateView()
+const created = await CalendarEvent.presentCreateView();
 if (created) {
-  console.log("新事件已创建:", created.title)
+  console.log("新事件已创建:", created.title);
 }
 ```
 
@@ -379,8 +378,8 @@ if (created) {
 ## 6. 编辑事件
 
 ```ts
-const result = await event.presentEditView()
-console.log("编辑操作:", result)
+const result = await event.presentEditView();
+console.log("编辑操作:", result);
 ```
 
 ***
@@ -388,13 +387,13 @@ console.log("编辑操作:", result)
 ## 7. 删除事件
 
 ```ts
-await event.remove()
-console.log("事件已移除")
+await event.remove();
+console.log("事件已移除");
 ```
 
 ***
 
-# 八、补充说明
+## 八、补充说明
 
 ### 时区处理
 

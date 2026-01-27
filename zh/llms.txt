@@ -9,41 +9,36 @@
 - [请求结构化数据](/zh/doc/Assistant/requestStructuredData.md)
 - [智能助手工具](/zh/doc/AssistantTool.md)
 - [动画和过渡](/zh/doc/Changelog/2.4.3/Animation and Transition.md)
-- [EnvironmentValuesReader](/zh/doc/Changelog/2.4.3/EnvironmentValuesReader.md): 以下为每个字段的说明：
+- [EnvironmentValuesReader](/zh/doc/Changelog/2.4.3/EnvironmentValuesReader.md)
 - [ForEach](/zh/doc/Changelog/2.4.3/ForEach/index.md)
 - [示例](/zh/doc/Changelog/2.4.3/ForEach/iterating.md)
-- [GeometryReader](/zh/doc/Changelog/2.4.3/GeometryReader.md): 当 GeometryReader 构建其子内容时，会将一个 GeometryProxy 实例传递给 children 回调。开发者可以使用此对象访问与当前容器相关的布局信息。
+- [GeometryReader](/zh/doc/Changelog/2.4.3/GeometryReader.md)
 - [实时活动（LiveActivity）修饰符](/zh/doc/Changelog/2.4.3/LiveActivity View Modifiers.md)
-- [实时活动（灵动岛）](/zh/doc/Changelog/2.4.3/LiveActivity.md): Live Activity 展示在以下区域： 锁屏界面iPhone 14 Pro+ 的 Dynamic Island其他设备的悬浮样式（Banner） 它能随着应用或脚本运行实时更新内容，如： 计时器外卖进度健身、运动状态倒计时、打卡、提醒 在 Scripting app 中，一个 Live Activity 由两部分组成： 内容状态（contentState）
-一个 JSON 可序列化的对象，会随时间改变。UI Builder
-通过 TSX 描述不同区域的展示方式。 用于描述当前正在运行的所有 Live Activity 信息。
+- [实时活动（灵动岛）](/zh/doc/Changelog/2.4.3/LiveActivity.md)
 - [可拖拽的 ForEach (ReorderableForEach)](/zh/doc/Changelog/2.4.3/ReorderableForEach/index.md)
 - [示例](/zh/doc/Changelog/2.4.3/ReorderableForEach/index_example.md)
 - [SSH 客户端](/zh/doc/Changelog/2.4.3/SSH Client.md)
-- [ScrollViewReader](/zh/doc/Changelog/2.4.3/ScrollViewReader.md): ScrollViewProxy 是提供滚动控制的代理对象，由 ScrollViewReader 在渲染期间自动注入。
-- [设置环境变量 (environments)](/zh/doc/Changelog/2.4.3/Set environment values (environments).md): editMode 用于设置当前视图树中所有支持编辑模式的组件的编辑状态。 典型用途： 控制 List 的编辑状态启用批量删除、移动操作与用户交互同步（如切换编辑按钮）
+- [ScrollViewReader](/zh/doc/Changelog/2.4.3/ScrollViewReader.md)
+- [设置环境变量 (environments)](/zh/doc/Changelog/2.4.3/Set environment values (environments).md)
 - [线程（Thread）](/zh/doc/Changelog/2.4.3/Thread.md)
-- [useObservable](/zh/doc/Changelog/2.4.3/useObservable.md): Observable<T> 是一个可观察的数据容器，当 .value 更新时，会触发依赖该值的 UI 自动重新渲染。
+- [useObservable](/zh/doc/Changelog/2.4.3/useObservable.md)
 - [同心圆矩形（ConcentricRectangle）](/zh/doc/Changelog/2.4.4/ConcentricRectangle.md)
-- [玻璃效果过渡效果](/zh/doc/Changelog/2.4.4/Glass Effect Transition/index.md): glassEffectTransition 用于指定 Liquid Glass 在视图出现、消失或布局变化期间应如何过渡。 Glass Effect Transition 控制三个核心内容： 玻璃材质如何出现 / 消失玻璃的几何形状是否会参与动画玻璃是否与容器中其他视图的几何形状匹配 过渡效果只影响“玻璃材质本身”，而不是普通视图的 opacity 或 scale。
+- [玻璃效果过渡效果](/zh/doc/Changelog/2.4.4/Glass Effect Transition/index.md)
 - [示例](/zh/doc/Changelog/2.4.4/Glass Effect Transition/index_example.md)
 - [Intent.continueInForeground](/zh/doc/Changelog/2.4.4/Intent.continueInForeground.md)
 - [Intent.requestConfirmation](/zh/doc/Changelog/2.4.4/Intent.requestConfirmation.md)
-- [IntentMemoryStorage](/zh/doc/Changelog/2.4.4/IntentMemoryStorage.md): 在 Scripting 中，每个 AppIntent 都运行在其所属脚本的 脚本执行上下文（Script Execution Context） 中。当 AppIntent 的 perform() 执行完成，或在 intent.tsx 中调用 Script.exit() 时，当前 AppIntent 的执行流程会结束。 但关键点是： IntentMemoryStorage 不会在 AppIntent 或 Script.exit 结束时被立即销毁 它的生命周期依赖于： 系统是否继续保留当前 Extension 进程系统是否因为内存压力或其他策略回收 ExtensionWidget 或 Live Activity 是否仍在使用同一 Extension 因此： 在 Shortcuts 再次运行同一个脚本时
-有可能读取到上次设置的 MemoryStorage 值在 Widget 或 Live Activity 中调用 AppIntent
-同一个脚本的 JS Context 可能被重用，因此 MemoryStorage 也会保留系统何时清除 MemoryStorage 不可预测 MemoryStorage 的本质是： 存储在当前 Extension 进程中的短期内存，非持久化、非可靠、非严格会话级 IntentMemoryStorage 提供两类存储区域：
+- [IntentMemoryStorage](/zh/doc/Changelog/2.4.4/IntentMemoryStorage.md)
 - [液态玻璃效果](/zh/doc/Changelog/2.4.4/Liquid Glass Effect/index.md)
 - [示例](/zh/doc/Changelog/2.4.4/Liquid Glass Effect/index_example.md)
 - [命名空间读取器（NamespaceReader）](/zh/doc/Changelog/2.4.4/NamespaceReader.md)
-- [新的 List 视图修饰符](/zh/doc/Changelog/2.4.4/New List View Modifiers.md): 功能说明 控制 List 的右侧索引条是否显示。常用于需要类似通讯录 A-Z 快速跳转的场景。 可选值： "visible""hidden""automatic"（系统自行判断） 示例 功能说明 设置 Section 的外边距，完全替换系统默认边距。可使用数值、 EdgeSets，或指定边的写法。 三种写法说明 2.1 使用单一数字作为四边边距 2.2 使用 EdgeInsets 2.3 针对特定边设置长度 此写法等同于 SwiftUI 中： 示例 功能说明 为 Section 设置索引条的显示字符，一般为单字母，如 “A”、“B”、“C”。 示例 功能说明 为 Section 添加自定义操作按钮、菜单等 UI，位置通常显示在 Section Header 区域的右侧。 示例：添加刷新按钮 示例：添加菜单动作
+- [新的 List 视图修饰符](/zh/doc/Changelog/2.4.4/New List View Modifiers.md)
 - [通知](/zh/doc/Changelog/2.4.4/Notification/index.md)
 - [示例](/zh/doc/Changelog/2.4.4/Notification/index_example.md)
 - [SFTP 客户端](/zh/doc/Changelog/2.4.4/SFTP Client.md)
 - [SFTP 文件](/zh/doc/Changelog/2.4.4/SFTP File.md)
-- [SnippetIntent](/zh/doc/Changelog/2.4.4/SnippetIntent.md): SnippetIntent 只能在 iOS 26 及以上系统运行。 在 iOS 26 以下环境： 无法调用 Intent.snippetIntent无法使用 Intent.requestConfirmationShortcuts 中不存在「Show Snippet Intent」动作SnippetIntent 类型的 AppIntent 不会被 Shortcuts 正常识别 在 app_intents.tsx 中声明 SnippetIntent： 再例如： 要求： protocol 必须为 AppIntentProtocol.SnippetIntentperform() 必须返回 VirtualNode与普通 AppIntent 区别在于返回的是 UI，而非数据 SnippetIntent 不能直接作为 JS 返回值，必须通过 Intent.snippetIntent() 包装成 IntentSnippetIntentValue。 类型定义 封装的返回值可被 Shortcuts 的「Show Snippet Intent」动作识别并展示 UI。 SnippetIntent 支持在执行逻辑中先请求用户确认某个操作。此能力同样基于 iOS 26。 ConfirmationActionName 这些名称会影响 Shortcuts UI 中呈现的文案，例如 “Set …”、“Add …”、“Toggle …” 等。 示例值： 示例 效果： Shortcuts 弹出 PickColorIntent 对应的 Snippet UI用户点击确认后 Promise resolve用户取消时脚本执行终止 Shortcuts 在 iOS 26 新增动作： Show Snippet Intent 用于展示 SnippetIntent 返回的 Snippet UI。 与其他动作对比 使用方式： 在 Shortcuts 中添加「Show Snippet Intent」选择脚本项目（需包含 intent.tsx）脚本返回 Intent.snippetIntent(...)Shortcuts 显示 Snippet UI
-- [TabView](/zh/doc/Changelog/2.4.4/TabView.md): 在最基本的形式中，TabView 作为容器，内部包含多个 Tab。
-每个 Tab 定义： 标签标题图标标识值（value）角色（如 search）对应的内容视图 示例： 要点： selection 通过 Observable 控制当前激活的标签value 必须与 selection 的泛型类型匹配（string 或 number）Search Tab 可使用 role="search" 与搜索相关行为联动 当 Tab 数量较多、需要按功能分类、需要在侧边栏中显示复杂结构时，可以使用 TabSection。 结构关系为：
-- [使用 Toolbar 组件](/zh/doc/Changelog/2.4.4/Use with Toolbar Component.md): 工具栏组件始终通过视图的 toolbar 属性使用： toolbar 可以接受： ToolBarProps 对象（与原机制一致）VirtualNode（必须为 <Toolbar> 组件） 使用 <Toolbar> 时，所有内容都通过 <ToolbarItem> 系列组件明确定义位置和呈现方式。 Toolbar 组件是工具栏的容器，用于包含多个工具栏项。它本身不定义位置，内部的 ToolbarItem 或 ToolbarItemGroup 决定实际布局。
+- [SnippetIntent](/zh/doc/Changelog/2.4.4/SnippetIntent.md)
+- [TabView](/zh/doc/Changelog/2.4.4/TabView.md)
+- [使用 Toolbar 组件](/zh/doc/Changelog/2.4.4/Use with Toolbar Component.md)
 - [匹配几何效果（matchedGeometryEffect）](/zh/doc/Changelog/2.4.4/matchedGeometryEffect.md)
 - [匹配过渡源（matchedTransitionSource）](/zh/doc/Changelog/2.4.4/matchedTransitionSource.md)
 - [视频播放组件(AVPlayerView)](/zh/doc/Changelog/2.4.5/AVPlayerView.md)
@@ -168,11 +163,9 @@
 - [Intent.continueInForeground](/zh/doc/Intent/Intent.continueInForeground.md)
 - [Intent.requestConfirmation](/zh/doc/Intent/Intent.requestConfirmation.md)
 - [快速开始](/zh/doc/Intent/Quick Start.md)
-- [SnippetIntent](/zh/doc/Intent/SnippetIntent.md): SnippetIntent 只能在 iOS 26 及以上系统运行。 在 iOS 26 以下环境： 无法调用 Intent.snippetIntent无法使用 Intent.requestConfirmationShortcuts 中不存在「Show Snippet Intent」动作SnippetIntent 类型的 AppIntent 不会被 Shortcuts 正常识别 在 app_intents.tsx 中声明 SnippetIntent： 再例如： 要求： protocol 必须为 AppIntentProtocol.SnippetIntentperform() 必须返回 VirtualNode与普通 AppIntent 区别在于返回的是 UI，而非数据 SnippetIntent 不能直接作为 JS 返回值，必须通过 Intent.snippetIntent() 包装成 IntentSnippetIntentValue。 类型定义 封装的返回值可被 Shortcuts 的「Show Snippet Intent」动作识别并展示 UI。 SnippetIntent 支持在执行逻辑中先请求用户确认某个操作。此能力同样基于 iOS 26。 ConfirmationActionName 这些名称会影响 Shortcuts UI 中呈现的文案，例如 “Set …”、“Add …”、“Toggle …” 等。 示例值： 示例 效果： Shortcuts 弹出 PickColorIntent 对应的 Snippet UI用户点击确认后 Promise resolve用户取消时脚本执行终止 Shortcuts 在 iOS 26 新增动作： Show Snippet Intent 用于展示 SnippetIntent 返回的 Snippet UI。 与其他动作对比 使用方式： 在 Shortcuts 中添加「Show Snippet Intent」选择脚本项目（需包含 intent.tsx）脚本返回 Intent.snippetIntent(...)Shortcuts 显示 Snippet UI
+- [SnippetIntent](/zh/doc/Intent/SnippetIntent.md)
 - [可互动的小组件和灵动岛](/zh/doc/Interactive Widget and LiveActivity.md)
-- [实时活动（灵动岛）](/zh/doc/LiveActivity.md): Live Activity 展示在以下区域： 锁屏界面iPhone 14 Pro+ 的 Dynamic Island其他设备的悬浮样式（Banner） 它能随着应用或脚本运行实时更新内容，如： 计时器外卖进度健身、运动状态倒计时、打卡、提醒 在 Scripting app 中，一个 Live Activity 由两部分组成： 内容状态（contentState）
-一个 JSON 可序列化的对象，会随时间改变。UI Builder
-通过 TSX 描述不同区域的展示方式。 用于描述当前正在运行的所有 Live Activity 信息。
+- [实时活动（灵动岛）](/zh/doc/LiveActivity.md)
 - [快速开始](/zh/doc/Quick Start.md)
 - [Script](/zh/doc/Script.md)
 - [对齐](/zh/doc/Types/Alignment.md)
@@ -208,7 +201,7 @@
 - [SSH 认证方法](/zh/doc/Utilities/SSH/SSH Authentication Method.md)
 - [SSH 客户端](/zh/doc/Utilities/SSH/SSH Client.md)
 - [TTY 标准输入写入器](/zh/doc/Utilities/SSH/TTY Stdin Writer.md)
-- [本地存储](/zh/doc/Utilities/Storage.md): Storage 支持以下类型的数据： stringnumberbooleanJSON（符合 JSON 可序列化类型的结构）Data（需使用 setData / getData） 以上类型均可安全持久化。
+- [本地存储](/zh/doc/Utilities/Storage.md)
 - [线程（Thread）](/zh/doc/Utilities/Thread.md)
 - [UIImage](/zh/doc/Utilities/UIImage.md)
 - [后台网络会话](/zh/doc/Utilities/URLSession/BackgroundURLSession.md)
@@ -224,12 +217,12 @@
 - [网格布局控制](/zh/doc/View Modifiers/Grid Layout Control.md)
 - [图片样式](/zh/doc/View Modifiers/Image Style.md)
 - [生命周期事件](/zh/doc/View Modifiers/Lifecycle Events.md)
-- [玻璃效果过渡效果](/zh/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index.md): glassEffectTransition 用于指定 Liquid Glass 在视图出现、消失或布局变化期间应如何过渡。 Glass Effect Transition 控制三个核心内容： 玻璃材质如何出现 / 消失玻璃的几何形状是否会参与动画玻璃是否与容器中其他视图的几何形状匹配 过渡效果只影响“玻璃材质本身”，而不是普通视图的 opacity 或 scale。
+- [玻璃效果过渡效果](/zh/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index.md)
 - [示例](/zh/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index_example.md)
 - [液态玻璃效果](/zh/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md)
 - [示例](/zh/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index_example.md)
 - [通用修饰符](/zh/doc/View Modifiers/List and Section View Modifiers/Common.md)
-- [新的 List 视图修饰符](/zh/doc/View Modifiers/List and Section View Modifiers/New List View Modifiers.md): 功能说明 控制 List 的右侧索引条是否显示。常用于需要类似通讯录 A-Z 快速跳转的场景。 可选值： "visible""hidden""automatic"（系统自行判断） 示例 功能说明 设置 Section 的外边距，完全替换系统默认边距。可使用数值、 EdgeSets，或指定边的写法。 三种写法说明 2.1 使用单一数字作为四边边距 2.2 使用 EdgeInsets 2.3 针对特定边设置长度 此写法等同于 SwiftUI 中： 示例 功能说明 为 Section 设置索引条的显示字符，一般为单字母，如 “A”、“B”、“C”。 示例 功能说明 为 Section 添加自定义操作按钮、菜单等 UI，位置通常显示在 Section Header 区域的右侧。 示例：添加刷新按钮 示例：添加菜单动作
+- [新的 List 视图修饰符](/zh/doc/View Modifiers/List and Section View Modifiers/New List View Modifiers.md)
 - [实时活动（LiveActivity）修饰符](/zh/doc/View Modifiers/LiveActivity View Modifiers.md)
 - [导航视图修饰符](/zh/doc/View Modifiers/Navigation View Modifiers.md)
 - [Picture in Picture （画中画）](/zh/doc/View Modifiers/Picture in Pictuer View Modifiers.md)
@@ -237,7 +230,7 @@
 - [数据遮罩视图修饰符](/zh/doc/View Modifiers/Redaction View Modifiers.md)
 - [安全区域](/zh/doc/View Modifiers/Safe Area.md)
 - [搜索交互](/zh/doc/View Modifiers/Search Interactions.md)
-- [设置环境变量 (environments)](/zh/doc/View Modifiers/Set environment values (environments).md): editMode 用于设置当前视图树中所有支持编辑模式的组件的编辑状态。 典型用途： 控制 List 的编辑状态启用批量删除、移动操作与用户交互同步（如切换编辑按钮）
+- [设置环境变量 (environments)](/zh/doc/View Modifiers/Set environment values (environments).md)
 - [滑动操作](/zh/doc/View Modifiers/Swipe Actions/index.md)
 - [示例](/zh/doc/View Modifiers/Swipe Actions/index_example.md)
 - [符号样式](/zh/doc/View Modifiers/Symbol Style.md)
@@ -290,7 +283,7 @@
 - [文本输入框样式](/zh/doc/View Modifiers/textFieldStyle.md)
 - [强调色](/zh/doc/View Modifiers/tint.md)
 - [切换开关样式](/zh/doc/View Modifiers/toggleStyle.md)
-- [使用 Toolbar 组件](/zh/doc/View Modifiers/toolbar/Use with Toolbar Component.md): 工具栏组件始终通过视图的 toolbar 属性使用： toolbar 可以接受： ToolBarProps 对象（与原机制一致）VirtualNode（必须为 <Toolbar> 组件） 使用 <Toolbar> 时，所有内容都通过 <ToolbarItem> 系列组件明确定义位置和呈现方式。 Toolbar 组件是工具栏的容器，用于包含多个工具栏项。它本身不定义位置，内部的 ToolbarItem 或 ToolbarItemGroup 决定实际布局。
+- [使用 Toolbar 组件](/zh/doc/View Modifiers/toolbar/Use with Toolbar Component.md)
 - [使用 ToolbarProps](/zh/doc/View Modifiers/toolbar/Use with ToolbarProps.md)
 - [翻译宿主](/zh/doc/View Modifiers/translationHost.md)
 - [小组件背景](/zh/doc/View Modifiers/widgetBackground.md)
@@ -359,8 +352,8 @@
 - [显示文本](/zh/doc/Views/Displaying text/index.md)
 - [示例](/zh/doc/Views/Displaying text/index_example.md)
 - [编辑器](/zh/doc/Views/Editor.md)
-- [EnvironmentValuesReader](/zh/doc/Views/EnvironmentValuesReader.md): 以下为每个字段的说明：
-- [GeometryReader](/zh/doc/Views/GeometryReader.md): 当 GeometryReader 构建其子内容时，会将一个 GeometryProxy 实例传递给 children 回调。开发者可以使用此对象访问与当前容器相关的布局信息。
+- [EnvironmentValuesReader](/zh/doc/Views/EnvironmentValuesReader.md)
+- [GeometryReader](/zh/doc/Views/GeometryReader.md)
 - [手势](/zh/doc/Views/Gestures.md)
 - [图像](/zh/doc/Views/Image/index.md)
 - [示例](/zh/doc/Views/Image/index_example.md)
@@ -415,8 +408,7 @@
 - [与 navigationDestination 一起使用](/zh/doc/Views/Navigation/NavigationStack/Use with navigationDestination.md)
 - [带徽章的 TabView](/zh/doc/Views/Navigation/TabView/TabView with badge.md)
 - [包含多个可滚动页面的 TabView](/zh/doc/Views/Navigation/TabView/TabView with multiple scrolling pages.md)
-- [TabView](/zh/doc/Views/Navigation/TabView/TabView.md): 在最基本的形式中，TabView 作为容器，内部包含多个 Tab。
-每个 Tab 定义： 标签标题图标标识值（value）角色（如 search）对应的内容视图 示例： 要点： selection 通过 Observable 控制当前激活的标签value 必须与 selection 的泛型类型匹配（string 或 number）Search Tab 可使用 role="search" 与搜索相关行为联动 当 Tab 数量较多、需要按功能分类、需要在侧边栏中显示复杂结构时，可以使用 TabSection。 结构关系为：
+- [TabView](/zh/doc/Views/Navigation/TabView/TabView.md)
 - [关闭一个视图](/zh/doc/Views/Present views/Dismissing a presented view/index.md)
 - [示例](/zh/doc/Views/Present views/Dismissing a presented view/index_example.md)
 - [展示一个简单视图](/zh/doc/Views/Present views/Present a simple view/index.md)
@@ -424,7 +416,7 @@
 - [SVG](/zh/doc/Views/SVG.md)
 - [可滚动视图](/zh/doc/Views/Scroll views/index.md)
 - [示例](/zh/doc/Views/Scroll views/index_example.md)
-- [ScrollViewReader](/zh/doc/Views/ScrollViewReader.md): ScrollViewProxy 是提供滚动控制的代理对象，由 ScrollViewReader 在渲染期间自动注入。
+- [ScrollViewReader](/zh/doc/Views/ScrollViewReader.md)
 - [搜索](/zh/doc/Views/Search/index.md)
 - [示例](/zh/doc/Views/Search/index_example.md)
 - [形状](/zh/doc/Views/Shapes/index.md)

@@ -8,57 +8,37 @@
 - [requestStreaming](/doc/Assistant/requestStreaming.md)
 - [requestStructuredData](/doc/Assistant/requestStructuredData.md)
 - [AssistantTool](/doc/AssistantTool.md)
-- [Animation and Transition](/doc/Changelog/2.4.3/Animation and Transition.md): The Animation class describes how values animate in time.
-- [EnvironmentValuesReader](/doc/Changelog/2.4.3/EnvironmentValuesReader.md): Below are the descriptions of each field. 1. colorScheme Type: ColorScheme
-The current system color appearance (light or dark). 2. colorSchemeContrast Type: ColorSchemeContrast
-Represents contrast settings such as standard or increased. 3. displayScale Type: number
-The display scale factor of the device (e.g., 2.0, 3.0). 4. horizontalSizeClass Type: UserInterfaceSizeClass | null
-The horizontal size class of the current environment: compact or regular. 5. verticalSizeClass Type: UserInterfaceSizeClass | null
-The vertical size class, same categories as above. 6. dismiss Type: () => void
-A function to dismiss the currently presented view (equivalent to SwiftUI’s dismiss()). 7. dismissSearch Type: () => void
-A function that dismisses the current searchable field, if active. 8. editMode Type: EditMode | null
-Indicates whether the view is in editing mode (e.g., during List editing). 9. widgetRenderingMode Type: WidgetRenderingMode
-The current widget rendering mode (e.g., fullColor, accented). 10. showsWidgetContainerBackground Type: boolean
-Indicates whether the widget is showing the system-provided container background. 11. isSearching Type: boolean
-Whether the view is currently in a searching state triggered by searchable. 12. isPresented Type: boolean
-Whether the view is currently being shown, unlike onAppear which is called every time the view appears, isPresented is called only once when the view is first shown. 13. activityFamily Type: "small" | "medium"
-The current LiveActivity size, similar to SwiftUI's activityFamily, used to determine the size of LiveActivity UI. 14. tabViewBottomAccessoryPlacement Type: 'expanded' | 'inline'
-The current TabView bottom accessory placement, similar to SwiftUI's tabViewBottomAccessoryPlacement. keys Type: Array<keyof EnvironmentValues>
-Specifies exactly which environment keys you want to read.
-Only these keys will be retrieved and passed to the callback. children(values) Type: (values: EnvironmentValues) => VirtualNode
-A rendering callback that receives the requested environment values and returns the corresponding view.
+- [Animation and Transition](/doc/Changelog/2.4.3/Animation and Transition.md)
+- [EnvironmentValuesReader](/doc/Changelog/2.4.3/EnvironmentValuesReader.md)
 - [ForEach](/doc/Changelog/2.4.3/ForEach/index.md)
 - [Example](/doc/Changelog/2.4.3/ForEach/iterating.md)
-- [GeometryReader](/doc/Changelog/2.4.3/GeometryReader.md): When GeometryReader constructs its child content, it injects a GeometryProxy instance into the children callback. This proxy exposes real-time layout information about the container.
-- [LiveActivity View Modifiers](/doc/Changelog/2.4.3/LiveActivity View Modifiers.md): These modifiers can only be applied to the content view of the Live Activity UI. They do not take effect when placed in: compactLeadingcompactTrailingminimal Only the full-size Lock Screen presentation (the content region) supports these appearance customizations.
-- [LiveActivity](/doc/Changelog/2.4.3/LiveActivity.md): A Live Activity can appear in the following regions: Lock ScreenDynamic Island (iPhone 14 Pro and later)Banner-style presentation on devices without Dynamic Island Live Activities are used for time-based and progress-based information, such as: TimersFitness progressDelivery trackingCountdowns and remindersReal-time status updates In Scripting, each Live Activity consists of: contentState (a JSON-serializable object that updates over time)UI Builder (a function that produces TSX UI for each state) Represents a summary of each active Live Activity.
+- [GeometryReader](/doc/Changelog/2.4.3/GeometryReader.md)
+- [LiveActivity View Modifiers](/doc/Changelog/2.4.3/LiveActivity View Modifiers.md)
+- [LiveActivity](/doc/Changelog/2.4.3/LiveActivity.md)
 - [ReorderableForEach](/doc/Changelog/2.4.3/ReorderableForEach/index.md)
 - [Example](/doc/Changelog/2.4.3/ReorderableForEach/index_example.md)
 - [SSH Client](/doc/Changelog/2.4.3/SSH Client.md)
-- [ScrollViewReader](/doc/Changelog/2.4.3/ScrollViewReader.md): ScrollViewProxy represents the programmatic interface for controlling scrolling. It is provided by ScrollViewReader during rendering.
-- [Set environment values (environments)](/doc/Changelog/2.4.3/Set environment values (environments).md): The editMode environment value controls the editing state of views that support editing behavior, such as List with row deletion or movement. It must be provided as an Observable<EditMode> so views can reactively update when the editing state changes.
+- [ScrollViewReader](/doc/Changelog/2.4.3/ScrollViewReader.md)
+- [Set environment values (environments)](/doc/Changelog/2.4.3/Set environment values (environments).md)
 - [Thread](/doc/Changelog/2.4.3/Thread.md)
-- [useObservable](/doc/Changelog/2.4.3/useObservable.md): Observable<T> is a reactive container that holds a mutable value.
-Whenever the value changes, any UI components that read this value are automatically re-rendered.
+- [useObservable](/doc/Changelog/2.4.3/useObservable.md)
 - [ConcentricRectangle](/doc/Changelog/2.4.4/ConcentricRectangle.md)
-- [Glass Effect Transition](/doc/Changelog/2.4.4/Glass Effect Transition/index.md): A Glass Effect Transition defines how a Liquid Glass material animates when: A view is inserted or removedLayout changesViews switch between two states These transitions affect only the Liquid Glass material—not the rest of the view’s opacity or scale. A transition controls: How the glass material appears or disappearsWhether the shape of the glass participates in animationWhether the glass attempts to match geometry with other shapes
+- [Glass Effect Transition](/doc/Changelog/2.4.4/Glass Effect Transition/index.md)
 - [Example](/doc/Changelog/2.4.4/Glass Effect Transition/index_example.md)
 - [Intent.continueInForeground](/doc/Changelog/2.4.4/Intent.continueInForeground.md)
 - [Intent.requestConfirmation](/doc/Changelog/2.4.4/Intent.requestConfirmation.md)
-- [IntentMemoryStorage](/doc/Changelog/2.4.4/IntentMemoryStorage.md): Each AppIntent in Scripting runs inside its own Script Execution Context (JSContext).
-When: The AppIntent’s perform() finishes, orScript.exit() is called the execution ends. But this does not mean that IntentMemoryStorage (or the JSContext) is destroyed. Instead: IntentMemoryStorage persists as long as the system keeps the Extension process alive It will only be cleared when: The Extension process is terminated by the systemThe system decides to reclaim memoryThe environment hosting the Intent Extension or Widget Extension is destroyed Therefore: Running the same Shortcut again may read leftover values from the previous run.Widget or Live Activity AppIntent calls may reuse the same JSContext, preserving MemoryStorage.MemoryStorage can disappear at any time if the system kills the Extension process. This behavior is normal and inherent to the AppExtension lifecycle. IntentMemoryStorage is: A short-lived, extension-scoped, non-persistent memory store IntentMemoryStorage provides two scopes.
-- [Liquid Glass Effect](/doc/Changelog/2.4.4/Liquid Glass Effect/index.md): Liquid Glass is a new material and animation system in iOS 26. Compared to earlier blur or material effects, Liquid Glass provides: Fluid, dynamic shapes that follow view geometryTintable and interactive glass materialsGeometry-matched transitionsGrouped “glass unions” to merge multiple regionsHigh-performance rendering inside containers Any view that adopts GlassProps can apply a Liquid Glass effect using the glassEffect property. Definition
+- [IntentMemoryStorage](/doc/Changelog/2.4.4/IntentMemoryStorage.md)
+- [Liquid Glass Effect](/doc/Changelog/2.4.4/Liquid Glass Effect/index.md)
 - [Example](/doc/Changelog/2.4.4/Liquid Glass Effect/index_example.md)
 - [NamespaceReader](/doc/Changelog/2.4.4/NamespaceReader.md)
-- [New List View Modifiers](/doc/Changelog/2.4.4/New List View Modifiers.md): Description Controls whether the List shows the right-side section index (commonly used for A–Z navigation in contact lists). Possible values: "visible""hidden""automatic" (default system behavior) Example Description Customizes the margins of a section. When set, it fully replaces SwiftUI’s default section margin rules. Supported Formats 2.1 Single number Applies the same margin to all edges. 2.2 EdgeSets Applies the specified edges with the default margin. 2.3 Specific edges with length Applies a margin of length only to the specified edges. Equivalent to SwiftUI: Example Description Sets the character or text displayed in the right-side section index for this section. Typically a single letter. Example Description Adds custom UI elements such as buttons or menus to the section header’s trailing (accessory) area. Example: Refresh button Example: Menu with multiple actions
+- [New List View Modifiers](/doc/Changelog/2.4.4/New List View Modifiers.md)
 - [Notification](/doc/Changelog/2.4.4/Notification/index.md)
 - [Example](/doc/Changelog/2.4.4/Notification/index_example.md)
 - [SFTP Client](/doc/Changelog/2.4.4/SFTP Client.md)
 - [SFTP File](/doc/Changelog/2.4.4/SFTP File.md)
-- [SnippetIntent](/doc/Changelog/2.4.4/SnippetIntent.md): SnippetIntent requires iOS 26 or later. On iOS versions earlier than 26: Intent.snippetIntent() is not availableIntent.requestConfirmation() cannot be usedThe Shortcuts action “Show Snippet Intent” does not existSnippetIntent-type AppIntents cannot be invoked by Shortcuts Example: Another SnippetIntent: Requirements: protocol must be AppIntentProtocol.SnippetIntentperform() must return a TSX UI (VirtualNode)SnippetIntent cannot return non-UI types such as text, numbers, JSON, or file paths A SnippetIntent cannot be passed directly to Script.exit().
-It must be wrapped in a IntentSnippetIntentValue. Type Definition This wrapper makes the return value compatible with the Shortcuts “Show Snippet Intent” action. iOS 26 Snippet Framework provides built-in confirmation UI driven by SnippetIntent. API ConfirmationActionName A predefined list of semantic action names used by system UI: Example Execution behavior: Displays a Snippet UI for confirmationIf the user confirms → Promise resolves and script continuesIf the user cancels → execution stops (system-driven behavior) iOS 26 adds a new Shortcuts action: Show Snippet Intent This action is the only correct way to display SnippetIntent UI. Comparison with Other Scripting Actions Usage Add “Show Snippet Intent” in ShortcutsSelect a Scripting script projectThe script must return Intent.snippetIntent(...)Shortcuts renders the UI in a Snippet card
+- [SnippetIntent](/doc/Changelog/2.4.4/SnippetIntent.md)
 - [TabView](/doc/Changelog/2.4.4/TabView.md)
-- [Use with Toolbar Component](/doc/Changelog/2.4.4/Use with Toolbar Component.md): The toolbar property can be used in two ways: By passing a ToolBarProps objectBy passing a VirtualNode, which must be a <Toolbar> component When using the component-based API, all toolbar content is declared inside a <Toolbar> container, and each item defines its placement explicitly. This provides clearer structure and more precise layout control, similar to SwiftUI. The <Toolbar> component serves as a container for toolbar content. It does not define placement itself; instead, ToolbarItem and ToolbarItemGroup determine where items go.
+- [Use with Toolbar Component](/doc/Changelog/2.4.4/Use with Toolbar Component.md)
 - [matchedGeometryEffect](/doc/Changelog/2.4.4/matchedGeometryEffect.md)
 - [matchedTransitionSource](/doc/Changelog/2.4.4/matchedTransitionSource.md)
 - [AVPlayerView](/doc/Changelog/2.4.5/AVPlayerView.md)
@@ -76,8 +56,7 @@ It must be wrapped in a IntentSnippetIntentValue. Type Definition This wrapper m
 - [Photos](/doc/Changelog/2.4.5/Photos/index.md)
 - [Example](/doc/Changelog/2.4.5/Photos/index_example.md)
 - [Picture in Pictuer View Modifiers](/doc/Changelog/2.4.5/Picture in Pictuer View Modifiers.md)
-- [Reminder](/doc/Changelog/2.4.5/Reminder.md): The Reminder class represents an individual reminder item and provides properties and methods to read and modify its data. identifier: string A unique identifier assigned by the system (read-only). calendar: Calendar The calendar to which the reminder belongs.
-Each reminder must be associated with a calendar. title: string The title or summary of the reminder. notes: string | null Optional notes providing additional context.
+- [Reminder](/doc/Changelog/2.4.5/Reminder.md)
 - [ReorderableForEach](/doc/Changelog/2.4.5/ReorderableForEach/index.md)
 - [Example](/doc/Changelog/2.4.5/ReorderableForEach/index_example.md)
 - [Selectable List](/doc/Changelog/2.4.5/Selectable List.md)
@@ -164,8 +143,7 @@ Each reminder must be associated with a calendar. title: string The title or sum
 - [QRCode](/doc/Device Capabilities/QRCode.md)
 - [QuickLook](/doc/Device Capabilities/QuickLook.md)
 - [Recurrence](/doc/Device Capabilities/Recurrence.md)
-- [Reminder](/doc/Device Capabilities/Reminder.md): The Reminder class represents an individual reminder item and provides properties and methods to read and modify its data. identifier: string A unique identifier assigned by the system (read-only). calendar: Calendar The calendar to which the reminder belongs.
-Each reminder must be associated with a calendar. title: string The title or summary of the reminder. notes: string | null Optional notes providing additional context.
+- [Reminder](/doc/Device Capabilities/Reminder.md)
 - [Safari](/doc/Device Capabilities/Safari/index.md)
 - [Example](/doc/Device Capabilities/Safari/index_example.md)
 - [Send Mail](/doc/Device Capabilities/Send Mail.md)
@@ -185,10 +163,9 @@ Each reminder must be associated with a calendar. title: string The title or sum
 - [Intent.continueInForeground](/doc/Intent/Intent.continueInForeground.md)
 - [Intent.requestConfirmation](/doc/Intent/Intent.requestConfirmation.md)
 - [Quick Start](/doc/Intent/Quick Start.md)
-- [SnippetIntent](/doc/Intent/SnippetIntent.md): SnippetIntent requires iOS 26 or later. On iOS versions earlier than 26: Intent.snippetIntent() is not availableIntent.requestConfirmation() cannot be usedThe Shortcuts action “Show Snippet Intent” does not existSnippetIntent-type AppIntents cannot be invoked by Shortcuts Example: Another SnippetIntent: Requirements: protocol must be AppIntentProtocol.SnippetIntentperform() must return a TSX UI (VirtualNode)SnippetIntent cannot return non-UI types such as text, numbers, JSON, or file paths A SnippetIntent cannot be passed directly to Script.exit().
-It must be wrapped in a IntentSnippetIntentValue. Type Definition This wrapper makes the return value compatible with the Shortcuts “Show Snippet Intent” action. iOS 26 Snippet Framework provides built-in confirmation UI driven by SnippetIntent. API ConfirmationActionName A predefined list of semantic action names used by system UI: Example Execution behavior: Displays a Snippet UI for confirmationIf the user confirms → Promise resolves and script continuesIf the user cancels → execution stops (system-driven behavior) iOS 26 adds a new Shortcuts action: Show Snippet Intent This action is the only correct way to display SnippetIntent UI. Comparison with Other Scripting Actions Usage Add “Show Snippet Intent” in ShortcutsSelect a Scripting script projectThe script must return Intent.snippetIntent(...)Shortcuts renders the UI in a Snippet card
+- [SnippetIntent](/doc/Intent/SnippetIntent.md)
 - [Interactive Widget and LiveActivity](/doc/Interactive Widget and LiveActivity.md)
-- [LiveActivity](/doc/LiveActivity.md): A Live Activity can appear in the following regions: Lock ScreenDynamic Island (iPhone 14 Pro and later)Banner-style presentation on devices without Dynamic Island Live Activities are used for time-based and progress-based information, such as: TimersFitness progressDelivery trackingCountdowns and remindersReal-time status updates In Scripting, each Live Activity consists of: contentState (a JSON-serializable object that updates over time)UI Builder (a function that produces TSX UI for each state) Represents a summary of each active Live Activity.
+- [LiveActivity](/doc/LiveActivity.md)
 - [Quick Start](/doc/Quick Start.md)
 - [Script](/doc/Script.md)
 - [Alignment](/doc/Types/Alignment.md)
@@ -224,7 +201,7 @@ It must be wrapped in a IntentSnippetIntentValue. Type Definition This wrapper m
 - [SSH Authentication Method](/doc/Utilities/SSH/SSH Authentication Method.md)
 - [SSH Client](/doc/Utilities/SSH/SSH Client.md)
 - [TTY Stdin Writer](/doc/Utilities/SSH/TTY Stdin Writer.md)
-- [Storage](/doc/Utilities/Storage.md): The following types can be stored using the Storage API: stringnumberbooleanJSON (any JSON-serializable structure)Data (using setData / getData)
+- [Storage](/doc/Utilities/Storage.md)
 - [Thread](/doc/Utilities/Thread.md)
 - [UIImage](/doc/Utilities/UIImage.md)
 - [BackgroundURLSession](/doc/Utilities/URLSession/BackgroundURLSession.md)
@@ -233,27 +210,27 @@ It must be wrapped in a IntentSnippetIntentValue. Type Definition This wrapper m
 - [UUID](/doc/Utilities/UUID.md)
 - [WebScoket](/doc/Utilities/WebScoket.md)
 - [socket.io](/doc/Utilities/socket.io.md)
-- [Animation and Transition](/doc/View Modifiers/Animation and Transition.md): The Animation class describes how values animate in time.
+- [Animation and Transition](/doc/View Modifiers/Animation and Transition.md)
 - [Chaining View Modifiers](/doc/View Modifiers/Chaining View Modifiers.md)
 - [ChartMarkProps](/doc/View Modifiers/ChartMarkProps/index.md)
 - [Charts Style](/doc/View Modifiers/Charts Style.md)
 - [Grid Layout Control](/doc/View Modifiers/Grid Layout Control.md)
 - [Image Style](/doc/View Modifiers/Image Style.md)
 - [Lifecycle Events](/doc/View Modifiers/Lifecycle Events.md)
-- [Glass Effect Transition](/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index.md): A Glass Effect Transition defines how a Liquid Glass material animates when: A view is inserted or removedLayout changesViews switch between two states These transitions affect only the Liquid Glass material—not the rest of the view’s opacity or scale. A transition controls: How the glass material appears or disappearsWhether the shape of the glass participates in animationWhether the glass attempts to match geometry with other shapes
+- [Glass Effect Transition](/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index.md)
 - [Example](/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index_example.md)
-- [Liquid Glass Effect](/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md): Liquid Glass is a new material and animation system in iOS 26. Compared to earlier blur or material effects, Liquid Glass provides: Fluid, dynamic shapes that follow view geometryTintable and interactive glass materialsGeometry-matched transitionsGrouped “glass unions” to merge multiple regionsHigh-performance rendering inside containers Any view that adopts GlassProps can apply a Liquid Glass effect using the glassEffect property. Definition
+- [Liquid Glass Effect](/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md)
 - [Example](/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index_example.md)
 - [Common](/doc/View Modifiers/List and Section View Modifiers/Common.md)
-- [New List View Modifiers](/doc/View Modifiers/List and Section View Modifiers/New List View Modifiers.md): Description Controls whether the List shows the right-side section index (commonly used for A–Z navigation in contact lists). Possible values: "visible""hidden""automatic" (default system behavior) Example Description Customizes the margins of a section. When set, it fully replaces SwiftUI’s default section margin rules. Supported Formats 2.1 Single number Applies the same margin to all edges. 2.2 EdgeSets Applies the specified edges with the default margin. 2.3 Specific edges with length Applies a margin of length only to the specified edges. Equivalent to SwiftUI: Example Description Sets the character or text displayed in the right-side section index for this section. Typically a single letter. Example Description Adds custom UI elements such as buttons or menus to the section header’s trailing (accessory) area. Example: Refresh button Example: Menu with multiple actions
-- [LiveActivity View Modifiers](/doc/View Modifiers/LiveActivity View Modifiers.md): These modifiers can only be applied to the content view of the Live Activity UI. They do not take effect when placed in: compactLeadingcompactTrailingminimal Only the full-size Lock Screen presentation (the content region) supports these appearance customizations.
+- [New List View Modifiers](/doc/View Modifiers/List and Section View Modifiers/New List View Modifiers.md)
+- [LiveActivity View Modifiers](/doc/View Modifiers/LiveActivity View Modifiers.md)
 - [Navigation View Modifiers](/doc/View Modifiers/Navigation View Modifiers.md)
 - [Picture in Pictuer View Modifiers](/doc/View Modifiers/Picture in Pictuer View Modifiers.md)
 - [Presentation View Modifiers](/doc/View Modifiers/Presentation View Modifiers.md)
-- [Redaction View Modifiers](/doc/View Modifiers/Redaction View Modifiers.md): The Scripting app supports view modifiers for applying redaction to a view hierarchy. Redaction allows views to display placeholder, obscured, or invalidated content, commonly used to indicate loading states, protect sensitive data, or mark content as outdated. These modifiers closely follow SwiftUI's redacted(reason:) and unredacted() API behavior.
+- [Redaction View Modifiers](/doc/View Modifiers/Redaction View Modifiers.md)
 - [Safe Area](/doc/View Modifiers/Safe Area.md)
 - [Search Interactions](/doc/View Modifiers/Search Interactions.md)
-- [Set environment values (environments)](/doc/View Modifiers/Set environment values (environments).md): The editMode environment value controls the editing state of views that support editing behavior, such as List with row deletion or movement. It must be provided as an Observable<EditMode> so views can reactively update when the editing state changes.
+- [Set environment values (environments)](/doc/View Modifiers/Set environment values (environments).md)
 - [Swipe Actions](/doc/View Modifiers/Swipe Actions/index.md)
 - [Example](/doc/View Modifiers/Swipe Actions/index_example.md)
 - [Symbol Style](/doc/View Modifiers/Symbol Style.md)
@@ -306,7 +283,7 @@ It must be wrapped in a IntentSnippetIntentValue. Type Definition This wrapper m
 - [textFieldStyle](/doc/View Modifiers/textFieldStyle.md)
 - [tint](/doc/View Modifiers/tint.md)
 - [toggleStyle](/doc/View Modifiers/toggleStyle.md)
-- [Use with Toolbar Component](/doc/View Modifiers/toolbar/Use with Toolbar Component.md): The toolbar property can be used in two ways: By passing a ToolBarProps objectBy passing a VirtualNode, which must be a <Toolbar> component When using the component-based API, all toolbar content is declared inside a <Toolbar> container, and each item defines its placement explicitly. This provides clearer structure and more precise layout control, similar to SwiftUI. The <Toolbar> component serves as a container for toolbar content. It does not define placement itself; instead, ToolbarItem and ToolbarItemGroup determine where items go.
+- [Use with Toolbar Component](/doc/View Modifiers/toolbar/Use with Toolbar Component.md)
 - [Use with ToolbarProps](/doc/View Modifiers/toolbar/Use with ToolbarProps.md)
 - [translationHost](/doc/View Modifiers/translationHost.md)
 - [widgetBackground](/doc/View Modifiers/widgetBackground.md)
@@ -347,7 +324,7 @@ It must be wrapped in a IntentSnippetIntentValue. Type Definition This wrapper m
 - [Example](/doc/Views/Charts/RectAreaChart/index_example.md)
 - [RectChart](/doc/Views/Charts/RectChart/index.md)
 - [Example](/doc/Views/Charts/RectChart/index_example.md)
-- [RuleChart](/doc/Views/Charts/RuleChart/index.md): The RuleChart component displays a range or duration for each labeled item as a horizontal or vertical rule. It is suitable for visualizing time spans, data ranges, or active periods across categories.
+- [RuleChart](/doc/Views/Charts/RuleChart/index.md)
 - [Example](/doc/Views/Charts/RuleChart/index_example.md)
 - [RuleLineForLabelChart](/doc/Views/Charts/RuleLineForLabelChart.md)
 - [RuleLineForValueChart](/doc/Views/Charts/RuleLineForValueChart.md)
@@ -375,25 +352,8 @@ It must be wrapped in a IntentSnippetIntentValue. Type Definition This wrapper m
 - [Displaying text](/doc/Views/Displaying text/index.md)
 - [Example](/doc/Views/Displaying text/index_example.md)
 - [Editor](/doc/Views/Editor.md)
-- [EnvironmentValuesReader](/doc/Views/EnvironmentValuesReader.md): Below are the descriptions of each field. 1. colorScheme Type: ColorScheme
-The current system color appearance (light or dark). 2. colorSchemeContrast Type: ColorSchemeContrast
-Represents contrast settings such as standard or increased. 3. displayScale Type: number
-The display scale factor of the device (e.g., 2.0, 3.0). 4. horizontalSizeClass Type: UserInterfaceSizeClass | null
-The horizontal size class of the current environment: compact or regular. 5. verticalSizeClass Type: UserInterfaceSizeClass | null
-The vertical size class, same categories as above. 6. dismiss Type: () => void
-A function to dismiss the currently presented view (equivalent to SwiftUI’s dismiss()). 7. dismissSearch Type: () => void
-A function that dismisses the current searchable field, if active. 8. editMode Type: EditMode | null
-Indicates whether the view is in editing mode (e.g., during List editing). 9. widgetRenderingMode Type: WidgetRenderingMode
-The current widget rendering mode (e.g., fullColor, accented). 10. showsWidgetContainerBackground Type: boolean
-Indicates whether the widget is showing the system-provided container background. 11. isSearching Type: boolean
-Whether the view is currently in a searching state triggered by searchable. 12. isPresented Type: boolean
-Whether the view is currently being shown, unlike onAppear which is called every time the view appears, isPresented is called only once when the view is first shown. 13. activityFamily Type: "small" | "medium"
-The current LiveActivity size, similar to SwiftUI's activityFamily, used to determine the size of LiveActivity UI. 14. tabViewBottomAccessoryPlacement Type: 'expanded' | 'inline'
-The current TabView bottom accessory placement, similar to SwiftUI's tabViewBottomAccessoryPlacement. keys Type: Array<keyof EnvironmentValues>
-Specifies exactly which environment keys you want to read.
-Only these keys will be retrieved and passed to the callback. children(values) Type: (values: EnvironmentValues) => VirtualNode
-A rendering callback that receives the requested environment values and returns the corresponding view.
-- [GeometryReader](/doc/Views/GeometryReader.md): When GeometryReader constructs its child content, it injects a GeometryProxy instance into the children callback. This proxy exposes real-time layout information about the container.
+- [EnvironmentValuesReader](/doc/Views/EnvironmentValuesReader.md)
+- [GeometryReader](/doc/Views/GeometryReader.md)
 - [Gestures](/doc/Views/Gestures.md)
 - [Image](/doc/Views/Image/index.md)
 - [Example](/doc/Views/Image/index_example.md)
@@ -456,7 +416,7 @@ A rendering callback that receives the requested environment values and returns 
 - [SVG](/doc/Views/SVG.md)
 - [Scroll views](/doc/Views/Scroll views/index.md)
 - [Example](/doc/Views/Scroll views/index_example.md)
-- [ScrollViewReader](/doc/Views/ScrollViewReader.md): ScrollViewProxy represents the programmatic interface for controlling scrolling. It is provided by ScrollViewReader during rendering.
+- [ScrollViewReader](/doc/Views/ScrollViewReader.md)
 - [Search](/doc/Views/Search/index.md)
 - [Example](/doc/Views/Search/index_example.md)
 - [Shapes](/doc/Views/Shapes/index.md)
