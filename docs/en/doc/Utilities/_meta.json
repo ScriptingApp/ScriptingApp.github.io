@@ -1,0 +1,123 @@
+[
+  {
+    "type": "file",
+    "name": "Data",
+    "label": "Data"
+  },
+  {
+    "type": "file",
+    "name": "Encoding",
+    "label": "Encoding"
+  },
+  {
+    "type": "file",
+    "name": "UIImage",
+    "label": "UIImage"
+  },
+  {
+    "type": "file",
+    "name": "UUID",
+    "label": "UUID"
+  },
+  {
+    "type": "file",
+    "name": "Crypto",
+    "label": "Crypto"
+  },
+  {
+    "type": "file",
+    "name": "DateComponents",
+    "label": "DateComponents"
+  },
+  {
+    "type": "file",
+    "name": "DateFormatter",
+    "label": "DateFormatter"
+  },
+  {
+    "type": "file",
+    "name": "Path",
+    "label": "Path"
+  },
+  {
+    "type": "file",
+    "name": "FileManager",
+    "label": "FileManager"
+  },
+  {
+    "type": "file",
+    "name": "FileEntity",
+    "label": "FileEntity"
+  },
+  {
+    "type": "file",
+    "name": "Archive",
+    "label": "Archive",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Storage",
+    "label": "Storage"
+  },
+  {
+    "type": "dir",
+    "name": "Request",
+    "label": "Request",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "WebScoket",
+    "label": "WebScoket"
+  },
+  {
+    "type": "file",
+    "name": "socket.io",
+    "label": "socket.io"
+  },
+  {
+    "type": "dir",
+    "name": "SSH",
+    "label": "SSH",
+    "collapsible": true,
+    "collapsed": true,
+    "tag": "PRO"
+  },
+  {
+    "type": "dir",
+    "name": "HttpServer",
+    "label": "HttpServer",
+    "collapsible": true,
+    "collapsed": true,
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "OAuth2",
+    "label": "OAuth2"
+  },
+  {
+    "type": "dir",
+    "name": "URLSession",
+    "label": "URLSession",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Thread",
+    "label": "Thread"
+  },
+  {
+    "type": "file",
+    "name": "ItemProvider",
+    "label": "ItemProvider"
+  },
+  {
+    "type": "file",
+    "name": "App Events",
+    "label": "App Events"
+  }
+]

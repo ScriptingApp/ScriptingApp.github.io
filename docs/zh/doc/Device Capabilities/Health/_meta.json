@@ -1,0 +1,170 @@
+[
+  {
+    "type": "file",
+    "name": "HealthKit Permission Behavior",
+    "label": "HealthKit 权限行为",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Reading Characteristic Data",
+    "label": "读取特征数据",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Reading Quantity Samples",
+    "label": "读取数量型数据（HealthQuantitySample）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Reading Category Samples",
+    "label": "读取分类数据（HealthCategorySample）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Reading Correlation Data",
+    "label": "读取关联数据（HealthCorrelation）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Reading Workout Samples",
+    "label": "读取锻炼数据（HealthWorkout）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Reading Heartbeat Series Samples",
+    "label": "读取心跳序列数据（HealthHeartbeatSeriesSample）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Reading Activity Summaries",
+    "label": "读取活动摘要（HealthActivitySummary）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Query Statistics",
+    "label": "查询统计数据（HealthStatistics）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Query Statistics Collection",
+    "label": "查询统计数据集合（HealthStatisticsCollection）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Writing Health Quantity Samples",
+    "label": "写入数量型数据（HealthQuantitySample）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Writing Health Category Samples",
+    "label": "写入分类数据（HealthCategorySample）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Writing Health Correlation Data",
+    "label": "写入关联数据（HealthCorrelation）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthQuantityType",
+    "label": "健康数量型数据（HealthQuantityType）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthCategoryType",
+    "label": "健康分类数据（HealthCategoryType）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthCategoryValue Types",
+    "label": "健康分类值类型（HealthCategoryValue）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthUnit",
+    "label": "健康单位（HealthUnit）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthCharacteristicType",
+    "label": "健康特征类型（HealthCharacteristicType）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthQuantitySample",
+    "label": "健康数量型数据（HealthQuantitySample）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthCategorySample",
+    "label": "健康分类数据（HealthCategorySample）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthCorrelation",
+    "label": "健康关联数据（HealthCorrelation）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthWorkoutEvent",
+    "label": "健康锻炼事件（HealthWorkoutEvent）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthWorkoutActivityType",
+    "label": "健康锻炼活动类型（HealthWorkoutActivityType）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthWorkout",
+    "label": "健康锻炼数据（HealthWorkout）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthHeartbeatSeriesSample",
+    "label": "健康心跳序列数据（HealthHeartbeatSeriesSample）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthActivitySummary",
+    "label": "健康活动摘要（HealthActivitySummary）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthStatistics",
+    "label": "健康统计（HealthStatistics）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HealthStatisticsCollection",
+    "label": "健康统计集合（HealthStatisticsCollection）",
+    "tag": "PRO"
+  }
+]

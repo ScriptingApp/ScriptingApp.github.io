@@ -1,0 +1,65 @@
+[
+  {
+    "type": "dir",
+    "name": "Toggle",
+    "label": "切换开关",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Stepper",
+    "label": "步进器",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Slider",
+    "label": "滑块控件",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "ProgressView",
+    "label": "进度视图",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Picker",
+    "label": "选择器",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "DatePicker",
+    "label": "日期、时间选择器",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "ColorPicker",
+    "label": "颜色选择器",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Gauge",
+    "label": "仪表盘",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "ContentUnavailableView",
+    "label": "内容不可用视图",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

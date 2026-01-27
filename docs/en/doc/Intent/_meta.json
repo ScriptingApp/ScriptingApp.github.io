@@ -1,0 +1,25 @@
+[
+  {
+    "type": "file",
+    "name": "Quick Start",
+    "label": "Quick Start"
+  },
+  {
+    "type": "file",
+    "name": "SnippetIntent",
+    "label": "SnippetIntent",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Intent.continueInForeground",
+    "label": "Intent.continueInForeground",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Intent.requestConfirmation",
+    "label": "Intent.requestConfirmation",
+    "tag": "PRO"
+  }
+]

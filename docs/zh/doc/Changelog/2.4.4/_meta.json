@@ -1,0 +1,93 @@
+[
+  {
+    "type": "file",
+    "name": "SnippetIntent",
+    "label": "SnippetIntent",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Intent.continueInForeground",
+    "label": "Intent.continueInForeground",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Intent.requestConfirmation",
+    "label": "Intent.requestConfirmation",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "IntentMemoryStorage",
+    "label": "IntentMemoryStorage"
+  },
+  {
+    "type": "dir",
+    "name": "Liquid Glass Effect",
+    "label": "液态玻璃效果",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Glass Effect Transition",
+    "label": "玻璃效果过渡效果",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Use with Toolbar Component",
+    "label": "使用 Toolbar 组件"
+  },
+  {
+    "type": "file",
+    "name": "TabView",
+    "label": "TabView"
+  },
+  {
+    "type": "file",
+    "name": "New List View Modifiers",
+    "label": "新的 List 视图修饰符"
+  },
+  {
+    "type": "file",
+    "name": "ConcentricRectangle",
+    "label": "同心圆矩形（ConcentricRectangle）"
+  },
+  {
+    "type": "file",
+    "name": "matchedGeometryEffect",
+    "label": "匹配几何效果（matchedGeometryEffect）"
+  },
+  {
+    "type": "file",
+    "name": "matchedTransitionSource",
+    "label": "匹配过渡源（matchedTransitionSource）"
+  },
+  {
+    "type": "file",
+    "name": "NamespaceReader",
+    "label": "命名空间读取器（NamespaceReader）"
+  },
+  {
+    "type": "dir",
+    "name": "Notification",
+    "label": "通知",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "SFTP File",
+    "label": "SFTP 文件",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "SFTP Client",
+    "label": "SFTP 客户端",
+    "tag": "PRO"
+  }
+]

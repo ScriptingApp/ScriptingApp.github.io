@@ -1,0 +1,32 @@
+[
+  {
+    "type": "file",
+    "name": "SSH Client",
+    "label": "SSH Client",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "SFTP Client",
+    "label": "SFTP Client",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "SFTP File",
+    "label": "SFTP File",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "SSH Authentication Method",
+    "label": "SSH Authentication Method",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "TTY Stdin Writer",
+    "label": "TTY Stdin Writer",
+    "tag": "PRO"
+  }
+]

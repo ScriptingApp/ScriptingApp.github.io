@@ -1,0 +1,138 @@
+[
+  {
+    "type": "dir",
+    "name": "LineChart",
+    "label": "折线图（LineChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "BarChart",
+    "label": "柱状图（BarChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "RectChart",
+    "label": "矩形图（RectChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "RuleChart",
+    "label": "标尺图（RuleChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "LineCategoryChart",
+    "label": "分类折线图（LineCategoryChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "BarStackChart",
+    "label": "堆叠柱状图（BarStackChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "BarGroupChart",
+    "label": "分组柱状图（BarGroupChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "AreaStackChart",
+    "label": "堆叠面积图（AreaStackChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "BarGanttChart",
+    "label": "甘特柱状图（BarGanttChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "RangeAreaChart",
+    "label": "范围面积图（RangeAreaChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Bar1DChart",
+    "label": "一维柱状图（Bar1DChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "PointChart",
+    "label": "点状图（PointChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "PointCategoryChart",
+    "label": "分类点状图（PointCategoryChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "HeatMapChart",
+    "label": "热力图（HeatMapChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "RectAreaChart",
+    "label": "矩形面积图（RectAreaChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "PieChart",
+    "label": "饼图（PieChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "DonutChart",
+    "label": "环形图（DonutChart）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "RuleLineForValueChart",
+    "label": "值线图（RuleLineForValueChart）"
+  },
+  {
+    "type": "file",
+    "name": "RuleLineForLabelChart",
+    "label": "标签线图（RuleLineForLabelChart）"
+  },
+  {
+    "type": "dir",
+    "name": "Multiple Charts Example",
+    "label": "多个图表示例",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

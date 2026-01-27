@@ -1,0 +1,26 @@
+[
+  {
+    "type": "file",
+    "name": "Assistant Quick Start",
+    "label": "快速了解智能助手",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "requestStructuredData",
+    "label": "请求结构化数据",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "requestStreaming",
+    "label": "请求流式数据",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Assistant Conversation APIs",
+    "label": "智能助手会话 API",
+    "tag": "PRO"
+  }
+]

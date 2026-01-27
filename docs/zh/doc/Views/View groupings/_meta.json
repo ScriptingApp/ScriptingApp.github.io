@@ -1,0 +1,34 @@
+[
+  {
+    "type": "file",
+    "name": "Group",
+    "label": "Group"
+  },
+  {
+    "type": "file",
+    "name": "Section",
+    "label": "Section"
+  },
+  {
+    "type": "dir",
+    "name": "ForEach",
+    "label": "ForEach",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "GroupBox",
+    "label": "GroupBox"
+  },
+  {
+    "type": "file",
+    "name": "Form",
+    "label": "表单"
+  },
+  {
+    "type": "file",
+    "name": "ControlGroup",
+    "label": "控件组"
+  }
+]

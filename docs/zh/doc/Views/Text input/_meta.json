@@ -1,0 +1,21 @@
+[
+  {
+    "type": "dir",
+    "name": "TextField",
+    "label": "文本输入框（TextField）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "SecureField",
+    "label": "安全文本输入框（SecureField）",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Keyboard",
+    "label": "键盘"
+  }
+]

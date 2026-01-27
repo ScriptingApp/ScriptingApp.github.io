@@ -1,0 +1,138 @@
+[
+  {
+    "type": "dir",
+    "name": "LineChart",
+    "label": "LineChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "BarChart",
+    "label": "BarChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "RectChart",
+    "label": "RectChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "RuleChart",
+    "label": "RuleChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "LineCategoryChart",
+    "label": "LineCategoryChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "BarStackChart",
+    "label": "BarStackChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "BarGroupChart",
+    "label": "BarGroupChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "AreaStackChart",
+    "label": "AreaStackChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "BarGanttChart",
+    "label": "BarGanttChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "RangeAreaChart",
+    "label": "RangeAreaChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Bar1DChart",
+    "label": "Bar1DChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "PointChart",
+    "label": "PointChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "PointCategoryChart",
+    "label": "PointCategoryChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "HeatMapChart",
+    "label": "HeatMapChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "RectAreaChart",
+    "label": "RectAreaChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "PieChart",
+    "label": "PieChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "DonutChart",
+    "label": "DonutChart",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "RuleLineForValueChart",
+    "label": "RuleLineForValueChart"
+  },
+  {
+    "type": "file",
+    "name": "RuleLineForLabelChart",
+    "label": "RuleLineForLabelChart"
+  },
+  {
+    "type": "dir",
+    "name": "Multiple Charts Example",
+    "label": "Multiple Charts Example",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

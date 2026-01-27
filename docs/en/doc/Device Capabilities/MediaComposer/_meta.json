@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "Quick Start",
+    "label": "Quick Start"
+  },
+  {
+    "type": "file",
+    "name": "MediaComposer Example",
+    "label": "MediaComposer Example"
+  },
+  {
+    "type": "file",
+    "name": "MediaTime",
+    "label": "MediaTime"
+  }
+]

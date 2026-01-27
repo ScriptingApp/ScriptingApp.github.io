@@ -1,0 +1,21 @@
+[
+  {
+    "text": "docs",
+    "link": "/doc/Quick%20Start",
+    "activeMatch": "/doc/"
+  },
+  {
+    "text": "privacy",
+    "link": "/privacy/policy",
+    "activeMatch": "/privacy/"
+  },
+  {
+    "text": "Version",
+    "items": [
+      {
+        "text": "TestFlight",
+        "link": "https://scriptingapp.github.io"
+      }
+    ]
+  }
+]

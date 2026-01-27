@@ -1,0 +1,32 @@
+[
+  {
+    "type": "file",
+    "name": "Widget Quick Start",
+    "label": "Widget Quick Start"
+  },
+  {
+    "type": "file",
+    "name": "Widget API",
+    "label": "Widget API"
+  },
+  {
+    "type": "file",
+    "name": "Tinted Mode Adaptation Guide",
+    "label": "Tinted Mode Adaptation Guide"
+  },
+  {
+    "type": "file",
+    "name": "Widget Background in Tinted Mode",
+    "label": "Widget Background in Tinted Mode"
+  },
+  {
+    "type": "file",
+    "name": "AccessoryWidgetBackground",
+    "label": "AccessoryWidgetBackground"
+  },
+  {
+    "type": "file",
+    "name": "Animation for Widget and LiveActivity",
+    "label": "Animation for Widget and LiveActivity"
+  }
+]

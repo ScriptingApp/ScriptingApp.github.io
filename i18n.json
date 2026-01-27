@@ -1,0 +1,54 @@
+{
+    "start": {
+        "en": "Getting Started",
+        "zh": "开始"
+    },
+    "docs": {
+        "en": "Documentation",
+        "zh": "文档"
+    },
+    "changelog": {
+        "en": "Changelog",
+        "zh": "更新日志"
+    },
+    "learnMore": {
+        "en": "Learn More",
+        "zh": "了解更多"
+    },
+    "features": {
+        "en": "Features",
+        "zh": "特性"
+    },
+    "overview": {
+        "en": "Overview",
+        "zh": "概览"
+    },
+    "example": {
+        "en": "Example",
+        "zh": "示例"
+    },
+    "types": {
+        "en": "Types",
+        "zh": "类型"
+    },
+    "api": {
+        "en": "API",
+        "zh": "API"
+    },
+    "layout": {
+        "en": "Layout",
+        "zh": "布局"
+    },
+    "views": {
+        "en": "View",
+        "zh": "视图"
+    },
+    "view_modifiers": {
+        "en": "View Modifiers",
+        "zh": "视图修饰器"
+    },
+    "privacy": {
+        "en": "Privacy",
+        "zh": "隐私"
+    }
+}

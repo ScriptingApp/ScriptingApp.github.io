@@ -1,0 +1,109 @@
+[
+  {
+    "type": "file",
+    "name": "Quick Start",
+    "label": "Quick Start"
+  },
+  {
+    "type": "dir",
+    "name": "Changelog",
+    "label": "Changelog",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Widget",
+    "label": "Widget",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Control Widget",
+    "label": "Control Widget",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "AppIntent",
+    "label": "AppIntent"
+  },
+  {
+    "type": "dir",
+    "name": "Intent",
+    "label": "Intent",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Views",
+    "label": "Views",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Types",
+    "label": "Types",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "View Modifiers",
+    "label": "View Modifiers",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "LiveActivity",
+    "label": "LiveActivity"
+  },
+  {
+    "type": "file",
+    "name": "Interactive Widget and LiveActivity",
+    "label": "Interactive Widget and LiveActivity"
+  },
+  {
+    "type": "file",
+    "name": "Custom Keyboard",
+    "label": "Custom Keyboard",
+    "tag": "PRO"
+  },
+  {
+    "type": "dir",
+    "name": "Assistant",
+    "label": "Assistant",
+    "collapsible": true,
+    "collapsed": true,
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "AssistantTool",
+    "label": "AssistantTool",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Script",
+    "label": "Script"
+  },
+  {
+    "type": "dir",
+    "name": "Utilities",
+    "label": "Utilities",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Device Capabilities",
+    "label": "Device Capabilities",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "type": "file",
+    "name": "Color",
+    "label": "颜色"
+  },
+  {
+    "type": "file",
+    "name": "ShapeStyle",
+    "label": "形状样式"
+  },
+  {
+    "type": "file",
+    "name": "DynamicShapeStyle",
+    "label": "DynamicShapeStyle"
+  },
+  {
+    "type": "file",
+    "name": "Alignment",
+    "label": "对齐"
+  },
+  {
+    "type": "file",
+    "name": "Shape",
+    "label": "形状"
+  }
+]
