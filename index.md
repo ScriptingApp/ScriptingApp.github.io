@@ -4,7 +4,7 @@ iOS Automation Tool
 
 > by thomfang
 
-[Start](/doc/Quick%20Start) | [Download](https://apps.apple.com/app/apple-store/id6479691128)
+[Start](/guide/Quick Start) | [Download](https://apps.apple.com/app/apple-store/id6479691128)
 
 ## Features
 

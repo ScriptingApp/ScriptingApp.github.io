@@ -1,451 +1,451 @@
 # Scripting
 
-## Documentation
-
-- [AppIntent](/doc/AppIntent.md): This interface serves as the core mechanism for executing script logic behind controls in Widgets, Live Activities, and ControlWidgets.
-- [Assistant Conversation APIs](/doc/Assistant/Assistant Conversation APIs.md): The Conversation APIs are used to start, control, and present a system-hosted Assistant chat session.
-- [Assistant Quick Start](/doc/Assistant/Assistant Quick Start.md): Quickly master the use of Assistant.
-- [requestStreaming](/doc/Assistant/requestStreaming.md): Requests a streaming response from the Assistant.
-- [requestStructuredData](/doc/Assistant/requestStructuredData.md): Request structured JSON data.
-- [AssistantTool](/doc/AssistantTool.md): Custom tools for the assistant.
-- [Animation and Transition](/doc/Changelog/2.4.3/Animation and Transition.md): These interfaces define how view transitions occur when their properties change.
-- [EnvironmentValuesReader](/doc/Changelog/2.4.3/EnvironmentValuesReader.md): This view allows you to read environment values from the current view hierarchy.
-- [ForEach](/doc/Changelog/2.4.3/ForEach/index.md): Iterating over dynamic data
-- [Example](/doc/Changelog/2.4.3/ForEach/iterating.md): Iterating over dynamic data
-- [GeometryReader](/doc/Changelog/2.4.3/GeometryReader.md): It provides information about the size, padding, safe area, and safe area insets of the current container.
-- [LiveActivity View Modifiers](/doc/Changelog/2.4.3/LiveActivity View Modifiers.md): These modifiers used to customize the appearance of Live Activities on the Lock Screen.
-- [LiveActivity](/doc/Changelog/2.4.3/LiveActivity.md): To improve the stability and performance of LiveActivity, the API has been redesigned.
-- [ReorderableForEach](/doc/Changelog/2.4.3/ReorderableForEach/index.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
-- [Example](/doc/Changelog/2.4.3/ReorderableForEach/index_example.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
-- [SSH Client](/doc/Changelog/2.4.3/SSH Client.md): This interface provides a simple way to connect to remote servers using SSH protocol.
-- [ScrollViewReader](/doc/Changelog/2.4.3/ScrollViewReader.md): Allowing scripts to programmatically control scrolling position within scrollable content such as List or ScrollView.
-- [Set environment values (environments)](/doc/Changelog/2.4.3/Set environment values (environments).md): This view modifier allows you to set environment values for a view hierarchy.
-- [Thread](/doc/Changelog/2.4.3/Thread.md): This interface provides a simple way to let you manually switch threads.
-- [useObservable](/doc/Changelog/2.4.3/useObservable.md): Used to drive UI rendering and work with the animation system.
-- [ConcentricRectangle](/doc/Changelog/2.4.4/ConcentricRectangle.md): It is designed to create rectangles with progressively inset (concentric) corner geometry, which adapts naturally to modern UI designs.
-- [Glass Effect Transition](/doc/Changelog/2.4.4/Glass Effect Transition/index.md): How Liquid Glass materials animate during view changes.
-- [Example](/doc/Changelog/2.4.4/Glass Effect Transition/index_example.md): How Liquid Glass materials animate during view changes.
-- [Intent.continueInForeground](/doc/Changelog/2.4.4/Intent.continueInForeground.md): This method requests the system to bring the Scripting app to the foreground while a Shortcut is running.
-- [Intent.requestConfirmation](/doc/Changelog/2.4.4/Intent.requestConfirmation.md): This method pauses script execution and asks the user to confirm an action through a system-managed confirmation UI.
-- [IntentMemoryStorage](/doc/Changelog/2.4.4/IntentMemoryStorage.md): A lightweight, session-based storage for sharing state across multiple AppIntents during a single Shortcut execution.
-- [Liquid Glass Effect](/doc/Changelog/2.4.4/Liquid Glass Effect/index.md): Liquid Glass visual system introduced in iOS 26.
-- [Example](/doc/Changelog/2.4.4/Liquid Glass Effect/index_example.md): Liquid Glass visual system introduced in iOS 26.
-- [NamespaceReader](/doc/Changelog/2.4.4/NamespaceReader.md): This view is used to create and manage a geometry animation namespace.
-- [New List View Modifiers](/doc/Changelog/2.4.4/New List View Modifiers.md): These modifiers allow you to customize how sections behave and appear inside a <List> component.
-- [Notification](/doc/Changelog/2.4.4/Notification/index.md): The interface for managing local notification-related activities.
-- [Example](/doc/Changelog/2.4.4/Notification/index_example.md): The interface for managing local notification-related activities.
-- [SFTP Client](/doc/Changelog/2.4.4/SFTP Client.md): This interface provides a simple way to transfer files securely over SSH using SFTP protocol.
-- [SFTP File](/doc/Changelog/2.4.4/SFTP File.md): This interface provides low-level operations such as reading, writing, retrieving attributes, and closing the file.
-- [SnippetIntent](/doc/Changelog/2.4.4/SnippetIntent.md): SnippetIntent is a special kind of AppIntent whose purpose is to render interactive Snippet UI cards inside the Shortcuts app (iOS 26+).
-- [TabView](/doc/Changelog/2.4.4/TabView.md): Displays a set of child views in a tabbed interface.
-- [Use with Toolbar Component](/doc/Changelog/2.4.4/Use with Toolbar Component.md): Use the Toolbar component to populate a view’s navigation or toolbar area with various items.
-- [matchedGeometryEffect](/doc/Changelog/2.4.4/matchedGeometryEffect.md): This view modifier establishes a geometric relationship between different views, allowing them to animate smoothly when transitioning across different layouts, different containers, different conditional render states, different size and position configurations.
-- [matchedTransitionSource](/doc/Changelog/2.4.4/matchedTransitionSource.md): This view modifier marks a view as the geometric source of a navigation transition.
-- [AVPlayerView](/doc/Changelog/2.4.5/AVPlayerView.md): This component is intended for media-centric scenarios where native playback behavior, PiP, Now Playing integration, and background playback are required.
-- [AppStore](/doc/Changelog/2.4.5/AppStore.md): This API is used to display the details of an app in the App Store, without leaving the Scripting app.
-- [Assistant Conversation APIs](/doc/Changelog/2.4.5/Assistant/Assistant Conversation APIs.md): The Conversation APIs are used to start, control, and present a system-hosted Assistant chat session.
-- [Assistant Quick Start](/doc/Changelog/2.4.5/Assistant/Assistant Quick Start.md): Quickly master the use of Assistant.
-- [requestStreaming](/doc/Changelog/2.4.5/Assistant/requestStreaming.md): Requests a streaming response from the Assistant.
-- [requestStructuredData](/doc/Changelog/2.4.5/Assistant/requestStructuredData.md): Request structured JSON data.
-- [CalendarEvent](/doc/Changelog/2.4.5/CalendarEvent.md): This interface enables you to create and manage events in iOS calendars, with properties like title, location, dates, attendees, and recurrence.
-- [DateFormatter](/doc/Changelog/2.4.5/DateFormatter.md): This class is used to format Date objects into strings, or parse strings into Date objects.
-- [EventAlarm](/doc/Changelog/2.4.5/EventAlarm.md): This class represents a reminder rule that can be attached to both CalendarEvent and Reminder objects.
-- [Keychain](/doc/Changelog/2.4.5/Keychain.md): The interface to store data in Keychain.
-- [LivePhotoView](/doc/Changelog/2.4.5/LivePhotoView.md): This component is intended for media-centric scenarios where Live Photo playback is required.
-- [NavigationStack with path](/doc/Changelog/2.4.5/NavigationStack with path.md): It allows direct manipulation of the navigation history using a bound observable array.
-- [Photos](/doc/Changelog/2.4.5/Photos/index.md): The interface that manages access and changes to the user’s photo library.
-- [Example](/doc/Changelog/2.4.5/Photos/index_example.md): The interface that manages access and changes to the user’s photo library.
-- [Picture in Pictuer View Modifiers](/doc/Changelog/2.4.5/Picture in Pictuer View Modifiers.md): These apis allow developers to render any view inside a system PiP window.
-- [Reminder](/doc/Changelog/2.4.5/Reminder.md): This interface allows you to create, edit, and manage reminders in a calendar. This includes setting titles, due dates, priorities, and recurrence rules.
-- [ReorderableForEach](/doc/Changelog/2.4.5/ReorderableForEach/index.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
-- [Example](/doc/Changelog/2.4.5/ReorderableForEach/index_example.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
-- [Selectable List](/doc/Changelog/2.4.5/Selectable List.md): Implements selectable and multiselectable list features.
-- [VideoPreviewView](/doc/Changelog/2.4.5/VideoPreviewView.md): A view that displays the live camera preview associated with a VideoRecorder instance.
-- [VideoRecorder](/doc/Changelog/2.4.5/VideoRecorder.md): A high-level API for recording video with fine-grained control over camera configuration, audio capture, encoding, pause/resume behavior, and final file output.
-- [WebViewController](/doc/Changelog/2.4.5/WebViewController.md): It is designed for use cases like custom in-app browsers, rendering dynamic HTML, or communicating with JavaScript running in a web context.
-- [Device](/doc/Changelog/2.4.6/Device/index.md): New networkInterfaces method.
-- [Example](/doc/Changelog/2.4.6/Device/index_example.md): New networkInterfaces method.
-- [Intent](/doc/Changelog/2.4.6/Intent.md): New Intent.image method for returning images to Shortcuts.
-- [ItemProvider](/doc/Changelog/2.4.6/ItemProvider.md): This class represents a deferred data provider.
-- [MediaComposer Example](/doc/Changelog/2.4.6/MediaComposer/MediaComposer Example.md): This example shows how to use MediaComposer.
-- [MediaTime](/doc/Changelog/2.4.6/MediaComposer/MediaTime.md): This class represents a media time.
-- [Quick Start](/doc/Changelog/2.4.6/MediaComposer/Quick Start.md): Quickly master the use of MediaComposer.
-- [SharedAudioSession](/doc/Changelog/2.4.6/SharedAudioSession.md): New outputVolume property and addOutputVolumeChangedListener and removeOutputVolumeChangedListener methods.
-- [VideoRecorder](/doc/Changelog/2.4.6/VideoRecorder.md): New displayZoomFactor property for displaying user-readable zoom factor.
-- [onDrag and onDrop View Modifiers](/doc/Changelog/2.4.6/onDrag and onDrop View Modifiers.md): These APIs enable views to act as drag sources, drop destinations, or both, supporting intra-app and cross-app drag-and-drop scenarios.
-- [onDropContent](/doc/Changelog/2.4.6/onDropContent.md): New Observable support, perform function has been adjusted, return an array of ItemProvider objects for deferred loading data.
-- [Control Widget](/doc/Control Widget.md): Add custom Button or Toggle controls to the Control Center or Lock Screen
-- [Custom Keyboard](/doc/Custom Keyboard.md): Create custom keyboards with unique layouts and functionalities.
-- [AVMetadataItem](/doc/Device Capabilities/AVMetadataItem.md): AVMetadataItem is a class that represents a metadata item in an audio or video asset.
-- [AppStore](/doc/Device Capabilities/AppStore.md): This API is used to display the details of an app in the App Store, without leaving the Scripting app.
-- [Audio Player](/doc/Device Capabilities/Audio Player.md): The interface allows for playback of both local and network audio sources, and offers controls such as play, pause, stop, volume, and more.
-- [AudioRecorder](/doc/Device Capabilities/AudioRecorder.md): The interface allows you to record audio data to a file. It provides functionalities to start, stop, pause, and manage audio recordings, with configurable settings for audio quality, sample rate, format, and more.
-- [BackgroundKeeper](/doc/Device Capabilities/BackgroundKeeper.md): This interface provides methods for keeping the Scripting app running in the background.
-- [BluetoothCentralManager](/doc/Device Capabilities/Bluetooth/BluetoothCentralManager.md): This interface allows you to scan for, connect to, and interact with nearby Bluetooth peripherals.
-- [BluetoothCharacteristic](/doc/Device Capabilities/Bluetooth/BluetoothCharacteristic.md): This interface represents a Bluetooth Low Energy (BLE) service. A service is a logical grouping of related characteristics and possibly other included services.
-- [BluetoothPeripheral](/doc/Device Capabilities/Bluetooth/BluetoothPeripheral.md): This interface provides properties and methods for interacting with the device, including connecting, discovering services and characteristics, reading/writing values, and subscribing to notifications.
-- [BluetoothPeripheralManager](/doc/Device Capabilities/Bluetooth/BluetoothPeripheralManager.md): This interface allows you to create a Bluetooth peripheral that can advertise services and characteristics, and accept connections from central devices.
-- [BluetoothService](/doc/Device Capabilities/Bluetooth/BluetoothService.md): This interface represents a Bluetooth Low Energy (BLE) service. A service is a logical grouping of related characteristics and possibly other included services.
-- [Calendar](/doc/Device Capabilities/Calendar.md): This interface allows you to interact with iOS calendars, enabling operations like retrieving default calendars, creating custom calendars, and managing calendar settings and events.
-- [CalendarEvent](/doc/Device Capabilities/CalendarEvent.md): This interface enables you to create and manage events in iOS calendars, with properties like title, location, dates, attendees, and recurrence.
-- [Contact](/doc/Device Capabilities/Contact/index.md): This interface allows you to access and manage contacts on the device. You can create, query, update, and delete contacts, as well as manage contact groups and containers.
-- [Example](/doc/Device Capabilities/Contact/index_example.md): This interface allows you to access and manage contacts on the device. You can create, query, update, and delete contacts, as well as manage contact groups and containers.
-- [Device](/doc/Device Capabilities/Device/index.md): Provides the information abouts the device, also some methods to use the capabilities of the device.
-- [Example](/doc/Device Capabilities/Device/index_example.md): Provides the information abouts the device, also some methods to use the capabilities of the device.
-- [DocumentPicker](/doc/Device Capabilities/DocumentPicker.md): Pick files from Files app.
-- [EventAlarm](/doc/Device Capabilities/EventAlarm.md): This class represents a reminder rule that can be attached to both CalendarEvent and Reminder objects.
-- [FontPicker](/doc/Device Capabilities/FontPicker.md): This namespace provides methods for selecting fonts from the system’s available font list.
-- [HapticFeedback](/doc/Device Capabilities/HapticFeedback.md): Haptic feedback provides a tactile response, such as a tap, that draws attention and reinforces both actions and events.
-- [HealthActivitySummary](/doc/Device Capabilities/Health/HealthActivitySummary.md): Represents a summary of daily activity, including steps taken, distance traveled, and calories burned.
-- [HealthCategorySample](/doc/Device Capabilities/Health/HealthCategorySample.md): Represents a health category sample, such as sleep analysis, menstrual flow, ovulation test results, etc.
-- [HealthCategoryType](/doc/Device Capabilities/Health/HealthCategoryType.md): This interface provides a way to define and manage health category types, which represent qualitative health data such as sleep analysis, mood, or menstrual cycle.
-- [HealthCategoryValue Types](/doc/Device Capabilities/Health/HealthCategoryValue Types.md): This interface provides a way to define and manage health category value types, which represent specific values for health category data such as sleep stages or mood states.
-- [HealthCharacteristicType](/doc/Device Capabilities/Health/HealthCharacteristicType.md): An enumeration of health characteristics such as biological sex, blood type, skin type, wheelchair use, and activity mobility patterns.
-- [HealthCorrelation](/doc/Device Capabilities/Health/HealthCorrelation.md): Represents a health correlation, which is a relationship between two or more health data samples, such as blood pressure readings and heart rate.
-- [HealthHeartbeatSeriesSample](/doc/Device Capabilities/Health/HealthHeartbeatSeriesSample.md): Represents a series of heartbeat samples, which can be used to analyze heart rate variability or other cardiac metrics.
-- [HealthKit Permission Behavior](/doc/Device Capabilities/Health/HealthKit Permission Behavior.md): iOS HealthKit-specific permission behavior.
-- [HealthQuantitySample](/doc/Device Capabilities/Health/HealthQuantitySample.md): Represents a health quantity sample, such as a heart rate measurement, recorded steps, or calories consumed.
-- [HealthQuantityType](/doc/Device Capabilities/Health/HealthQuantityType.md): This interface provides a way to define and manage health quantity types, which represent measurable health data such as steps, heart rate, or calories burned.
-- [HealthStatistics](/doc/Device Capabilities/Health/HealthStatistics.md): This interface provides a way to calculate statistics for health data, such as average, minimum, maximum, and sum for health quantity samples.
-- [HealthStatisticsCollection](/doc/Device Capabilities/Health/HealthStatisticsCollection.md): This interface provides a way to collect and manage statistics for health data over a specified time period, such as average, minimum, maximum, and sum for health quantity samples.
-- [HealthUnit](/doc/Device Capabilities/Health/HealthUnit.md): This interface provides a way to define and manage health units, which represent the measurement units for health data such as kilograms, meters, or beats per minute.
-- [HealthWorkout](/doc/Device Capabilities/Health/HealthWorkout.md): Represents a health workout, which is a structured activity such as running, cycling, or swimming, with associated metadata like duration, distance, and calories burned.
-- [HealthWorkoutActivityType](/doc/Device Capabilities/Health/HealthWorkoutActivityType.md): An enumeration of health workout activity types, such as running, cycling, swimming, etc.
-- [HealthWorkoutEvent](/doc/Device Capabilities/Health/HealthWorkoutEvent.md): Represents a health workout event, such as a start or end of a workout session, or a pause in the workout.
-- [Query Statistics Collection](/doc/Device Capabilities/Health/Query Statistics Collection.md): This interface allows you to query a collection of health statistics, such as average, minimum, maximum, and sum for health quantity samples over a specified time period.
-- [Query Statistics](/doc/Device Capabilities/Health/Query Statistics.md): This interface allows you to query statistics for health data, such as average, minimum, maximum, and sum for health quantity samples.
-- [Reading Activity Summaries](/doc/Device Capabilities/Health/Reading Activity Summaries.md): This interface allows you to read health activity summaries from the HealthKit store.
-- [Reading Category Samples](/doc/Device Capabilities/Health/Reading Category Samples.md): This interface allows you to read health category samples from the HealthKit store.
-- [Reading Characteristic Data](/doc/Device Capabilities/Health/Reading Characteristic Data.md): This interface allows you to read health characteristic data from the HealthKit store.
-- [Reading Correlation Data](/doc/Device Capabilities/Health/Reading Correlation Data.md): This interface allows you to read health correlation data from the HealthKit store.
-- [Reading Heartbeat Series Samples](/doc/Device Capabilities/Health/Reading Heartbeat Series Samples.md): This interface allows you to read health heartbeat series samples from the HealthKit store.
-- [Reading Quantity Samples](/doc/Device Capabilities/Health/Reading Quantity Samples.md): This interface allows you to read health quantity samples from the HealthKit store.
-- [Reading Workout Samples](/doc/Device Capabilities/Health/Reading Workout Samples.md): This interface allows you to read health workout samples from the HealthKit store.
-- [Writing Health Category Samples](/doc/Device Capabilities/Health/Writing Health Category Samples.md): This interface allows you to write health category samples to the HealthKit store.
-- [Writing Health Correlation Data](/doc/Device Capabilities/Health/Writing Health Correlation Data.md): This interface allows you to write health correlation data to the HealthKit store.
-- [Writing Health Quantity Samples](/doc/Device Capabilities/Health/Writing Health Quantity Samples.md): This interface allows you to write health quantity samples to the HealthKit store.
-- [Keychain](/doc/Device Capabilities/Keychain.md): The interface to store data in Keychain.
-- [LocalAuth](/doc/Device Capabilities/LocalAuth.md): This interface provides authentication with biometrics such as fingerprint or facial recognition.
-- [Location](/doc/Device Capabilities/Location.md): Getting the current location of your device.
-- [MediaComposer Example](/doc/Device Capabilities/MediaComposer/MediaComposer Example.md): This example shows how to use MediaComposer.
-- [MediaTime](/doc/Device Capabilities/MediaComposer/MediaTime.md): This class represents a media time.
-- [Quick Start](/doc/Device Capabilities/MediaComposer/Quick Start.md): Quickly master the use of MediaComposer.
-- [MediaPlayer](/doc/Device Capabilities/MediaPlayer.md): This interface allows you to interact with the Now Playing Center, manage Now Playing Info, and respond to remote control events.
-- [Notification](/doc/Device Capabilities/Notification/index.md): The interface for managing local notification-related activities.
-- [Example](/doc/Device Capabilities/Notification/index_example.md): The interface for managing local notification-related activities.
-- [PDF](/doc/Device Capabilities/PDF.md): A high-level interface for interacting with PDF files.
-- [Pasteboard](/doc/Device Capabilities/Pasteboard.md): This namspace provides a complete interface for reading, writing, and observing system pasteboard  changes.
-- [Photos](/doc/Device Capabilities/Photos/index.md): The interface that manages access and changes to the user’s photo library.
-- [Example](/doc/Device Capabilities/Photos/index_example.md): The interface that manages access and changes to the user’s photo library.
-- [AVPlayerView](/doc/Device Capabilities/Play Video/AVPlayerView.md): This component is intended for media-centric scenarios where native playback behavior, PiP, Now Playing integration, and background playback are required.
-- [VideoPlayer](/doc/Device Capabilities/Play Video/VideoPlayer/index.md): VideoPlayer view lets you playback movies from any URL, local or remote.
-- [Example](/doc/Device Capabilities/Play Video/VideoPlayer/index_example.md): VideoPlayer view lets you playback movies from any URL, local or remote.
-- [QRCode](/doc/Device Capabilities/QRCode.md): Parse the QR code image file, or open the scan code page to scan.
-- [QuickLook](/doc/Device Capabilities/QuickLook.md): A simple way to preview text, images, or files within your scripts
-- [Recurrence](/doc/Device Capabilities/Recurrence.md): The recurrence-related types and classes allow you to define and manage recurring patterns for events and reminders.
-- [Reminder](/doc/Device Capabilities/Reminder.md): This interface allows you to create, edit, and manage reminders in a calendar. This includes setting titles, due dates, priorities, and recurrence rules.
-- [Safari](/doc/Device Capabilities/Safari/index.md): Present a website either in-app or leaving the app and opening the system default browser.
-- [Example](/doc/Device Capabilities/Safari/index_example.md): Present a website either in-app or leaving the app and opening the system default browser.
-- [Send Mail](/doc/Device Capabilities/Send Mail.md): This interface allows you to present a mail compose view within your app. You can specify recipients, subject, body, and attachments.
-- [Send Message](/doc/Device Capabilities/Send Message.md): This interface allows you to send messages using the device's messaging capabilities, such as SMS or iMessage.
-- [ShareSheet](/doc/Device Capabilities/ShareSheet.md): You can share data from your script using this interface.
-- [SharedAudioSession](/doc/Device Capabilities/SharedAudioSession.md): The shared audio session instance. An audio session acts as an intermediary between your app and the operating system — and, in turn, the underlying audio hardware.
-- [Speech](/doc/Device Capabilities/Speech/index.md): Text To Speech.
-- [Example](/doc/Device Capabilities/Speech/index_example.md): Text To Speech.
-- [SpeechRecognition](/doc/Device Capabilities/SpeechRecognition/index.md): The interface for managing the speech recognizer process.
-- [Example](/doc/Device Capabilities/SpeechRecognition/index_example.md): The interface for managing the speech recognizer process.
-- [Translation](/doc/Device Capabilities/Translation.md): This interface provides language translation capabilities, allowing you to translate text between different languages.
-- [VideoRecorder](/doc/Device Capabilities/VideoRecorder.md): A high-level API for recording video with fine-grained control over camera configuration, audio capture, encoding, pause/resume behavior, and final file output.
-- [Vision](/doc/Device Capabilities/Vision.md): The module provides APIs for text recognition tasks.
-- [Weather](/doc/Device Capabilities/Weather/index.md): This interface provides access to real-time and forecast weather data.
-- [Example](/doc/Device Capabilities/Weather/index_example.md): This interface provides access to real-time and forecast weather data.
-- [WebViewController](/doc/Device Capabilities/WebViewController.md): It is designed for use cases like custom in-app browsers, rendering dynamic HTML, or communicating with JavaScript running in a web context.
-- [Intent.continueInForeground](/doc/Intent/Intent.continueInForeground.md): This method requests the system to bring the Scripting app to the foreground while a Shortcut is running.
-- [Intent.requestConfirmation](/doc/Intent/Intent.requestConfirmation.md): This method pauses script execution and asks the user to confirm an action through a system-managed confirmation UI.
-- [Quick Start](/doc/Intent/Quick Start.md): Quickly master the use of Intents.
-- [SnippetIntent](/doc/Intent/SnippetIntent.md): SnippetIntent is a special kind of AppIntent whose purpose is to render interactive Snippet UI cards inside the Shortcuts app (iOS 26+).
-- [Interactive Widget and LiveActivity](/doc/Interactive Widget and LiveActivity.md): To create dynamic and interactive UIs using Button and Toggle views.
-- [LiveActivity](/doc/LiveActivity.md): Display your Script’s data in the Dynamic Island and on the Lock Screen and offer quick interactions.
-- [Quick Start](/doc/Quick Start.md): Quickly master the use of Scripting app.
-- [Script](/doc/Script.md): This API allows you to build reusable script logic, trigger automation via custom URL schemes, and manage inter-script communication in a structured and efficient manner.
-- [Alignment](/doc/Types/Alignment.md): The Alignment type defines how to position content within a view’s frame, mirroring the behavior of SwiftUI’s built-in alignments.
-- [Color](/doc/Types/Color.md): The Color API supports various color formats, including HEX strings, RGBA strings, and predefined color keywords
-- [DynamicShapeStyle](/doc/Types/DynamicShapeStyle.md): This type allows you to define two distinct styles for a shape—one for light mode and another for dark mode. The system automatically applies the appropriate style based on the current color scheme (light or dark) of the user’s device.
-- [Shape](/doc/Types/Shape.md): This property defines a visual clipping or background shape used in view modifiers such as clipShape, background, or border.
-- [ShapeStyle](/doc/Types/ShapeStyle.md): This type defines how colors, gradients, and materials can be applied to a view’s foreground or background, mirroring the styling capabilities found in SwiftUI.
-- [App Events](/doc/Utilities/App Events.md): This interface allows you to observe global application state changes, such as scene lifecycle transitions and changes in system-wide appearance (light/dark mode).
-- [Archive](/doc/Utilities/Archive.md): This class provides a comprehensive interface for working with archive files (such as ZIP).
-- [Crypto](/doc/Utilities/Crypto.md): The interface provides simple, secure, and efficient APIs for generating cryptographic hashes from data.
-- [Data](/doc/Utilities/Data.md): This class represents binary data and provides methods to convert between various formats.
-- [DateComponents](/doc/Utilities/DateComponents.md): The interface provides a way to work with date and time components, allowing you to create, manipulate, and format dates easily.
-- [DateFormatter](/doc/Utilities/DateFormatter.md): This class is used to format Date objects into strings, or parse strings into Date objects.
-- [Encoding](/doc/Utilities/Encoding.md): This type defines a set of supported character encodings.
-- [FileEntity](/doc/Utilities/FileEntity.md): This interface allows scripts and HTTP servers to open, read, write, seek, and close files efficiently.
-- [FileManager](/doc/Utilities/FileManager.md): A convenient interface to the contents of the file system, and the primary means of interacting with it.
-- [HttpRequest](/doc/Utilities/HttpServer/HttpRequest.md): This class represents an HTTP request received by the server.
-- [HttpResponse](/doc/Utilities/HttpServer/HttpResponse.md): This class represents an HTTP response object returned by the server to the client.
-- [HttpResponseBody](/doc/Utilities/HttpServer/HttpResponseBody.md): This class represents an HTTP response body object returned by the server to the client.
-- [HttpServer](/doc/Utilities/HttpServer/HttpServer.md): This interface provides a lightweight local HTTP server that can handle HTTP requests, serve static files, and manage WebSocket connections
-- [WebSocketSession](/doc/Utilities/HttpServer/WebSocketSession.md): This class represents an active WebSocket connection session.
-- [ItemProvider](/doc/Utilities/ItemProvider.md): This class represents a deferred data provider.
-- [OAuth2](/doc/Utilities/OAuth2.md): This interface provides a simple way to authenticate users and authorize access to resources using OAuth2 protocol.
-- [Path](/doc/Utilities/Path.md): The interface provides utilities for working with file and directory paths.
-- [FormData](/doc/Utilities/Request/FormData.md): This class represents a collection of key/value pairs representing form data.
-- [Headers](/doc/Utilities/Request/Headers.md): This class represents a collection of HTTP request or response header fields.
-- [ReadableStream](/doc/Utilities/Request/ReadableStream.md): This class represents a stream of data that can be read from.
-- [Request & RequestInit](/doc/Utilities/Request/Request & RequestInit.md): The interface represents a complete configuration of an HTTP request.
-- [Response](/doc/Utilities/Request/Response.md): This class represents the result of an HTTP request made using the fetch() API
-- [fetch](/doc/Utilities/Request/fetch.md): Send network requests.
-- [SFTP Client](/doc/Utilities/SSH/SFTP Client.md): This interface provides a simple way to transfer files securely over SSH using SFTP protocol.
-- [SFTP File](/doc/Utilities/SSH/SFTP File.md): This interface provides low-level operations such as reading, writing, retrieving attributes, and closing the file.
-- [SSH Authentication Method](/doc/Utilities/SSH/SSH Authentication Method.md): This interface provides a way to authenticate SSH connections using various methods such as password, public key, or private key.
-- [SSH Client](/doc/Utilities/SSH/SSH Client.md): This interface provides a simple way to connect to remote servers using SSH protocol.
-- [TTY Stdin Writer](/doc/Utilities/SSH/TTY Stdin Writer.md): This interface allows you to write data to the standard input of a TTY session, enabling interactive command execution.
-- [Storage](/doc/Utilities/Storage.md): Providing a persistent store for simple data.
-- [Thread](/doc/Utilities/Thread.md): This interface provides a simple way to let you manually switch threads.
-- [UIImage](/doc/Utilities/UIImage.md): This class represents an image and provides methods to manipulate and display images.
-- [BackgroundURLSession](/doc/Utilities/URLSession/BackgroundURLSession.md): This interface provides the ability to initiate, resume, and query background download and upload tasks.
-- [URLSessionDownloadTask](/doc/Utilities/URLSession/URLSessionDownloadTask.md): Represents a download task instance that can be performed in the foreground or background, and can be resumed after the script is terminated.
-- [URLSessionUploadTask](/doc/Utilities/URLSession/URLSessionUploadTask.md): Represents an upload task instance that can be performed in the foreground or background, and can be resumed after the script is terminated.
-- [UUID](/doc/Utilities/UUID.md): The interface provides an easy way to generate unique UUID strings.
-- [WebScoket](/doc/Utilities/WebScoket.md): This interface allows you to create and manage WebSocket connections, allowing for real-time communication with a server.
-- [socket.io](/doc/Utilities/socket.io.md): This interface allows you to manage real-time, bidirectional communication between clients and servers with socket.io library.
-- [Animation and Transition](/doc/View Modifiers/Animation and Transition.md): These interfaces define how view transitions occur when their properties change.
-- [Chaining View Modifiers](/doc/View Modifiers/Chaining View Modifiers.md): This view modifier allows you to chain multiple modifiers together, supporting the same modifier being used multiple times in the same view.
-- [ChartMarkProps](/doc/View Modifiers/ChartMarkProps/index.md): These properties allow you to set the style, symbol, position, annotation, transformation, etc. of each chart mark.
-- [Charts Style](/doc/View Modifiers/Charts Style.md): The properties allows you to customize the appearance of the chart view.
-- [Grid Layout Control](/doc/View Modifiers/Grid Layout Control.md): These properties are used to control the layout behavior of individual views placed inside a Grid structure.
-- [Image Style](/doc/View Modifiers/Image Style.md): These modifiers are specifically designed for views that render images.
-- [Lifecycle Events](/doc/View Modifiers/Lifecycle Events.md): The lifecycle hooks to execute custom logic when a view becomes visible or is removed from the visible interface.
-- [Glass Effect Transition](/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index.md): How Liquid Glass materials animate during view changes.
-- [Example](/doc/View Modifiers/Liquid Glass/Glass Effect Transition/index_example.md): How Liquid Glass materials animate during view changes.
-- [Liquid Glass Effect](/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md): Liquid Glass visual system introduced in iOS 26.
-- [Example](/doc/View Modifiers/Liquid Glass/Liquid Glass Effect/index_example.md): Liquid Glass visual system introduced in iOS 26.
-- [Common](/doc/View Modifiers/List and Section View Modifiers/Common.md): These modifiers allow you to customize how rows behave and appear inside a <List> component.
-- [New List View Modifiers](/doc/View Modifiers/List and Section View Modifiers/New List View Modifiers.md): These modifiers allow you to customize how sections behave and appear inside a <List> component.
-- [LiveActivity View Modifiers](/doc/View Modifiers/LiveActivity View Modifiers.md): These modifiers used to customize the appearance of Live Activities on the Lock Screen.
-- [Navigation View Modifiers](/doc/View Modifiers/Navigation View Modifiers.md): These modifiers allow for the customization of navigation titles, title display styles, and back button behavior—closely following the conventions of SwiftUI's navigation system.
-- [Picture in Pictuer View Modifiers](/doc/View Modifiers/Picture in Pictuer View Modifiers.md): These apis allow developers to render any view inside a system PiP window.
-- [Presentation View Modifiers](/doc/View Modifiers/Presentation View Modifiers.md): These view modifiers customize the appearance, sizing, and interaction behavior of views presented using sheet.
-- [Redaction View Modifiers](/doc/View Modifiers/Redaction View Modifiers.md): This view modifier apply redaction to a view hierarchy.
-- [Safe Area](/doc/View Modifiers/Safe Area.md): These properties allow you to adjust layout behavior relative to the system-defined safe areas.
-- [Search Interactions](/doc/View Modifiers/Search Interactions.md): You can add a search bar, control its visibility and placement, react to changes in input, and display dynamic suggestions.
-- [Set environment values (environments)](/doc/View Modifiers/Set environment values (environments).md): This view modifier allows you to set environment values for a view hierarchy.
-- [Swipe Actions](/doc/View Modifiers/Swipe Actions/index.md): You can attach swipe actions to views used as rows in a <List> (such as <HStack>) to support contextual interactions like deleting, editing, marking favorites, etc.
-- [Example](/doc/View Modifiers/Swipe Actions/index_example.md): You can attach swipe actions to views used as rows in a <List> (such as <HStack>) to support contextual interactions like deleting, editing, marking favorites, etc.
-- [Symbol Style](/doc/View Modifiers/Symbol Style.md): These modifiers allow you to customize how SF Symbols are displayed and animated inside views.
-- [Text Field](/doc/View Modifiers/Text Field.md): These modifiers customize the behavior and appearance of TextField components.
-- [Text View Modifiers](/doc/View Modifiers/Text View Modifiers.md): The properties allows you to customize the layout and appearance of a text or label view.
-- [Toast](/doc/View Modifiers/Toast.md): This view modifier displays a temporary notification message (toast) over the current view.
-- [ToolBar View Modifiers](/doc/View Modifiers/ToolBar View Modifiers.md): Control the visibility, appearance, and behavior of system toolbars.
-- [blur](/doc/View Modifiers/blur.md): Applies a Gaussian blur effect to the view.
-- [border](/doc/View Modifiers/border.md): This property adds a border around the view.
-- [buttonStyle](/doc/View Modifiers/buttonStyle.md): The buttonStyle property allows you to customize the interaction behavior and appearance of buttons within a view hierarchy.
-- [clipShape](/doc/View Modifiers/clipShape.md): Clips the view to the specified shape while maintaining its aspect ratio.
-- [clipped](/doc/View Modifiers/clipped.md): Clips the view to its rectangular bounds.
-- [colorConvert](/doc/View Modifiers/colorConvert.md): Inverts the colors in this view.
-- [containerRelativeFrame](/doc/View Modifiers/containerRelativeFrame.md): Positions the view within an invisible frame whose size and position are relative to its nearest container.
-- [contentMargins](/doc/View Modifiers/contentMargins.md): This view modifier configures custom margins around a view’s content.
-- [contentShape](/doc/View Modifiers/contentShape.md): This property defines the interactive or visual boundary shape of a view's content.
-- [contentTransition](/doc/View Modifiers/contentTransition.md): This view modifier specifies a transition animation to apply when the content within a single view changes.
-- [contextMenu](/doc/View Modifiers/contextMenu.md): This property allows a view to present a contextual menu when the user performs a long-press or right-click gesture.
-- [controlGroupStyle](/doc/View Modifiers/controlGroupStyle.md): The controlGroupStyle property allows you to set the visual and interactive style for control groups within your view, reflecting the look and feel found in SwiftUI.
-- [datePickerStyle](/doc/View Modifiers/datePickerStyle.md): The datePickerStyle property allows you to customize the appearance and interaction of the DatePicker view.
-- [disabled](/doc/View Modifiers/disabled.md): Disables user interactions for this view and its children.
-- [fixedSize](/doc/View Modifiers/fixedSize.md): Fixes the size of a view to its ideal dimensions.
-- [flipsForRightToLeftLayoutDirection](/doc/View Modifiers/flipsForRightToLeftLayoutDirection.md): Determines whether the view should horizontally mirror its contents when the system layout direction is right-to-left (RTL).
-- [foregroundStyle & background](/doc/View Modifiers/foregroundStyle & background.md): These two properties allow you to customize the visual styling of view content and its background.
-- [formStyle](/doc/View Modifiers/formStyle.md): The formStyle property allows you to customize the appearance and interaction of the Form view.
-- [frame](/doc/View Modifiers/frame.md): This property defines the size and alignment of a view.
-- [gaugeStyle](/doc/View Modifiers/gaugeStyle.md): The gaugeStyle property allows you to customize the appearance and interaction of the Gauge view.
-- [hidden](/doc/View Modifiers/hidden.md): Sets the visibility of a view.
-- [labelsHidden](/doc/View Modifiers/labelsHidden.md): Hides the labels of controls contained within the view.
-- [layoutPriority](/doc/View Modifiers/layoutPriority.md): This view modifier specifies a layout priority for a view.
-- [listStyle](/doc/View Modifiers/listStyle.md): The listStyle property allows you to customize the behavior and appearance of a list in your UI when using the List view.
-- [mask](/doc/View Modifiers/mask.md): This view modifier clips the visual rendering of a view using the **alpha channel** of another view.
-- [matchedGeometryEffect](/doc/View Modifiers/matchedGeometryEffect.md): This view modifier establishes a geometric relationship between different views, allowing them to animate smoothly when transitioning across different layouts, different containers, different conditional render states, different size and position configurations.
-- [matchedTransitionSource](/doc/View Modifiers/matchedTransitionSource.md): This view modifier marks a view as the geometric source of a navigation transition.
-- [offset](/doc/View Modifiers/offset.md): Moves the view from its original position by the specified x and y distances.
-- [onDrag and onDrop View Modifiers](/doc/View Modifiers/onDrag and onDrop View Modifiers.md): These APIs enable views to act as drag sources, drop destinations, or both, supporting intra-app and cross-app drag-and-drop scenarios.
-- [onDropContent](/doc/View Modifiers/onDropContent.md): The view modifier allows a view in your script to act as a drop target, accepting files, images, or text dragged in from other apps.
-- [opacity](/doc/View Modifiers/opacity.md): Sets the transparency level of a view.
-- [overlay](/doc/View Modifiers/overlay.md): This view modifier places a view on top of the modified view, creating a layered composition.
-- [padding](/doc/View Modifiers/padding.md): This property adds space around the content of a view.
-- [pickerStyle](/doc/View Modifiers/pickerStyle.md): The pickerStyle property allows you to customize the appearance and behavior of pickers within a view hierarchy.
-- [position](/doc/View Modifiers/position.md): Positions the center of the view at the given x and y coordinates within its parent’s coordinate space.
-- [preferredColorScheme](/doc/View Modifiers/preferredColorScheme.md): Sets the preferred system appearance (light or dark) for the view hierarchy.
-- [progressViewStyle](/doc/View Modifiers/progressViewStyle.md): The progressViewStyle property allows you to customize the appearance of a progress view.
-- [refresable](/doc/View Modifiers/refresable/index.md): Marks a scrollable view as refreshable, enabling the user to pull down to trigger an asynchronous data reload.
-- [Example](/doc/View Modifiers/refresable/refreshable_list.md): Marks a scrollable view as refreshable, enabling the user to pull down to trigger an asynchronous data reload.
-- [rotationEffect](/doc/View Modifiers/rotationEffect.md): Rotates the view by a specified angle in degrees.
-- [scaleEffect](/doc/View Modifiers/scaleEffect.md): Scales the view horizontally and vertically.
-- [shadow](/doc/View Modifiers/shadow.md): Applies a shadow behind the view.
-- [textFieldStyle](/doc/View Modifiers/textFieldStyle.md): The textFieldStyle property allows you to customize the appearance and interaction of the TextField view.
-- [tint](/doc/View Modifiers/tint.md): Overrides the default accent color for a specific view using a given style.
-- [toggleStyle](/doc/View Modifiers/toggleStyle.md): The toggleStyle property allows you to customize the appearance and interaction of the Toggle view.
-- [Use with Toolbar Component](/doc/View Modifiers/toolbar/Use with Toolbar Component.md): Use the Toolbar component to populate a view’s navigation or toolbar area with various items.
-- [Use with ToolbarProps](/doc/View Modifiers/toolbar/Use with ToolbarProps.md): Use ToolbarProps to simply set a toolbar.
-- [translationHost](/doc/View Modifiers/translationHost.md): This view modifier is used to provide a translation service context to your UI.
-- [widgetBackground](/doc/View Modifiers/widgetBackground.md): This property is used to define background styles specifically for widgets, with behavior optimized for iOS 18’s accented (tinted) rendering mode.
-- [AVPlayerView](/doc/Views/AVPlayerView.md): This component is intended for media-centric scenarios where native playback behavior, PiP, Now Playing integration, and background playback are required.
-- [AccessoryWidgetBackground](/doc/Views/AccessoryWidgetBackground.md): This component is designed to be used inside accessory widgets—such as Lock Screen widgets or StandBy widgets.
-- [Button](/doc/Views/Button.md): A control that initiates an action.
-- [AreaStackChart](/doc/Views/Charts/AreaStackChart/index.md): A chart that displays data as stacked areas, where each area represents a total and is divided into segments representing sub-values.
-- [Example](/doc/Views/Charts/AreaStackChart/index_example.md): A chart that displays data as stacked areas, where each area represents a total and is divided into segments representing sub-values.
-- [Bar1DChart](/doc/Views/Charts/Bar1DChart/index.md): A chart that displays data as a single-dimensional bar, typically used for representing a single value or category.
-- [Example](/doc/Views/Charts/Bar1DChart/index_example.md): A chart that displays data as a single-dimensional bar, typically used for representing a single value or category.
-- [BarChart](/doc/Views/Charts/BarChart/index.md): A chart that displays data as rectangular bars with lengths proportional to the values they represent.
-- [Example](/doc/Views/Charts/BarChart/index_example.md): A chart that displays data as rectangular bars with lengths proportional to the values they represent.
-- [BarGanttChart](/doc/Views/Charts/BarGanttChart/index.md): A chart that displays data as horizontal bars, typically used to represent project schedules or timelines.
-- [Example](/doc/Views/Charts/BarGanttChart/index_example.md): A chart that displays data as horizontal bars, typically used to represent project schedules or timelines.
-- [BarGroupChart](/doc/Views/Charts/BarGroupChart/index.md): A chart that displays data as groups of bars, where each group represents a category and the bars within the group represent sub-categories.
-- [Example](/doc/Views/Charts/BarGroupChart/index_example.md): A chart that displays data as groups of bars, where each group represents a category and the bars within the group represent sub-categories.
-- [BarStackChart](/doc/Views/Charts/BarStackChart/index.md): A chart that displays data as stacked bars, where each bar represents a total and is divided into segments representing sub-values.
-- [Example](/doc/Views/Charts/BarStackChart/index_example.md): A chart that displays data as stacked bars, where each bar represents a total and is divided into segments representing sub-values.
-- [DonutChart](/doc/Views/Charts/DonutChart/index.md): A chart that displays data as a donut shape, similar to a pie chart but with a hole in the center.
-- [Example](/doc/Views/Charts/DonutChart/index_example.md): A chart that displays data as a donut shape, similar to a pie chart but with a hole in the center.
-- [HeatMapChart](/doc/Views/Charts/HeatMapChart/index.md): A chart that displays data as a matrix of colors, where each color represents a value in a two-dimensional space.
-- [Example](/doc/Views/Charts/HeatMapChart/index_example.md): A chart that displays data as a matrix of colors, where each color represents a value in a two-dimensional space.
-- [LineCategoryChart](/doc/Views/Charts/LineCategoryChart/index.md): A chart that displays data as a series of points connected by lines, with categories on the a specified axis.
-- [Example](/doc/Views/Charts/LineCategoryChart/index_example.md): A chart that displays data as a series of points connected by lines, with categories on the a specified axis.
-- [LineChart](/doc/Views/Charts/LineChart/index.md): A chart that displays data as a series of points connected by straight lines.
-- [Example](/doc/Views/Charts/LineChart/index_example.md): A chart that displays data as a series of points connected by straight lines.
-- [Multiple Charts Example](/doc/Views/Charts/Multiple Charts Example/index.md): An example that demonstrates how to use multiple charts in a single view.
-- [Example](/doc/Views/Charts/Multiple Charts Example/index_example.md): An example that demonstrates how to use multiple charts in a single view.
-- [PieChart](/doc/Views/Charts/PieChart/index.md): A chart that displays data as slices of a pie, where each slice represents a proportion of the whole.
-- [Example](/doc/Views/Charts/PieChart/index_example.md): A chart that displays data as slices of a pie, where each slice represents a proportion of the whole.
-- [PointCategoryChart](/doc/Views/Charts/PointCategoryChart/index.md): A chart that displays data as points categorized by a specific axis, useful for visualizing discrete data with categories.
-- [Example](/doc/Views/Charts/PointCategoryChart/index_example.md): A chart that displays data as points categorized by a specific axis, useful for visualizing discrete data with categories.
-- [PointChart](/doc/Views/Charts/PointChart/index.md): A chart that displays data as individual points, typically used for scatter plots or discrete data.
-- [Example](/doc/Views/Charts/PointChart/index_example.md): A chart that displays data as individual points, typically used for scatter plots or discrete data.
-- [RangeAreaChart](/doc/Views/Charts/RangeAreaChart/index.md): A chart that displays data as areas between two lines, representing a range of values.
-- [Example](/doc/Views/Charts/RangeAreaChart/index_example.md): A chart that displays data as areas between two lines, representing a range of values.
-- [RectAreaChart](/doc/Views/Charts/RectAreaChart/index.md): A chart that displays data as rectangular areas, where the size and color of each rectangle represent different data values.
-- [Example](/doc/Views/Charts/RectAreaChart/index_example.md): A chart that displays data as rectangular areas, where the size and color of each rectangle represent different data values.
-- [RectChart](/doc/Views/Charts/RectChart/index.md): A chart that displays data as rectangles, where the size and color of each rectangle represent different data values.
-- [Example](/doc/Views/Charts/RectChart/index_example.md): A chart that displays data as rectangles, where the size and color of each rectangle represent different data values.
-- [RuleChart](/doc/Views/Charts/RuleChart/index.md): A chart that displays data as a series of rules, which can be used to represent thresholds or limits.
-- [Example](/doc/Views/Charts/RuleChart/index_example.md): A chart that displays data as a series of rules, which can be used to represent thresholds or limits.
-- [RuleLineForLabelChart](/doc/Views/Charts/RuleLineForLabelChart.md): A chart that displays data as a series of lines, with labels indicating specific values or thresholds.
-- [RuleLineForValueChart](/doc/Views/Charts/RuleLineForValueChart.md): A chart that displays data as a series of lines, with rules indicating specific values or thresholds.
-- [ConcentricRectangle](/doc/Views/ConcentricRectangle.md): It is designed to create rectangles with progressively inset (concentric) corner geometry, which adapts naturally to modern UI designs.
-- [ColorPicker](/doc/Views/Controls/ColorPicker/index.md): A control used to select a color from the system color picker UI.
-- [Example](/doc/Views/Controls/ColorPicker/index_example.md): A control used to select a color from the system color picker UI.
-- [ContentUnavailableView](/doc/Views/Controls/ContentUnavailableView/index.md): An interface, consisting of a label and additional content, that you display when the content of your app is unavailable to users.
-- [Example](/doc/Views/Controls/ContentUnavailableView/index_example.md): An interface, consisting of a label and additional content, that you display when the content of your app is unavailable to users.
-- [DatePicker](/doc/Views/Controls/DatePicker/index.md): A control for selecting an absolute date.
-- [Example](/doc/Views/Controls/DatePicker/index_example.md): A control for selecting an absolute date.
-- [Gauge](/doc/Views/Controls/Gauge/index.md): A view that shows a value within a range.
-- [Example](/doc/Views/Controls/Gauge/index_example.md): A view that shows a value within a range.
-- [Picker](/doc/Views/Controls/Picker/index.md): A control for selecting from a set of mutually exclusive values.
-- [Example](/doc/Views/Controls/Picker/index_example.md): A control for selecting from a set of mutually exclusive values.
-- [ProgressView](/doc/Views/Controls/ProgressView/index.md): A view that shows the progress toward completion of a task.
-- [Example](/doc/Views/Controls/ProgressView/index_example.md): A view that shows the progress toward completion of a task.
-- [Slider](/doc/Views/Controls/Slider/index.md): A control for selecting a value from a bounded linear range of values.
-- [Example](/doc/Views/Controls/Slider/index_example.md): A control for selecting a value from a bounded linear range of values.
-- [Stepper](/doc/Views/Controls/Stepper/index.md): A control that performs increment and decrement actions.
-- [Example](/doc/Views/Controls/Stepper/index_example.md): A control that performs increment and decrement actions.
-- [Toggle](/doc/Views/Controls/Toggle/index.md): A control that toggles between on and off states.
-- [Example](/doc/Views/Controls/Toggle/index_example.md): A control that toggles between on and off states.
-- [Dialog](/doc/Views/Dialog/index.md): This interface provides some shortcut methods for displaying dialog boxes.
-- [Example](/doc/Views/Dialog/index_example.md): This interface provides some shortcut methods for displaying dialog boxes.
-- [Displaying text](/doc/Views/Displaying text/index.md): Display formatted text.
-- [Example](/doc/Views/Displaying text/index_example.md): Display formatted text.
-- [Editor](/doc/Views/Editor.md): A powerful code editor that can be controlled programmatically or embedded into a user interface.
-- [EnvironmentValuesReader](/doc/Views/EnvironmentValuesReader.md): This view allows you to read environment values from the current view hierarchy.
-- [GeometryReader](/doc/Views/GeometryReader.md): It provides information about the size, padding, safe area, and safe area insets of the current container.
-- [Gestures](/doc/Views/Gestures.md): This interface provides a gesture system similar to SwiftUI, allowing any view to respond to touch interactions such as tapping, long pressing, dragging, rotating, and magnifying.
-- [Image](/doc/Views/Image/index.md): Add images and symbols to your app’s user interface.
-- [Example](/doc/Views/Image/index_example.md): Add images and symbols to your app’s user interface.
-- [FlowLayout](/doc/Views/Layout/FlowLayout.md): This view is a flow-based layout component that arranges its children horizontally and automatically wraps items to the next line when there is insufficient space.
-- [Grid](/doc/Views/Layout/Grid/index.md): A container view that arranges other views in a two dimensional layout.
-- [Example](/doc/Views/Layout/Grid/index_example.md): A container view that arranges other views in a two dimensional layout.
-- [HStack](/doc/Views/Layout/HStack/index.md): A view that arranges its subviews in a horizontal line.
-- [Example](/doc/Views/Layout/HStack/index_example.md): A view that arranges its subviews in a horizontal line.
-- [LazyHGrid](/doc/Views/Layout/LazyHGrid/index.md): A container view that arranges its child views in a grid that grows horizontally, creating items only as needed.
-- [Example](/doc/Views/Layout/LazyHGrid/index_example.md): A container view that arranges its child views in a grid that grows horizontally, creating items only as needed.
-- [LazyHStack](/doc/Views/Layout/LazyHStack/index.md): A view that arranges its children in a line that grows horizontally, creating items only as needed.
-- [Example](/doc/Views/Layout/LazyHStack/index_example.md): A view that arranges its children in a line that grows horizontally, creating items only as needed.
-- [LazyVGrid](/doc/Views/Layout/LazyVGrid/index.md): A container view that arranges its child views in a grid that grows vertically, creating items only as needed.
-- [Example](/doc/Views/Layout/LazyVGrid/index_example.md): A container view that arranges its child views in a grid that grows vertically, creating items only as needed.
-- [LazyVStack](/doc/Views/Layout/LazyVStack/index.md): A view that arranges its children in a line that grows vertically, creating items only as needed.
-- [Example](/doc/Views/Layout/LazyVStack/index_example.md): A view that arranges its children in a line that grows vertically, creating items only as needed.
-- [VStack](/doc/Views/Layout/VStack/index.md): A view that arranges its subviews in a vertical line.
-- [Example](/doc/Views/Layout/VStack/index_example.md): A view that arranges its subviews in a vertical line.
-- [ZStack](/doc/Views/Layout/ZStack/index.md): A view that overlays its subviews, aligning them in both axes.
-- [Example](/doc/Views/Layout/ZStack/index_example.md): A view that overlays its subviews, aligning them in both axes.
-- [Link](/doc/Views/Link.md): This view can be used to open web pages, app-specific URLs, or other schemes.
-- [DisclosureGroup](/doc/Views/List/DisclosureGroup/index.md): A view that shows or hides another content view, based on the state of a disclosure control.
-- [Example](/doc/Views/List/DisclosureGroup/index_example.md): A view that shows or hides another content view, based on the state of a disclosure control.
-- [Display data inside a row](/doc/Views/List/Display data inside a row/index.md)
-- [Example](/doc/Views/List/Display data inside a row/index_example.md)
-- [Editable List](/doc/Views/List/Editable List/index.md): Move and delete list item.
-- [Example](/doc/Views/List/Editable List/index_example.md): Move and delete list item.
-- [List interaction](/doc/Views/List/List interaction/index.md): Adds custom swipe actions to a row in a list.
-- [Example](/doc/Views/List/List interaction/index_example.md): Adds custom swipe actions to a row in a list.
-- [List style](/doc/Views/List/List style/index.md): Sets the style for lists within this view.
-- [Example](/doc/Views/List/List style/list_style.md): Sets the style for lists within this view.
-- [Refresable List](/doc/Views/List/Refresable List/index.md): Pull down to refresh on a list view.
-- [Example](/doc/Views/List/Refresable List/refreshable_list.md): Pull down to refresh on a list view.
-- [Represent data hierarchy in sections](/doc/Views/List/Represent data hierarchy in sections/index.md)
-- [Example](/doc/Views/List/Represent data hierarchy in sections/index_example.md)
-- [Selectable List](/doc/Views/List/Selectable List.md): Implements selectable and multiselectable list features.
-- [Use list for navigations](/doc/Views/List/Use list for navigations/index.md)
-- [Example](/doc/Views/List/Use list for navigations/index_example.md)
-- [LivePhotoView](/doc/Views/LivePhotoView.md): This component is intended for media-centric scenarios where Live Photo playback is required.
-- [Markdown](/doc/Views/Markdown.md): A view that renders Markdown content, allowing you to display formatted text, links, images, and more.
-- [Menu](/doc/Views/Menu/index.md): Use a menu to provide people with easy access to common commands.
-- [Example](/doc/Views/Menu/index_example.md): Use a menu to provide people with easy access to common commands.
-- [Modal presentaions](/doc/Views/Modal presentaions/index.md): Present content in a separate view that offers focused interaction.
-- [Example](/doc/Views/Modal presentaions/index_example.md): Present content in a separate view that offers focused interaction.
-- [NamespaceReader](/doc/Views/NamespaceReader.md): This view is used to create and manage a geometry animation namespace.
-- [Collapsed split views](/doc/Views/Navigation/NavigationSplitView (for iPad)/Collapsed split views.md)
-- [Control column visibility](/doc/Views/Navigation/NavigationSplitView (for iPad)/Control column visibility.md)
-- [Three-column](/doc/Views/Navigation/NavigationSplitView (for iPad)/Three-column.md)
-- [Two-column](/doc/Views/Navigation/NavigationSplitView (for iPad)/Two-column.md)
-- [NavigationStack with path](/doc/Views/Navigation/NavigationStack/NavigationStack with path.md): It allows direct manipulation of the navigation history using a bound observable array.
-- [Use with NavigationLink](/doc/Views/Navigation/NavigationStack/Use with NavigationLink.md)
-- [Use with navigationDestination](/doc/Views/Navigation/NavigationStack/Use with navigationDestination.md)
-- [TabView with badge](/doc/Views/Navigation/TabView/TabView with badge.md)
-- [TabView with multiple scrolling pages](/doc/Views/Navigation/TabView/TabView with multiple scrolling pages.md)
-- [TabView](/doc/Views/Navigation/TabView/TabView.md): Displays a set of child views in a tabbed interface.
-- [Dismissing a presented view](/doc/Views/Present views/Dismissing a presented view/index.md): Use Navigation.useDismiss to dismiss a view.
-- [Example](/doc/Views/Present views/Dismissing a presented view/index_example.md): Use Navigation.useDismiss to dismiss a view.
-- [Present a simple view](/doc/Views/Present views/Present a simple view/index.md): Use Navigation.present to present a simple view.
-- [Example](/doc/Views/Present views/Present a simple view/index_example.md): Use Navigation.present to present a simple view.
-- [SVG](/doc/Views/SVG.md): This view can be used to render SVG images.
-- [Scroll views](/doc/Views/Scroll views/index.md): Enable people to scroll to content that doesn’t fit in the current display.
-- [Example](/doc/Views/Scroll views/index_example.md): Enable people to scroll to content that doesn’t fit in the current display.
-- [ScrollViewReader](/doc/Views/ScrollViewReader.md): Allowing scripts to programmatically control scrolling position within scrollable content such as List or ScrollView.
-- [Search](/doc/Views/Search/index.md): Enable people to search for text or other content within your script UI.
-- [Example](/doc/Views/Search/index_example.md): Enable people to search for text or other content within your script UI.
-- [Shapes](/doc/Views/Shapes/index.md): Draw shapes like circles and rectangles, as well as custom paths that define shapes of your own design.
-- [Example](/doc/Views/Shapes/index_example.md): Draw shapes like circles and rectangles, as well as custom paths that define shapes of your own design.
-- [Keyboard](/doc/Views/Text input/Keyboard.md): This interface allows you to interact with the software keyboard.
-- [SecureField](/doc/Views/Text input/SecureField/index.md): A control into which people securely enter private text.
-- [Example](/doc/Views/Text input/SecureField/index_example.md): A control into which people securely enter private text.
-- [TextField](/doc/Views/Text input/TextField/index.md): A control that displays an editable text interface.
-- [Example](/doc/Views/Text input/TextField/index_example.md): A control that displays an editable text interface.
-- [Time-based label views](/doc/Views/Time-based label views.md): These views allow you to display live-updating or formatted date and time strings in widgets and views.
-- [Toolbars](/doc/Views/Toolbars/index.md): Provide immediate access to frequently used commands and controls.
-- [Example](/doc/Views/Toolbars/index_example.md): Provide immediate access to frequently used commands and controls.
-- [VideoPreviewView](/doc/Views/VideoPreviewView.md): A view that displays the live camera preview associated with a VideoRecorder instance.
-- [ControlGroup](/doc/Views/View groupings/ControlGroup.md): A container view that displays semantically-related controls in a visually-appropriate manner for the context.
-- [ForEach](/doc/Views/View groupings/ForEach/index.md): Iterating over dynamic data
-- [Example](/doc/Views/View groupings/ForEach/iterating.md): Iterating over dynamic data
-- [Form](/doc/Views/View groupings/Form.md): A container for grouping controls used for data entry, such as in settings or inspectors.
-- [Group](/doc/Views/View groupings/Group.md): Grouping views into a container
-- [GroupBox](/doc/Views/View groupings/GroupBox.md): Grouping views into a box
-- [Section](/doc/Views/View groupings/Section.md): Organizing views into sections
-- [WebView](/doc/Views/WebView.md): An view that displays interactive web content.
-- [AccessoryWidgetBackground](/doc/Widget/AccessoryWidgetBackground.md): This component is designed to be used inside accessory widgets—such as Lock Screen widgets or StandBy widgets.
-- [Animation for Widget and LiveActivity](/doc/Widget/Animation for Widget and LiveActivity.md): The views and view modifiers for displaying animation in widget and LiveActivity
-- [Tinted Mode Adaptation Guide](/doc/Widget/Tinted Mode Adaptation Guide.md): Learn how to adapt your widget to the tinted mode.
-- [Widget API](/doc/Widget/Widget API.md): The Widget API provides static methods and properties to render and interact with home screen widgets.
-- [Widget Background in Tinted Mode](/doc/Widget/Widget Background in Tinted Mode.md): This property is used to define background styles specifically for widgets, with behavior optimized for iOS 18’s accented (tinted) rendering mode.
-- [Widget Quick Start](/doc/Widget/Widget Quick Start.md): Quickly master the use of widget.
-
 ## Privacy
 
 - [Privacy Policy](/privacy/policy.md)
 - [Terms of Service & EULA](/privacy/service.md)
+
+## Others
+
+- [AppIntent](/guide/AppIntent.md): This interface serves as the core mechanism for executing script logic behind controls in Widgets, Live Activities, and ControlWidgets.
+- [Assistant Conversation APIs](/guide/Assistant/Assistant Conversation APIs.md): The Conversation APIs are used to start, control, and present a system-hosted Assistant chat session.
+- [Assistant Quick Start](/guide/Assistant/Assistant Quick Start.md): Quickly master the use of Assistant.
+- [requestStreaming](/guide/Assistant/requestStreaming.md): Requests a streaming response from the Assistant.
+- [requestStructuredData](/guide/Assistant/requestStructuredData.md): Request structured JSON data.
+- [AssistantTool](/guide/AssistantTool.md): Custom tools for the assistant.
+- [Animation and Transition](/guide/Changelog/2.4.3/Animation and Transition.md): These interfaces define how view transitions occur when their properties change.
+- [EnvironmentValuesReader](/guide/Changelog/2.4.3/EnvironmentValuesReader.md): This view allows you to read environment values from the current view hierarchy.
+- [ForEach](/guide/Changelog/2.4.3/ForEach/index.md): Iterating over dynamic data
+- [Example](/guide/Changelog/2.4.3/ForEach/iterating.md): Iterating over dynamic data
+- [GeometryReader](/guide/Changelog/2.4.3/GeometryReader.md): It provides information about the size, padding, safe area, and safe area insets of the current container.
+- [LiveActivity View Modifiers](/guide/Changelog/2.4.3/LiveActivity View Modifiers.md): These modifiers used to customize the appearance of Live Activities on the Lock Screen.
+- [LiveActivity](/guide/Changelog/2.4.3/LiveActivity.md): To improve the stability and performance of LiveActivity, the API has been redesigned.
+- [ReorderableForEach](/guide/Changelog/2.4.3/ReorderableForEach/index.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
+- [Example](/guide/Changelog/2.4.3/ReorderableForEach/index_example.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
+- [SSH Client](/guide/Changelog/2.4.3/SSH Client.md): This interface provides a simple way to connect to remote servers using SSH protocol.
+- [ScrollViewReader](/guide/Changelog/2.4.3/ScrollViewReader.md): Allowing scripts to programmatically control scrolling position within scrollable content such as List or ScrollView.
+- [Set environment values (environments)](/guide/Changelog/2.4.3/Set environment values (environments).md): This view modifier allows you to set environment values for a view hierarchy.
+- [Thread](/guide/Changelog/2.4.3/Thread.md): This interface provides a simple way to let you manually switch threads.
+- [useObservable](/guide/Changelog/2.4.3/useObservable.md): Used to drive UI rendering and work with the animation system.
+- [ConcentricRectangle](/guide/Changelog/2.4.4/ConcentricRectangle.md): It is designed to create rectangles with progressively inset (concentric) corner geometry, which adapts naturally to modern UI designs.
+- [Glass Effect Transition](/guide/Changelog/2.4.4/Glass Effect Transition/index.md): How Liquid Glass materials animate during view changes.
+- [Example](/guide/Changelog/2.4.4/Glass Effect Transition/index_example.md): How Liquid Glass materials animate during view changes.
+- [Intent.continueInForeground](/guide/Changelog/2.4.4/Intent.continueInForeground.md): This method requests the system to bring the Scripting app to the foreground while a Shortcut is running.
+- [Intent.requestConfirmation](/guide/Changelog/2.4.4/Intent.requestConfirmation.md): This method pauses script execution and asks the user to confirm an action through a system-managed confirmation UI.
+- [IntentMemoryStorage](/guide/Changelog/2.4.4/IntentMemoryStorage.md): A lightweight, session-based storage for sharing state across multiple AppIntents during a single Shortcut execution.
+- [Liquid Glass Effect](/guide/Changelog/2.4.4/Liquid Glass Effect/index.md): Liquid Glass visual system introduced in iOS 26.
+- [Example](/guide/Changelog/2.4.4/Liquid Glass Effect/index_example.md): Liquid Glass visual system introduced in iOS 26.
+- [NamespaceReader](/guide/Changelog/2.4.4/NamespaceReader.md): This view is used to create and manage a geometry animation namespace.
+- [New List View Modifiers](/guide/Changelog/2.4.4/New List View Modifiers.md): These modifiers allow you to customize how sections behave and appear inside a <List> component.
+- [Notification](/guide/Changelog/2.4.4/Notification/index.md): The interface for managing local notification-related activities.
+- [Example](/guide/Changelog/2.4.4/Notification/index_example.md): The interface for managing local notification-related activities.
+- [SFTP Client](/guide/Changelog/2.4.4/SFTP Client.md): This interface provides a simple way to transfer files securely over SSH using SFTP protocol.
+- [SFTP File](/guide/Changelog/2.4.4/SFTP File.md): This interface provides low-level operations such as reading, writing, retrieving attributes, and closing the file.
+- [SnippetIntent](/guide/Changelog/2.4.4/SnippetIntent.md): SnippetIntent is a special kind of AppIntent whose purpose is to render interactive Snippet UI cards inside the Shortcuts app (iOS 26+).
+- [TabView](/guide/Changelog/2.4.4/TabView.md): Displays a set of child views in a tabbed interface.
+- [Use with Toolbar Component](/guide/Changelog/2.4.4/Use with Toolbar Component.md): Use the Toolbar component to populate a view’s navigation or toolbar area with various items.
+- [matchedGeometryEffect](/guide/Changelog/2.4.4/matchedGeometryEffect.md): This view modifier establishes a geometric relationship between different views, allowing them to animate smoothly when transitioning across different layouts, different containers, different conditional render states, different size and position configurations.
+- [matchedTransitionSource](/guide/Changelog/2.4.4/matchedTransitionSource.md): This view modifier marks a view as the geometric source of a navigation transition.
+- [AVPlayerView](/guide/Changelog/2.4.5/AVPlayerView.md): This component is intended for media-centric scenarios where native playback behavior, PiP, Now Playing integration, and background playback are required.
+- [AppStore](/guide/Changelog/2.4.5/AppStore.md): This API is used to display the details of an app in the App Store, without leaving the Scripting app.
+- [Assistant Conversation APIs](/guide/Changelog/2.4.5/Assistant/Assistant Conversation APIs.md): The Conversation APIs are used to start, control, and present a system-hosted Assistant chat session.
+- [Assistant Quick Start](/guide/Changelog/2.4.5/Assistant/Assistant Quick Start.md): Quickly master the use of Assistant.
+- [requestStreaming](/guide/Changelog/2.4.5/Assistant/requestStreaming.md): Requests a streaming response from the Assistant.
+- [requestStructuredData](/guide/Changelog/2.4.5/Assistant/requestStructuredData.md): Request structured JSON data.
+- [CalendarEvent](/guide/Changelog/2.4.5/CalendarEvent.md): This interface enables you to create and manage events in iOS calendars, with properties like title, location, dates, attendees, and recurrence.
+- [DateFormatter](/guide/Changelog/2.4.5/DateFormatter.md): This class is used to format Date objects into strings, or parse strings into Date objects.
+- [EventAlarm](/guide/Changelog/2.4.5/EventAlarm.md): This class represents a reminder rule that can be attached to both CalendarEvent and Reminder objects.
+- [Keychain](/guide/Changelog/2.4.5/Keychain.md): The interface to store data in Keychain.
+- [LivePhotoView](/guide/Changelog/2.4.5/LivePhotoView.md): This component is intended for media-centric scenarios where Live Photo playback is required.
+- [NavigationStack with path](/guide/Changelog/2.4.5/NavigationStack with path.md): It allows direct manipulation of the navigation history using a bound observable array.
+- [Photos](/guide/Changelog/2.4.5/Photos/index.md): The interface that manages access and changes to the user’s photo library.
+- [Example](/guide/Changelog/2.4.5/Photos/index_example.md): The interface that manages access and changes to the user’s photo library.
+- [Picture in Pictuer View Modifiers](/guide/Changelog/2.4.5/Picture in Pictuer View Modifiers.md): These apis allow developers to render any view inside a system PiP window.
+- [Reminder](/guide/Changelog/2.4.5/Reminder.md): This interface allows you to create, edit, and manage reminders in a calendar. This includes setting titles, due dates, priorities, and recurrence rules.
+- [ReorderableForEach](/guide/Changelog/2.4.5/ReorderableForEach/index.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
+- [Example](/guide/Changelog/2.4.5/ReorderableForEach/index_example.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
+- [Selectable List](/guide/Changelog/2.4.5/Selectable List.md): Implements selectable and multiselectable list features.
+- [VideoPreviewView](/guide/Changelog/2.4.5/VideoPreviewView.md): A view that displays the live camera preview associated with a VideoRecorder instance.
+- [VideoRecorder](/guide/Changelog/2.4.5/VideoRecorder.md): A high-level API for recording video with fine-grained control over camera configuration, audio capture, encoding, pause/resume behavior, and final file output.
+- [WebViewController](/guide/Changelog/2.4.5/WebViewController.md): It is designed for use cases like custom in-app browsers, rendering dynamic HTML, or communicating with JavaScript running in a web context.
+- [Device](/guide/Changelog/2.4.6/Device/index.md): New networkInterfaces method.
+- [Example](/guide/Changelog/2.4.6/Device/index_example.md): New networkInterfaces method.
+- [Intent](/guide/Changelog/2.4.6/Intent.md): New Intent.image method for returning images to Shortcuts.
+- [ItemProvider](/guide/Changelog/2.4.6/ItemProvider.md): This class represents a deferred data provider.
+- [MediaComposer Example](/guide/Changelog/2.4.6/MediaComposer/MediaComposer Example.md): This example shows how to use MediaComposer.
+- [MediaTime](/guide/Changelog/2.4.6/MediaComposer/MediaTime.md): This class represents a media time.
+- [Quick Start](/guide/Changelog/2.4.6/MediaComposer/Quick Start.md): Quickly master the use of MediaComposer.
+- [SharedAudioSession](/guide/Changelog/2.4.6/SharedAudioSession.md): New outputVolume property and addOutputVolumeChangedListener and removeOutputVolumeChangedListener methods.
+- [VideoRecorder](/guide/Changelog/2.4.6/VideoRecorder.md): New displayZoomFactor property for displaying user-readable zoom factor.
+- [onDrag and onDrop View Modifiers](/guide/Changelog/2.4.6/onDrag and onDrop View Modifiers.md): These APIs enable views to act as drag sources, drop destinations, or both, supporting intra-app and cross-app drag-and-drop scenarios.
+- [onDropContent](/guide/Changelog/2.4.6/onDropContent.md): New Observable support, perform function has been adjusted, return an array of ItemProvider objects for deferred loading data.
+- [Control Widget](/guide/Control Widget.md): Add custom Button or Toggle controls to the Control Center or Lock Screen
+- [Custom Keyboard](/guide/Custom Keyboard.md): Create custom keyboards with unique layouts and functionalities.
+- [AVMetadataItem](/guide/Device Capabilities/AVMetadataItem.md): AVMetadataItem is a class that represents a metadata item in an audio or video asset.
+- [AppStore](/guide/Device Capabilities/AppStore.md): This API is used to display the details of an app in the App Store, without leaving the Scripting app.
+- [Audio Player](/guide/Device Capabilities/Audio Player.md): The interface allows for playback of both local and network audio sources, and offers controls such as play, pause, stop, volume, and more.
+- [AudioRecorder](/guide/Device Capabilities/AudioRecorder.md): The interface allows you to record audio data to a file. It provides functionalities to start, stop, pause, and manage audio recordings, with configurable settings for audio quality, sample rate, format, and more.
+- [BackgroundKeeper](/guide/Device Capabilities/BackgroundKeeper.md): This interface provides methods for keeping the Scripting app running in the background.
+- [BluetoothCentralManager](/guide/Device Capabilities/Bluetooth/BluetoothCentralManager.md): This interface allows you to scan for, connect to, and interact with nearby Bluetooth peripherals.
+- [BluetoothCharacteristic](/guide/Device Capabilities/Bluetooth/BluetoothCharacteristic.md): This interface represents a Bluetooth Low Energy (BLE) service. A service is a logical grouping of related characteristics and possibly other included services.
+- [BluetoothPeripheral](/guide/Device Capabilities/Bluetooth/BluetoothPeripheral.md): This interface provides properties and methods for interacting with the device, including connecting, discovering services and characteristics, reading/writing values, and subscribing to notifications.
+- [BluetoothPeripheralManager](/guide/Device Capabilities/Bluetooth/BluetoothPeripheralManager.md): This interface allows you to create a Bluetooth peripheral that can advertise services and characteristics, and accept connections from central devices.
+- [BluetoothService](/guide/Device Capabilities/Bluetooth/BluetoothService.md): This interface represents a Bluetooth Low Energy (BLE) service. A service is a logical grouping of related characteristics and possibly other included services.
+- [Calendar](/guide/Device Capabilities/Calendar.md): This interface allows you to interact with iOS calendars, enabling operations like retrieving default calendars, creating custom calendars, and managing calendar settings and events.
+- [CalendarEvent](/guide/Device Capabilities/CalendarEvent.md): This interface enables you to create and manage events in iOS calendars, with properties like title, location, dates, attendees, and recurrence.
+- [Contact](/guide/Device Capabilities/Contact/index.md): This interface allows you to access and manage contacts on the device. You can create, query, update, and delete contacts, as well as manage contact groups and containers.
+- [Example](/guide/Device Capabilities/Contact/index_example.md): This interface allows you to access and manage contacts on the device. You can create, query, update, and delete contacts, as well as manage contact groups and containers.
+- [Device](/guide/Device Capabilities/Device/index.md): Provides the information abouts the device, also some methods to use the capabilities of the device.
+- [Example](/guide/Device Capabilities/Device/index_example.md): Provides the information abouts the device, also some methods to use the capabilities of the device.
+- [DocumentPicker](/guide/Device Capabilities/DocumentPicker.md): Pick files from Files app.
+- [EventAlarm](/guide/Device Capabilities/EventAlarm.md): This class represents a reminder rule that can be attached to both CalendarEvent and Reminder objects.
+- [FontPicker](/guide/Device Capabilities/FontPicker.md): This namespace provides methods for selecting fonts from the system’s available font list.
+- [HapticFeedback](/guide/Device Capabilities/HapticFeedback.md): Haptic feedback provides a tactile response, such as a tap, that draws attention and reinforces both actions and events.
+- [HealthActivitySummary](/guide/Device Capabilities/Health/HealthActivitySummary.md): Represents a summary of daily activity, including steps taken, distance traveled, and calories burned.
+- [HealthCategorySample](/guide/Device Capabilities/Health/HealthCategorySample.md): Represents a health category sample, such as sleep analysis, menstrual flow, ovulation test results, etc.
+- [HealthCategoryType](/guide/Device Capabilities/Health/HealthCategoryType.md): This interface provides a way to define and manage health category types, which represent qualitative health data such as sleep analysis, mood, or menstrual cycle.
+- [HealthCategoryValue Types](/guide/Device Capabilities/Health/HealthCategoryValue Types.md): This interface provides a way to define and manage health category value types, which represent specific values for health category data such as sleep stages or mood states.
+- [HealthCharacteristicType](/guide/Device Capabilities/Health/HealthCharacteristicType.md): An enumeration of health characteristics such as biological sex, blood type, skin type, wheelchair use, and activity mobility patterns.
+- [HealthCorrelation](/guide/Device Capabilities/Health/HealthCorrelation.md): Represents a health correlation, which is a relationship between two or more health data samples, such as blood pressure readings and heart rate.
+- [HealthHeartbeatSeriesSample](/guide/Device Capabilities/Health/HealthHeartbeatSeriesSample.md): Represents a series of heartbeat samples, which can be used to analyze heart rate variability or other cardiac metrics.
+- [HealthKit Permission Behavior](/guide/Device Capabilities/Health/HealthKit Permission Behavior.md): iOS HealthKit-specific permission behavior.
+- [HealthQuantitySample](/guide/Device Capabilities/Health/HealthQuantitySample.md): Represents a health quantity sample, such as a heart rate measurement, recorded steps, or calories consumed.
+- [HealthQuantityType](/guide/Device Capabilities/Health/HealthQuantityType.md): This interface provides a way to define and manage health quantity types, which represent measurable health data such as steps, heart rate, or calories burned.
+- [HealthStatistics](/guide/Device Capabilities/Health/HealthStatistics.md): This interface provides a way to calculate statistics for health data, such as average, minimum, maximum, and sum for health quantity samples.
+- [HealthStatisticsCollection](/guide/Device Capabilities/Health/HealthStatisticsCollection.md): This interface provides a way to collect and manage statistics for health data over a specified time period, such as average, minimum, maximum, and sum for health quantity samples.
+- [HealthUnit](/guide/Device Capabilities/Health/HealthUnit.md): This interface provides a way to define and manage health units, which represent the measurement units for health data such as kilograms, meters, or beats per minute.
+- [HealthWorkout](/guide/Device Capabilities/Health/HealthWorkout.md): Represents a health workout, which is a structured activity such as running, cycling, or swimming, with associated metadata like duration, distance, and calories burned.
+- [HealthWorkoutActivityType](/guide/Device Capabilities/Health/HealthWorkoutActivityType.md): An enumeration of health workout activity types, such as running, cycling, swimming, etc.
+- [HealthWorkoutEvent](/guide/Device Capabilities/Health/HealthWorkoutEvent.md): Represents a health workout event, such as a start or end of a workout session, or a pause in the workout.
+- [Query Statistics Collection](/guide/Device Capabilities/Health/Query Statistics Collection.md): This interface allows you to query a collection of health statistics, such as average, minimum, maximum, and sum for health quantity samples over a specified time period.
+- [Query Statistics](/guide/Device Capabilities/Health/Query Statistics.md): This interface allows you to query statistics for health data, such as average, minimum, maximum, and sum for health quantity samples.
+- [Reading Activity Summaries](/guide/Device Capabilities/Health/Reading Activity Summaries.md): This interface allows you to read health activity summaries from the HealthKit store.
+- [Reading Category Samples](/guide/Device Capabilities/Health/Reading Category Samples.md): This interface allows you to read health category samples from the HealthKit store.
+- [Reading Characteristic Data](/guide/Device Capabilities/Health/Reading Characteristic Data.md): This interface allows you to read health characteristic data from the HealthKit store.
+- [Reading Correlation Data](/guide/Device Capabilities/Health/Reading Correlation Data.md): This interface allows you to read health correlation data from the HealthKit store.
+- [Reading Heartbeat Series Samples](/guide/Device Capabilities/Health/Reading Heartbeat Series Samples.md): This interface allows you to read health heartbeat series samples from the HealthKit store.
+- [Reading Quantity Samples](/guide/Device Capabilities/Health/Reading Quantity Samples.md): This interface allows you to read health quantity samples from the HealthKit store.
+- [Reading Workout Samples](/guide/Device Capabilities/Health/Reading Workout Samples.md): This interface allows you to read health workout samples from the HealthKit store.
+- [Writing Health Category Samples](/guide/Device Capabilities/Health/Writing Health Category Samples.md): This interface allows you to write health category samples to the HealthKit store.
+- [Writing Health Correlation Data](/guide/Device Capabilities/Health/Writing Health Correlation Data.md): This interface allows you to write health correlation data to the HealthKit store.
+- [Writing Health Quantity Samples](/guide/Device Capabilities/Health/Writing Health Quantity Samples.md): This interface allows you to write health quantity samples to the HealthKit store.
+- [Keychain](/guide/Device Capabilities/Keychain.md): The interface to store data in Keychain.
+- [LocalAuth](/guide/Device Capabilities/LocalAuth.md): This interface provides authentication with biometrics such as fingerprint or facial recognition.
+- [Location](/guide/Device Capabilities/Location.md): Getting the current location of your device.
+- [MediaComposer Example](/guide/Device Capabilities/MediaComposer/MediaComposer Example.md): This example shows how to use MediaComposer.
+- [MediaTime](/guide/Device Capabilities/MediaComposer/MediaTime.md): This class represents a media time.
+- [Quick Start](/guide/Device Capabilities/MediaComposer/Quick Start.md): Quickly master the use of MediaComposer.
+- [MediaPlayer](/guide/Device Capabilities/MediaPlayer.md): This interface allows you to interact with the Now Playing Center, manage Now Playing Info, and respond to remote control events.
+- [Notification](/guide/Device Capabilities/Notification/index.md): The interface for managing local notification-related activities.
+- [Example](/guide/Device Capabilities/Notification/index_example.md): The interface for managing local notification-related activities.
+- [PDF](/guide/Device Capabilities/PDF.md): A high-level interface for interacting with PDF files.
+- [Pasteboard](/guide/Device Capabilities/Pasteboard.md): This namspace provides a complete interface for reading, writing, and observing system pasteboard  changes.
+- [Photos](/guide/Device Capabilities/Photos/index.md): The interface that manages access and changes to the user’s photo library.
+- [Example](/guide/Device Capabilities/Photos/index_example.md): The interface that manages access and changes to the user’s photo library.
+- [AVPlayerView](/guide/Device Capabilities/Play Video/AVPlayerView.md): This component is intended for media-centric scenarios where native playback behavior, PiP, Now Playing integration, and background playback are required.
+- [VideoPlayer](/guide/Device Capabilities/Play Video/VideoPlayer/index.md): VideoPlayer view lets you playback movies from any URL, local or remote.
+- [Example](/guide/Device Capabilities/Play Video/VideoPlayer/index_example.md): VideoPlayer view lets you playback movies from any URL, local or remote.
+- [QRCode](/guide/Device Capabilities/QRCode.md): Parse the QR code image file, or open the scan code page to scan.
+- [QuickLook](/guide/Device Capabilities/QuickLook.md): A simple way to preview text, images, or files within your scripts
+- [Recurrence](/guide/Device Capabilities/Recurrence.md): The recurrence-related types and classes allow you to define and manage recurring patterns for events and reminders.
+- [Reminder](/guide/Device Capabilities/Reminder.md): This interface allows you to create, edit, and manage reminders in a calendar. This includes setting titles, due dates, priorities, and recurrence rules.
+- [Safari](/guide/Device Capabilities/Safari/index.md): Present a website either in-app or leaving the app and opening the system default browser.
+- [Example](/guide/Device Capabilities/Safari/index_example.md): Present a website either in-app or leaving the app and opening the system default browser.
+- [Send Mail](/guide/Device Capabilities/Send Mail.md): This interface allows you to present a mail compose view within your app. You can specify recipients, subject, body, and attachments.
+- [Send Message](/guide/Device Capabilities/Send Message.md): This interface allows you to send messages using the device's messaging capabilities, such as SMS or iMessage.
+- [ShareSheet](/guide/Device Capabilities/ShareSheet.md): You can share data from your script using this interface.
+- [SharedAudioSession](/guide/Device Capabilities/SharedAudioSession.md): The shared audio session instance. An audio session acts as an intermediary between your app and the operating system — and, in turn, the underlying audio hardware.
+- [Speech](/guide/Device Capabilities/Speech/index.md): Text To Speech.
+- [Example](/guide/Device Capabilities/Speech/index_example.md): Text To Speech.
+- [SpeechRecognition](/guide/Device Capabilities/SpeechRecognition/index.md): The interface for managing the speech recognizer process.
+- [Example](/guide/Device Capabilities/SpeechRecognition/index_example.md): The interface for managing the speech recognizer process.
+- [Translation](/guide/Device Capabilities/Translation.md): This interface provides language translation capabilities, allowing you to translate text between different languages.
+- [VideoRecorder](/guide/Device Capabilities/VideoRecorder.md): A high-level API for recording video with fine-grained control over camera configuration, audio capture, encoding, pause/resume behavior, and final file output.
+- [Vision](/guide/Device Capabilities/Vision.md): The module provides APIs for text recognition tasks.
+- [Weather](/guide/Device Capabilities/Weather/index.md): This interface provides access to real-time and forecast weather data.
+- [Example](/guide/Device Capabilities/Weather/index_example.md): This interface provides access to real-time and forecast weather data.
+- [WebViewController](/guide/Device Capabilities/WebViewController.md): It is designed for use cases like custom in-app browsers, rendering dynamic HTML, or communicating with JavaScript running in a web context.
+- [Intent.continueInForeground](/guide/Intent/Intent.continueInForeground.md): This method requests the system to bring the Scripting app to the foreground while a Shortcut is running.
+- [Intent.requestConfirmation](/guide/Intent/Intent.requestConfirmation.md): This method pauses script execution and asks the user to confirm an action through a system-managed confirmation UI.
+- [Quick Start](/guide/Intent/Quick Start.md): Quickly master the use of Intents.
+- [SnippetIntent](/guide/Intent/SnippetIntent.md): SnippetIntent is a special kind of AppIntent whose purpose is to render interactive Snippet UI cards inside the Shortcuts app (iOS 26+).
+- [Interactive Widget and LiveActivity](/guide/Interactive Widget and LiveActivity.md): To create dynamic and interactive UIs using Button and Toggle views.
+- [LiveActivity](/guide/LiveActivity.md): Display your Script’s data in the Dynamic Island and on the Lock Screen and offer quick interactions.
+- [Quick Start](/guide/Quick Start.md): Quickly master the use of Scripting app.
+- [Script](/guide/Script.md): This API allows you to build reusable script logic, trigger automation via custom URL schemes, and manage inter-script communication in a structured and efficient manner.
+- [Alignment](/guide/Types/Alignment.md): The Alignment type defines how to position content within a view’s frame, mirroring the behavior of SwiftUI’s built-in alignments.
+- [Color](/guide/Types/Color.md): The Color API supports various color formats, including HEX strings, RGBA strings, and predefined color keywords
+- [DynamicShapeStyle](/guide/Types/DynamicShapeStyle.md): This type allows you to define two distinct styles for a shape—one for light mode and another for dark mode. The system automatically applies the appropriate style based on the current color scheme (light or dark) of the user’s device.
+- [Shape](/guide/Types/Shape.md): This property defines a visual clipping or background shape used in view modifiers such as clipShape, background, or border.
+- [ShapeStyle](/guide/Types/ShapeStyle.md): This type defines how colors, gradients, and materials can be applied to a view’s foreground or background, mirroring the styling capabilities found in SwiftUI.
+- [App Events](/guide/Utilities/App Events.md): This interface allows you to observe global application state changes, such as scene lifecycle transitions and changes in system-wide appearance (light/dark mode).
+- [Archive](/guide/Utilities/Archive.md): This class provides a comprehensive interface for working with archive files (such as ZIP).
+- [Crypto](/guide/Utilities/Crypto.md): The interface provides simple, secure, and efficient APIs for generating cryptographic hashes from data.
+- [Data](/guide/Utilities/Data.md): This class represents binary data and provides methods to convert between various formats.
+- [DateComponents](/guide/Utilities/DateComponents.md): The interface provides a way to work with date and time components, allowing you to create, manipulate, and format dates easily.
+- [DateFormatter](/guide/Utilities/DateFormatter.md): This class is used to format Date objects into strings, or parse strings into Date objects.
+- [Encoding](/guide/Utilities/Encoding.md): This type defines a set of supported character encodings.
+- [FileEntity](/guide/Utilities/FileEntity.md): This interface allows scripts and HTTP servers to open, read, write, seek, and close files efficiently.
+- [FileManager](/guide/Utilities/FileManager.md): A convenient interface to the contents of the file system, and the primary means of interacting with it.
+- [HttpRequest](/guide/Utilities/HttpServer/HttpRequest.md): This class represents an HTTP request received by the server.
+- [HttpResponse](/guide/Utilities/HttpServer/HttpResponse.md): This class represents an HTTP response object returned by the server to the client.
+- [HttpResponseBody](/guide/Utilities/HttpServer/HttpResponseBody.md): This class represents an HTTP response body object returned by the server to the client.
+- [HttpServer](/guide/Utilities/HttpServer/HttpServer.md): This interface provides a lightweight local HTTP server that can handle HTTP requests, serve static files, and manage WebSocket connections
+- [WebSocketSession](/guide/Utilities/HttpServer/WebSocketSession.md): This class represents an active WebSocket connection session.
+- [ItemProvider](/guide/Utilities/ItemProvider.md): This class represents a deferred data provider.
+- [OAuth2](/guide/Utilities/OAuth2.md): This interface provides a simple way to authenticate users and authorize access to resources using OAuth2 protocol.
+- [Path](/guide/Utilities/Path.md): The interface provides utilities for working with file and directory paths.
+- [FormData](/guide/Utilities/Request/FormData.md): This class represents a collection of key/value pairs representing form data.
+- [Headers](/guide/Utilities/Request/Headers.md): This class represents a collection of HTTP request or response header fields.
+- [ReadableStream](/guide/Utilities/Request/ReadableStream.md): This class represents a stream of data that can be read from.
+- [Request & RequestInit](/guide/Utilities/Request/Request & RequestInit.md): The interface represents a complete configuration of an HTTP request.
+- [Response](/guide/Utilities/Request/Response.md): This class represents the result of an HTTP request made using the fetch() API
+- [fetch](/guide/Utilities/Request/fetch.md): Send network requests.
+- [SFTP Client](/guide/Utilities/SSH/SFTP Client.md): This interface provides a simple way to transfer files securely over SSH using SFTP protocol.
+- [SFTP File](/guide/Utilities/SSH/SFTP File.md): This interface provides low-level operations such as reading, writing, retrieving attributes, and closing the file.
+- [SSH Authentication Method](/guide/Utilities/SSH/SSH Authentication Method.md): This interface provides a way to authenticate SSH connections using various methods such as password, public key, or private key.
+- [SSH Client](/guide/Utilities/SSH/SSH Client.md): This interface provides a simple way to connect to remote servers using SSH protocol.
+- [TTY Stdin Writer](/guide/Utilities/SSH/TTY Stdin Writer.md): This interface allows you to write data to the standard input of a TTY session, enabling interactive command execution.
+- [Storage](/guide/Utilities/Storage.md): Providing a persistent store for simple data.
+- [Thread](/guide/Utilities/Thread.md): This interface provides a simple way to let you manually switch threads.
+- [UIImage](/guide/Utilities/UIImage.md): This class represents an image and provides methods to manipulate and display images.
+- [BackgroundURLSession](/guide/Utilities/URLSession/BackgroundURLSession.md): This interface provides the ability to initiate, resume, and query background download and upload tasks.
+- [URLSessionDownloadTask](/guide/Utilities/URLSession/URLSessionDownloadTask.md): Represents a download task instance that can be performed in the foreground or background, and can be resumed after the script is terminated.
+- [URLSessionUploadTask](/guide/Utilities/URLSession/URLSessionUploadTask.md): Represents an upload task instance that can be performed in the foreground or background, and can be resumed after the script is terminated.
+- [UUID](/guide/Utilities/UUID.md): The interface provides an easy way to generate unique UUID strings.
+- [WebScoket](/guide/Utilities/WebScoket.md): This interface allows you to create and manage WebSocket connections, allowing for real-time communication with a server.
+- [socket.io](/guide/Utilities/socket.io.md): This interface allows you to manage real-time, bidirectional communication between clients and servers with socket.io library.
+- [Animation and Transition](/guide/View Modifiers/Animation and Transition.md): These interfaces define how view transitions occur when their properties change.
+- [Chaining View Modifiers](/guide/View Modifiers/Chaining View Modifiers.md): This view modifier allows you to chain multiple modifiers together, supporting the same modifier being used multiple times in the same view.
+- [ChartMarkProps](/guide/View Modifiers/ChartMarkProps/index.md): These properties allow you to set the style, symbol, position, annotation, transformation, etc. of each chart mark.
+- [Charts Style](/guide/View Modifiers/Charts Style.md): The properties allows you to customize the appearance of the chart view.
+- [Grid Layout Control](/guide/View Modifiers/Grid Layout Control.md): These properties are used to control the layout behavior of individual views placed inside a Grid structure.
+- [Image Style](/guide/View Modifiers/Image Style.md): These modifiers are specifically designed for views that render images.
+- [Lifecycle Events](/guide/View Modifiers/Lifecycle Events.md): The lifecycle hooks to execute custom logic when a view becomes visible or is removed from the visible interface.
+- [Glass Effect Transition](/guide/View Modifiers/Liquid Glass/Glass Effect Transition/index.md): How Liquid Glass materials animate during view changes.
+- [Example](/guide/View Modifiers/Liquid Glass/Glass Effect Transition/index_example.md): How Liquid Glass materials animate during view changes.
+- [Liquid Glass Effect](/guide/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md): Liquid Glass visual system introduced in iOS 26.
+- [Example](/guide/View Modifiers/Liquid Glass/Liquid Glass Effect/index_example.md): Liquid Glass visual system introduced in iOS 26.
+- [Common](/guide/View Modifiers/List and Section View Modifiers/Common.md): These modifiers allow you to customize how rows behave and appear inside a <List> component.
+- [New List View Modifiers](/guide/View Modifiers/List and Section View Modifiers/New List View Modifiers.md): These modifiers allow you to customize how sections behave and appear inside a <List> component.
+- [LiveActivity View Modifiers](/guide/View Modifiers/LiveActivity View Modifiers.md): These modifiers used to customize the appearance of Live Activities on the Lock Screen.
+- [Navigation View Modifiers](/guide/View Modifiers/Navigation View Modifiers.md): These modifiers allow for the customization of navigation titles, title display styles, and back button behavior—closely following the conventions of SwiftUI's navigation system.
+- [Picture in Pictuer View Modifiers](/guide/View Modifiers/Picture in Pictuer View Modifiers.md): These apis allow developers to render any view inside a system PiP window.
+- [Presentation View Modifiers](/guide/View Modifiers/Presentation View Modifiers.md): These view modifiers customize the appearance, sizing, and interaction behavior of views presented using sheet.
+- [Redaction View Modifiers](/guide/View Modifiers/Redaction View Modifiers.md): This view modifier apply redaction to a view hierarchy.
+- [Safe Area](/guide/View Modifiers/Safe Area.md): These properties allow you to adjust layout behavior relative to the system-defined safe areas.
+- [Search Interactions](/guide/View Modifiers/Search Interactions.md): You can add a search bar, control its visibility and placement, react to changes in input, and display dynamic suggestions.
+- [Set environment values (environments)](/guide/View Modifiers/Set environment values (environments).md): This view modifier allows you to set environment values for a view hierarchy.
+- [Swipe Actions](/guide/View Modifiers/Swipe Actions/index.md): You can attach swipe actions to views used as rows in a <List> (such as <HStack>) to support contextual interactions like deleting, editing, marking favorites, etc.
+- [Example](/guide/View Modifiers/Swipe Actions/index_example.md): You can attach swipe actions to views used as rows in a <List> (such as <HStack>) to support contextual interactions like deleting, editing, marking favorites, etc.
+- [Symbol Style](/guide/View Modifiers/Symbol Style.md): These modifiers allow you to customize how SF Symbols are displayed and animated inside views.
+- [Text Field](/guide/View Modifiers/Text Field.md): These modifiers customize the behavior and appearance of TextField components.
+- [Text View Modifiers](/guide/View Modifiers/Text View Modifiers.md): The properties allows you to customize the layout and appearance of a text or label view.
+- [Toast](/guide/View Modifiers/Toast.md): This view modifier displays a temporary notification message (toast) over the current view.
+- [ToolBar View Modifiers](/guide/View Modifiers/ToolBar View Modifiers.md): Control the visibility, appearance, and behavior of system toolbars.
+- [blur](/guide/View Modifiers/blur.md): Applies a Gaussian blur effect to the view.
+- [border](/guide/View Modifiers/border.md): This property adds a border around the view.
+- [buttonStyle](/guide/View Modifiers/buttonStyle.md): The buttonStyle property allows you to customize the interaction behavior and appearance of buttons within a view hierarchy.
+- [clipShape](/guide/View Modifiers/clipShape.md): Clips the view to the specified shape while maintaining its aspect ratio.
+- [clipped](/guide/View Modifiers/clipped.md): Clips the view to its rectangular bounds.
+- [colorConvert](/guide/View Modifiers/colorConvert.md): Inverts the colors in this view.
+- [containerRelativeFrame](/guide/View Modifiers/containerRelativeFrame.md): Positions the view within an invisible frame whose size and position are relative to its nearest container.
+- [contentMargins](/guide/View Modifiers/contentMargins.md): This view modifier configures custom margins around a view’s content.
+- [contentShape](/guide/View Modifiers/contentShape.md): This property defines the interactive or visual boundary shape of a view's content.
+- [contentTransition](/guide/View Modifiers/contentTransition.md): This view modifier specifies a transition animation to apply when the content within a single view changes.
+- [contextMenu](/guide/View Modifiers/contextMenu.md): This property allows a view to present a contextual menu when the user performs a long-press or right-click gesture.
+- [controlGroupStyle](/guide/View Modifiers/controlGroupStyle.md): The controlGroupStyle property allows you to set the visual and interactive style for control groups within your view, reflecting the look and feel found in SwiftUI.
+- [datePickerStyle](/guide/View Modifiers/datePickerStyle.md): The datePickerStyle property allows you to customize the appearance and interaction of the DatePicker view.
+- [disabled](/guide/View Modifiers/disabled.md): Disables user interactions for this view and its children.
+- [fixedSize](/guide/View Modifiers/fixedSize.md): Fixes the size of a view to its ideal dimensions.
+- [flipsForRightToLeftLayoutDirection](/guide/View Modifiers/flipsForRightToLeftLayoutDirection.md): Determines whether the view should horizontally mirror its contents when the system layout direction is right-to-left (RTL).
+- [foregroundStyle & background](/guide/View Modifiers/foregroundStyle & background.md): These two properties allow you to customize the visual styling of view content and its background.
+- [formStyle](/guide/View Modifiers/formStyle.md): The formStyle property allows you to customize the appearance and interaction of the Form view.
+- [frame](/guide/View Modifiers/frame.md): This property defines the size and alignment of a view.
+- [gaugeStyle](/guide/View Modifiers/gaugeStyle.md): The gaugeStyle property allows you to customize the appearance and interaction of the Gauge view.
+- [hidden](/guide/View Modifiers/hidden.md): Sets the visibility of a view.
+- [labelsHidden](/guide/View Modifiers/labelsHidden.md): Hides the labels of controls contained within the view.
+- [layoutPriority](/guide/View Modifiers/layoutPriority.md): This view modifier specifies a layout priority for a view.
+- [listStyle](/guide/View Modifiers/listStyle.md): The listStyle property allows you to customize the behavior and appearance of a list in your UI when using the List view.
+- [mask](/guide/View Modifiers/mask.md): This view modifier clips the visual rendering of a view using the **alpha channel** of another view.
+- [matchedGeometryEffect](/guide/View Modifiers/matchedGeometryEffect.md): This view modifier establishes a geometric relationship between different views, allowing them to animate smoothly when transitioning across different layouts, different containers, different conditional render states, different size and position configurations.
+- [matchedTransitionSource](/guide/View Modifiers/matchedTransitionSource.md): This view modifier marks a view as the geometric source of a navigation transition.
+- [offset](/guide/View Modifiers/offset.md): Moves the view from its original position by the specified x and y distances.
+- [onDrag and onDrop View Modifiers](/guide/View Modifiers/onDrag and onDrop View Modifiers.md): These APIs enable views to act as drag sources, drop destinations, or both, supporting intra-app and cross-app drag-and-drop scenarios.
+- [onDropContent](/guide/View Modifiers/onDropContent.md): The view modifier allows a view in your script to act as a drop target, accepting files, images, or text dragged in from other apps.
+- [opacity](/guide/View Modifiers/opacity.md): Sets the transparency level of a view.
+- [overlay](/guide/View Modifiers/overlay.md): This view modifier places a view on top of the modified view, creating a layered composition.
+- [padding](/guide/View Modifiers/padding.md): This property adds space around the content of a view.
+- [pickerStyle](/guide/View Modifiers/pickerStyle.md): The pickerStyle property allows you to customize the appearance and behavior of pickers within a view hierarchy.
+- [position](/guide/View Modifiers/position.md): Positions the center of the view at the given x and y coordinates within its parent’s coordinate space.
+- [preferredColorScheme](/guide/View Modifiers/preferredColorScheme.md): Sets the preferred system appearance (light or dark) for the view hierarchy.
+- [progressViewStyle](/guide/View Modifiers/progressViewStyle.md): The progressViewStyle property allows you to customize the appearance of a progress view.
+- [refresable](/guide/View Modifiers/refresable/index.md): Marks a scrollable view as refreshable, enabling the user to pull down to trigger an asynchronous data reload.
+- [Example](/guide/View Modifiers/refresable/refreshable_list.md): Marks a scrollable view as refreshable, enabling the user to pull down to trigger an asynchronous data reload.
+- [rotationEffect](/guide/View Modifiers/rotationEffect.md): Rotates the view by a specified angle in degrees.
+- [scaleEffect](/guide/View Modifiers/scaleEffect.md): Scales the view horizontally and vertically.
+- [shadow](/guide/View Modifiers/shadow.md): Applies a shadow behind the view.
+- [textFieldStyle](/guide/View Modifiers/textFieldStyle.md): The textFieldStyle property allows you to customize the appearance and interaction of the TextField view.
+- [tint](/guide/View Modifiers/tint.md): Overrides the default accent color for a specific view using a given style.
+- [toggleStyle](/guide/View Modifiers/toggleStyle.md): The toggleStyle property allows you to customize the appearance and interaction of the Toggle view.
+- [Use with Toolbar Component](/guide/View Modifiers/toolbar/Use with Toolbar Component.md): Use the Toolbar component to populate a view’s navigation or toolbar area with various items.
+- [Use with ToolbarProps](/guide/View Modifiers/toolbar/Use with ToolbarProps.md): Use ToolbarProps to simply set a toolbar.
+- [translationHost](/guide/View Modifiers/translationHost.md): This view modifier is used to provide a translation service context to your UI.
+- [widgetBackground](/guide/View Modifiers/widgetBackground.md): This property is used to define background styles specifically for widgets, with behavior optimized for iOS 18’s accented (tinted) rendering mode.
+- [AVPlayerView](/guide/Views/AVPlayerView.md): This component is intended for media-centric scenarios where native playback behavior, PiP, Now Playing integration, and background playback are required.
+- [AccessoryWidgetBackground](/guide/Views/AccessoryWidgetBackground.md): This component is designed to be used inside accessory widgets—such as Lock Screen widgets or StandBy widgets.
+- [Button](/guide/Views/Button.md): A control that initiates an action.
+- [AreaStackChart](/guide/Views/Charts/AreaStackChart/index.md): A chart that displays data as stacked areas, where each area represents a total and is divided into segments representing sub-values.
+- [Example](/guide/Views/Charts/AreaStackChart/index_example.md): A chart that displays data as stacked areas, where each area represents a total and is divided into segments representing sub-values.
+- [Bar1DChart](/guide/Views/Charts/Bar1DChart/index.md): A chart that displays data as a single-dimensional bar, typically used for representing a single value or category.
+- [Example](/guide/Views/Charts/Bar1DChart/index_example.md): A chart that displays data as a single-dimensional bar, typically used for representing a single value or category.
+- [BarChart](/guide/Views/Charts/BarChart/index.md): A chart that displays data as rectangular bars with lengths proportional to the values they represent.
+- [Example](/guide/Views/Charts/BarChart/index_example.md): A chart that displays data as rectangular bars with lengths proportional to the values they represent.
+- [BarGanttChart](/guide/Views/Charts/BarGanttChart/index.md): A chart that displays data as horizontal bars, typically used to represent project schedules or timelines.
+- [Example](/guide/Views/Charts/BarGanttChart/index_example.md): A chart that displays data as horizontal bars, typically used to represent project schedules or timelines.
+- [BarGroupChart](/guide/Views/Charts/BarGroupChart/index.md): A chart that displays data as groups of bars, where each group represents a category and the bars within the group represent sub-categories.
+- [Example](/guide/Views/Charts/BarGroupChart/index_example.md): A chart that displays data as groups of bars, where each group represents a category and the bars within the group represent sub-categories.
+- [BarStackChart](/guide/Views/Charts/BarStackChart/index.md): A chart that displays data as stacked bars, where each bar represents a total and is divided into segments representing sub-values.
+- [Example](/guide/Views/Charts/BarStackChart/index_example.md): A chart that displays data as stacked bars, where each bar represents a total and is divided into segments representing sub-values.
+- [DonutChart](/guide/Views/Charts/DonutChart/index.md): A chart that displays data as a donut shape, similar to a pie chart but with a hole in the center.
+- [Example](/guide/Views/Charts/DonutChart/index_example.md): A chart that displays data as a donut shape, similar to a pie chart but with a hole in the center.
+- [HeatMapChart](/guide/Views/Charts/HeatMapChart/index.md): A chart that displays data as a matrix of colors, where each color represents a value in a two-dimensional space.
+- [Example](/guide/Views/Charts/HeatMapChart/index_example.md): A chart that displays data as a matrix of colors, where each color represents a value in a two-dimensional space.
+- [LineCategoryChart](/guide/Views/Charts/LineCategoryChart/index.md): A chart that displays data as a series of points connected by lines, with categories on the a specified axis.
+- [Example](/guide/Views/Charts/LineCategoryChart/index_example.md): A chart that displays data as a series of points connected by lines, with categories on the a specified axis.
+- [LineChart](/guide/Views/Charts/LineChart/index.md): A chart that displays data as a series of points connected by straight lines.
+- [Example](/guide/Views/Charts/LineChart/index_example.md): A chart that displays data as a series of points connected by straight lines.
+- [Multiple Charts Example](/guide/Views/Charts/Multiple Charts Example/index.md): An example that demonstrates how to use multiple charts in a single view.
+- [Example](/guide/Views/Charts/Multiple Charts Example/index_example.md): An example that demonstrates how to use multiple charts in a single view.
+- [PieChart](/guide/Views/Charts/PieChart/index.md): A chart that displays data as slices of a pie, where each slice represents a proportion of the whole.
+- [Example](/guide/Views/Charts/PieChart/index_example.md): A chart that displays data as slices of a pie, where each slice represents a proportion of the whole.
+- [PointCategoryChart](/guide/Views/Charts/PointCategoryChart/index.md): A chart that displays data as points categorized by a specific axis, useful for visualizing discrete data with categories.
+- [Example](/guide/Views/Charts/PointCategoryChart/index_example.md): A chart that displays data as points categorized by a specific axis, useful for visualizing discrete data with categories.
+- [PointChart](/guide/Views/Charts/PointChart/index.md): A chart that displays data as individual points, typically used for scatter plots or discrete data.
+- [Example](/guide/Views/Charts/PointChart/index_example.md): A chart that displays data as individual points, typically used for scatter plots or discrete data.
+- [RangeAreaChart](/guide/Views/Charts/RangeAreaChart/index.md): A chart that displays data as areas between two lines, representing a range of values.
+- [Example](/guide/Views/Charts/RangeAreaChart/index_example.md): A chart that displays data as areas between two lines, representing a range of values.
+- [RectAreaChart](/guide/Views/Charts/RectAreaChart/index.md): A chart that displays data as rectangular areas, where the size and color of each rectangle represent different data values.
+- [Example](/guide/Views/Charts/RectAreaChart/index_example.md): A chart that displays data as rectangular areas, where the size and color of each rectangle represent different data values.
+- [RectChart](/guide/Views/Charts/RectChart/index.md): A chart that displays data as rectangles, where the size and color of each rectangle represent different data values.
+- [Example](/guide/Views/Charts/RectChart/index_example.md): A chart that displays data as rectangles, where the size and color of each rectangle represent different data values.
+- [RuleChart](/guide/Views/Charts/RuleChart/index.md): A chart that displays data as a series of rules, which can be used to represent thresholds or limits.
+- [Example](/guide/Views/Charts/RuleChart/index_example.md): A chart that displays data as a series of rules, which can be used to represent thresholds or limits.
+- [RuleLineForLabelChart](/guide/Views/Charts/RuleLineForLabelChart.md): A chart that displays data as a series of lines, with labels indicating specific values or thresholds.
+- [RuleLineForValueChart](/guide/Views/Charts/RuleLineForValueChart.md): A chart that displays data as a series of lines, with rules indicating specific values or thresholds.
+- [ConcentricRectangle](/guide/Views/ConcentricRectangle.md): It is designed to create rectangles with progressively inset (concentric) corner geometry, which adapts naturally to modern UI designs.
+- [ColorPicker](/guide/Views/Controls/ColorPicker/index.md): A control used to select a color from the system color picker UI.
+- [Example](/guide/Views/Controls/ColorPicker/index_example.md): A control used to select a color from the system color picker UI.
+- [ContentUnavailableView](/guide/Views/Controls/ContentUnavailableView/index.md): An interface, consisting of a label and additional content, that you display when the content of your app is unavailable to users.
+- [Example](/guide/Views/Controls/ContentUnavailableView/index_example.md): An interface, consisting of a label and additional content, that you display when the content of your app is unavailable to users.
+- [DatePicker](/guide/Views/Controls/DatePicker/index.md): A control for selecting an absolute date.
+- [Example](/guide/Views/Controls/DatePicker/index_example.md): A control for selecting an absolute date.
+- [Gauge](/guide/Views/Controls/Gauge/index.md): A view that shows a value within a range.
+- [Example](/guide/Views/Controls/Gauge/index_example.md): A view that shows a value within a range.
+- [Picker](/guide/Views/Controls/Picker/index.md): A control for selecting from a set of mutually exclusive values.
+- [Example](/guide/Views/Controls/Picker/index_example.md): A control for selecting from a set of mutually exclusive values.
+- [ProgressView](/guide/Views/Controls/ProgressView/index.md): A view that shows the progress toward completion of a task.
+- [Example](/guide/Views/Controls/ProgressView/index_example.md): A view that shows the progress toward completion of a task.
+- [Slider](/guide/Views/Controls/Slider/index.md): A control for selecting a value from a bounded linear range of values.
+- [Example](/guide/Views/Controls/Slider/index_example.md): A control for selecting a value from a bounded linear range of values.
+- [Stepper](/guide/Views/Controls/Stepper/index.md): A control that performs increment and decrement actions.
+- [Example](/guide/Views/Controls/Stepper/index_example.md): A control that performs increment and decrement actions.
+- [Toggle](/guide/Views/Controls/Toggle/index.md): A control that toggles between on and off states.
+- [Example](/guide/Views/Controls/Toggle/index_example.md): A control that toggles between on and off states.
+- [Dialog](/guide/Views/Dialog/index.md): This interface provides some shortcut methods for displaying dialog boxes.
+- [Example](/guide/Views/Dialog/index_example.md): This interface provides some shortcut methods for displaying dialog boxes.
+- [Displaying text](/guide/Views/Displaying text/index.md): Display formatted text.
+- [Example](/guide/Views/Displaying text/index_example.md): Display formatted text.
+- [Editor](/guide/Views/Editor.md): A powerful code editor that can be controlled programmatically or embedded into a user interface.
+- [EnvironmentValuesReader](/guide/Views/EnvironmentValuesReader.md): This view allows you to read environment values from the current view hierarchy.
+- [GeometryReader](/guide/Views/GeometryReader.md): It provides information about the size, padding, safe area, and safe area insets of the current container.
+- [Gestures](/guide/Views/Gestures.md): This interface provides a gesture system similar to SwiftUI, allowing any view to respond to touch interactions such as tapping, long pressing, dragging, rotating, and magnifying.
+- [Image](/guide/Views/Image/index.md): Add images and symbols to your app’s user interface.
+- [Example](/guide/Views/Image/index_example.md): Add images and symbols to your app’s user interface.
+- [FlowLayout](/guide/Views/Layout/FlowLayout.md): This view is a flow-based layout component that arranges its children horizontally and automatically wraps items to the next line when there is insufficient space.
+- [Grid](/guide/Views/Layout/Grid/index.md): A container view that arranges other views in a two dimensional layout.
+- [Example](/guide/Views/Layout/Grid/index_example.md): A container view that arranges other views in a two dimensional layout.
+- [HStack](/guide/Views/Layout/HStack/index.md): A view that arranges its subviews in a horizontal line.
+- [Example](/guide/Views/Layout/HStack/index_example.md): A view that arranges its subviews in a horizontal line.
+- [LazyHGrid](/guide/Views/Layout/LazyHGrid/index.md): A container view that arranges its child views in a grid that grows horizontally, creating items only as needed.
+- [Example](/guide/Views/Layout/LazyHGrid/index_example.md): A container view that arranges its child views in a grid that grows horizontally, creating items only as needed.
+- [LazyHStack](/guide/Views/Layout/LazyHStack/index.md): A view that arranges its children in a line that grows horizontally, creating items only as needed.
+- [Example](/guide/Views/Layout/LazyHStack/index_example.md): A view that arranges its children in a line that grows horizontally, creating items only as needed.
+- [LazyVGrid](/guide/Views/Layout/LazyVGrid/index.md): A container view that arranges its child views in a grid that grows vertically, creating items only as needed.
+- [Example](/guide/Views/Layout/LazyVGrid/index_example.md): A container view that arranges its child views in a grid that grows vertically, creating items only as needed.
+- [LazyVStack](/guide/Views/Layout/LazyVStack/index.md): A view that arranges its children in a line that grows vertically, creating items only as needed.
+- [Example](/guide/Views/Layout/LazyVStack/index_example.md): A view that arranges its children in a line that grows vertically, creating items only as needed.
+- [VStack](/guide/Views/Layout/VStack/index.md): A view that arranges its subviews in a vertical line.
+- [Example](/guide/Views/Layout/VStack/index_example.md): A view that arranges its subviews in a vertical line.
+- [ZStack](/guide/Views/Layout/ZStack/index.md): A view that overlays its subviews, aligning them in both axes.
+- [Example](/guide/Views/Layout/ZStack/index_example.md): A view that overlays its subviews, aligning them in both axes.
+- [Link](/guide/Views/Link.md): This view can be used to open web pages, app-specific URLs, or other schemes.
+- [DisclosureGroup](/guide/Views/List/DisclosureGroup/index.md): A view that shows or hides another content view, based on the state of a disclosure control.
+- [Example](/guide/Views/List/DisclosureGroup/index_example.md): A view that shows or hides another content view, based on the state of a disclosure control.
+- [Display data inside a row](/guide/Views/List/Display data inside a row/index.md)
+- [Example](/guide/Views/List/Display data inside a row/index_example.md)
+- [Editable List](/guide/Views/List/Editable List/index.md): Move and delete list item.
+- [Example](/guide/Views/List/Editable List/index_example.md): Move and delete list item.
+- [List interaction](/guide/Views/List/List interaction/index.md): Adds custom swipe actions to a row in a list.
+- [Example](/guide/Views/List/List interaction/index_example.md): Adds custom swipe actions to a row in a list.
+- [List style](/guide/Views/List/List style/index.md): Sets the style for lists within this view.
+- [Example](/guide/Views/List/List style/list_style.md): Sets the style for lists within this view.
+- [Refresable List](/guide/Views/List/Refresable List/index.md): Pull down to refresh on a list view.
+- [Example](/guide/Views/List/Refresable List/refreshable_list.md): Pull down to refresh on a list view.
+- [Represent data hierarchy in sections](/guide/Views/List/Represent data hierarchy in sections/index.md)
+- [Example](/guide/Views/List/Represent data hierarchy in sections/index_example.md)
+- [Selectable List](/guide/Views/List/Selectable List.md): Implements selectable and multiselectable list features.
+- [Use list for navigations](/guide/Views/List/Use list for navigations/index.md)
+- [Example](/guide/Views/List/Use list for navigations/index_example.md)
+- [LivePhotoView](/guide/Views/LivePhotoView.md): This component is intended for media-centric scenarios where Live Photo playback is required.
+- [Markdown](/guide/Views/Markdown.md): A view that renders Markdown content, allowing you to display formatted text, links, images, and more.
+- [Menu](/guide/Views/Menu/index.md): Use a menu to provide people with easy access to common commands.
+- [Example](/guide/Views/Menu/index_example.md): Use a menu to provide people with easy access to common commands.
+- [Modal presentaions](/guide/Views/Modal presentaions/index.md): Present content in a separate view that offers focused interaction.
+- [Example](/guide/Views/Modal presentaions/index_example.md): Present content in a separate view that offers focused interaction.
+- [NamespaceReader](/guide/Views/NamespaceReader.md): This view is used to create and manage a geometry animation namespace.
+- [Collapsed split views](/guide/Views/Navigation/NavigationSplitView (for iPad)/Collapsed split views.md)
+- [Control column visibility](/guide/Views/Navigation/NavigationSplitView (for iPad)/Control column visibility.md)
+- [Three-column](/guide/Views/Navigation/NavigationSplitView (for iPad)/Three-column.md)
+- [Two-column](/guide/Views/Navigation/NavigationSplitView (for iPad)/Two-column.md)
+- [NavigationStack with path](/guide/Views/Navigation/NavigationStack/NavigationStack with path.md): It allows direct manipulation of the navigation history using a bound observable array.
+- [Use with NavigationLink](/guide/Views/Navigation/NavigationStack/Use with NavigationLink.md)
+- [Use with navigationDestination](/guide/Views/Navigation/NavigationStack/Use with navigationDestination.md)
+- [TabView with badge](/guide/Views/Navigation/TabView/TabView with badge.md)
+- [TabView with multiple scrolling pages](/guide/Views/Navigation/TabView/TabView with multiple scrolling pages.md)
+- [TabView](/guide/Views/Navigation/TabView/TabView.md): Displays a set of child views in a tabbed interface.
+- [Dismissing a presented view](/guide/Views/Present views/Dismissing a presented view/index.md): Use Navigation.useDismiss to dismiss a view.
+- [Example](/guide/Views/Present views/Dismissing a presented view/index_example.md): Use Navigation.useDismiss to dismiss a view.
+- [Present a simple view](/guide/Views/Present views/Present a simple view/index.md): Use Navigation.present to present a simple view.
+- [Example](/guide/Views/Present views/Present a simple view/index_example.md): Use Navigation.present to present a simple view.
+- [SVG](/guide/Views/SVG.md): This view can be used to render SVG images.
+- [Scroll views](/guide/Views/Scroll views/index.md): Enable people to scroll to content that doesn’t fit in the current display.
+- [Example](/guide/Views/Scroll views/index_example.md): Enable people to scroll to content that doesn’t fit in the current display.
+- [ScrollViewReader](/guide/Views/ScrollViewReader.md): Allowing scripts to programmatically control scrolling position within scrollable content such as List or ScrollView.
+- [Search](/guide/Views/Search/index.md): Enable people to search for text or other content within your script UI.
+- [Example](/guide/Views/Search/index_example.md): Enable people to search for text or other content within your script UI.
+- [Shapes](/guide/Views/Shapes/index.md): Draw shapes like circles and rectangles, as well as custom paths that define shapes of your own design.
+- [Example](/guide/Views/Shapes/index_example.md): Draw shapes like circles and rectangles, as well as custom paths that define shapes of your own design.
+- [Keyboard](/guide/Views/Text input/Keyboard.md): This interface allows you to interact with the software keyboard.
+- [SecureField](/guide/Views/Text input/SecureField/index.md): A control into which people securely enter private text.
+- [Example](/guide/Views/Text input/SecureField/index_example.md): A control into which people securely enter private text.
+- [TextField](/guide/Views/Text input/TextField/index.md): A control that displays an editable text interface.
+- [Example](/guide/Views/Text input/TextField/index_example.md): A control that displays an editable text interface.
+- [Time-based label views](/guide/Views/Time-based label views.md): These views allow you to display live-updating or formatted date and time strings in widgets and views.
+- [Toolbars](/guide/Views/Toolbars/index.md): Provide immediate access to frequently used commands and controls.
+- [Example](/guide/Views/Toolbars/index_example.md): Provide immediate access to frequently used commands and controls.
+- [VideoPreviewView](/guide/Views/VideoPreviewView.md): A view that displays the live camera preview associated with a VideoRecorder instance.
+- [ControlGroup](/guide/Views/View groupings/ControlGroup.md): A container view that displays semantically-related controls in a visually-appropriate manner for the context.
+- [ForEach](/guide/Views/View groupings/ForEach/index.md): Iterating over dynamic data
+- [Example](/guide/Views/View groupings/ForEach/iterating.md): Iterating over dynamic data
+- [Form](/guide/Views/View groupings/Form.md): A container for grouping controls used for data entry, such as in settings or inspectors.
+- [Group](/guide/Views/View groupings/Group.md): Grouping views into a container
+- [GroupBox](/guide/Views/View groupings/GroupBox.md): Grouping views into a box
+- [Section](/guide/Views/View groupings/Section.md): Organizing views into sections
+- [WebView](/guide/Views/WebView.md): An view that displays interactive web content.
+- [AccessoryWidgetBackground](/guide/Widget/AccessoryWidgetBackground.md): This component is designed to be used inside accessory widgets—such as Lock Screen widgets or StandBy widgets.
+- [Animation for Widget and LiveActivity](/guide/Widget/Animation for Widget and LiveActivity.md): The views and view modifiers for displaying animation in widget and LiveActivity
+- [Tinted Mode Adaptation Guide](/guide/Widget/Tinted Mode Adaptation Guide.md): Learn how to adapt your widget to the tinted mode.
+- [Widget API](/guide/Widget/Widget API.md): The Widget API provides static methods and properties to render and interact with home screen widgets.
+- [Widget Background in Tinted Mode](/guide/Widget/Widget Background in Tinted Mode.md): This property is used to define background styles specifically for widgets, with behavior optimized for iOS 18’s accented (tinted) rendering mode.
+- [Widget Quick Start](/guide/Widget/Widget Quick Start.md): Quickly master the use of widget.
