@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -42,6 +42,47 @@
 <hr/>
 <h2 class="rp-toc-include" id="与-videorecorder-状态的关系"><a href="#与-videorecorder-状态的关系" class="rp-header-anchor rp-link" aria-hidden="true">#</a>与 VideoRecorder 状态的关系</h2>
 <p><code>VideoPreviewView</code> 的显示效果通常与 <code>VideoRecorder.state</code> 对应如下（具体表现可能受系统行为影响）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Recorder 状态</th><th>预览表现</th></tr></thead><tbody><tr><td><code>idle</code></td><td>尚未准备，可能为空画面</td></tr><tr><td><code>preparing</code></td><td>正在准备中，画面可能尚不可用</td></tr><tr><td><code>ready</code></td><td>预览可用</td></tr><tr><td><code>recording</code></td><td>正常实时预览</td></tr><tr><td><code>paused</code></td><td>通常停留在暂停时的最后一帧</td></tr><tr><td><code>finishing</code></td><td>停止更新或逐步停止</td></tr><tr><td><code>finished</code></td><td>不再更新</td></tr><tr><td><code>failed</code></td><td>不可用</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="推荐用法与生命周期管理"><a href="#推荐用法与生命周期管理" class="rp-header-anchor rp-link" aria-hidden="true">#</a>推荐用法与生命周期管理</h2>

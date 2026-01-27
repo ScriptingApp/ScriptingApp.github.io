@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -45,11 +45,39 @@ Files stored here may be removed automatically by the system.</p>
 <h2 class="rp-toc-include" id="icloud-file-management"><a href="#icloud-file-management" class="rp-header-anchor rp-link" aria-hidden="true">#</a>iCloud File Management</h2>
 <h3 class="rp-toc-include" id="filemanagerisfilestoredinicloudfilepath-string-boolean"><a href="#filemanagerisfilestoredinicloudfilepath-string-boolean" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>FileManager.isFileStoredIniCloud(filePath: string): boolean</code></h3>
 <p>Checks whether the specified file is stored in iCloud.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>filePath</td><td>string</td><td>The file path to check</td></tr></tbody></table></div>
 <h3 class="rp-toc-include" id="filemanagerisicloudfiledownloadedfilepath-string-boolean"><a href="#filemanagerisicloudfiledownloadedfilepath-string-boolean" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>FileManager.isiCloudFileDownloaded(filePath: string): boolean</code></h3>
 <p>Checks whether an iCloud-stored file has been downloaded to the device.</p>
 <h3 class="rp-toc-include" id="filemanagerdownloadfilefromicloudfilepath-string-promiseboolean"><a href="#filemanagerdownloadfilefromicloudfilepath-string-promiseboolean" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>FileManager.downloadFileFromiCloud(filePath: string): Promise&lt;boolean&gt;</code></h3>
 <p>Downloads an iCloud file to the device.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Returns</th><th>Description</th></tr></thead><tbody><tr><td>Promise&lt;boolean&gt;</td><td><code>true</code> if download succeeds</td></tr></tbody></table></div>
 <p><strong>Example:</strong></p>
 <div class="rp-codeblock language-ts"><div class="rp-codeblock__content"><div class="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0" data-lang="ts"><code><span class="line"><span style="color:var(--shiki-token-keyword)">if</span><span style="color:var(--shiki-foreground)"> (</span><span style="color:var(--shiki-token-constant)">FileManager</span><span style="color:var(--shiki-foreground)">.isiCloudEnabled) {</span></span>
@@ -58,6 +86,26 @@ Files stored here may be removed automatically by the system.</p>
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <h3 class="rp-toc-include" id="filemanagergetshareurloficloudfilepath-string-expiration-number-string"><a href="#filemanagergetshareurloficloudfilepath-string-expiration-number-string" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>FileManager.getShareUrlOfiCloudFile(path: string, expiration?: number): string</code></h3>
 <p>Generates a shareable download URL for an iCloud file.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>path</td><td>string</td><td>The iCloud file path. Must begin with <code>FileManager.iCloudDocumentsDirectory</code>. File must be fully uploaded to iCloud.</td></tr><tr><td>expiration</td><td>number (optional)</td><td>Expiration timestamp of the share link</td></tr></tbody></table></div>
 <p>This call may throw an error. Use <code>try-catch</code> for error handling.</p>
 <hr/>
@@ -67,6 +115,26 @@ Synchronous methods block execution; asynchronous versions are recommended for m
 <h3 class="rp-toc-include" id="create-directory"><a href="#create-directory" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Create Directory</h3>
 <h4 class="rp-toc-include" id="createdirectorypath-string-recursive-boolean-promisevoid"><a href="#createdirectorypath-string-recursive-boolean-promisevoid" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>createDirectory(path: string, recursive?: boolean): Promise&lt;void&gt;</code></h4>
 <h4 class="rp-toc-include" id="createdirectorysyncpath-string-recursive-boolean-void"><a href="#createdirectorysyncpath-string-recursive-boolean-void" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>createDirectorySync(path: string, recursive?: boolean): void</code></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td>path</td><td>string</td><td>Directory path to create</td></tr><tr><td>recursive</td><td>boolean (optional)</td><td>If true, creates intermediate directories automatically</td></tr></tbody></table></div>
 <h3 class="rp-toc-include" id="create-symbolic-link"><a href="#create-symbolic-link" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Create Symbolic Link</h3>
 <h4 class="rp-toc-include" id="createlinkpath-string-target-string-promisevoid"><a href="#createlinkpath-string-target-string-promisevoid" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>createLink(path: string, target: string): Promise&lt;void&gt;</code></h4>
@@ -85,19 +153,133 @@ Synchronous methods block execution; asynchronous versions are recommended for m
 <p>Checks whether a file or directory exists.</p>
 <h3 class="rp-toc-include" id="file-bookmarks"><a href="#file-bookmarks" class="rp-header-anchor rp-link" aria-hidden="true">#</a>File Bookmarks</h3>
 <p>Bookmarks allow persistent access to user-authorized external files or folders.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Method</th><th>Description</th></tr></thead><tbody><tr><td><code>bookmarkExists(name)</code></td><td>Checks whether a bookmark exists</td></tr><tr><td><code>getAllFileBookmarks()</code></td><td>Returns all bookmark names and their paths</td></tr><tr><td><code>bookmarkedPath(name)</code></td><td>Returns file path for the bookmark name, or <code>null</code> if not found</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="determine-file-type"><a href="#determine-file-type" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Determine File Type</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Method</th><th>Returns</th><th>Description</th></tr></thead><tbody><tr><td><code>isFile / isFileSync</code></td><td>boolean</td><td>Whether the path refers to a file</td></tr><tr><td><code>isDirectory / isDirectorySync</code></td><td>boolean</td><td>Whether it refers to a directory</td></tr><tr><td><code>isLink / isLinkSync</code></td><td>boolean</td><td>Whether it refers to a symbolic link</td></tr><tr><td><code>isBinaryFile / isBinaryFileSync</code></td><td>boolean</td><td>Whether the file is binary</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="file-reading-and-writing"><a href="#file-reading-and-writing" class="rp-header-anchor rp-link" aria-hidden="true">#</a>File Reading and Writing</h2>
 <p>Supports three data formats: string, <code>Uint8Array</code>, and <code>Data</code>.</p>
 <h3 class="rp-toc-include" id="read-file"><a href="#read-file" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Read File</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Method</th><th>Return Type</th><th>Description</th></tr></thead><tbody><tr><td>readAsString / Sync</td><td>string</td><td>Reads text using specified encoding</td></tr><tr><td>readAsBytes / Sync</td><td>Uint8Array</td><td>Reads raw bytes</td></tr><tr><td>readAsData / Sync</td><td>Data</td><td>Reads the entire file as a <code>Data</code> object</td></tr></tbody></table></div>
 <h3 class="rp-toc-include" id="write-file"><a href="#write-file" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Write File</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Method</th><th>Data Format</th></tr></thead><tbody><tr><td>writeAsString / Sync</td><td>string</td></tr><tr><td>writeAsBytes / Sync</td><td>Uint8Array</td></tr><tr><td>writeAsData / Sync</td><td>Data</td></tr></tbody></table></div>
 <p>Existing files will be overwritten.</p>
 <h3 class="rp-toc-include" id="append-to-file"><a href="#append-to-file" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Append to File</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Method</th><th>Data Format</th></tr></thead><tbody><tr><td>appendText / Sync</td><td>string</td></tr><tr><td>appendData / Sync</td><td>Data</td></tr></tbody></table></div>
 <p>If the file or its parent directory does not exist, it will be created automatically.</p>
 <hr/>

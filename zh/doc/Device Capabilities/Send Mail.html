@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -30,9 +30,91 @@
 <h2 class="rp-toc-include" id="mailuipresentoptions-promisecancelled--sent--failed--saved"><a href="#mailuipresentoptions-promisecancelled--sent--failed--saved" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>MailUI.present(options): Promise&lt;&quot;cancelled&quot; | &quot;sent&quot; | &quot;failed&quot; | &quot;saved&quot;&gt;</code></h2>
 <p>展示系统级的邮件撰写界面，预填内容并等待用户操作。用户可编辑内容后选择发送、取消或保存草稿。</p>
 <h3 class="rp-toc-include" id="参数说明"><a href="#参数说明" class="rp-header-anchor rp-link" aria-hidden="true">#</a>参数说明</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>参数名</th><th>类型</th><th>是否必填</th><th>说明</th></tr></thead><tbody><tr><td><code>toRecipients</code></td><td><code>string[]</code></td><td>是</td><td>邮件主收件人列表，填写在“收件人”字段</td></tr><tr><td><code>ccRecipients</code></td><td><code>string[]</code></td><td>否</td><td>抄送收件人列表，填写在“抄送”字段</td></tr><tr><td><code>bccRecipients</code></td><td><code>string[]</code></td><td>否</td><td>密送收件人列表，填写在“密送”字段</td></tr><tr><td><code>preferredSendingEmailAddress</code></td><td><code>string</code></td><td>否</td><td>指定用于发送邮件的发件邮箱（如果配置了多个邮箱账户）</td></tr><tr><td><code>subject</code></td><td><code>string</code></td><td>否</td><td>邮件主题内容</td></tr><tr><td><code>body</code></td><td><code>string</code></td><td>否</td><td>邮件正文内容</td></tr><tr><td><code>attachments</code></td><td><code>Attachment[]</code></td><td>否</td><td>附件数组，添加文件至邮件中</td></tr></tbody></table></div>
 <h3 class="rp-toc-include" id="附件对象结构"><a href="#附件对象结构" class="rp-header-anchor rp-link" aria-hidden="true">#</a>附件对象结构</h3>
 <p>每个附件应包含以下字段：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>字段名</th><th>类型</th><th>是否必填</th><th>说明</th></tr></thead><tbody><tr><td><code>data</code></td><td><code>Data</code></td><td>是</td><td>要附加的二进制数据内容</td></tr><tr><td><code>mimeType</code></td><td><code>string</code></td><td>是</td><td>附件的 MIME 类型，例如 <code>&quot;image/png&quot;</code>、<code>&quot;application/pdf&quot;</code></td></tr><tr><td><code>fileName</code></td><td><code>string</code></td><td>是</td><td>附件在邮件中显示的文件名</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="返回值"><a href="#返回值" class="rp-header-anchor rp-link" aria-hidden="true">#</a>返回值</h3>

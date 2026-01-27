@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -26,11 +26,11 @@
 <ul>
 <li>
 <p><strong><code>duration</code></strong>: <code>DurationInSeconds</code><br/>
-<!-- -->动画的持续时间，单位为秒。</p>
+动画的持续时间，单位为秒。</p>
 </li>
 <li>
 <p><strong><code>children</code></strong>: <code>VirtualNode[]</code><br/>
-<!-- -->一组视图，作为动画的每一帧。每个子视图在动画过程中依次显示。</p>
+一组视图，作为动画的每一帧。每个子视图在动画过程中依次显示。</p>
 </li>
 </ul>
 <h3 class="rp-toc-include" id="示例"><a href="#示例" class="rp-header-anchor rp-link" aria-hidden="true">#</a>示例</h3>
@@ -48,11 +48,11 @@
 <ul>
 <li>
 <p><strong><code>path</code></strong>: <code>string</code><br/>
-<!-- -->GIF 文件的路径。</p>
+GIF 文件的路径。</p>
 </li>
 <li>
 <p><strong><code>duration</code></strong>: <code>DurationInSeconds</code> <em>(可选)</em><br/>
-<!-- -->动画的持续时间，单位为秒。如果未提供，使用默认持续时间。</p>
+动画的持续时间，单位为秒。如果未提供，使用默认持续时间。</p>
 </li>
 </ul>
 <h3 class="rp-toc-include" id="示例-1"><a href="#示例-1" class="rp-header-anchor rp-link" aria-hidden="true">#</a>示例</h3>
@@ -68,11 +68,11 @@
 <ul>
 <li>
 <p><strong><code>duration</code></strong>: <code>DurationInSeconds</code><br/>
-<!-- -->动画的持续时间，单位为秒。</p>
+动画的持续时间，单位为秒。</p>
 </li>
 <li>
 <p><strong><code>distance</code></strong>: <code>number</code><br/>
-<!-- -->视图在给定轴向上摇摆的距离。</p>
+视图在给定轴向上摇摆的距离。</p>
 </li>
 </ul>
 <hr/>
@@ -87,20 +87,20 @@
 <ul>
 <li>
 <p><strong><code>systemImages</code></strong>: <code>(string | { name: string; variableValue: number })[]</code> <em>(可选)</em><br/>
-<!-- -->一个包含 <code>SFSymbol</code> 名称和变量值的数组，用于显示作为动画帧的符号图像。</p>
+一个包含 <code>SFSymbol</code> 名称和变量值的数组，用于显示作为动画帧的符号图像。</p>
 </li>
 <li>
 <p><strong><code>images</code></strong>: <code>UIImage[]</code> <em>(可选)</em><br/>
-<!-- -->一个 <code>UIImage</code> 数组，用于显示作为动画帧的图像。</p>
+一个 <code>UIImage</code> 数组，用于显示作为动画帧的图像。</p>
 </li>
 <li>
 <p><strong><code>contentMode</code></strong>: <code>ContentMode</code> <em>(可选)</em><br/>
-<!-- -->图像在父容器中的显示方式。默认为 <code>&quot;fit&quot;</code>。<br/>
-<!-- -->可选值：<code>&quot;fit&quot;</code>、<code>&quot;fill&quot;</code>。</p>
+图像在父容器中的显示方式。默认为 <code>&quot;fit&quot;</code>。<br/>
+可选值：<code>&quot;fit&quot;</code>、<code>&quot;fill&quot;</code>。</p>
 </li>
 <li>
 <p><strong><code>duration</code></strong>: <code>DurationInSeconds</code><br/>
-<!-- -->动画的持续时间，单位为秒。</p>
+动画的持续时间，单位为秒。</p>
 </li>
 </ul>
 <h3 class="rp-toc-include" id="示例-使用-sfsymbol"><a href="#示例-使用-sfsymbol" class="rp-header-anchor rp-link" aria-hidden="true">#</a>示例 (使用 <code>SFSymbol</code>)</h3>
@@ -134,7 +134,7 @@
 <ul>
 <li>
 <p><strong><code>swingAnimation</code></strong>: <code>{ x?: SwingAnimation, y?: SwingAnimation }</code> <em>(可选)</em><br/>
-<!-- -->定义了视图在 X 轴和 Y 轴上的摇摆动画配置。每个轴向都可以有单独的动画设置：</p>
+定义了视图在 X 轴和 Y 轴上的摇摆动画配置。每个轴向都可以有单独的动画设置：</p>
 <ul>
 <li><strong><code>x</code></strong>: 水平轴的动画配置。</li>
 <li><strong><code>y</code></strong>: 垂直轴的动画配置。</li>
@@ -142,7 +142,7 @@
 </li>
 <li>
 <p><strong><code>clockHandRotationEffect</code></strong>: <code>ClockHandRotationEffectPeriod | { anchor: KeywordPoint | Point, period: ClockHandRotationEffectPeriod }</code> <em>(可选)</em><br/>
-<!-- -->定义模拟时钟指针的旋转效果。可以指定锚点（可选）和周期（例如，<code>&quot;hourHand&quot;</code>、<code>&quot;minuteHand&quot;</code>、<code>&quot;secondHand&quot;</code>），或者提供自定义的旋转持续时间。</p>
+定义模拟时钟指针的旋转效果。可以指定锚点（可选）和周期（例如，<code>&quot;hourHand&quot;</code>、<code>&quot;minuteHand&quot;</code>、<code>&quot;secondHand&quot;</code>），或者提供自定义的旋转持续时间。</p>
 </li>
 </ul>
 <h3 class="rp-toc-include" id="示例-摇摆动画"><a href="#示例-摇摆动画" class="rp-header-anchor rp-link" aria-hidden="true">#</a>示例 (摇摆动画)</h3>

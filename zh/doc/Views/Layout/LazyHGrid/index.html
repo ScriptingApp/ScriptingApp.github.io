@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -25,14 +25,109 @@
 <p><code>LazyHGrid</code> 将其子元素排列在一个水平扩展的网格中。与普通网格不同，它以懒加载方式加载和显示项目，仅在项目即将出现在屏幕上时创建它们。这使其非常适合处理包含大量或动态内容的网格。</p>
 <hr/>
 <h2 class="rp-toc-include" id="lazyhgridprops"><a href="#lazyhgridprops" class="rp-header-anchor rp-link" aria-hidden="true">#</a>LazyHGridProps</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>属性</th><th>类型</th><th>默认值</th><th>描述</th></tr></thead><tbody><tr><td><code>rows</code></td><td><code>GridItem[]</code></td><td><strong>必需</strong></td><td>定义网格中行的配置，包括其大小和对齐方式。</td></tr><tr><td><code>alignment</code></td><td><code>VerticalAlignment</code></td><td><code>undefined</code></td><td>控制网格在其父视图中的垂直对齐方式。</td></tr><tr><td><code>spacing</code></td><td><code>number</code></td><td><code>undefined</code>（默认间距）</td><td>网格与其父视图中下一个项目之间的距离。</td></tr><tr><td><code>pinnedViews</code></td><td><code>&#x27;sectionHeaders&#x27;</code> | <code>&#x27;sectionFooters&#x27;</code> | <code>&#x27;sectionHeadersAndFooters&#x27;</code></td><td><code>undefined</code></td><td>指定哪些子视图会固定在父滚动视图的边界内。</td></tr><tr><td><code>children</code></td><td><code>(VirtualNode | undefined | null | (VirtualNode | undefined | null)[])[] | VirtualNode</code></td><td><code>undefined</code></td><td>要在网格中显示的内容。接受一个或多个 <code>VirtualNode</code> 元素，包括数组以及可选的 <code>null</code> 或 <code>undefined</code> 值。</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="griditem"><a href="#griditem" class="rp-header-anchor rp-link" aria-hidden="true">#</a>GridItem</h2>
 <p>定义网格中单行的属性。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>属性</th><th>类型</th><th>默认值</th><th>描述</th></tr></thead><tbody><tr><td><code>alignment</code></td><td><code>Alignment</code></td><td><code>undefined</code></td><td>指定在此行中放置每个子视图时使用的对齐方式。</td></tr><tr><td><code>spacing</code></td><td><code>number</code></td><td><code>undefined</code>（默认间距）</td><td>此行与下一行之间的间距。</td></tr><tr><td><code>size</code></td><td><code>GridSize</code></td><td><strong>必需</strong></td><td>定义行的大小。可以是固定大小，也可以是基于内容的灵活/自适应大小。</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="gridsize"><a href="#gridsize" class="rp-header-anchor rp-link" aria-hidden="true">#</a>GridSize</h2>
 <p>定义网格布局中行或列的大小。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>类型</th><th>属性</th><th>描述</th></tr></thead><tbody><tr><td><code>number</code></td><td><em>无</em></td><td>行或列的固定大小。</td></tr><tr><td><code>adaptive</code></td><td><code>min: number</code>, <code>max?: number |&#x27;infinity&#x27;</code></td><td>指定一个灵活大小，根据内容进行调整，带有最小值和可选的最大值限制。</td></tr><tr><td><code>flexible</code></td><td><code>min?: number</code>, <code>max?: number | &#x27;infinity&#x27;</code></td><td>指定一个动态调整的灵活大小，可以使用可选的最小值和最大值约束。</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="pinnedscrollviews"><a href="#pinnedscrollviews" class="rp-header-anchor rp-link" aria-hidden="true">#</a>PinnedScrollViews</h2>
@@ -71,7 +166,7 @@
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <h3 class="rp-toc-include" id="说明"><a href="#说明" class="rp-header-anchor rp-link" aria-hidden="true">#</a>说明：</h3>
 <ul>
-<li>定义了三个具有不同大小的行：<!-- -->
+<li>定义了三个具有不同大小的行：
 <ul>
 <li>一个大小为 50 的固定行</li>
 <li>一个最小大小为 30，最大大小为 80 的自适应行</li>

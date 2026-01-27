@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -49,52 +49,52 @@
 <ul>
 <li>
 <p><strong><code>timerFrom</code></strong> (<code>number</code>):<br/>
-<!-- -->The start timestamp (in milliseconds) that defines the beginning of the progress interval. This is used to calculate how much time has passed in the progress view.</p>
+The start timestamp (in milliseconds) that defines the beginning of the progress interval. This is used to calculate how much time has passed in the progress view.</p>
 </li>
 <li>
 <p><strong><code>timerTo</code></strong> (<code>number</code>):<br/>
-<!-- -->The end timestamp (in milliseconds) that defines the completion of the progress interval. This marks the end point of the progress view.</p>
+The end timestamp (in milliseconds) that defines the completion of the progress interval. This marks the end point of the progress view.</p>
 </li>
 <li>
 <p><strong><code>countsDown</code></strong> (<code>boolean</code>, optional, default: <code>true</code>):<br/>
-<!-- -->If set to <code>true</code>, the progress view counts down from the <code>timerFrom</code> to <code>timerTo</code> timestamp. If <code>false</code>, it will count up.</p>
+If set to <code>true</code>, the progress view counts down from the <code>timerFrom</code> to <code>timerTo</code> timestamp. If <code>false</code>, it will count up.</p>
 </li>
 <li>
 <p><strong><code>label</code></strong> (<code>VirtualNode</code>, optional):<br/>
-<!-- -->A virtual node that provides additional context or description about the task in progress. This could be a text label or another type of view.</p>
+A virtual node that provides additional context or description about the task in progress. This could be a text label or another type of view.</p>
 </li>
 <li>
 <p><strong><code>currentValueLabel</code></strong> (<code>VirtualNode</code>, optional):<br/>
-<!-- -->A virtual node that describes the current value or progress of the task. For example, this could show the current percentage of completion.</p>
+A virtual node that describes the current value or progress of the task. For example, this could show the current percentage of completion.</p>
 </li>
 </ul>
 <h3 class="rp-toc-include" id="normalprogressviewprops"><a href="#normalprogressviewprops" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>NormalProgressViewProps</code></h3>
 <ul>
 <li>
 <p><strong><code>value</code></strong> (<code>number</code>, optional):<br/>
-<!-- -->The completed progress of the task so far. This is a floating-point number between <code>0.0</code> and <code>total</code>, representing the task&#x27;s completion percentage. If <code>nil</code>, the progress is indeterminate.</p>
+The completed progress of the task so far. This is a floating-point number between <code>0.0</code> and <code>total</code>, representing the task&#x27;s completion percentage. If <code>nil</code>, the progress is indeterminate.</p>
 </li>
 <li>
 <p><strong><code>total</code></strong> (<code>number</code>, optional, default: <code>1.0</code>):<br/>
-<!-- -->The total amount representing 100% completion of the task. The progress is considered complete when <code>value</code> equals <code>total</code>. Defaults to <code>1.0</code>.</p>
+The total amount representing 100% completion of the task. The progress is considered complete when <code>value</code> equals <code>total</code>. Defaults to <code>1.0</code>.</p>
 </li>
 <li>
 <p><strong><code>title</code></strong> (<code>string</code>, optional):<br/>
-<!-- -->The title or name of the task that is being represented in the progress view.</p>
+The title or name of the task that is being represented in the progress view.</p>
 </li>
 <li>
 <p><strong><code>label</code></strong> (<code>VirtualNode</code>, optional):<br/>
-<!-- -->A virtual node that describes the task in progress, similar to the <code>label</code> property in <code>TimerIntervalProgressViewProps</code>.</p>
+A virtual node that describes the task in progress, similar to the <code>label</code> property in <code>TimerIntervalProgressViewProps</code>.</p>
 </li>
 <li>
 <p><strong><code>currentValueLabel</code></strong> (<code>VirtualNode</code>, optional):<br/>
-<!-- -->A virtual node that shows the current progress value of the task, similar to the <code>currentValueLabel</code> in <code>TimerIntervalProgressViewProps</code>.</p>
+A virtual node that shows the current progress value of the task, similar to the <code>currentValueLabel</code> in <code>TimerIntervalProgressViewProps</code>.</p>
 </li>
 </ul>
 <h3 class="rp-toc-include" id="commonviewprops"><a href="#commonviewprops" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>CommonViewProps</code></h3>
 <ul>
 <li><strong><code>progressViewStyle</code></strong> (<code>ProgressViewStyle</code>, optional):<br/>
-<!-- -->The style of the progress view. The available styles are:<!-- -->
+The style of the progress view. The available styles are:
 <ul>
 <li><strong><code>automatic</code></strong>: The default style based on the current context of the view being styled.</li>
 <li><strong><code>circular</code></strong>: A circular gauge style to show progress. On platforms other than macOS, this may appear as an indeterminate indicator.</li>

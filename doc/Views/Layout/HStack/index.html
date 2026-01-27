@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -29,7 +29,7 @@
 <li><strong>Type</strong>: <code>VerticalAlignment</code></li>
 <li><strong>Description</strong>: Specifies the vertical alignment of the subviews within the stack. Each subview is aligned according to the same vertical screen coordinate.</li>
 <li><strong>Default Value</strong>: <code>&quot;center&quot;</code></li>
-<li><strong>Options</strong>:<!-- -->
+<li><strong>Options</strong>:
 <ul>
 <li><code>&quot;top&quot;</code>: Align subviews to the top edge.</li>
 <li><code>&quot;center&quot;</code>: Align subviews to the vertical center.</li>
@@ -38,7 +38,7 @@
 <li><code>&quot;lastTextBaseline&quot;</code>: Align subviews to the last text baseline.</li>
 </ul>
 </li>
-<li><strong>Example</strong>:<!-- -->
+<li><strong>Example</strong>:
 <div class="rp-codeblock language-tsx"><div class="rp-codeblock__content"><div class="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0" data-lang="tsx"><code><span class="line"><span style="color:var(--shiki-foreground)">&lt;</span><span style="color:var(--shiki-token-constant)">HStack</span><span style="color:var(--shiki-token-function)"> alignment</span><span style="color:var(--shiki-token-keyword)">=</span><span style="color:var(--shiki-token-string-expression)">&quot;top&quot;</span><span style="color:var(--shiki-foreground)">&gt;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">  &lt;</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;Item 1&lt;/</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">  &lt;</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;Item 2&lt;/</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;</span></span>
@@ -52,7 +52,7 @@
 <li><strong>Type</strong>: <code>number</code></li>
 <li><strong>Description</strong>: Specifies the distance between adjacent subviews. If not provided, the stack automatically determines the default spacing.</li>
 <li><strong>Default Value</strong>: <code>undefined</code> (uses default spacing)</li>
-<li><strong>Example</strong>:<!-- -->
+<li><strong>Example</strong>:
 <div class="rp-codeblock language-tsx"><div class="rp-codeblock__content"><div class="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0" data-lang="tsx"><code><span class="line"><span style="color:var(--shiki-foreground)">&lt;</span><span style="color:var(--shiki-token-constant)">HStack</span><span style="color:var(--shiki-token-function)"> spacing</span><span style="color:var(--shiki-token-keyword)">=</span><span style="color:var(--shiki-foreground)">{</span><span style="color:var(--shiki-token-constant)">15</span><span style="color:var(--shiki-foreground)">}&gt;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">  &lt;</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;Item 1&lt;/</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">  &lt;</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;Item 2&lt;/</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;</span></span>
@@ -63,11 +63,11 @@
 <li>
 <p><strong><code>children</code></strong> (optional)</p>
 <ul>
-<li><strong>Type</strong>:<!-- -->
+<li><strong>Type</strong>:
 <div class="rp-codeblock language-ts"><div class="rp-codeblock__content"><div class="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0" data-lang="ts"><code><span class="line"><span style="color:var(--shiki-foreground)">(VirtualNode </span><span style="color:var(--shiki-token-keyword)">|</span><span style="color:var(--shiki-token-constant)"> undefined</span><span style="color:var(--shiki-token-keyword)"> |</span><span style="color:var(--shiki-token-constant)"> null</span><span style="color:var(--shiki-token-keyword)"> |</span><span style="color:var(--shiki-foreground)"> (VirtualNode </span><span style="color:var(--shiki-token-keyword)">|</span><span style="color:var(--shiki-token-constant)"> undefined</span><span style="color:var(--shiki-token-keyword)"> |</span><span style="color:var(--shiki-token-constant)"> null</span><span style="color:var(--shiki-foreground)">)[])[] </span><span style="color:var(--shiki-token-keyword)">|</span><span style="color:var(--shiki-foreground)"> VirtualNode </span><span style="color:var(--shiki-token-keyword)">|</span><span style="color:var(--shiki-token-constant)"> undefined</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 </li>
 <li><strong>Description</strong>: Specifies the subviews to be arranged in the stack. It can accept a single child, multiple children, or nested arrays of children.</li>
-<li><strong>Example</strong>:<!-- -->
+<li><strong>Example</strong>:
 <div class="rp-codeblock language-tsx"><div class="rp-codeblock__content"><div class="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0" data-lang="tsx"><code><span class="line"><span style="color:var(--shiki-foreground)">&lt;</span><span style="color:var(--shiki-token-constant)">HStack</span><span style="color:var(--shiki-foreground)">&gt;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">  &lt;</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;Item 1&lt;/</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">  &lt;</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;Item 2&lt;/</span><span style="color:var(--shiki-token-constant)">Text</span><span style="color:var(--shiki-foreground)">&gt;</span></span>

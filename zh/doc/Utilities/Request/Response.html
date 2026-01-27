@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -54,6 +54,71 @@
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
 <h2 class="rp-toc-include" id="属性说明"><a href="#属性说明" class="rp-header-anchor rp-link" aria-hidden="true">#</a>属性说明</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>属性</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><strong>body</strong></td><td><code>ReadableStream&lt;Data&gt;</code></td><td>响应体数据的可读流。</td></tr><tr><td><strong>bodyUsed</strong></td><td><code>boolean</code></td><td>指示响应体是否已被读取。</td></tr><tr><td><strong>cookies</strong></td><td><code>Cookie[]</code></td><td>服务器通过 <code>Set-Cookie</code> 返回的 Cookie 列表。</td></tr><tr><td><strong>status</strong></td><td><code>number</code></td><td>HTTP 状态码（如 <code>200</code>、<code>404</code>、<code>500</code>）。</td></tr><tr><td><strong>statusText</strong></td><td><code>string</code></td><td>状态描述（如 <code>&quot;OK&quot;</code>、<code>&quot;Not Found&quot;</code>）。</td></tr><tr><td><strong>headers</strong></td><td><code>Headers</code></td><td>响应头对象。</td></tr><tr><td><strong>ok</strong></td><td><code>boolean</code></td><td>当状态码在 200–299 范围内时为 <code>true</code>。</td></tr><tr><td><strong>url</strong></td><td><code>string</code></td><td>响应的最终 URL（可能经过重定向）。</td></tr><tr><td><strong>mimeType</strong></td><td><code>string | undefined</code></td><td>响应的 MIME 类型（如 <code>&quot;application/json&quot;</code>）。</td></tr><tr><td><strong>expectedContentLength</strong></td><td><code>number | undefined</code></td><td>响应体的预期长度（字节），由服务器提供。</td></tr><tr><td><strong>textEncodingName</strong></td><td><code>string | undefined</code></td><td>文本编码方式（如 <code>&quot;utf-8&quot;</code>）。</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="方法说明"><a href="#方法说明" class="rp-header-anchor rp-link" aria-hidden="true">#</a>方法说明</h2>
@@ -115,6 +180,56 @@
 <span class="line"><span style="color:var(--shiki-foreground)">  isSessionOnly</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-constant)"> boolean</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">  expiresDate</span><span style="color:var(--shiki-token-keyword)">?:</span><span style="color:var(--shiki-token-function)"> Date</span><span style="color:var(--shiki-token-keyword)"> |</span><span style="color:var(--shiki-token-constant)"> null</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><strong>name</strong></td><td><code>string</code></td><td>Cookie 名称。</td></tr><tr><td><strong>value</strong></td><td><code>string</code></td><td>Cookie 值。</td></tr><tr><td><strong>domain</strong></td><td><code>string</code></td><td>所属域名。</td></tr><tr><td><strong>path</strong></td><td><code>string</code></td><td>作用路径。</td></tr><tr><td><strong>isSecure</strong></td><td><code>boolean</code></td><td>是否仅通过 HTTPS 发送。</td></tr><tr><td><strong>isHTTPOnly</strong></td><td><code>boolean</code></td><td>是否为 HTTP-only，无法被脚本访问。</td></tr><tr><td><strong>isSessionOnly</strong></td><td><code>boolean</code></td><td>是否为会话 Cookie（无过期时间）。</td></tr><tr><td><strong>expiresDate</strong></td><td><code>Date | null</code></td><td>过期时间（若有设置）。</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="示例读取响应中的-cookies"><a href="#示例读取响应中的-cookies" class="rp-header-anchor rp-link" aria-hidden="true">#</a>示例：读取响应中的 Cookies</h3>
@@ -136,6 +251,35 @@
 <p>这种方式让开发者能够像浏览器开发者工具一样 <strong>完全掌控 Cookie 的发送与存储</strong>。</p>
 <hr/>
 <h2 class="rp-toc-include" id="与其他类的关系"><a href="#与其他类的关系" class="rp-header-anchor rp-link" aria-hidden="true">#</a>与其他类的关系</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>类名</th><th>说明</th></tr></thead><tbody><tr><td><strong><code>Request</code></strong></td><td>表示生成此响应的请求对象。</td></tr><tr><td><strong><code>Headers</code></strong></td><td>用于访问响应头部信息。</td></tr><tr><td><strong><code>Data</code></strong></td><td>表示响应体的二进制数据。</td></tr><tr><td><strong><code>FormData</code></strong></td><td>表示 <code>multipart/form-data</code> 格式的表单响应。</td></tr><tr><td><strong><code>Cookie</code></strong></td><td>表示服务器返回的单个 Cookie 对象。</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="使用示例"><a href="#使用示例" class="rp-header-anchor rp-link" aria-hidden="true">#</a>使用示例</h2>

@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -28,12 +28,113 @@
 </ul>
 <hr/>
 <h2 class="rp-toc-include" id="properties"><a href="#properties" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Properties</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Property Name</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>uuid</code></td><td><code>string</code></td><td>A unique identifier for the correlation sample.</td></tr><tr><td><code>correlationType</code></td><td><code>HealthCorrelationType</code></td><td>The type of the correlation, such as <code>&quot;bloodPressure&quot;</code> or <code>&quot;food&quot;</code>.</td></tr><tr><td><code>startDate</code></td><td><code>Date</code></td><td>The start time of the correlation event.</td></tr><tr><td><code>endDate</code></td><td><code>Date</code></td><td>The end time of the correlation event.</td></tr><tr><td><code>metadata</code></td><td><code>Record&lt;string, any&gt; | null</code></td><td>Optional metadata associated with the correlation, such as user annotations.</td></tr><tr><td><code>samples</code></td><td><code>(HealthQuantitySample | HealthCumulativeQuantitySample | HealthDiscreteQuantitySample | HealthCategorySample)[]</code></td><td>All samples included in this correlation.</td></tr><tr><td><code>quantitySamples</code></td><td><code>HealthQuantitySample[]</code></td><td>A convenience array of all quantity-based samples.</td></tr><tr><td><code>cumulativeQuantitySamples</code></td><td><code>HealthCumulativeQuantitySample[]</code></td><td>A filtered array of only cumulative quantity samples.</td></tr><tr><td><code>discreteQuantitySamples</code></td><td><code>HealthDiscreteQuantitySample[]</code></td><td>A filtered array of only discrete quantity samples.</td></tr><tr><td><code>categorySamples</code></td><td><code>HealthCategorySample[]</code></td><td>A filtered array of all category-based samples.</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="static-method"><a href="#static-method" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Static Method</h2>
 <h3 class="rp-toc-include" id="healthcorrelationcreateoptions-healthcorrelation--null"><a href="#healthcorrelationcreateoptions-healthcorrelation--null" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>HealthCorrelation.create(options): HealthCorrelation | null</code></h3>
 <p>Creates a new correlation with one or more health samples.</p>
 <h4 class="rp-toc-include" id="parameters"><a href="#parameters" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Parameters</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code>type</code></td><td><code>HealthCorrelationType</code></td><td>Yes</td><td>The correlation type, e.g., <code>&quot;bloodPressure&quot;</code> or <code>&quot;food&quot;</code>.</td></tr><tr><td><code>startDate</code></td><td><code>Date</code></td><td>Yes</td><td>The start time of the correlation.</td></tr><tr><td><code>endDate</code></td><td><code>Date</code></td><td>Yes</td><td>The end time of the correlation.</td></tr><tr><td><code>metadata</code></td><td><code>Record&lt;string, any&gt; | null</code></td><td>No</td><td>Optional metadata to store alongside the correlation.</td></tr><tr><td><code>objects</code></td><td><code>(HealthQuantitySample | HealthCategorySample)[]</code></td><td>Yes</td><td>The array of health samples to associate in the correlation.</td></tr></tbody></table></div>
 <h4 class="rp-toc-include" id="returns"><a href="#returns" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Returns</h4>
 <ul>

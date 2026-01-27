@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -112,6 +112,39 @@ When:</p>
 </ul>
 <hr/>
 <h2 class="rp-toc-include" id="final-lifecycle-summary"><a href="#final-lifecycle-summary" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Final Lifecycle Summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Event</th><th>Does MemoryStorage clear immediately?</th></tr></thead><tbody><tr><td>AppIntent finish</td><td>No</td></tr><tr><td>Script.exit()</td><td>No</td></tr><tr><td>Shortcut flow finishes</td><td>Not necessarily</td></tr><tr><td>Widget AppIntent call</td><td>Not necessarily</td></tr><tr><td>Live Activity AppIntent call</td><td>Not necessarily</td></tr><tr><td>System kills the Extension process</td><td>Yes (completely cleared)</td></tr></tbody></table></div>
 <p>Therefore:</p>
 <p><strong>MemoryStorage should never be treated as reliable or persistent.</strong></p>

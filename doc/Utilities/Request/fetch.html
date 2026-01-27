@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -49,6 +49,77 @@ It can be:</p>
 <span class="line"><span style="color:var(--shiki-foreground)">  debugLabel</span><span style="color:var(--shiki-token-keyword)">?:</span><span style="color:var(--shiki-token-constant)"> string</span><span style="color:var(--shiki-foreground)">;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <h4 class="rp-toc-include" id="parameter-details"><a href="#parameter-details" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Parameter Details</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Property</th><th>Type</th><th>Description</th><th></th></tr></thead><tbody><tr><td><strong>method</strong></td><td><code>string</code></td><td>The HTTP method, such as <code>&quot;GET&quot;</code>, <code>&quot;POST&quot;</code>, <code>&quot;PUT&quot;</code>, <code>&quot;DELETE&quot;</code>. Defaults to <code>&quot;GET&quot;</code>.</td><td></td></tr><tr><td><strong>headers</strong></td><td><code>HeadersInit</code></td><td>The request headers. Can be a <code>Headers</code> object, a key-value object, or an array of <code>[key, value]</code> pairs.</td><td></td></tr><tr><td><strong>body</strong></td><td><code>Data</code> | <code>FormData</code> | <code>string</code> | <code>ArrayBuffer</code></td><td>The request body. Only used for methods other than <code>GET</code> or <code>HEAD</code>.</td><td></td></tr><tr><td><strong>allowInsecureRequest</strong></td><td><code>boolean</code></td><td>Whether to allow HTTP requests when running in an HTTPS context. Defaults to <code>false</code>.</td><td></td></tr><tr><td><strong>handleRedirect</strong></td><td><code>(newRequest: RedirectRequest) =&gt; Promise&lt;RedirectRequest | null&gt;</code></td><td>Custom redirect handler. Return <code>null</code> to cancel the redirect.</td><td></td></tr><tr><td><strong>shouldAllowRedirect</strong></td><td><code>(newRequest: Request) =&gt; Promise&lt;boolean&gt;</code></td><td>Deprecated. Use <code>handleRedirect</code> instead.</td><td></td></tr><tr><td><strong>timeout</strong></td><td><code>number</code></td><td>Timeout duration in seconds. Throws an <code>AbortError</code> when exceeded.</td><td></td></tr><tr><td><strong>signal</strong></td><td><code>AbortSignal</code></td><td>A signal object from <code>AbortController</code> that can abort the request.</td><td></td></tr><tr><td><strong>cancelToken</strong></td><td><code>CancelToken</code></td><td>Deprecated. Use <code>signal</code> instead.</td><td></td></tr><tr><td><strong>debugLabel</strong></td><td><code>string</code></td><td>A label shown in the log panel for debugging and tracing requests.</td><td></td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="return-value"><a href="#return-value" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Return Value</h2>
@@ -63,6 +134,23 @@ The Promise is <strong>rejected</strong> only when:</p>
 </ul>
 <hr/>
 <h2 class="rp-toc-include" id="error-handling"><a href="#error-handling" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Error Handling</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Error Type</th><th>Trigger Condition</th></tr></thead><tbody><tr><td><strong><code>TypeError</code></strong></td><td>Invalid URL, unsupported protocol, or incompatible request body.</td></tr><tr><td><strong><code>AbortError</code></strong></td><td>The request was aborted via <code>AbortController</code> or timed out.</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="examples"><a href="#examples" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Examples</h2>
@@ -141,6 +229,39 @@ The Promise is <strong>rejected</strong> only when:</p>
 <span class="line"><span style="color:var(--shiki-token-comment)">// The request will be labeled &quot;Health Check&quot; in the log panel</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
 <h2 class="rp-toc-include" id="relationship-with-other-classes"><a href="#relationship-with-other-classes" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Relationship with Other Classes</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Class</th><th>Description</th></tr></thead><tbody><tr><td><strong><code>Request</code></strong></td><td>Represents a network request. You can pass a <code>Request</code> object to <code>fetch(request)</code> to reuse configuration.</td></tr><tr><td><strong><code>Response</code></strong></td><td>Represents the result of a network operation, with helper methods such as <code>.json()</code>, <code>.text()</code>, <code>.data()</code>.</td></tr><tr><td><strong><code>AbortController</code> / <code>AbortSignal</code></strong></td><td>Provides a way to abort requests programmatically.</td></tr><tr><td><strong><code>FormData</code></strong></td><td>Builds multipart/form-data bodies for file uploads and form submissions.</td></tr><tr><td><strong><code>Headers</code></strong></td><td>Manages HTTP request and response headers.</td></tr><tr><td><strong><code>Data</code></strong></td><td>Represents binary data and supports conversion to multiple formats (e.g., Base64, hex).</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="additional-details"><a href="#additional-details" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Additional Details</h2>

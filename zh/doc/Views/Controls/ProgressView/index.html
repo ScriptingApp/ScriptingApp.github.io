@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -49,52 +49,52 @@
 <ul>
 <li>
 <p><strong><code>timerFrom</code></strong> (<code>number</code>):<br/>
-<!-- -->任务进度区间的起始时间戳（以毫秒为单位）。此值用于计算进度视图中已过去的时间。</p>
+任务进度区间的起始时间戳（以毫秒为单位）。此值用于计算进度视图中已过去的时间。</p>
 </li>
 <li>
 <p><strong><code>timerTo</code></strong> (<code>number</code>):<br/>
-<!-- -->任务进度区间的结束时间戳（以毫秒为单位）。此值表示进度视图的结束点。</p>
+任务进度区间的结束时间戳（以毫秒为单位）。此值表示进度视图的结束点。</p>
 </li>
 <li>
 <p><strong><code>countsDown</code></strong> (<code>boolean</code>, 可选，默认值: <code>true</code>):<br/>
-<!-- -->如果设置为 <code>true</code>，进度视图会从 <code>timerFrom</code> 倒计时至 <code>timerTo</code>。如果设置为 <code>false</code>，则表示进度会从 <code>timerFrom</code> 增长至 <code>timerTo</code>。</p>
+如果设置为 <code>true</code>，进度视图会从 <code>timerFrom</code> 倒计时至 <code>timerTo</code>。如果设置为 <code>false</code>，则表示进度会从 <code>timerFrom</code> 增长至 <code>timerTo</code>。</p>
 </li>
 <li>
 <p><strong><code>label</code></strong> (<code>VirtualNode</code>, 可选):<br/>
-<!-- -->一个虚拟节点，用于提供任务的描述或附加信息。这可以是一个文本标签或其他类型的视图。</p>
+一个虚拟节点，用于提供任务的描述或附加信息。这可以是一个文本标签或其他类型的视图。</p>
 </li>
 <li>
 <p><strong><code>currentValueLabel</code></strong> (<code>VirtualNode</code>, 可选):<br/>
-<!-- -->一个虚拟节点，描述任务的当前进度值。例如，这可以显示当前的完成百分比。</p>
+一个虚拟节点，描述任务的当前进度值。例如，这可以显示当前的完成百分比。</p>
 </li>
 </ul>
 <h3 class="rp-toc-include" id="normalprogressviewprops"><a href="#normalprogressviewprops" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>NormalProgressViewProps</code></h3>
 <ul>
 <li>
 <p><strong><code>value</code></strong> (<code>number</code>, 可选):<br/>
-<!-- -->任务当前的进度值，范围为 <code>0.0</code> 到 <code>total</code> 之间，表示任务完成的百分比。如果为 <code>nil</code>，则视图为不确定性进度。</p>
+任务当前的进度值，范围为 <code>0.0</code> 到 <code>total</code> 之间，表示任务完成的百分比。如果为 <code>nil</code>，则视图为不确定性进度。</p>
 </li>
 <li>
 <p><strong><code>total</code></strong> (<code>number</code>, 可选，默认值: <code>1.0</code>):<br/>
-<!-- -->完成任务所需的总进度值。当 <code>value</code> 等于 <code>total</code> 时，任务完成。默认值为 <code>1.0</code>。</p>
+完成任务所需的总进度值。当 <code>value</code> 等于 <code>total</code> 时，任务完成。默认值为 <code>1.0</code>。</p>
 </li>
 <li>
 <p><strong><code>title</code></strong> (<code>string</code>, 可选):<br/>
-<!-- -->正在进行的任务的标题或名称。</p>
+正在进行的任务的标题或名称。</p>
 </li>
 <li>
 <p><strong><code>label</code></strong> (<code>VirtualNode</code>, 可选):<br/>
-<!-- -->描述任务进度的虚拟节点，类似于 <code>TimerIntervalProgressViewProps</code> 中的 <code>label</code> 属性。</p>
+描述任务进度的虚拟节点，类似于 <code>TimerIntervalProgressViewProps</code> 中的 <code>label</code> 属性。</p>
 </li>
 <li>
 <p><strong><code>currentValueLabel</code></strong> (<code>VirtualNode</code>, 可选):<br/>
-<!-- -->显示当前进度值的虚拟节点，类似于 <code>TimerIntervalProgressViewProps</code> 中的 <code>currentValueLabel</code> 属性。</p>
+显示当前进度值的虚拟节点，类似于 <code>TimerIntervalProgressViewProps</code> 中的 <code>currentValueLabel</code> 属性。</p>
 </li>
 </ul>
 <h3 class="rp-toc-include" id="commonviewprops"><a href="#commonviewprops" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>CommonViewProps</code></h3>
 <ul>
 <li><strong><code>progressViewStyle</code></strong> (<code>ProgressViewStyle</code>, 可选):<br/>
-<!-- -->用于此视图的进度视图样式。可用样式包括：<!-- -->
+用于此视图的进度视图样式。可用样式包括：
 <ul>
 <li><strong><code>automatic</code></strong>: 根据当前上下文自动选择的默认样式。</li>
 <li><strong><code>circular</code></strong>: 使用圆形进度条样式，表示活动的部分完成。在 macOS 之外的平台，圆形样式可能会显示为不确定性指示器。</li>

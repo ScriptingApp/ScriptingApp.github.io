@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -49,6 +49,36 @@
 <span class="line"><span style="color:var(--shiki-token-constant)">CustomKeyboard</span><span style="color:var(--shiki-token-function)">.present</span><span style="color:var(--shiki-foreground)">(&lt;</span><span style="color:var(--shiki-token-constant)">MyKeyboard</span><span style="color:var(--shiki-foreground)"> /&gt;)</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
 <h2 class="rp-toc-include" id="3-text-input-state"><a href="#3-text-input-state" class="rp-header-anchor rp-link" aria-hidden="true">#</a>3. Text Input State</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>textBeforeCursor</code></td><td><code>Promise&lt;string | null&gt;</code></td><td>Text before the cursor</td></tr><tr><td><code>textAfterCursor</code></td><td><code>Promise&lt;string | null&gt;</code></td><td>Text after the cursor</td></tr><tr><td><code>selectedText</code></td><td><code>Promise&lt;string | null&gt;</code></td><td>Currently selected text</td></tr><tr><td><code>hasText</code></td><td><code>Promise&lt;boolean&gt;</code></td><td>Whether the text input contains any text</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="4-input-traits"><a href="#4-input-traits" class="rp-header-anchor rp-link" aria-hidden="true">#</a>4. Input Traits</h2>
@@ -102,6 +132,36 @@
 <h2 class="rp-toc-include" id="9-event-listeners"><a href="#9-event-listeners" class="rp-header-anchor rp-link" aria-hidden="true">#</a>9. Event Listeners</h2>
 <h3 class="rp-toc-include" id="addlistenerevent-callback-void"><a href="#addlistenerevent-callback-void" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>addListener(event, callback): void</code></h3>
 <p>Register a listener for keyboard or text input changes.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Event</th><th>Callback Signature</th><th>Description</th></tr></thead><tbody><tr><td><code>textWillChange</code></td><td><code>() =&gt; void</code></td><td>Before text changes</td></tr><tr><td><code>textDidChange</code></td><td><code>(traits: TextInputTraits) =&gt; void</code></td><td>After text changes</td></tr><tr><td><code>selectionWillChange</code></td><td><code>() =&gt; void</code></td><td>Before cursor/selection changes</td></tr><tr><td><code>selectionDidChange</code></td><td><code>(traits: TextInputTraits) =&gt; void</code></td><td>After cursor/selection changes</td></tr></tbody></table></div>
 <h3 class="rp-toc-include" id="removelistenerevent-callback-void"><a href="#removelistenerevent-callback-void" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>removeListener(event, callback): void</code></h3>
 <p>Remove a specific listener.</p>

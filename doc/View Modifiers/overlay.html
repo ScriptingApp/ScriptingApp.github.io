@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -92,6 +92,27 @@
 <p>This renders a white &quot;Hello&quot; text centered on top of a blue rectangle.</p>
 <hr/>
 <h2 class="rp-toc-include" id="summary"><a href="#summary" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Summary</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td><code>VirtualNode</code></td><td>A view to layer on top (centered by default)</td></tr><tr><td><code>alignment</code></td><td>(Optional) Position of the overlay within the base view</td></tr><tr><td><code>content</code></td><td>The overlay content to display</td></tr></tbody></table></div><!--/$--></div><footer class="rp-doc-footer"><div class="rp-doc-footer__edit"></div><div class="rp-doc-footer__divider"></div><div class="rp-prev-next-page"><a href="/doc/View Modifiers/disabled.html" class="rp-prev-next-page__item rp-prev-next-page__prev rp-link"><span class="rp-prev-next-page__item__desc">Previous page</span><span class="rp-prev-next-page__item__title"><svg width="1em" height="1em" viewBox="0 0 32 32" class="rp-prev-next-page__icon rp-prev-next-page__rotate_180"><path fill="currentColor" d="M22 16 12 26l-1.4-1.4 8.6-8.6-8.6-8.6L12 6z"></path></svg><span>disabled</span></span></a><a href="/doc/View Modifiers/mask.html" class="rp-prev-next-page__item rp-prev-next-page__next rp-link"><span class="rp-prev-next-page__item__desc">Next page</span><span class="rp-prev-next-page__item__title"><span>mask</span><svg width="1em" height="1em" viewBox="0 0 32 32" class="rp-prev-next-page__icon"><path fill="currentColor" d="M22 16 12 26l-1.4-1.4 8.6-8.6-8.6-8.6L12 6z"></path></svg></span></a></div></footer></main></div><aside class="rp-doc-layout__outline rp-scrollbar"><div class="rp-outline"><div class="rp-outline__title">ON THIS PAGE<svg width="14" height="14" class="rp-progress-circle"><circle cx="7" cy="7" r="6" stroke-linecap="round" fill="none" stroke="var(--rp-c-divider-light)" stroke-width="2"></circle><circle cx="7" cy="7" r="6" stroke-linecap="round" fill="none" stroke="var(--rp-c-brand)" stroke-width="2" stroke-dasharray="37.69911184307752" stroke-dashoffset="37.69911184307752" transform="rotate(-90 7 7)" style="transition:stroke-dashoffset 0.3s"></circle></svg></div><nav class="rp-outline__toc rp-scrollbar"><a href="#type" class="rp-toc-item rp-link" title="Type" style="padding-left:0" data-depth="0"><span class="rp-toc-item__text rp-doc">Type</span></a><a href="#parameters" class="rp-toc-item rp-link" title="Parameters" style="padding-left:0" data-depth="0"><span class="rp-toc-item__text rp-doc">Parameters</span></a><a href="#1-virtualnode-simple-form" class="rp-toc-item rp-link" title="1. VirtualNode (Simple Form)" style="padding-left:12px" data-depth="1"><span class="rp-toc-item__text rp-doc">1. <code>VirtualNode</code> (Simple Form)</span></a><a href="#2-object-form-with-alignment" class="rp-toc-item rp-link" title="2. Object Form with Alignment" style="padding-left:12px" data-depth="1"><span class="rp-toc-item__text rp-doc">2. Object Form with Alignment</span></a><a href="#structure" class="rp-toc-item rp-link" title="Structure" style="padding-left:24px" data-depth="2"><span class="rp-toc-item__text rp-doc">Structure</span></a><a href="#alignment-options" class="rp-toc-item rp-link" title="Alignment options:" style="padding-left:24px" data-depth="2"><span class="rp-toc-item__text rp-doc"><code>Alignment</code> options:</span></a><a href="#example--badge-overlay-in-top-trailing-corner" class="rp-toc-item rp-link" title="Example – badge overlay in top trailing corner:" style="padding-left:24px" data-depth="2"><span class="rp-toc-item__text rp-doc">Example – badge overlay in top trailing corner:</span></a><a href="#behavior" class="rp-toc-item rp-link" title="Behavior" style="padding-left:0" data-depth="0"><span class="rp-toc-item__text rp-doc">Behavior</span></a><a href="#common-use-cases" class="rp-toc-item rp-link" title="Common Use Cases" style="padding-left:0" data-depth="0"><span class="rp-toc-item__text rp-doc">Common Use Cases</span></a><a href="#example--overlay-with-text" class="rp-toc-item rp-link" title="Example – Overlay with Text" style="padding-left:0" data-depth="0"><span class="rp-toc-item__text rp-doc">Example – Overlay with Text</span></a><a href="#summary" class="rp-toc-item rp-link" title="Summary" style="padding-left:0" data-depth="0"><span class="rp-toc-item__text rp-doc">Summary</span></a></nav><div class="rp-outline__divider"></div><div class="rp-outline__bottom"><button class="rp-outline__scroll-to-top"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.99967 14.6667C11.6816 14.6667 14.6663 11.6819 14.6663 8.00001C14.6663 4.31811 11.6816 1.33334 7.99967 1.33334C4.31777 1.33334 1.33301 4.31811 1.33301 8.00001C1.33301 11.6819 4.31777 14.6667 7.99967 14.6667Z" stroke="currentColor" stroke-opacity="0.8" stroke-width="1.33333"></path><path d="M7.99967 14.6667C11.6816 14.6667 14.6663 11.6819 14.6663 8.00001C14.6663 4.31811 11.6816 1.33334 7.99967 1.33334C4.31777 1.33334 1.33301 4.31811 1.33301 8.00001C1.33301 11.6819 4.31777 14.6667 7.99967 14.6667Z" stroke="currentColor" stroke-opacity="0.8" stroke-width="1.33333" stroke-linejoin="round"></path><path d="M11 9L8 6L5 9" stroke="currentColor" stroke-opacity="0.8" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Back to top</span></button></div></div></aside></div></div>
     <div id="__rspress_modal_container"></div>
   </body>

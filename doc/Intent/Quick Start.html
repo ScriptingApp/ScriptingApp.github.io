@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -39,6 +39,35 @@
 <hr/>
 <h2 class="rp-toc-include" id="2-accessing-input-data"><a href="#2-accessing-input-data" class="rp-header-anchor rp-link" aria-hidden="true">#</a>2. Accessing Input Data</h2>
 <p>Inside <code>intent.tsx</code>, use the <code>Intent</code> API to access input values.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Property</th><th>Description</th></tr></thead><tbody><tr><td><code>Intent.shortcutParameter</code></td><td>A single parameter passed from the Shortcuts app, with <code>.type</code> and <code>.value</code> fields.</td></tr><tr><td><code>Intent.textsParameter</code></td><td>Array of text strings.</td></tr><tr><td><code>Intent.urlsParameter</code></td><td>Array of URL strings.</td></tr><tr><td><code>Intent.imagesParameter</code></td><td>Array of image file paths (UIImage objects).</td></tr><tr><td><code>Intent.fileURLsParameter</code></td><td>Array of local file URL paths.</td></tr></tbody></table></div>
 <p>Example:</p>
 <div class="rp-codeblock language-ts"><div class="rp-codeblock__content"><div class="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0" data-lang="ts"><code><span class="line"><span style="color:var(--shiki-token-keyword)">if</span><span style="color:var(--shiki-foreground)"> (</span><span style="color:var(--shiki-token-constant)">Intent</span><span style="color:var(--shiki-foreground)">.shortcutParameter) {</span></span>
@@ -105,8 +134,88 @@
 <hr/>
 <h2 class="rp-toc-include" id="7-intent-api-reference"><a href="#7-intent-api-reference" class="rp-header-anchor rp-link" aria-hidden="true">#</a>7. Intent API Reference</h2>
 <h3 class="rp-toc-include" id="intent-properties"><a href="#intent-properties" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>Intent</code> Properties</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>shortcutParameter</code></td><td><code>ShortcutParameter</code></td><td>Input from Shortcuts with <code>.type</code> and <code>.value</code>.</td></tr><tr><td><code>textsParameter</code></td><td><code>string[]</code></td><td>Array of input text values.</td></tr><tr><td><code>urlsParameter</code></td><td><code>string[]</code></td><td>Array of input URLs.</td></tr><tr><td><code>imagesParameter</code></td><td><code>UIImage[]</code></td><td>Array of image file paths or objects.</td></tr><tr><td><code>fileURLsParameter</code></td><td><code>string[]</code></td><td>Array of input file paths (local file URLs).</td></tr></tbody></table></div>
 <h3 class="rp-toc-include" id="intent-methods"><a href="#intent-methods" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>Intent</code> Methods</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Method</th><th>Return Type</th><th>Example</th></tr></thead><tbody><tr><td><code>Intent.text(value)</code></td><td><code>IntentTextValue</code></td><td><code>Intent.text(&quot;Hello&quot;)</code></td></tr><tr><td><code>Intent.attributedText(value)</code></td><td><code>IntentAttributedTextValue</code></td><td><code>Intent.attributedText(&quot;Styled Text&quot;)</code></td></tr><tr><td><code>Intent.url(value)</code></td><td><code>IntentURLValue</code></td><td><code>Intent.url(&quot;https://example.com&quot;)</code></td></tr><tr><td><code>Intent.json(value)</code></td><td><code>IntentJsonValue</code></td><td><code>Intent.json({ key: &quot;value&quot; })</code></td></tr><tr><td><code>Intent.file(path)</code></td><td><code>IntentFileValue</code></td><td><code>Intent.file(&quot;/path/to/file.txt&quot;)</code></td></tr><tr><td><code>Intent.fileURL(path)</code></td><td><code>IntentFileURLValue</code></td><td><code>Intent.fileURL(&quot;/path/to/file.pdf&quot;)</code></td></tr><tr><td><code>Intent.image(UIImage)</code></td><td><code>IntentImageValue</code></td><td><code>Intent.image(uiImage)</code></td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="8-best-practices-and-notes"><a href="#8-best-practices-and-notes" class="rp-header-anchor rp-link" aria-hidden="true">#</a>8. Best Practices and Notes</h2>

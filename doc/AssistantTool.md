@@ -54,61 +54,62 @@ This file declares the basic information and behavior settings of the tool. Belo
 ## 3. Execution Logic Example: `assistant_tool.tsx`
 
 ```tsx
-type RequestCurrentLocationParams = {};
+type RequestCurrentLocationParams = {}
 
-const locationApprovalRequest: AssistantToolApprovalRequestFn<
-  RequestCurrentLocationParams
-> = async (params) => {
+const locationApprovalRequest: AssistantToolApprovalRequestFn<RequestCurrentLocationParams> = async (
+  params,
+) => {
   return {
     message: "The assistant wants to request your current location.",
-    primaryButtonLabel: "Allow",
-  };
-};
+    primaryButtonLabel: "Allow"
+  }
+}
 
-const requestCurrentLocation: AssistantToolExecuteWithApprovalFn<
-  RequestCurrentLocationParams
-> = async (params, { primaryConfirmed, secondaryConfirmed }) => {
+const requestCurrentLocation: AssistantToolExecuteWithApprovalFn<RequestCurrentLocationParams> = async (
+  params,
+  {
+    primaryConfirmed,
+    secondaryConfirmed,
+  }
+) => {
   try {
-    const location = await Location.requestCurrent();
+    const location = await Location.requestCurrent()
     if (location) {
       return {
         success: true,
         message: [
           "The user's current location info:",
           `<latitude>${location.latitude}</latitude>`,
-          `<longitude>${location.longitude}</longitude>`,
-        ].join("\n"),
-      };
+          `<longitude>${location.longitude}</longitude>`
+        ].join("\n")
+      }
     }
     return {
       success: false,
-      message:
-        "Failed to request user's current location, ask user to check the device's location permission.",
-    };
+      message: "Failed to request user's current location, ask user to check the device's location permission."
+    }
   } catch {
     return {
       success: false,
-      message:
-        "Failed to request user's current location, ask user to check the device's location permission.",
-    };
+      message: "Failed to request user's current location, ask user to check the device's location permission."
+    }
   }
-};
+}
 
-const testRequestLocationApprovalFn =
-  AssistantTool.registerApprovalRequest(locationApprovalRequest);
+const testRequestLocationApprovalFn = AssistantTool.registerApprovalRequest(
+  locationApprovalRequest
+)
 
-const testRequestLocationExecuteFn =
-  AssistantTool.registerExecuteToolWithApproval(requestCurrentLocation);
+const testRequestLocationExecuteFn = AssistantTool.registerExecuteToolWithApproval(
+  requestCurrentLocation
+)
 
 // Test the tool in the script editor:
-testRequestLocationApprovalFn({});
-testRequestLocationExecuteFn(
-  {},
-  {
-    primaryConfirmed: true,
-    secondaryConfirmed: false,
-  },
-);
+testRequestLocationApprovalFn({})
+testRequestLocationExecuteFn({}, {
+  primaryConfirmed: true,
+  secondaryConfirmed: false
+})
 ```
 
 ***
@@ -121,8 +122,8 @@ Registers a function to request user approval before executing the tool.
 
 ```ts
 function registerApprovalRequest<P>(
-  requestFn: AssistantToolApprovalRequestFn<P>,
-): AssistantToolApprovalRequestTestFn<P>;
+  requestFn: AssistantToolApprovalRequestFn<P>
+): AssistantToolApprovalRequestTestFn<P>
 ```
 
 **Parameters**:
@@ -143,8 +144,8 @@ Registers an execution function that requires user approval.
 
 ```ts
 function registerExecuteToolWithApproval<P>(
-  executeFn: AssistantToolExecuteWithApprovalFn<P>,
-): AssistantToolExecuteWithApprovalTestFn<P>;
+  executeFn: AssistantToolExecuteWithApprovalFn<P>
+): AssistantToolExecuteWithApprovalTestFn<P>
 ```
 
 **Parameters**:
@@ -154,9 +155,9 @@ function registerExecuteToolWithApproval<P>(
 
 ```ts
 type UserActionForApprovalRequest = {
-  primaryConfirmed: boolean;
-  secondaryConfirmed: boolean;
-};
+  primaryConfirmed: boolean
+  secondaryConfirmed: boolean
+}
 ```
 
 - `scriptEditorProvider`: Same as above.
@@ -167,8 +168,8 @@ Returns an object:
 
 ```ts
 {
-  success: boolean;
-  message: string;
+  success: boolean
+  message: string
 }
 ```
 
@@ -183,8 +184,8 @@ Registers a tool that does **not** require user approval.
 
 ```ts
 function registerExecuteTool<P>(
-  executeFn: AssistantToolExecuteFn<P>,
-): AssistantToolExecuteTestFn<P>;
+  executeFn: AssistantToolExecuteFn<P>
+): AssistantToolExecuteTestFn<P>
 ```
 
 **Use Case**: Suitable for non-sensitive operations or those that don’t involve device permissions.
@@ -196,15 +197,12 @@ function registerExecuteTool<P>(
 Each registration function returns a test function that can be used in the script:
 
 ```ts
-testApprovalRequestFn({ ...params });
-testExecuteFn(
-  { ...params },
-  {
-    primaryConfirmed: true,
-    secondaryConfirmed: false,
-  },
-);
-testExecuteToolFn({ ...params });
+testApprovalRequestFn({ ...params })
+testExecuteFn({ ...params }, {
+  primaryConfirmed: true,
+  secondaryConfirmed: false,
+})
+testExecuteToolFn({ ...params })
 ```
 
 ***
@@ -242,9 +240,9 @@ If you don’t want to show an approval prompt, simply use `registerExecuteTool`
 AssistantTool.registerExecuteTool<MyParams>(async (params) => {
   return {
     success: true,
-    message: "Tool executed successfully.",
-  };
-});
+    message: "Tool executed successfully."
+  }
+})
 ```
 
 ***

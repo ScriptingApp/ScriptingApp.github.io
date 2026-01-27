@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -51,6 +51,31 @@
 <span class="line"><span style="color:var(--shiki-token-keyword)">  static</span><span style="color:var(--shiki-token-function)"> transient</span><span style="color:var(--shiki-foreground)">()</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-function)"> EditMode</span><span style="color:var(--shiki-foreground)">;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <h3 class="rp-toc-include" id="value-含义"><a href="#value-含义" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>value</code> 含义</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>值</th><th>描述</th></tr></thead><tbody><tr><td><code>active</code></td><td>编辑模式已开启</td></tr><tr><td><code>inactive</code></td><td>编辑模式已关闭</td></tr><tr><td><code>transient</code></td><td>临时状态（如交互中切换）</td></tr><tr><td><code>unknown</code></td><td>非预期状态，通常不需使用</td></tr></tbody></table></div>
 <h3 class="rp-toc-include" id="与-observable-配合使用"><a href="#与-observable-配合使用" class="rp-header-anchor rp-link" aria-hidden="true">#</a>与 <code>Observable</code> 配合使用</h3>
 <p>由于 editMode 是动态值，必须使用 <code>Observable&lt;EditMode&gt;</code> 传递，以便视图随编辑状态变化而刷新。</p>
@@ -102,6 +127,27 @@
 <span class="line"><span style="color:var(--shiki-foreground)">  })</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-function)"> OpenURLActionResult</span><span style="color:var(--shiki-foreground)">;</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <h2 class="rp-toc-include" id="作用说明"><a href="#作用说明" class="rp-header-anchor rp-link" aria-hidden="true">#</a>作用说明</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>返回值</th><th>含义</th></tr></thead><tbody><tr><td><code>handled()</code></td><td>URL 已处理，不执行默认行为</td></tr><tr><td><code>discarded()</code></td><td>忽略该 URL</td></tr><tr><td><code>systemAction(options)</code></td><td>要求系统打开给定 URL（支持 App 内或外打开）</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="openurl-使用示例"><a href="#openurl-使用示例" class="rp-header-anchor rp-link" aria-hidden="true">#</a>openURL 使用示例</h2>
@@ -125,6 +171,29 @@
 </ul>
 <hr/>
 <h2 class="rp-toc-include" id="使用总结"><a href="#使用总结" class="rp-header-anchor rp-link" aria-hidden="true">#</a>使用总结</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>environment key</th><th>类型</th><th>作用范围</th><th>使用场景</th></tr></thead><tbody><tr><td><code>editMode</code></td><td><code>Observable&lt;EditMode&gt;</code></td><td>影响所有可编辑组件</td><td>List 编辑、批量操作</td></tr><tr><td><code>openURL</code></td><td><code>(url) =&gt; OpenURLActionResult</code></td><td>所有链接组件</td><td>自定义 URL 处理逻辑</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="完整示例同时使用-editmode-与-openurl"><a href="#完整示例同时使用-editmode-与-openurl" class="rp-header-anchor rp-link" aria-hidden="true">#</a>完整示例：同时使用 editMode 与 openURL</h2>

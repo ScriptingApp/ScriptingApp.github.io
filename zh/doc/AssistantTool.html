@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -52,6 +52,61 @@
 <span class="line"><span style="color:var(--shiki-token-keyword)">  &quot;scriptEditorOnly&quot;</span><span style="color:var(--shiki-token-punctuation)">:</span><span style="color:var(--shiki-token-constant)"> false</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <h3 class="rp-toc-include" id="字段说明"><a href="#字段说明" class="rp-header-anchor rp-link" aria-hidden="true">#</a>字段说明：</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>displayName</code></td><td>string</td><td>工具在界面中显示的名称</td></tr><tr><td><code>id</code></td><td>string</td><td>工具唯一标识符，不能重复</td></tr><tr><td><code>description</code></td><td>string</td><td>工具功能描述</td></tr><tr><td><code>icon</code></td><td>string</td><td>使用的 SF Symbols 图标名</td></tr><tr><td><code>color</code></td><td>string</td><td>工具主色调</td></tr><tr><td><code>parameters</code></td><td>array</td><td>工具需要的参数（为空表示无输入）</td></tr><tr><td><code>requireApproval</code></td><td>boolean</td><td>是否需要用户批准</td></tr><tr><td><code>autoApprove</code></td><td>boolean</td><td>是否支持 Assistant 自动批准</td></tr><tr><td><code>scriptEditorOnly</code></td><td>boolean</td><td>工具是否仅能在脚本编辑器中使用</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="三执行逻辑-assistant_tooltsx-实现示例"><a href="#三执行逻辑-assistant_tooltsx-实现示例" class="rp-header-anchor rp-link" aria-hidden="true">#</a>三、执行逻辑 assistant_tool.tsx 实现示例</h2>
@@ -185,7 +240,7 @@
 <h2 class="rp-toc-include" id="六执行与用户体验流程"><a href="#六执行与用户体验流程" class="rp-header-anchor rp-link" aria-hidden="true">#</a>六、执行与用户体验流程</h2>
 <ol>
 <li>Assistant 在会话中判断是否需要调用某个工具。</li>
-<li>如果工具设置为需要批准，系统弹出批准对话框：<!-- -->
+<li>如果工具设置为需要批准，系统弹出批准对话框：
 <ul>
 <li>显示由 <code>registerApprovalRequest</code> 返回的提示信息。</li>
 <li>用户点击“允许”后执行工具逻辑。</li>

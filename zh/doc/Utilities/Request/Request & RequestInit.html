@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -57,6 +57,71 @@
 | <strong>init</strong>  | <code>RequestInit</code> | 可选的初始化参数，用于配置请求的行为（见下文）。 |</p>
 <hr/>
 <h2 class="rp-toc-include" id="属性"><a href="#属性" class="rp-header-anchor rp-link" aria-hidden="true">#</a>属性</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>属性名</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><strong>url</strong></td><td><code>string</code></td><td>请求的完整 URL。</td></tr><tr><td><strong>method</strong></td><td><code>string</code></td><td>请求方法（默认 <code>&quot;GET&quot;</code>）。</td></tr><tr><td><strong>headers</strong></td><td><code>Headers</code></td><td>请求头部对象，可通过 <code>.get()</code>、<code>.set()</code>、<code>.append()</code> 等方法操作。</td></tr><tr><td><strong>body</strong></td><td><code>Data</code> | <code>FormData</code> | <code>string</code> | <code>ArrayBuffer</code> | <code>undefined</code></td><td>请求体，仅用于非 <code>GET</code> 或 <code>HEAD</code> 请求。</td></tr><tr><td><strong>allowInsecureRequest</strong></td><td><code>boolean</code></td><td>是否允许使用 HTTP 明文请求（默认 <code>false</code>）。</td></tr><tr><td><strong>handleRedirect</strong></td><td><code>(newRequest: RedirectRequest) =&gt; Promise&lt;RedirectRequest | null&gt;</code></td><td>自定义重定向逻辑；返回 <code>null</code> 表示阻止重定向。</td></tr><tr><td><strong>shouldAllowRedirect</strong></td><td><code>(newRequest: Request) =&gt; Promise&lt;boolean&gt;</code></td><td>已废弃。旧版重定向控制回调。</td></tr><tr><td><strong>timeout</strong></td><td><code>number</code></td><td>请求超时时间（单位：秒）。超时会自动中止请求。</td></tr><tr><td><strong>signal</strong></td><td><code>AbortSignal</code></td><td>用于中止请求的信号，由 <code>AbortController</code> 创建。</td></tr><tr><td><strong>cancelToken</strong></td><td><code>CancelToken</code></td><td>已废弃。旧版取消机制，请改用 <code>signal</code>。</td></tr><tr><td><strong>debugLabel</strong></td><td><code>string</code></td><td>调试标签，会在日志面板中显示以方便追踪。</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="方法"><a href="#方法" class="rp-header-anchor rp-link" aria-hidden="true">#</a>方法</h2>
@@ -129,6 +194,77 @@
 <span class="line"><span style="color:var(--shiki-foreground)">};</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
 <h2 class="rp-toc-include" id="字段说明"><a href="#字段说明" class="rp-header-anchor rp-link" aria-hidden="true">#</a>字段说明</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>字段名</th><th>类型</th><th>说明</th><th></th></tr></thead><tbody><tr><td><strong>method</strong></td><td><code>string</code></td><td>HTTP 方法，如 <code>&quot;GET&quot;</code>, <code>&quot;POST&quot;</code>, <code>&quot;PUT&quot;</code>, <code>&quot;DELETE&quot;</code>，默认 <code>&quot;GET&quot;</code>。</td><td></td></tr><tr><td><strong>headers</strong></td><td><code>HeadersInit</code></td><td>请求头部信息，可以是：<code>Headers</code> 对象、普通对象 <code>{key: value}</code>、或 <code>[key, value][]</code> 数组。</td><td></td></tr><tr><td><strong>body</strong></td><td><code>Data</code> | <code>FormData</code> | <code>string</code> | <code>ArrayBuffer</code></td><td>请求体，仅在非 <code>GET</code> / <code>HEAD</code> 请求中使用。</td><td></td></tr><tr><td><strong>allowInsecureRequest</strong></td><td><code>boolean</code></td><td>是否允许发送 HTTP 请求。默认 <code>false</code>。</td><td></td></tr><tr><td><strong>handleRedirect</strong></td><td><code>(newRequest: RedirectRequest) =&gt; Promise&lt;RedirectRequest | null&gt;</code></td><td>自定义重定向回调。返回新的请求对象以继续，返回 <code>null</code> 以阻止跳转。</td><td></td></tr><tr><td><strong>shouldAllowRedirect</strong></td><td><code>(newRequest: Request) =&gt; Promise&lt;boolean&gt;</code></td><td>已废弃。旧的布尔型重定向控制回调。</td><td></td></tr><tr><td><strong>timeout</strong></td><td><code>number</code></td><td>请求超时时间（秒），超时后会自动中止请求。</td><td></td></tr><tr><td><strong>signal</strong></td><td><code>AbortSignal</code></td><td>中止信号，可由 <code>AbortController</code> 触发，用于主动取消请求。</td><td></td></tr><tr><td><strong>cancelToken</strong></td><td><code>CancelToken</code></td><td>已废弃。旧版取消机制，请使用 <code>signal</code> 替代。</td><td></td></tr><tr><td><strong>debugLabel</strong></td><td><code>string</code></td><td>调试标签，在日志面板中显示，用于标识请求。</td><td></td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="与-fetch-的关系"><a href="#与-fetch-的关系" class="rp-header-anchor rp-link" aria-hidden="true">#</a>与 <code>fetch()</code> 的关系</h2>
@@ -142,6 +278,39 @@
 <span class="line"><span style="color:var(--shiki-foreground)">});</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
 <h2 class="rp-toc-include" id="与其他类的关系"><a href="#与其他类的关系" class="rp-header-anchor rp-link" aria-hidden="true">#</a>与其他类的关系</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>类名</th><th>用途</th></tr></thead><tbody><tr><td><strong><code>Headers</code></strong></td><td>管理请求头部的集合，可与 <code>headers</code> 字段一起使用。</td></tr><tr><td><strong><code>Data</code></strong></td><td>表示二进制数据，可作为请求体（body）上传文件或原始字节数据。</td></tr><tr><td><strong><code>FormData</code></strong></td><td>用于构造 multipart/form-data 表单请求。</td></tr><tr><td><strong><code>AbortController</code> / <code>AbortSignal</code></strong></td><td>用于在请求过程中主动取消网络操作。</td></tr><tr><td><strong><code>CancelToken</code></strong></td><td>旧版取消机制，仅为兼容保留。</td></tr><tr><td><strong><code>RedirectRequest</code></strong></td><td>当发生重定向时传入 <code>handleRedirect</code> 回调的参数，包含新请求的详细信息。</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="示例-1"><a href="#示例-1" class="rp-header-anchor rp-link" aria-hidden="true">#</a>示例</h2>
@@ -184,6 +353,46 @@
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="复制代码"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
 <h3 class="rp-toc-include" id="字段说明-1"><a href="#字段说明-1" class="rp-header-anchor rp-link" aria-hidden="true">#</a>字段说明</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><strong>method</strong></td><td><code>string</code></td><td>即将执行的重定向请求方法（例如 <code>&quot;GET&quot;</code>、<code>&quot;POST&quot;</code>）。</td></tr><tr><td><strong>url</strong></td><td><code>string</code></td><td>重定向目标的完整 URL。</td></tr><tr><td><strong>headers</strong></td><td><code>Record&lt;string, string&gt;</code></td><td>该重定向请求的 HTTP 头部信息。你可以根据需要修改或记录这些头部。</td></tr><tr><td><strong>cookies</strong></td><td><code>Cookie[]</code></td><td>当前请求中携带的 Cookie 列表，类型与 <code>Response.cookies</code> 一致。</td></tr><tr><td><strong>body</strong></td><td><code>Data</code>（可选）</td><td>若为非 <code>GET</code> 请求，则包含请求体数据（例如表单或二进制数据）。</td></tr><tr><td><strong>timeout</strong></td><td><code>number</code>（可选）</td><td>请求的超时时间（单位：秒）。</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="使用场景"><a href="#使用场景" class="rp-header-anchor rp-link" aria-hidden="true">#</a>使用场景</h3>

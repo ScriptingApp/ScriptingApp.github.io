@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -24,22 +24,178 @@
 <h3 class="rp-toc-include" id="描述"><a href="#描述" class="rp-header-anchor rp-link" aria-hidden="true">#</a>描述</h3>
 <p>您可以通过提供一个 <strong>动作</strong>（action）或 <strong>意图</strong>（intent）以及一个 <strong>标签</strong>（label）来创建按钮。标签可以是简单的文本、图标或复杂的视图。按钮是创建交互界面的关键，例如提交表单或在页面之间导航。</p>
 <h3 class="rp-toc-include" id="属性"><a href="#属性" class="rp-header-anchor rp-link" aria-hidden="true">#</a>属性</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th><strong>属性</strong></th><th><strong>类型</strong></th><th><strong>描述</strong></th></tr></thead><tbody><tr><td><code>title</code></td><td><code>string</code></td><td>按钮上显示的文本标签。</td></tr><tr><td><code>systemImage</code></td><td><code>string</code> <em>(可选)</em></td><td>按钮标题旁边显示的系统图标名称。</td></tr><tr><td><code>children</code></td><td><code>VirtualNode</code> 或 <code>VirtualNode[]</code></td><td>用作按钮标签的自定义视图，替代 <code>title</code>。</td></tr><tr><td><code>role</code></td><td><code>&#x27;destructive&#x27; | &#x27;cancel&#x27; | &#x27;close&#x27; | &#x27;confirm&#x27;</code> <em>(可选)</em></td><td>描述按钮的用途。<code>destructive</code> 用于标记执行潜在危险操作的按钮，<code>cancel</code> 表示取消操作。</td></tr><tr><td><code>intent</code></td><td><code>AppIntent&lt;any&gt;</code></td><td>当按钮被触发时执行的意图。适用于 <code>Widget</code> 或 <code>LiveActivity</code>。详情见 <code>Interactive Widget and LiveActivity</code>。</td></tr><tr><td><code>action</code></td><td><code>() =&gt; void</code></td><td>用户触发按钮时执行的函数。</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="buttonstyle"><a href="#buttonstyle" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>ButtonStyle</code></h3>
 <p>定义按钮的视觉外观。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th><strong>值</strong></th><th><strong>描述</strong></th></tr></thead><tbody><tr><td><code>automatic</code></td><td>根据按钮的上下文设置默认样式。</td></tr><tr><td><code>bordered</code></td><td>标准的带边框样式。</td></tr><tr><td><code>borderedProminent</code></td><td>突出的带边框样式，更加醒目。</td></tr><tr><td><code>borderless</code></td><td>无边框样式。</td></tr><tr><td><code>plain</code></td><td>简洁的样式，具有最少的装饰，但仍可在按下、聚焦或启用状态下提供视觉反馈。</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="buttonbordershape"><a href="#buttonbordershape" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>ButtonBorderShape</code></h3>
 <p>指定 <code>bordered</code> 或 <code>borderedProminent</code> 样式按钮的边框形状。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th><strong>值</strong></th><th><strong>描述</strong></th></tr></thead><tbody><tr><td><code>automatic</code></td><td>由系统决定适当的形状。</td></tr><tr><td><code>capsule</code></td><td>胶囊形状的边框。</td></tr><tr><td><code>circle</code></td><td>圆形边框。</td></tr><tr><td><code>roundedRectangle</code></td><td>带圆角的矩形边框。</td></tr><tr><td><code>buttonBorder</code></td><td>由环境决定最终的边框形状。</td></tr><tr><td><code>{ roundedRectangleRadius: number }</code></td><td>带特定角半径的圆角矩形。</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="controlsize"><a href="#controlsize" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>ControlSize</code></h3>
 <p>定义按钮和其他控件的尺寸。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th><strong>值</strong></th><th><strong>描述</strong></th></tr></thead><tbody><tr><td><code>mini</code></td><td>最小的控件尺寸。</td></tr><tr><td><code>small</code></td><td>紧凑的控件尺寸。</td></tr><tr><td><code>regular</code></td><td>标准的控件尺寸。</td></tr><tr><td><code>large</code></td><td>较大的控件尺寸。</td></tr><tr><td><code>extraLarge</code></td><td>最大的控件尺寸，通常用于高强调或无障碍场景。</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="commonviewprops"><a href="#commonviewprops" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>CommonViewProps</code></h3>
 <p>这些属性可用于自定义视图中按钮的外观和行为。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th><strong>属性</strong></th><th><strong>类型</strong></th><th><strong>描述</strong></th></tr></thead><tbody><tr><td><code>controlSize</code></td><td><code>ControlSize</code></td><td>设置视图中控件的尺寸。</td></tr><tr><td><code>buttonStyle</code></td><td><code>ButtonStyle</code></td><td>应用自定义交互行为和按钮外观。</td></tr><tr><td><code>buttonBorderShape</code></td><td><code>ButtonBorderShape</code></td><td>指定 <code>bordered</code> 和 <code>borderedProminent</code> 按钮样式的边框形状。</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="示例用法"><a href="#示例用法" class="rp-header-anchor rp-link" aria-hidden="true">#</a>示例用法</h2>

@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -57,6 +57,71 @@ It can be passed directly to the <code>fetch()</code> method or used to clone, m
 | <strong>init</strong>  | <code>RequestInit</code> | Optional configuration object defining request settings (see below). |</p>
 <hr/>
 <h2 class="rp-toc-include" id="properties"><a href="#properties" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Properties</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><strong>url</strong></td><td><code>string</code></td><td>The full URL of the request.</td></tr><tr><td><strong>method</strong></td><td><code>string</code></td><td>The HTTP method (default is <code>&quot;GET&quot;</code>).</td></tr><tr><td><strong>headers</strong></td><td><code>Headers</code></td><td>A headers object representing the request headers.</td></tr><tr><td><strong>body</strong></td><td><code>Data</code> | <code>FormData</code> | <code>string</code> | <code>ArrayBuffer</code> | <code>undefined</code></td><td>The request body, used only for non-<code>GET</code> and non-<code>HEAD</code> requests.</td></tr><tr><td><strong>allowInsecureRequest</strong></td><td><code>boolean</code></td><td>Whether to allow plain HTTP requests (default <code>false</code>).</td></tr><tr><td><strong>handleRedirect</strong></td><td><code>(newRequest: RedirectRequest) =&gt; Promise&lt;RedirectRequest | null&gt;</code></td><td>Custom redirect handler. Return <code>null</code> to cancel the redirect.</td></tr><tr><td><strong>shouldAllowRedirect</strong></td><td><code>(newRequest: Request) =&gt; Promise&lt;boolean&gt;</code></td><td>Deprecated legacy redirect handler.</td></tr><tr><td><strong>timeout</strong></td><td><code>number</code></td><td>Timeout in seconds. The request will automatically abort after this duration.</td></tr><tr><td><strong>signal</strong></td><td><code>AbortSignal</code></td><td>Abort signal from an <code>AbortController</code>, allowing manual cancellation.</td></tr><tr><td><strong>cancelToken</strong></td><td><code>CancelToken</code></td><td>Deprecated. Older cancellation mechanism; prefer <code>signal</code>.</td></tr><tr><td><strong>debugLabel</strong></td><td><code>string</code></td><td>Optional label displayed in logs for debugging and tracking requests.</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="methods"><a href="#methods" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Methods</h2>
@@ -130,6 +195,77 @@ Scripting extends this interface with additional native fields.</p>
 <span class="line"><span style="color:var(--shiki-foreground)">};</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
 <h2 class="rp-toc-include" id="field-descriptions"><a href="#field-descriptions" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Field Descriptions</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Field</th><th>Type</th><th>Description</th><th></th></tr></thead><tbody><tr><td><strong>method</strong></td><td><code>string</code></td><td>The HTTP method such as <code>&quot;GET&quot;</code>, <code>&quot;POST&quot;</code>, <code>&quot;PUT&quot;</code>, <code>&quot;DELETE&quot;</code>. Default: <code>&quot;GET&quot;</code>.</td><td></td></tr><tr><td><strong>headers</strong></td><td><code>HeadersInit</code></td><td>Request headers, which can be a <code>Headers</code> object, key-value object <code>{ key: value }</code>, or array of <code>[key, value]</code> pairs.</td><td></td></tr><tr><td><strong>body</strong></td><td><code>Data</code> | <code>FormData</code> | <code>string</code> | <code>ArrayBuffer</code></td><td>The request body. Ignored for <code>GET</code> and <code>HEAD</code> requests.</td><td></td></tr><tr><td><strong>allowInsecureRequest</strong></td><td><code>boolean</code></td><td>Allows HTTP requests (insecure). Default: <code>false</code>.</td><td></td></tr><tr><td><strong>handleRedirect</strong></td><td><code>(newRequest: RedirectRequest) =&gt; Promise&lt;RedirectRequest | null&gt;</code></td><td>Custom redirect handler. Return <code>null</code> to block redirection.</td><td></td></tr><tr><td><strong>shouldAllowRedirect</strong></td><td><code>(newRequest: Request) =&gt; Promise&lt;boolean&gt;</code></td><td>Deprecated. Older redirect callback.</td><td></td></tr><tr><td><strong>timeout</strong></td><td><code>number</code></td><td>Request timeout in seconds. Triggers <code>AbortError</code> if exceeded.</td><td></td></tr><tr><td><strong>signal</strong></td><td><code>AbortSignal</code></td><td>Used to abort requests manually through an <code>AbortController</code>.</td><td></td></tr><tr><td><strong>cancelToken</strong></td><td><code>CancelToken</code></td><td>Deprecated cancellation mechanism. Use <code>signal</code> instead.</td><td></td></tr><tr><td><strong>debugLabel</strong></td><td><code>string</code></td><td>A label displayed in the debug log for identifying requests.</td><td></td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="relationship-with-fetch"><a href="#relationship-with-fetch" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Relationship with <code>fetch()</code></h2>
@@ -143,6 +279,39 @@ Scripting extends this interface with additional native fields.</p>
 <span class="line"><span style="color:var(--shiki-foreground)">});</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
 <h2 class="rp-toc-include" id="relationships-with-other-classes"><a href="#relationships-with-other-classes" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Relationships with Other Classes</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Class</th><th>Description</th></tr></thead><tbody><tr><td><strong><code>Headers</code></strong></td><td>Manages request headers, used with the <code>headers</code> field.</td></tr><tr><td><strong><code>Data</code></strong></td><td>Represents binary data. Can be used as the request body for file uploads or raw bytes.</td></tr><tr><td><strong><code>FormData</code></strong></td><td>Builds <code>multipart/form-data</code> bodies for form or file submissions.</td></tr><tr><td><strong><code>AbortController</code> / <code>AbortSignal</code></strong></td><td>Enables manual request cancellation.</td></tr><tr><td><strong><code>CancelToken</code></strong></td><td>Deprecated cancellation mechanism retained for backward compatibility.</td></tr><tr><td><strong><code>RedirectRequest</code></strong></td><td>Represents the redirected request passed to <code>handleRedirect</code>.</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="examples-1"><a href="#examples-1" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Examples</h2>
@@ -183,6 +352,46 @@ You can inspect or modify this object to control whether and how the redirect sh
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
 <h3 class="rp-toc-include" id="field-descriptions-1"><a href="#field-descriptions-1" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Field Descriptions</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><strong>method</strong></td><td><code>string</code></td><td>The HTTP method for the redirected request (e.g., <code>&quot;GET&quot;</code>, <code>&quot;POST&quot;</code>).</td></tr><tr><td><strong>url</strong></td><td><code>string</code></td><td>The full target URL of the redirect.</td></tr><tr><td><strong>headers</strong></td><td><code>Record&lt;string, string&gt;</code></td><td>The HTTP headers to be sent with the redirect request. You can modify these before proceeding.</td></tr><tr><td><strong>cookies</strong></td><td><code>Cookie[]</code></td><td>The list of cookies available for the redirected request (same format as <code>Response.cookies</code>).</td></tr><tr><td><strong>body</strong></td><td><code>Data</code> <em>(optional)</em></td><td>The body of the redirect request, if applicable (e.g., for non-GET methods).</td></tr><tr><td><strong>timeout</strong></td><td><code>number</code> <em>(optional)</em></td><td>The request timeout in seconds.</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="use-cases"><a href="#use-cases" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Use Cases</h3>

@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -107,6 +107,39 @@
 </ul>
 <hr/>
 <h2 class="rp-toc-include" id="总结生命周期非常关键"><a href="#总结生命周期非常关键" class="rp-header-anchor rp-link" aria-hidden="true">#</a>总结生命周期（非常关键）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>行为</th><th>是否导致 MemoryStorage 清空</th></tr></thead><tbody><tr><td>AppIntent 执行结束</td><td>否</td></tr><tr><td>Script.exit()</td><td>否</td></tr><tr><td>Shortcut 流程结束</td><td>不一定</td></tr><tr><td>Widget 更新 AppIntent</td><td>不一定</td></tr><tr><td>Live Activity 调用 AppIntent</td><td>不一定</td></tr><tr><td>系统回收 Extension 进程</td><td>是（彻底清空）</td></tr></tbody></table></div>
 <p>MemoryStorage 的生命周期与 <strong>Extension 进程生命周期</strong> 完全一致，而 Extension 何时被系统保留/销毁是不可预测的系统行为。</p>
 <hr/>

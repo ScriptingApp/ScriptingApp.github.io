@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -30,10 +30,85 @@
 <hr/>
 <h2 class="rp-toc-include" id="enum-healthworkouteventtype"><a href="#enum-healthworkouteventtype" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Enum: <code>HealthWorkoutEventType</code></h2>
 <p>This enum defines the various types of workout events.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Value</th><th>Name</th><th>Description</th></tr></thead><tbody><tr><td><code>1</code></td><td><code>pause</code></td><td>Indicates that the workout was paused manually.</td></tr><tr><td><code>2</code></td><td><code>resume</code></td><td>Indicates that the workout was resumed after a pause.</td></tr><tr><td><code>3</code></td><td><code>lap</code></td><td>Marks a lap during the workout, useful for sports like running or swimming.</td></tr><tr><td><code>4</code></td><td><code>marker</code></td><td>A generic marker placed by the system or user for reference.</td></tr><tr><td><code>5</code></td><td><code>motionPaused</code></td><td>Indicates that the workout was automatically paused due to no movement.</td></tr><tr><td><code>6</code></td><td><code>motionResumed</code></td><td>Workout automatically resumed after detecting motion.</td></tr><tr><td><code>7</code></td><td><code>segment</code></td><td>Marks the start of a new workout segment, e.g., during interval training.</td></tr><tr><td><code>8</code></td><td><code>pauseOrResumeRequest</code></td><td>A system-generated request to pause or resume, not a guaranteed action.</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="class-healthworkoutevent"><a href="#class-healthworkoutevent" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Class: <code>HealthWorkoutEvent</code></h2>
 <h3 class="rp-toc-include" id="properties"><a href="#properties" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Properties</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Property</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>type</code></td><td><code>HealthWorkoutEventType</code></td><td>The specific event type (e.g., pause, lap, motionPaused).</td></tr><tr><td><code>dateInterval</code></td><td><code>HealthDateInterval</code></td><td>The time interval during which this event occurred.</td></tr><tr><td><code>metadata</code></td><td><code>Record&lt;string, any&gt; | null</code></td><td>Optional metadata describing additional information about the event.</td></tr></tbody></table></div>
 <blockquote>
 <p>Note: <code>HealthDateInterval</code> contains <code>start</code>, <code>end</code>, and <code>duration</code> (in seconds).</p>

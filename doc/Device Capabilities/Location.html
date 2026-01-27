@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -42,6 +42,35 @@
 <h3 class="rp-toc-include" id="locationsetaccuracyaccuracy-locationaccuracy-promisevoid"><a href="#locationsetaccuracyaccuracy-locationaccuracy-promisevoid" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>Location.setAccuracy(accuracy: LocationAccuracy): Promise&lt;void&gt;</code></h3>
 <p>Sets the desired accuracy level for location retrieval. Higher accuracy may increase battery usage and wait time.</p>
 <h4 class="rp-toc-include" id="parameters"><a href="#parameters" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Parameters</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Value</th><th>Description</th></tr></thead><tbody><tr><td><code>&quot;best&quot;</code></td><td>Maximum available accuracy</td></tr><tr><td><code>&quot;tenMeters&quot;</code></td><td>Within 10 meters</td></tr><tr><td><code>&quot;hundredMeters&quot;</code></td><td>Within 100 meters</td></tr><tr><td><code>&quot;kilometer&quot;</code></td><td>Within 1 kilometer</td></tr><tr><td><code>&quot;threeKilometers&quot;</code></td><td>Within 3 kilometers</td></tr></tbody></table></div>
 <div class="rp-codeblock language-ts"><div class="rp-codeblock__content"><div class="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0" data-lang="ts"><code><span class="line"><span style="color:var(--shiki-token-keyword)">await</span><span style="color:var(--shiki-token-constant)"> Location</span><span style="color:var(--shiki-token-function)">.setAccuracy</span><span style="color:var(--shiki-foreground)">(</span><span style="color:var(--shiki-token-string-expression)">&quot;hundredMeters&quot;</span><span style="color:var(--shiki-foreground)">)</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <hr/>
@@ -49,6 +78,23 @@
 <p>Requests the user&#x27;s current location once. May trigger a permission prompt if not previously granted.</p>
 <p>By default, if a cached location is available, it will be returned immediately. If no cached location exists, a new request will be made. To force a new location retrieval even if a cached value exists, pass <code>{ forceRequest: true }</code>.</p>
 <h4 class="rp-toc-include" id="parameters-1"><a href="#parameters-1" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Parameters</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Option</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code>forceRequest</code></td><td><code>boolean</code></td><td>No</td><td>If <code>true</code>, bypasses the cache and always requests new location.</td></tr></tbody></table></div>
 <div class="rp-codeblock language-ts"><div class="rp-codeblock__content"><div class="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0" data-lang="ts"><code><span class="line"><span style="color:var(--shiki-token-keyword)">const</span><span style="color:var(--shiki-token-constant)"> location</span><span style="color:var(--shiki-token-keyword)"> =</span><span style="color:var(--shiki-token-keyword)"> await</span><span style="color:var(--shiki-token-constant)"> Location</span><span style="color:var(--shiki-token-function)">.requestCurrent</span><span style="color:var(--shiki-foreground)">({ forceRequest</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-constant)"> true</span><span style="color:var(--shiki-foreground)"> })</span></span>
 <span class="line"><span style="color:var(--shiki-token-keyword)">if</span><span style="color:var(--shiki-foreground)"> (location) {</span></span>
@@ -67,6 +113,35 @@
 <h3 class="rp-toc-include" id="locationreversegeocodeoptions-promiselocationplacemark--null"><a href="#locationreversegeocodeoptions-promiselocationplacemark--null" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>Location.reverseGeocode(options): Promise&lt;LocationPlacemark[] | null&gt;</code></h3>
 <p>Converts latitude and longitude into human-readable place information such as street, city, and country.</p>
 <h4 class="rp-toc-include" id="parameters-2"><a href="#parameters-2" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Parameters</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody><tr><td><code>latitude</code></td><td><code>number</code></td><td>Yes</td><td>Latitude in degrees</td></tr><tr><td><code>longitude</code></td><td><code>number</code></td><td>Yes</td><td>Longitude in degrees</td></tr><tr><td><code>locale</code></td><td><code>string</code></td><td>No</td><td>Optional locale (e.g., <code>&quot;en-US&quot;</code>). Defaults to device language.</td></tr></tbody></table></div>
 <div class="rp-codeblock language-ts"><div class="rp-codeblock__content"><div class="rp-codeblock__content__scroll-container rp-scrollbar rp-scrollbar--always"><pre class="shiki css-variables" style="background-color:var(--shiki-background);color:var(--shiki-foreground)" tabindex="0" data-lang="ts"><code><span class="line"><span style="color:var(--shiki-token-keyword)">const</span><span style="color:var(--shiki-token-constant)"> placemarks</span><span style="color:var(--shiki-token-keyword)"> =</span><span style="color:var(--shiki-token-keyword)"> await</span><span style="color:var(--shiki-token-constant)"> Location</span><span style="color:var(--shiki-token-function)">.reverseGeocode</span><span style="color:var(--shiki-foreground)">({</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">  latitude</span><span style="color:var(--shiki-token-keyword)">:</span><span style="color:var(--shiki-token-constant)"> 51.5074</span><span style="color:var(--shiki-token-punctuation)">,</span></span>
@@ -128,6 +203,96 @@
 <span class="line"><span style="color:var(--shiki-foreground)">  areasOfInterest</span><span style="color:var(--shiki-token-keyword)">?:</span><span style="color:var(--shiki-token-constant)"> string</span><span style="color:var(--shiki-foreground)">[]</span></span>
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <h4 class="rp-toc-include" id="field-descriptions"><a href="#field-descriptions" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Field Descriptions</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>location</code></td><td><code>LocationInfo</code></td><td>The coordinates of the placemark (typically the same as reverse geocode input).</td></tr><tr><td><code>region</code></td><td><code>string</code></td><td>General region or province/state.</td></tr><tr><td><code>timeZone</code></td><td><code>string</code></td><td>Time zone identifier (e.g., <code>&quot;Asia/Shanghai&quot;</code>).</td></tr><tr><td><code>name</code></td><td><code>string</code></td><td>Generic name such as building, landmark, or area.</td></tr><tr><td><code>thoroughfare</code></td><td><code>string</code></td><td>Street name (e.g., <code>&quot;Main St&quot;</code>, <code>&quot;Zhongguancun Ave&quot;</code>).</td></tr><tr><td><code>subThoroughfare</code></td><td><code>string</code></td><td>Street-level detail like building number or unit.</td></tr><tr><td><code>locality</code></td><td><code>string</code></td><td>City or town.</td></tr><tr><td><code>subLocality</code></td><td><code>string</code></td><td>Subdivision of the locality (e.g., neighborhood or district).</td></tr><tr><td><code>administrativeArea</code></td><td><code>string</code></td><td>Province, state, or equivalent administrative area.</td></tr><tr><td><code>subAdministrativeArea</code></td><td><code>string</code></td><td>Further subdivision like county or district.</td></tr><tr><td><code>postalCode</code></td><td><code>string</code></td><td>ZIP or postal code.</td></tr><tr><td><code>isoCountryCode</code></td><td><code>string</code></td><td>ISO 3166-1 alpha-2 country code (e.g., <code>&quot;US&quot;</code>, <code>&quot;CN&quot;</code>).</td></tr><tr><td><code>country</code></td><td><code>string</code></td><td>Full name of the country or region.</td></tr><tr><td><code>inlandWater</code></td><td><code>string</code></td><td>Name of nearby inland water (river/lake), if applicable.</td></tr><tr><td><code>ocean</code></td><td><code>string</code></td><td>Name of nearby ocean, if applicable.</td></tr><tr><td><code>areasOfInterest</code></td><td><code>string[]</code></td><td>List of nearby points of interest or landmarks (e.g., <code>&quot;Times Square&quot;</code>).</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="example-usage"><a href="#example-usage" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Example Usage</h2>

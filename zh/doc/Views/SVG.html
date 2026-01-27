@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -31,13 +31,100 @@
 <hr/>
 <h2 class="rp-toc-include" id="props属性"><a href="#props属性" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Props（属性）</h2>
 <h3 class="rp-toc-include" id="图像来源3选1必须指定一个"><a href="#图像来源3选1必须指定一个" class="rp-header-anchor rp-link" aria-hidden="true">#</a>图像来源（3选1，必须指定一个）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>属性</th><th>类型</th><th>说明</th></tr></thead><tbody><tr><td><code>url</code></td><td><code>string | DynamicImageSource&lt;string&gt;</code></td><td>从网络 URL 加载 SVG 图像</td></tr><tr><td><code>filePath</code></td><td><code>string | DynamicImageSource&lt;string&gt;</code></td><td>从本地文件路径加载 SVG 图像</td></tr><tr><td><code>code</code></td><td><code>string | DynamicImageSource&lt;string&gt;</code></td><td>使用内联 SVG 字符串代码渲染图像</td></tr></tbody></table></div>
 <p>注意：以上三个属性<strong>互斥</strong>，只能设置其中一个。</p>
 <hr/>
 <h3 class="rp-toc-include" id="图像渲染行为imagerenderingbehaviorprops"><a href="#图像渲染行为imagerenderingbehaviorprops" class="rp-header-anchor rp-link" aria-hidden="true">#</a>图像渲染行为（ImageRenderingBehaviorProps）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>属性</th><th>类型</th><th>默认值</th><th>说明</th></tr></thead><tbody><tr><td><code>resizable</code></td><td><code>boolean | object</code></td><td><code>false</code></td><td>控制图像是否自适应尺寸（详见下方）</td></tr><tr><td><code>renderingMode</code></td><td><code>&#x27;original&#x27; | &#x27;template&#x27;</code></td><td><code>&#x27;original&#x27;</code></td><td>设置图像渲染模式，<code>template</code> 可使用 <code>foregroundColor</code> 着色</td></tr><tr><td><code>interpolation</code></td><td><code>&#x27;none&#x27; | &#x27;low&#x27; | &#x27;medium&#x27; | &#x27;high&#x27;</code></td><td><code>&#x27;medium&#x27;</code></td><td>设置图像缩放时的插值质量</td></tr><tr><td><code>antialiased</code></td><td><code>boolean</code></td><td><code>false</code></td><td>是否开启抗锯齿边缘渲染</td></tr><tr><td><code>widgetAccentedRenderingMode</code></td><td><code>WidgetAccentedRenderingMode</code></td><td>-</td><td>控制在 Widget 的强调模式下的图像渲染方式（仅 Widget 有效）</td></tr></tbody></table></div>
 <hr/>
 <h3 class="rp-toc-include" id="resizable-属性详细说明"><a href="#resizable-属性详细说明" class="rp-header-anchor rp-link" aria-hidden="true">#</a><code>resizable</code> 属性详细说明</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>类型</th><th>含义</th></tr></thead><tbody><tr><td><code>true</code></td><td>使用默认拉伸模式使图像适应容器大小</td></tr><tr><td><code>false</code></td><td>不对图像进行缩放</td></tr><tr><td><code>{ capInsets, resizingMode }</code></td><td>设置切片边距和缩放模式（用于九宫格图像或复杂缩放需求）</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="示例"><a href="#示例" class="rp-header-anchor rp-link" aria-hidden="true">#</a>示例</h2>

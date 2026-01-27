@@ -9,7 +9,7 @@
 <script defer src="/static/js/lib-react.5edd1b77.js"></script>
 <script defer src="/static/js/lib-router.db7238c9.js"></script>
 <script defer src="/static/js/78699.ab32cbfe.js"></script>
-<script defer src="/static/js/index.8d9d45df.js"></script>
+<script defer src="/static/js/index.5cf60385.js"></script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="generator" content="Rspress v2.0.0-rc.7">
 <link rel="icon" href="/icon.png">
@@ -25,14 +25,109 @@
 <p>A <code>LazyHGrid</code> arranges its children in a grid that grows horizontally. Unlike a regular grid, it loads and displays items lazily, creating them only when they are about to appear on the screen. This makes it ideal for grids with large or dynamic content.</p>
 <hr/>
 <h2 class="rp-toc-include" id="lazyhgridprops"><a href="#lazyhgridprops" class="rp-header-anchor rp-link" aria-hidden="true">#</a>LazyHGridProps</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>rows</code></td><td><code>GridItem[]</code></td><td><strong>Required</strong></td><td>Defines the configuration for the rows in the grid, including their size and alignment.</td></tr><tr><td><code>alignment</code></td><td><code>VerticalAlignment</code></td><td><code>undefined</code></td><td>Controls how the grid is aligned vertically within its parent view.</td></tr><tr><td><code>spacing</code></td><td><code>number</code></td><td><code>undefined</code> (default spacing)</td><td>The spacing between the grid and the next item in its parent view.</td></tr><tr><td><code>pinnedViews</code></td><td><code>&#x27;sectionHeaders&#x27;</code> | <code>&#x27;sectionFooters&#x27;</code> | <code>&#x27;sectionHeadersAndFooters&#x27;</code></td><td><code>undefined</code></td><td>Specifies which child views remain pinned to the bounds of the parent scroll view.</td></tr><tr><td><code>children</code></td><td><code>(VirtualNode | undefined | null | (VirtualNode | undefined | null)[])[] | VirtualNode</code></td><td><code>undefined</code></td><td>The content to be displayed in the grid. Accepts one or multiple <code>VirtualNode</code> elements, including arrays and optional <code>null</code> or <code>undefined</code> values.</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="griditem"><a href="#griditem" class="rp-header-anchor rp-link" aria-hidden="true">#</a>GridItem</h2>
 <p>Defines the properties for a single row in the grid.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Property</th><th>Type</th><th>Default</th><th>Description</th></tr></thead><tbody><tr><td><code>alignment</code></td><td><code>Alignment</code></td><td><code>undefined</code></td><td>Specifies the alignment to use when placing each child view in this row.</td></tr><tr><td><code>spacing</code></td><td><code>number</code></td><td><code>undefined</code> (default spacing)</td><td>The spacing between items in this row and the next.</td></tr><tr><td><code>size</code></td><td><code>GridSize</code></td><td><strong>Required</strong></td><td>Defines the size of the row. Can be a fixed size or a flexible/adaptive size based on the content.</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="gridsize"><a href="#gridsize" class="rp-header-anchor rp-link" aria-hidden="true">#</a>GridSize</h2>
 <p>Defines the size of a row or column in the grid layout.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="rp-table-scroll-container rp-scrollbar"><table><thead><tr><th>Type</th><th>Properties</th><th>Description</th></tr></thead><tbody><tr><td><code>number</code></td><td><em>N/A</em></td><td>A fixed size for the row or column.</td></tr><tr><td><code>adaptive</code></td><td><code>min: number</code>, <code>max?: number |&#x27;infinity&#x27;</code></td><td>Specifies a flexible size that adapts to the content, with a minimum and optional maximum constraint.</td></tr><tr><td><code>flexible</code></td><td><code>min?: number</code>, <code>max?: number | &#x27;infinity&#x27;</code></td><td>Specifies a single flexible size that adjusts dynamically, constrained by optional min and max values.</td></tr></tbody></table></div>
 <hr/>
 <h2 class="rp-toc-include" id="pinnedscrollviews"><a href="#pinnedscrollviews" class="rp-header-anchor rp-link" aria-hidden="true">#</a>PinnedScrollViews</h2>
@@ -71,7 +166,7 @@
 <span class="line"><span style="color:var(--shiki-foreground)">}</span></span></code></pre></div><div class="rp-code-button-group"><button class="rp-code-button-group__button rp-code-wrap-button" title="Toggle code wrap"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrapped"><path fill="#22a041" d="M21 5H3v2h18zM3 19h7v-2H3zm0-6h15c1 0 2 .43 2 2s-1 2-2 2h-2v-2l-4 3 4 3v-2h2c2.95 0 4-1.27 4-4 0-2.72-1-4-4-4H3z"></path></svg><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" class="rp-code-button-group__icon rp-code-button-group__icon--wrap"><path fill="currentColor" d="M16 7H3V5h13zM3 19h13v-2H3zm19-7-4-3v2H3v2h15v2z"></path></svg></button><button class="rp-code-button-group__button rp-code-copy-button" title="Copy code"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--copy"><path fill="currentColor" d="M28 10v18H10V10zm0-2H10a2 2 0 0 0-2 2v18a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2"></path><path fill="currentColor" d="M4 18H2V4a2 2 0 0 1 2-2h14v2H4Z"></path></svg><svg width="32" height="32" viewBox="0 0 30 30" class="rp-code-button-group__icon rp-code-copy-button__icon rp-code-copy-button__icon--success"><path fill="#49cd37" d="m13 24-9-9 1.414-1.414L13 21.171 26.586 7.586 28 9z"></path></svg></button></div></div></div>
 <h3 class="rp-toc-include" id="explanation"><a href="#explanation" class="rp-header-anchor rp-link" aria-hidden="true">#</a>Explanation:</h3>
 <ul>
-<li>Defines three rows with different sizing:<!-- -->
+<li>Defines three rows with different sizing:
 <ul>
 <li>A fixed row with a size of 50</li>
 <li>An adaptive row with a minimum size of 30 and a maximum size of 80</li>
