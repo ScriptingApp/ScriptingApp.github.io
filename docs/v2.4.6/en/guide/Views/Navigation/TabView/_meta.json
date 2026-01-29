@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "TabView",
+    "label": "TabView"
+  },
+  {
+    "type": "file",
+    "name": "TabView with badge",
+    "label": "TabView with badge"
+  },
+  {
+    "type": "file",
+    "name": "TabView with multiple scrolling pages",
+    "label": "TabView with multiple scrolling pages"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "type": "file",
+    "name": "Quick Start",
+    "label": "快速开始"
+  },
+  {
+    "type": "file",
+    "name": "DatabaseQueue and DatabasePool",
+    "label": "DatabaseQueue 和 DatabasePool"
+  },
+  {
+    "type": "file",
+    "name": "Database",
+    "label": "数据库（Database）"
+  },
+  {
+    "type": "file",
+    "name": "Configuration",
+    "label": "配置"
+  },
+  {
+    "type": "file",
+    "name": "Schema & Value Types",
+    "label": "基础类型（Schema & Value Types）"
+  },
+  {
+    "type": "file",
+    "name": "Statement",
+    "label": "语句（Statement）"
+  },
+  {
+    "type": "file",
+    "name": "DatabaseMigrator",
+    "label": "数据库迁移（DatabaseMigrator）"
+  }
+]

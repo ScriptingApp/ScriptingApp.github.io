@@ -1,0 +1,16 @@
+[
+  {
+    "type": "dir",
+    "name": "Liquid Glass Effect",
+    "label": "Liquid Glass Effect",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Glass Effect Transition",
+    "label": "Glass Effect Transition",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

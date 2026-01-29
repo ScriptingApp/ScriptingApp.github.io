@@ -1,0 +1,12 @@
+[
+  {
+    "text": "文档",
+    "link": "/guide/Quick%20Start",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "隐私政策",
+    "link": "/privacy/policy",
+    "activeMatch": "/privacy/"
+  }
+]

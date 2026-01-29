@@ -1,0 +1,12 @@
+[
+  {
+    "text": "docs",
+    "link": "/guide/Quick%20Start",
+    "activeMatch": "/guide/"
+  },
+  {
+    "text": "privacy",
+    "link": "/privacy/policy",
+    "activeMatch": "/privacy/"
+  }
+]

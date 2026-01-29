@@ -1,0 +1,32 @@
+[
+  {
+    "type": "file",
+    "name": "BluetoothCentralManager",
+    "label": "BluetoothCentralManager",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "BluetoothPeripheral",
+    "label": "BluetoothPeripheral",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "BluetoothService",
+    "label": "BluetoothService",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "BluetoothCharacteristic",
+    "label": "BluetoothCharacteristic",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "BluetoothPeripheralManager",
+    "label": "BluetoothPeripheralManager",
+    "tag": "PRO"
+  }
+]

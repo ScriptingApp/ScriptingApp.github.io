@@ -13,6 +13,10 @@ export const config: UserConfig = {
       nojekyll: true,
     }),
   ],
+  multiVersion: {
+    default: "v2.4.6",
+    versions: ["v2.4.6", "TestFlight"],
+  },
   base: "/doc_v2/",
   title: "Scripting",
   icon: "/icon.png",

@@ -7,10 +7,11 @@
     "build:fun": "rspress build -c rspress.config.fun.ts",
     "dev": "rspress dev",
     "preview": "rspress preview",
-    "generate:docs": "rm -rf docs/*/doc && bun scripts/docs.js"
+    "generate:docs": "rm -rf docs/v*/*/guide && bun scripts/docs.js",
+    "generate:docs:tf": "rm -rf docs/TestFlight/*/guide && bun scripts/docs-tf.js"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.0-rc.5",
+    "@rspress/core": "^2.0.0",
     "rspress-plugin-gh-pages": "^1.0.0"
   },
   "devDependencies": {

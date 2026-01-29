@@ -1,0 +1,201 @@
+[
+  {
+    "type": "dir",
+    "name": "Present views",
+    "label": "展示视图",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Displaying text",
+    "label": "显示文本",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Time-based label views",
+    "label": "时间标签视图"
+  },
+  {
+    "type": "dir",
+    "name": "Image",
+    "label": "图像",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Button",
+    "label": "按钮"
+  },
+  {
+    "type": "dir",
+    "name": "Layout",
+    "label": "布局",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Text input",
+    "label": "文本输入",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Controls",
+    "label": "控件",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Link",
+    "label": "链接"
+  },
+  {
+    "type": "file",
+    "name": "SVG",
+    "label": "SVG"
+  },
+  {
+    "type": "dir",
+    "name": "Menu",
+    "label": "菜单",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Shapes",
+    "label": "形状",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "ConcentricRectangle",
+    "label": "同心圆矩形（ConcentricRectangle）"
+  },
+  {
+    "type": "dir",
+    "name": "List",
+    "label": "列表",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "View groupings",
+    "label": "视图分组",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Scroll views",
+    "label": "可滚动视图",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Gestures",
+    "label": "手势"
+  },
+  {
+    "type": "file",
+    "name": "NamespaceReader",
+    "label": "命名空间读取器（NamespaceReader）"
+  },
+  {
+    "type": "dir",
+    "name": "Navigation",
+    "label": "导航",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "WebView",
+    "label": "网页视图"
+  },
+  {
+    "type": "dir",
+    "name": "Dialog",
+    "label": "对话框",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Modal presentaions",
+    "label": "模态展示",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Toolbars",
+    "label": "工具栏",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Search",
+    "label": "搜索",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "ScrollViewReader",
+    "label": "ScrollViewReader"
+  },
+  {
+    "type": "file",
+    "name": "GeometryReader",
+    "label": "GeometryReader"
+  },
+  {
+    "type": "file",
+    "name": "EnvironmentValuesReader",
+    "label": "EnvironmentValuesReader"
+  },
+  {
+    "type": "file",
+    "name": "AccessoryWidgetBackground",
+    "label": "AccessoryWidgetBackground"
+  },
+  {
+    "type": "dir",
+    "name": "Charts",
+    "label": "图表",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Markdown",
+    "label": "Markdown"
+  },
+  {
+    "type": "file",
+    "name": "Editor",
+    "label": "编辑器"
+  },
+  {
+    "type": "file",
+    "name": "LivePhotoView",
+    "label": "LivePhotoView"
+  },
+  {
+    "type": "file",
+    "name": "AVPlayerView",
+    "label": "视频播放组件(AVPlayerView)"
+  }
+]

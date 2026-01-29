@@ -1,0 +1,111 @@
+[
+  {
+    "type": "file",
+    "name": "Quick Start",
+    "label": "快速开始"
+  },
+  {
+    "type": "dir",
+    "name": "Changelog",
+    "label": "更新日志",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Widget",
+    "label": "小组件",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Control Widget",
+    "label": "控制中心的小组件",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "AppIntent",
+    "label": "AppIntent"
+  },
+  {
+    "type": "dir",
+    "name": "Intent",
+    "label": "Intent",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Views",
+    "label": "视图",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Types",
+    "label": "类型",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "View Modifiers",
+    "label": "视图修饰器",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "LiveActivity",
+    "label": "实时活动（灵动岛）"
+  },
+  {
+    "type": "file",
+    "name": "Interactive Widget and LiveActivity",
+    "label": "可互动的小组件和灵动岛"
+  },
+  {
+    "type": "file",
+    "name": "Custom Keyboard",
+    "label": "自定义键盘",
+    "tag": "PRO"
+  },
+  {
+    "type": "dir",
+    "name": "Assistant",
+    "label": "智能助手",
+    "collapsible": true,
+    "collapsed": true,
+    "tag": "PRO"
+  },
+  {
+    "type": "dir",
+    "name": "AssistantTool",
+    "label": "智能助手工具",
+    "collapsible": true,
+    "collapsed": true,
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Script",
+    "label": "Script"
+  },
+  {
+    "type": "dir",
+    "name": "Utilities",
+    "label": "工具模块",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Device Capabilities",
+    "label": "设备功能",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

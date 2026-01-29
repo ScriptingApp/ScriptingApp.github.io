@@ -1,0 +1,32 @@
+[
+  {
+    "type": "file",
+    "name": "HttpServer",
+    "label": "HttpServer（HTTP 服务器）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HttpRequest",
+    "label": "HttpRequest（HTTP 请求）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HttpResponse",
+    "label": "HttpResponse（HTTP 响应）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "HttpResponseBody",
+    "label": "HttpResponseBody（HTTP 响应体）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "WebSocketSession",
+    "label": "WebSocketSession（WebSocket 会话）",
+    "tag": "PRO"
+  }
+]

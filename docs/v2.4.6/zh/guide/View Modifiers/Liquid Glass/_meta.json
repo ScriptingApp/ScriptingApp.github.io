@@ -1,0 +1,16 @@
+[
+  {
+    "type": "dir",
+    "name": "Liquid Glass Effect",
+    "label": "液态玻璃效果",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "Glass Effect Transition",
+    "label": "玻璃效果过渡效果",
+    "collapsible": true,
+    "collapsed": true
+  }
+]

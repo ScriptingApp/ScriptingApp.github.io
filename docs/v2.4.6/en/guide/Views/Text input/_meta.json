@@ -1,0 +1,21 @@
+[
+  {
+    "type": "dir",
+    "name": "TextField",
+    "label": "TextField",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "SecureField",
+    "label": "SecureField",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Keyboard",
+    "label": "Keyboard"
+  }
+]

@@ -1,0 +1,365 @@
+[
+  {
+    "type": "file",
+    "name": "frame",
+    "label": "frame"
+  },
+  {
+    "type": "file",
+    "name": "containerRelativeFrame",
+    "label": "containerRelativeFrame"
+  },
+  {
+    "type": "file",
+    "name": "foregroundStyle & background",
+    "label": "前景色和背景样式"
+  },
+  {
+    "type": "file",
+    "name": "widgetBackground",
+    "label": "小组件背景"
+  },
+  {
+    "type": "file",
+    "name": "border",
+    "label": "边框"
+  },
+  {
+    "type": "file",
+    "name": "padding",
+    "label": "间距"
+  },
+  {
+    "type": "file",
+    "name": "opacity",
+    "label": "不透明度"
+  },
+  {
+    "type": "file",
+    "name": "Animation and Transition",
+    "label": "动画和过渡"
+  },
+  {
+    "type": "file",
+    "name": "hidden",
+    "label": "隐藏"
+  },
+  {
+    "type": "file",
+    "name": "labelsHidden",
+    "label": "隐藏标签"
+  },
+  {
+    "type": "file",
+    "name": "disabled",
+    "label": "禁用"
+  },
+  {
+    "type": "file",
+    "name": "overlay",
+    "label": "overlay"
+  },
+  {
+    "type": "file",
+    "name": "mask",
+    "label": "遮罩"
+  },
+  {
+    "type": "file",
+    "name": "clipShape",
+    "label": "裁剪形状"
+  },
+  {
+    "type": "file",
+    "name": "clipped",
+    "label": "裁剪形状"
+  },
+  {
+    "type": "file",
+    "name": "position",
+    "label": "设置位置"
+  },
+  {
+    "type": "file",
+    "name": "offset",
+    "label": "设置偏移"
+  },
+  {
+    "type": "file",
+    "name": "rotationEffect",
+    "label": "旋转效果"
+  },
+  {
+    "type": "file",
+    "name": "scaleEffect",
+    "label": "缩放效果"
+  },
+  {
+    "type": "file",
+    "name": "shadow",
+    "label": "阴影"
+  },
+  {
+    "type": "file",
+    "name": "blur",
+    "label": "模糊"
+  },
+  {
+    "type": "file",
+    "name": "preferredColorScheme",
+    "label": "首选配色模式"
+  },
+  {
+    "type": "file",
+    "name": "tint",
+    "label": "强调色"
+  },
+  {
+    "type": "file",
+    "name": "colorConvert",
+    "label": "反转颜色"
+  },
+  {
+    "type": "file",
+    "name": "contentShape",
+    "label": "内容形状"
+  },
+  {
+    "type": "file",
+    "name": "Text View Modifiers",
+    "label": "文本修饰符"
+  },
+  {
+    "type": "file",
+    "name": "fixedSize",
+    "label": "固定大小"
+  },
+  {
+    "type": "file",
+    "name": "Image Style",
+    "label": "图片样式"
+  },
+  {
+    "type": "file",
+    "name": "Symbol Style",
+    "label": "符号样式"
+  },
+  {
+    "type": "file",
+    "name": "buttonStyle",
+    "label": "按钮样式"
+  },
+  {
+    "type": "file",
+    "name": "controlGroupStyle",
+    "label": "控件组样式"
+  },
+  {
+    "type": "file",
+    "name": "listStyle",
+    "label": "列表样式"
+  },
+  {
+    "type": "file",
+    "name": "pickerStyle",
+    "label": "选择器样式"
+  },
+  {
+    "type": "file",
+    "name": "progressViewStyle",
+    "label": "进度视图样式"
+  },
+  {
+    "type": "file",
+    "name": "datePickerStyle",
+    "label": "日期选择器样式"
+  },
+  {
+    "type": "file",
+    "name": "formStyle",
+    "label": "表单样式"
+  },
+  {
+    "type": "file",
+    "name": "Text Field",
+    "label": "文本输入框"
+  },
+  {
+    "type": "file",
+    "name": "textFieldStyle",
+    "label": "文本输入框样式"
+  },
+  {
+    "type": "file",
+    "name": "toggleStyle",
+    "label": "切换开关样式"
+  },
+  {
+    "type": "file",
+    "name": "gaugeStyle",
+    "label": "仪表盘样式"
+  },
+  {
+    "type": "dir",
+    "name": "Liquid Glass",
+    "label": "液态玻璃",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "toolbar",
+    "label": "工具栏",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "ToolBar View Modifiers",
+    "label": "工具栏修饰符"
+  },
+  {
+    "type": "file",
+    "name": "Navigation View Modifiers",
+    "label": "导航视图修饰符"
+  },
+  {
+    "type": "file",
+    "name": "LiveActivity View Modifiers",
+    "label": "实时活动（LiveActivity）修饰符"
+  },
+  {
+    "type": "file",
+    "name": "Charts Style",
+    "label": "图表样式"
+  },
+  {
+    "type": "dir",
+    "name": "ChartMarkProps",
+    "label": "通用图表标记属性 (ChartMarkProps)",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "dir",
+    "name": "refresable",
+    "label": "可刷新修饰符",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Search Interactions",
+    "label": "搜索交互"
+  },
+  {
+    "type": "dir",
+    "name": "Swipe Actions",
+    "label": "滑动操作",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Safe Area",
+    "label": "安全区域"
+  },
+  {
+    "type": "file",
+    "name": "Grid Layout Control",
+    "label": "网格布局控制"
+  },
+  {
+    "type": "dir",
+    "name": "List and Section View Modifiers",
+    "label": "列表和区块修饰符",
+    "collapsible": true,
+    "collapsed": true
+  },
+  {
+    "type": "file",
+    "name": "Toast",
+    "label": "Toast提示"
+  },
+  {
+    "type": "file",
+    "name": "Presentation View Modifiers",
+    "label": "弹出视图修饰符（Presentation"
+  },
+  {
+    "type": "file",
+    "name": "contextMenu",
+    "label": "上下文菜单"
+  },
+  {
+    "type": "file",
+    "name": "contentMargins",
+    "label": "内容外边距"
+  },
+  {
+    "type": "file",
+    "name": "contentTransition",
+    "label": "内容过渡动画"
+  },
+  {
+    "type": "file",
+    "name": "matchedGeometryEffect",
+    "label": "匹配几何效果（matchedGeometryEffect）"
+  },
+  {
+    "type": "file",
+    "name": "matchedTransitionSource",
+    "label": "匹配过渡源（matchedTransitionSource）"
+  },
+  {
+    "type": "file",
+    "name": "flipsForRightToLeftLayoutDirection",
+    "label": "flipsForRightToLeftLayoutDirection"
+  },
+  {
+    "type": "file",
+    "name": "Redaction View Modifiers",
+    "label": "数据遮罩视图修饰符"
+  },
+  {
+    "type": "file",
+    "name": "Lifecycle Events",
+    "label": "生命周期事件"
+  },
+  {
+    "type": "file",
+    "name": "onDrag and onDrop View Modifiers",
+    "label": "onDrag 和 onDrop 修饰符"
+  },
+  {
+    "type": "file",
+    "name": "onDropContent",
+    "label": "接收外部拖拽内容"
+  },
+  {
+    "type": "file",
+    "name": "Picture in Pictuer View Modifiers",
+    "label": "Picture in Picture （画中画）",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "translationHost",
+    "label": "翻译宿主"
+  },
+  {
+    "type": "file",
+    "name": "layoutPriority",
+    "label": "布局优先级"
+  },
+  {
+    "type": "file",
+    "name": "Set environment values (environments)",
+    "label": "设置环境变量 (environments)"
+  },
+  {
+    "type": "file",
+    "name": "Chaining View Modifiers",
+    "label": "可链式调用的修饰符"
+  }
+]

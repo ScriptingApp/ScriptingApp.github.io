@@ -1,0 +1,17 @@
+[
+  {
+    "type": "file",
+    "name": "NavigationStack with path",
+    "label": "NavigationStack with path"
+  },
+  {
+    "type": "file",
+    "name": "Use with NavigationLink",
+    "label": "Use with NavigationLink"
+  },
+  {
+    "type": "file",
+    "name": "Use with navigationDestination",
+    "label": "Use with navigationDestination"
+  }
+]

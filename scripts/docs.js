@@ -3,8 +3,8 @@ import path from "path";
 
 const resourcePath = path.join(__dirname, "..", "Scripting Documentation");
 const docsPath = path.join(__dirname, "..", "docs");
-const version = "";
-const base = "doc";
+const version = "v2.4.6";
+const base = "guide";
 
 // const proTag =
 // "<span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO</span>";
@@ -74,6 +74,7 @@ const processDocItem = (item, parentPath = "", language = "en") => {
 
         const readmeMd = `---
 title: ${title[language]}
+${subtitle ? `description: ${subtitle[language]}` : ""}
 ${pro ? "tag: PRO" : ""}
 ---
 
@@ -88,6 +89,7 @@ ${readmeContent}`;
         // 有 example
         const readmeMd = `---
 title: ${title[language]}
+${subtitle ? `description: ${subtitle[language]}` : ""}
 ${pro ? "tag: PRO" : ""}
 ---
         
@@ -104,6 +106,7 @@ ${readmeContent}`;
 
         const exampleMd = `---
 title: ${title[language]}
+${subtitle ? `description: ${subtitle[language]}` : ""}
 ${pro ? "tag: PRO" : ""}
 ---
 
@@ -122,6 +125,7 @@ ${tsxContent}
 
         const exampleMd = `---
 title: ${exampleTitle}
+${subtitle ? `description: ${subtitle[language]}` : ""}
 ${pro ? "tag: PRO" : ""}
 ---
 

@@ -1,0 +1,33 @@
+[
+  {
+    "type": "dir",
+    "name": "SQLite",
+    "label": "SQLite",
+    "collapsible": true,
+    "collapsed": true,
+    "tag": "PRO"
+  },
+  {
+    "type": "dir",
+    "name": "VideoRecorder",
+    "label": "VideoRecorder",
+    "collapsible": true,
+    "collapsed": true,
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Widget API",
+    "label": "Widget API"
+  },
+  {
+    "type": "file",
+    "name": "Location",
+    "label": "Location"
+  },
+  {
+    "type": "file",
+    "name": "Device",
+    "label": "Device"
+  }
+]

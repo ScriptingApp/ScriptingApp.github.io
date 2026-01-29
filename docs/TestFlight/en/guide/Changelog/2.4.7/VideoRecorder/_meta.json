@@ -1,0 +1,16 @@
+[
+  {
+    "type": "dir",
+    "name": "Quick Start",
+    "label": "Quick Start",
+    "collapsible": true,
+    "collapsed": true,
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "VideoRecorderPreviewView",
+    "label": "VideoRecorderPreviewView",
+    "tag": "PRO"
+  }
+]

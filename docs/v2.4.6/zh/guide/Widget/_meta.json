@@ -1,0 +1,32 @@
+[
+  {
+    "type": "file",
+    "name": "Widget Quick Start",
+    "label": "小组件快速入门"
+  },
+  {
+    "type": "file",
+    "name": "Widget API",
+    "label": "小组件 API"
+  },
+  {
+    "type": "file",
+    "name": "Tinted Mode Adaptation Guide",
+    "label": "小组件染色模式适配指南"
+  },
+  {
+    "type": "file",
+    "name": "Widget Background in Tinted Mode",
+    "label": "小组件色调模式背景"
+  },
+  {
+    "type": "file",
+    "name": "AccessoryWidgetBackground",
+    "label": "AccessoryWidgetBackground"
+  },
+  {
+    "type": "file",
+    "name": "Animation for Widget and LiveActivity",
+    "label": "在小组件和灵动岛中使用动画"
+  }
+]

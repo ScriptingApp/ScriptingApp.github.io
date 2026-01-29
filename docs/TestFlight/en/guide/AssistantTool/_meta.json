@@ -1,0 +1,26 @@
+[
+  {
+    "type": "file",
+    "name": "Overview and Workflow",
+    "label": "Overview and Workflow",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Assistant Tool Without User Approval",
+    "label": "Assistant Tool Without User Approval",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "Assistant Tool With User Approval",
+    "label": "Assistant Tool With User Approval",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "ScriptEditorProvider and Editor Types",
+    "label": "ScriptEditorProvider and Editor Types",
+    "tag": "PRO"
+  }
+]
