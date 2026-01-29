@@ -82551,7 +82551,7 @@ console.log("Widget preview dismissed")
 url: /TestFlight/zh/index.md
 ---
 
-# Scripting
+# Scripting - TestFlight
 
 iOS 自动化工具
 
