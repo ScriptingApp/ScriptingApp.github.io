@@ -1,10 +1,5 @@
 # Scripting
 
-## 隐私政策
-
-- [隐私政策](/zh/privacy/policy.md)
-- [服务条款与EULA](/zh/privacy/service.md)
-
 ## Others
 
 - [AppIntent](/zh/guide/AppIntent.md): AppIntent 为小组件，灵动岛和控制中心的控件提供了执行脚本逻辑的核心机制。
@@ -449,3 +444,450 @@
 - [小组件 API](/zh/guide/Widget/Widget API.md): 小组件 API 提供静态方法和属性，用于渲染和与主屏幕小组件交互。
 - [小组件色调模式背景](/zh/guide/Widget/Widget Background in Tinted Mode.md): 该属性用于定义小组件的背景样式，特别是针对 iOS 18 的强调（着色）渲染模式进行了优化。
 - [小组件快速入门](/zh/guide/Widget/Widget Quick Start.md): 快速掌握小组件的使用。
+- [隐私政策](/zh/privacy/policy.md)
+- [服务条款与EULA](/zh/privacy/service.md)
+- [AppIntent](/v2/zh/guide/AppIntent.md): AppIntent 为小组件，灵动岛和控制中心的控件提供了执行脚本逻辑的核心机制。
+- [智能助手会话 API](/v2/zh/guide/Assistant/Assistant Conversation APIs.md): 会话 API 用于启动、控制和展示系统托管的智能助手聊天会话。
+- [快速了解智能助手](/v2/zh/guide/Assistant/Assistant Quick Start.md): 快速掌握智能助手的使用。
+- [请求流式数据](/v2/zh/guide/Assistant/requestStreaming.md): 请求从智能助手获取流式响应。
+- [请求结构化数据](/v2/zh/guide/Assistant/requestStructuredData.md): 请求结构化的 JSON 数据。
+- [智能助手工具](/v2/zh/guide/AssistantTool.md): 自定义提供给智能助手使用的工具。
+- [动画和过渡](/v2/zh/guide/Changelog/2.4.3/Animation and Transition.md): 这些接口用于定义视图在属性发生变化时的过渡效果。
+- [EnvironmentValuesReader](/v2/zh/guide/Changelog/2.4.3/EnvironmentValuesReader.md): 它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。
+- [ForEach](/v2/zh/guide/Changelog/2.4.3/ForEach/index.md): 迭代动态数据
+- [示例](/v2/zh/guide/Changelog/2.4.3/ForEach/iterating.md): 迭代动态数据
+- [GeometryReader](/v2/zh/guide/Changelog/2.4.3/GeometryReader.md): 它能够在视图构建阶段提供当前容器的尺寸、边距、安全区域和角落内边距等信息。
+- [实时活动（LiveActivity）修饰符](/v2/zh/guide/Changelog/2.4.3/LiveActivity View Modifiers.md): 这些修饰符可用于在锁屏上自定义实时活动（LiveActivity）的外观。
+- [实时活动（灵动岛）](/v2/zh/guide/Changelog/2.4.3/LiveActivity.md): 为了实现更稳定和性能更好的 LiveActivity，对 API 进行了重新设计。
+- [可拖拽的 ForEach (ReorderableForEach)](/v2/zh/guide/Changelog/2.4.3/ReorderableForEach/index.md): 提供内置的拖拽重排功能的高级组件。
+- [示例](/v2/zh/guide/Changelog/2.4.3/ReorderableForEach/index_example.md): 提供内置的拖拽重排功能的高级组件。
+- [SSH 客户端](/v2/zh/guide/Changelog/2.4.3/SSH Client.md): 该接口提供了一种简单的方法来使用 SSH 协议连接到远程服务器。
+- [ScrollViewReader](/v2/zh/guide/Changelog/2.4.3/ScrollViewReader.md): 允许脚本在可滚动内容（例如 List 或 ScrollView）内控制滚动位置。
+- [设置环境变量 (environments)](/v2/zh/guide/Changelog/2.4.3/Set environment values (environments).md): 该修饰符用于为视图层级设置环境变量。
+- [线程（Thread）](/v2/zh/guide/Changelog/2.4.3/Thread.md): 该接口提供了一种简单的方法来让你手动切换线程。
+- [useObservable](/v2/zh/guide/Changelog/2.4.3/useObservable.md): 用于驱动 UI 渲染、与动画系统协同工作。
+- [同心圆矩形（ConcentricRectangle）](/v2/zh/guide/Changelog/2.4.4/ConcentricRectangle.md): 它是用于创建逐步缩进（浓缩）角几何形状的矩形，适合现代 UI 设计。
+- [玻璃效果过渡效果](/v2/zh/guide/Changelog/2.4.4/Glass Effect Transition/index.md): 视图变化过程中液态玻璃材料的动画效果。
+- [示例](/v2/zh/guide/Changelog/2.4.4/Glass Effect Transition/index_example.md): 视图变化过程中液态玻璃材料的动画效果。
+- [Intent.continueInForeground](/v2/zh/guide/Changelog/2.4.4/Intent.continueInForeground.md): 此方法请求系统将 Scripting 应用程序调至前台，同时运行快捷指令。
+- [Intent.requestConfirmation](/v2/zh/guide/Changelog/2.4.4/Intent.requestConfirmation.md): 此方法暂停脚本执行，请求用户通过系统管理的确认 UI 确认动作。
+- [IntentMemoryStorage](/v2/zh/guide/Changelog/2.4.4/IntentMemoryStorage.md): 一个轻量级，会话级的存储，可在单个快捷指令执行过程中跨多 AppIntent 共享状态。
+- [液态玻璃效果](/v2/zh/guide/Changelog/2.4.4/Liquid Glass Effect/index.md): 在 iOS 26 中引入的液态玻璃视觉系统。
+- [示例](/v2/zh/guide/Changelog/2.4.4/Liquid Glass Effect/index_example.md): 在 iOS 26 中引入的液态玻璃视觉系统。
+- [命名空间读取器（NamespaceReader）](/v2/zh/guide/Changelog/2.4.4/NamespaceReader.md): 该视图用于创建和管理几何动画命名空间。
+- [新的 List 视图修饰符](/v2/zh/guide/Changelog/2.4.4/New List View Modifiers.md): 这些修饰符可用于精细控制 <List> 中每一个区块（Section）的布局与样式。
+- [通知](/v2/zh/guide/Changelog/2.4.4/Notification/index.md): 用于管理本地通知相关活动的接口。
+- [示例](/v2/zh/guide/Changelog/2.4.4/Notification/index_example.md): 用于管理本地通知相关活动的接口。
+- [SFTP 客户端](/v2/zh/guide/Changelog/2.4.4/SFTP Client.md): 该接口提供了一种简单的方法来使用 SFTP 协议通过 SSH 安全地传输文件。
+- [SFTP 文件](/v2/zh/guide/Changelog/2.4.4/SFTP File.md): 通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。
+- [SnippetIntent](/v2/zh/guide/Changelog/2.4.4/SnippetIntent.md): SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。
+- [TabView](/v2/zh/guide/Changelog/2.4.4/TabView.md): 在标签界面中显示子视图集。
+- [使用 Toolbar 组件](/v2/zh/guide/Changelog/2.4.4/Use with Toolbar Component.md): 使用 Toolbar 组件在视图的导航栏或工具栏区域中添加各种项目。
+- [匹配几何效果（matchedGeometryEffect）](/v2/zh/guide/Changelog/2.4.4/matchedGeometryEffect.md): 该视图修饰符允许你在不同的布局，不同的容器，不同的条件渲染状态，不同的尺寸和位置配置之间进行平滑的过渡动画。
+- [匹配过渡源（matchedTransitionSource）](/v2/zh/guide/Changelog/2.4.4/matchedTransitionSource.md): 该视图修饰符允许你标记一个视图为导航过渡的几何源。
+- [视频播放组件(AVPlayerView)](/v2/zh/guide/Changelog/2.4.5/AVPlayerView.md): 该组件适用于需要原生播放行为、画中画、Now Playing 集成以及后台播放的媒体中心场景。
+- [AppStore](/v2/zh/guide/Changelog/2.4.5/AppStore.md): 用于在不离开 Scripting 应用的情况下，展示 App Store 中某个应用的详情页面。
+- [智能助手会话 API](/v2/zh/guide/Changelog/2.4.5/Assistant/Assistant Conversation APIs.md): 会话 API 用于启动、控制和展示系统托管的智能助手聊天会话。
+- [快速了解智能助手](/v2/zh/guide/Changelog/2.4.5/Assistant/Assistant Quick Start.md): 快速掌握智能助手的使用。
+- [请求流式数据](/v2/zh/guide/Changelog/2.4.5/Assistant/requestStreaming.md): 请求从智能助手获取流式响应。
+- [请求结构化数据](/v2/zh/guide/Changelog/2.4.5/Assistant/requestStructuredData.md): 请求结构化的 JSON 数据。
+- [日历事件](/v2/zh/guide/Changelog/2.4.5/CalendarEvent.md): 该接口允许您在 iOS 日历中创建和管理事件，设置标题、位置、日期、参与者和重复规则等属性。
+- [日期格式化（DateFormatter）](/v2/zh/guide/Changelog/2.4.5/DateFormatter.md): 用于将 Date 类型格式化为字符串，或将字符串解析为 Date。
+- [事件闹钟](/v2/zh/guide/Changelog/2.4.5/EventAlarm.md): 该类表示可以附加到 CalendarEvent 和 Reminder 对象的提醒规则。
+- [钥匙串](/v2/zh/guide/Changelog/2.4.5/Keychain.md): 存储数据到钥匙串的接口。
+- [LivePhotoView](/v2/zh/guide/Changelog/2.4.5/LivePhotoView.md): 该组件适用于在界面中展示 Live Photo 的媒体中心场景。
+- [NavigationStack 配合 path](/v2/zh/guide/Changelog/2.4.5/NavigationStack with path.md): 允许使用绑定的可观察数组直接操作导航历史。
+- [照片](/v2/zh/guide/Changelog/2.4.5/Photos/index.md): 用于管理用户照片库的访问和变更的接口。
+- [示例](/v2/zh/guide/Changelog/2.4.5/Photos/index_example.md): 用于管理用户照片库的访问和变更的接口。
+- [Picture in Picture （画中画）](/v2/zh/guide/Changelog/2.4.5/Picture in Pictuer View Modifiers.md): 这些 API 允许开发者在系统画中画窗口中渲染任何视图。
+- [提醒事项](/v2/zh/guide/Changelog/2.4.5/Reminder.md): 该接口允许您在日历中创建、编辑和管理提醒事项，包括设置标题、到期日、优先级和重复规则。
+- [可拖拽的 ForEach (ReorderableForEach)](/v2/zh/guide/Changelog/2.4.5/ReorderableForEach/index.md): 提供内置的拖拽重排功能的高级组件。
+- [示例](/v2/zh/guide/Changelog/2.4.5/ReorderableForEach/index_example.md): 提供内置的拖拽重排功能的高级组件。
+- [可选择的列表](/v2/zh/guide/Changelog/2.4.5/Selectable List.md): 实现单选和多选的列表功能。
+- [视频预览视图（VideoPreviewView）](/v2/zh/guide/Changelog/2.4.5/VideoPreviewView.md): 显示与 VideoRecorder 实例关联的实时摄像头预览的视图。
+- [视频录制（VideoRecorder）](/v2/zh/guide/Changelog/2.4.5/VideoRecorder.md): 提供对摄像头配置、音频捕获、编码、暂停/恢复行为以及最终文件输出的细粒度控制，以实现视频录制的高级 API。
+- [WebView 控制器](/v2/zh/guide/Changelog/2.4.5/WebViewController.md): 它允许你在脚本中加载 HTML、展示 Web 页面、执行 JavaScript 脚本，并与页面中的 JavaScript 进行消息通信。
+- [设备](/v2/zh/guide/Changelog/2.4.6/Device/index.md): 新增 networkInterfaces 方法。
+- [示例](/v2/zh/guide/Changelog/2.4.6/Device/index_example.md): 新增 networkInterfaces 方法。
+- [Intent](/v2/zh/guide/Changelog/2.4.6/Intent.md): 新增 Intent.image 方法，用于为快捷指令返回图像。
+- [ItemProvider](/v2/zh/guide/Changelog/2.4.6/ItemProvider.md): 该类表示一个延迟数据提供者。
+- [MediaComposer 示例](/v2/zh/guide/Changelog/2.4.6/MediaComposer/MediaComposer Example.md): 该示例展示如何使用 MediaComposer。
+- [MediaTime](/v2/zh/guide/Changelog/2.4.6/MediaComposer/MediaTime.md): 该类表示媒体时间。
+- [快速开始](/v2/zh/guide/Changelog/2.4.6/MediaComposer/Quick Start.md): 快速掌握 MediaComposer 的使用。
+- [SharedAudioSession](/v2/zh/guide/Changelog/2.4.6/SharedAudioSession.md): 新增 outputVolume 属性，以及 addOutputVolumeChangedListener 和 removeOutputVolumeChangedListener 方法。
+- [视频录制（VideoRecorder）](/v2/zh/guide/Changelog/2.4.6/VideoRecorder.md): 新增 displayZoomFactor 属性，用于展示用户可读的缩放比例。
+- [onDrag 和 onDrop 修饰符](/v2/zh/guide/Changelog/2.4.6/onDrag and onDrop View Modifiers.md): 这些 API 允许视图作为拖动源、拖放目标或者同时，支持内部应用和跨应用拖拽。
+- [接收外部拖拽内容](/v2/zh/guide/Changelog/2.4.6/onDropContent.md): 新增Observable支持，perform 函数有调整，返回一个 ItemProvider 对象的数组，用于延迟加载数据。
+- [控制中心的小组件](/v2/zh/guide/Control Widget.md): 在控制中心或锁屏界面添加按钮（Button）或开关（Toggle）控件。
+- [自定义键盘](/v2/zh/guide/Custom Keyboard.md): 创建具有独特布局和功能的自定义键盘。
+- [AVMetadataItem](/v2/zh/guide/Device Capabilities/AVMetadataItem.md): AVMetadataItem 是一个类，表示音频或视频资源中的元数据项。
+- [AppStore](/v2/zh/guide/Device Capabilities/AppStore.md): 用于在不离开 Scripting 应用的情况下，展示 App Store 中某个应用的详情页面。
+- [音频播放器](/v2/zh/guide/Device Capabilities/Audio Player.md): 该接口允许播放本地和网络音源，并提供播放、暂停、停止、音量控制等功能。
+- [录音](/v2/zh/guide/Device Capabilities/AudioRecorder.md): 该接口允许您将音频数据录制到文件中，提供开始、停止、暂停和管理音频录制的功能，并可配置音频质量、采样率、格式等设置。
+- [后台保活](/v2/zh/guide/Device Capabilities/BackgroundKeeper.md): 该接口提供了用于保持 Scripting 应用在后台运行的方法。
+- [蓝牙中央设备管理器](/v2/zh/guide/Device Capabilities/Bluetooth/BluetoothCentralManager.md): 该接口允许你扫描、连接和与附近的蓝牙外设进行交互。
+- [蓝牙服务特征值](/v2/zh/guide/Device Capabilities/Bluetooth/BluetoothCharacteristic.md): 表示蓝牙服务（`BluetoothService`）中的一个特征值，是 BLE 设备数据交互的核心单元。
+- [蓝牙外设](/v2/zh/guide/Device Capabilities/Bluetooth/BluetoothPeripheral.md): 表示一个 BLE 外围设备对象，支持读取设备信息、连接状态、发现服务与特征值、读取写入数据、订阅通知等。
+- [蓝牙外设管理器](/v2/zh/guide/Device Capabilities/Bluetooth/BluetoothPeripheralManager.md): 该接口允许你创建一个蓝牙外设，可以广播服务和特征，并接受来自中央设备的连接。
+- [蓝牙服务](/v2/zh/guide/Device Capabilities/Bluetooth/BluetoothService.md): 表示一个 BLE（低功耗蓝牙）服务。服务是外围设备中功能的逻辑分组，包含一个或多个特征值（`Characteristic`），也可以包含对其他服务的引用（包含服务）。
+- [日历](/v2/zh/guide/Device Capabilities/Calendar.md): 该接口允许您与 iOS 日历进行交互，例如获取默认日历、创建自定义日历以及管理日历设置和事件。
+- [日历事件](/v2/zh/guide/Device Capabilities/CalendarEvent.md): 该接口允许您在 iOS 日历中创建和管理事件，设置标题、位置、日期、参与者和重复规则等属性。
+- [通讯录](/v2/zh/guide/Device Capabilities/Contact/index.md): 该接口允许在脚本中访问和管理设备上的联系人数据，包括创建、查询、更新、删除联系人，以及操作联系人组和容器。
+- [示例](/v2/zh/guide/Device Capabilities/Contact/index_example.md): 该接口允许在脚本中访问和管理设备上的联系人数据，包括创建、查询、更新、删除联系人，以及操作联系人组和容器。
+- [设备](/v2/zh/guide/Device Capabilities/Device/index.md): 提供设备相关信息，以及使用设备功能的一些方法。
+- [示例](/v2/zh/guide/Device Capabilities/Device/index_example.md): 提供设备相关信息，以及使用设备功能的一些方法。
+- [文档选择器](/v2/zh/guide/Device Capabilities/DocumentPicker.md): 从文件应用中选择文件。
+- [事件闹钟](/v2/zh/guide/Device Capabilities/EventAlarm.md): 该类表示可以附加到 CalendarEvent 和 Reminder 对象的提醒规则。
+- [FontPicker（字体选择器）](/v2/zh/guide/Device Capabilities/FontPicker.md): 该命名空间提供了从系统可用字体列表中选择字体的方法。
+- [触觉反馈](/v2/zh/guide/Device Capabilities/HapticFeedback.md): 触觉反馈提供了触感响应，例如轻点，以引起注意并强化动作或事件。
+- [健康活动摘要（HealthActivitySummary）](/v2/zh/guide/Device Capabilities/Health/HealthActivitySummary.md): 表示每日活动的摘要，包括步数、行驶距离和燃烧的卡路里。
+- [健康分类数据（HealthCategorySample）](/v2/zh/guide/Device Capabilities/Health/HealthCategorySample.md): 表示一条基于分类的健康事件记录，例如睡眠分析、月经流量、排卵测试结果等。
+- [健康分类数据（HealthCategoryType）](/v2/zh/guide/Device Capabilities/Health/HealthCategoryType.md): 该接口提供了一种定义和管理健康分类数据的方法，表示定性的健康数据，如睡眠分析、情绪或月经周期。
+- [健康分类值类型（HealthCategoryValue）](/v2/zh/guide/Device Capabilities/Health/HealthCategoryValue Types.md): 该接口提供了一种定义和管理健康分类值类型的方法，表示健康分类数据的特定值，如睡眠阶段或情绪状态。
+- [健康特征类型（HealthCharacteristicType）](/v2/zh/guide/Device Capabilities/Health/HealthCharacteristicType.md): 生物性别、血型、皮肤类型、轮椅使用情况和活动移动模式的枚举。
+- [健康关联数据（HealthCorrelation）](/v2/zh/guide/Device Capabilities/Health/HealthCorrelation.md): 表示健康关联，即两个或多个健康数据样本之间的关系，例如血压读数和心率。
+- [健康心跳序列数据（HealthHeartbeatSeriesSample）](/v2/zh/guide/Device Capabilities/Health/HealthHeartbeatSeriesSample.md): 表示一系列心跳样本，可用于分析心率变异性或其他心脏指标。
+- [HealthKit 权限行为](/v2/zh/guide/Device Capabilities/Health/HealthKit Permission Behavior.md): iOS HealthKit 特有的授权机制。
+- [健康数量型数据（HealthQuantitySample）](/v2/zh/guide/Device Capabilities/Health/HealthQuantitySample.md): 表示一条健康数量类型的数据样本，例如一次心率测量、记录的步数或摄入的热量。
+- [健康数量型数据（HealthQuantityType）](/v2/zh/guide/Device Capabilities/Health/HealthQuantityType.md): 该接口提供了一种定义和管理健康数量型数据的方法，表示可测量的健康数据，如步数、心率或燃烧的卡路里。
+- [健康统计（HealthStatistics）](/v2/zh/guide/Device Capabilities/Health/HealthStatistics.md): 该接口提供了一种计算健康数据统计信息的方法，如健康数量样本的平均值、最小值、最大值和总和。
+- [健康统计集合（HealthStatisticsCollection）](/v2/zh/guide/Device Capabilities/Health/HealthStatisticsCollection.md): 该接口提供了一种在指定时间段内收集和管理健康数据统计信息的方法，如健康数量样本的平均值、最小值、最大值和总和。
+- [健康单位（HealthUnit）](/v2/zh/guide/Device Capabilities/Health/HealthUnit.md): 该接口提供了一种定义和管理健康单位的方法，表示健康数据的测量单位，如千克、米或每分钟心跳次数。
+- [健康锻炼数据（HealthWorkout）](/v2/zh/guide/Device Capabilities/Health/HealthWorkout.md): 表示一条健康锻炼数据记录，即结构化的活动，如跑步、骑自行车或游泳，带有持续时间、距离和燃烧的卡路里等相关元数据。
+- [健康锻炼活动类型（HealthWorkoutActivityType）](/v2/zh/guide/Device Capabilities/Health/HealthWorkoutActivityType.md): 健康锻炼活动类型的枚举，例如跑步、骑自行车、游泳等。
+- [健康锻炼事件（HealthWorkoutEvent）](/v2/zh/guide/Device Capabilities/Health/HealthWorkoutEvent.md): 表示一条健康锻炼事件记录，例如锻炼会话的开始或结束，或锻炼中的暂停。
+- [查询统计数据集合（HealthStatisticsCollection）](/v2/zh/guide/Device Capabilities/Health/Query Statistics Collection.md): 该接口允许您查询一组健康统计数据，如在指定时间段内的健康数量样本的平均值、最小值、最大值和总和。
+- [查询统计数据（HealthStatistics）](/v2/zh/guide/Device Capabilities/Health/Query Statistics.md): 该接口允许您查询健康数据的统计信息，如健康数量样本的平均值、最小值、最大值和总和。
+- [读取活动摘要（HealthActivitySummary）](/v2/zh/guide/Device Capabilities/Health/Reading Activity Summaries.md): 该接口允许您从 HealthKit 存储中读取健康活动摘要。
+- [读取分类数据（HealthCategorySample）](/v2/zh/guide/Device Capabilities/Health/Reading Category Samples.md): 该接口允许您从 HealthKit 存储中读取健康分类样本。
+- [读取特征数据](/v2/zh/guide/Device Capabilities/Health/Reading Characteristic Data.md): 该接口允许您从 HealthKit 存储中读取健康特征数据。
+- [读取关联数据（HealthCorrelation）](/v2/zh/guide/Device Capabilities/Health/Reading Correlation Data.md): 该接口允许您从 HealthKit 存储中读取健康关联数据。
+- [读取心跳序列数据（HealthHeartbeatSeriesSample）](/v2/zh/guide/Device Capabilities/Health/Reading Heartbeat Series Samples.md): 该接口允许您从 HealthKit 存储中读取健康心跳序列样本。
+- [读取数量型数据（HealthQuantitySample）](/v2/zh/guide/Device Capabilities/Health/Reading Quantity Samples.md): 该接口允许您从 HealthKit 存储中读取健康数量样本。
+- [读取锻炼数据（HealthWorkout）](/v2/zh/guide/Device Capabilities/Health/Reading Workout Samples.md): 该接口允许您从 HealthKit 存储中读取健康锻炼样本。
+- [写入分类数据（HealthCategorySample）](/v2/zh/guide/Device Capabilities/Health/Writing Health Category Samples.md): 该接口允许您将健康分类样本写入 HealthKit 存储。
+- [写入关联数据（HealthCorrelation）](/v2/zh/guide/Device Capabilities/Health/Writing Health Correlation Data.md): 该接口允许您将健康关联数据写入 HealthKit 存储。
+- [写入数量型数据（HealthQuantitySample）](/v2/zh/guide/Device Capabilities/Health/Writing Health Quantity Samples.md): 该接口允许您将健康数量样本写入 HealthKit 存储。
+- [钥匙串](/v2/zh/guide/Device Capabilities/Keychain.md): 存储数据到钥匙串的接口。
+- [本地认证](/v2/zh/guide/Device Capabilities/LocalAuth.md): 该接口提供使用指纹或面部识别等生物特征进行认证的功能。
+- [定位](/v2/zh/guide/Device Capabilities/Location.md): 获取设备的当前位置。
+- [MediaComposer 示例](/v2/zh/guide/Device Capabilities/MediaComposer/MediaComposer Example.md): 该示例展示如何使用 MediaComposer。
+- [MediaTime](/v2/zh/guide/Device Capabilities/MediaComposer/MediaTime.md): 该类表示媒体时间。
+- [快速开始](/v2/zh/guide/Device Capabilities/MediaComposer/Quick Start.md): 快速掌握 MediaComposer 的使用。
+- [媒体播放器](/v2/zh/guide/Device Capabilities/MediaPlayer.md): 该接口允许与 Now Playing Center 交互，管理 Now Playing Info，并响应远程控制事件。
+- [通知](/v2/zh/guide/Device Capabilities/Notification/index.md): 用于管理本地通知相关活动的接口。
+- [示例](/v2/zh/guide/Device Capabilities/Notification/index_example.md): 用于管理本地通知相关活动的接口。
+- [PDF](/v2/zh/guide/Device Capabilities/PDF.md): 通过该API高效地操作 PDF 文件。
+- [剪贴板](/v2/zh/guide/Device Capabilities/Pasteboard.md): 该命名空间提供了读取、写入和观察剪贴板变化的完整接口。
+- [照片](/v2/zh/guide/Device Capabilities/Photos/index.md): 用于管理用户照片库的访问和变更的接口。
+- [示例](/v2/zh/guide/Device Capabilities/Photos/index_example.md): 用于管理用户照片库的访问和变更的接口。
+- [视频播放组件(AVPlayerView)](/v2/zh/guide/Device Capabilities/Play Video/AVPlayerView.md): 该组件适用于需要原生播放行为、画中画、Now Playing 集成以及后台播放的媒体中心场景。
+- [视频播放器](/v2/zh/guide/Device Capabilities/Play Video/VideoPlayer/index.md): VideoPlayer 视图允许您播放来自任意 URL（本地或远程）的影片。
+- [示例](/v2/zh/guide/Device Capabilities/Play Video/VideoPlayer/index_example.md): VideoPlayer 视图允许您播放来自任意 URL（本地或远程）的影片。
+- [二维码](/v2/zh/guide/Device Capabilities/QRCode.md): 解析二维码图像文件，或打开扫码页面进行扫描。
+- [快速查看](/v2/zh/guide/Device Capabilities/QuickLook.md): 用于在脚本中预览文本、图片或文件。
+- [重复规则](/v2/zh/guide/Device Capabilities/Recurrence.md): 与重复相关的类型和类允许您为事件和提醒事项定义并管理重复模式。
+- [提醒事项](/v2/zh/guide/Device Capabilities/Reminder.md): 该接口允许您在日历中创建、编辑和管理提醒事项，包括设置标题、到期日、优先级和重复规则。
+- [Safari](/v2/zh/guide/Device Capabilities/Safari/index.md): 在应用内或跳转至系统默认浏览器来展示网站。
+- [示例](/v2/zh/guide/Device Capabilities/Safari/index_example.md): 在应用内或跳转至系统默认浏览器来展示网站。
+- [发送邮件](/v2/zh/guide/Device Capabilities/Send Mail.md): 该接口提供了在应用内直接唤起邮件撰写视图的能力，支持添加收件人、抄送、密送、主题、正文以及附件。
+- [发送信息](/v2/zh/guide/Device Capabilities/Send Message.md): 该接口允许您使用设备的消息功能发送信息，例如短信或 iMessage。
+- [分享内容](/v2/zh/guide/Device Capabilities/ShareSheet.md): 您可以通过此接口从脚本中共享数据。
+- [SharedAudioSession](/v2/zh/guide/Device Capabilities/SharedAudioSession.md): 共享音频会话实例。音频会话充当应用与操作系统以及底层音频硬件之间的中介。
+- [语音合成](/v2/zh/guide/Device Capabilities/Speech/index.md): 将文字转换为语音。
+- [示例](/v2/zh/guide/Device Capabilities/Speech/index_example.md): 将文字转换为语音。
+- [语音识别](/v2/zh/guide/Device Capabilities/SpeechRecognition/index.md): 用于管理语音识别过程的接口。
+- [示例](/v2/zh/guide/Device Capabilities/SpeechRecognition/index_example.md): 用于管理语音识别过程的接口。
+- [翻译](/v2/zh/guide/Device Capabilities/Translation.md): 该接口提供语言翻译功能，允许您在不同语言之间翻译文本。
+- [视频录制（VideoRecorder）](/v2/zh/guide/Device Capabilities/VideoRecorder.md): 提供对摄像头配置、音频捕获、编码、暂停/恢复行为以及最终文件输出的细粒度控制，以实现视频录制的高级 API。
+- [视觉](/v2/zh/guide/Device Capabilities/Vision.md): 该模块提供了用于文本识别的 API。
+- [天气](/v2/zh/guide/Device Capabilities/Weather/index.md): 该接口提供对实时天气和天气预报数据的访问。
+- [示例](/v2/zh/guide/Device Capabilities/Weather/index_example.md): 该接口提供对实时天气和天气预报数据的访问。
+- [WebView 控制器](/v2/zh/guide/Device Capabilities/WebViewController.md): 它允许你在脚本中加载 HTML、展示 Web 页面、执行 JavaScript 脚本，并与页面中的 JavaScript 进行消息通信。
+- [Intent.continueInForeground](/v2/zh/guide/Intent/Intent.continueInForeground.md): 此方法请求系统将 Scripting 应用程序调至前台，同时运行快捷指令。
+- [Intent.requestConfirmation](/v2/zh/guide/Intent/Intent.requestConfirmation.md): 此方法暂停脚本执行，请求用户通过系统管理的确认 UI 确认动作。
+- [快速开始](/v2/zh/guide/Intent/Quick Start.md): 快速掌握 Intent 的使用。
+- [SnippetIntent](/v2/zh/guide/Intent/SnippetIntent.md): SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。
+- [可互动的小组件和灵动岛](/v2/zh/guide/Interactive Widget and LiveActivity.md): 通过 Button 和 Toggle 组件创建动态、交互式的 UI。
+- [实时活动（灵动岛）](/v2/zh/guide/LiveActivity.md): 在动态岛和锁屏上展示脚本的数据，并提供快速交互方式。
+- [快速开始](/v2/zh/guide/Quick Start.md): 快速掌握 Scripting 应用的使用。
+- [Script](/v2/zh/guide/Script.md): 你可以通过该接口访问当前脚本的运行信息、终止脚本并返回结果、在脚本之间调用、以及生成 URL Scheme 以打开或运行脚本。
+- [对齐](/v2/zh/guide/Types/Alignment.md): Alignment 类型定义了如何在视图的框架内定位内容，类似于 SwiftUI 内置对齐方式的行为。
+- [颜色](/v2/zh/guide/Types/Color.md): Color API 支持多种颜色格式，包括 HEX 字符串、RGBA 字符串以及预定义的颜色关键字。
+- [DynamicShapeStyle](/v2/zh/guide/Types/DynamicShapeStyle.md): 这个类型允许为一个形状定义两种不同的样式——一种用于浅色模式，另一种用于深色模式。系统会根据用户设备的当前配色方案（浅色或深色）自动应用适合的样式。
+- [形状](/v2/zh/guide/Types/Shape.md): 用于定义视图的裁剪形状或背景形状。
+- [形状样式](/v2/zh/guide/Types/ShapeStyle.md): 该类型定义了如何将颜色、渐变和材质应用于视图的前景或背景，类似于 SwiftUI 中的样式功能。
+- [App事件](/v2/zh/guide/Utilities/App Events.md): 该接口允许你监听应用程序级别的状态变化事件，例如生命周期（scene phase）变更以及系统外观（light/dark 模式）切换。
+- [Archive（归档）](/v2/zh/guide/Utilities/Archive.md): 该类用于读取、创建与修改压缩归档文件（如 ZIP 格式）
+- [加密](/v2/zh/guide/Utilities/Crypto.md): 该接口提供简单、安全和高效的 API，用于从数据生成加密哈希。
+- [二进制数据（Data）](/v2/zh/guide/Utilities/Data.md): 该类表示二进制数据，并提供在不同格式之间转换的方法。
+- [日期组件](/v2/zh/guide/Utilities/DateComponents.md): 该接口提供了一种处理日期和时间组件的方法，使您能够轻松创建、操作和格式化日期。
+- [日期格式化（DateFormatter）](/v2/zh/guide/Utilities/DateFormatter.md): 用于将 Date 类型格式化为字符串，或将字符串解析为 Date。
+- [编码](/v2/zh/guide/Utilities/Encoding.md): 该类型定义了支持的字符编码集。
+- [FileEntity](/v2/zh/guide/Utilities/FileEntity.md): 该接口提供了文件级的读写操作接口，用于在 `HttpServer` 或其他脚本环境中直接读取、写入、定位和关闭文件。
+- [文件管理器](/v2/zh/guide/Utilities/FileManager.md): 一个与文件系统内容进行交互的便捷接口，也是与其进行交互的主要方式。
+- [HttpRequest（HTTP 请求）](/v2/zh/guide/Utilities/HttpServer/HttpRequest.md): 该类表示一个由客户端发往服务器的 HTTP 请求对象。
+- [HttpResponse（HTTP 响应）](/v2/zh/guide/Utilities/HttpServer/HttpResponse.md): 该类表示一个由服务器发往客户端的 HTTP 响应对象。
+- [HttpResponseBody（HTTP 响应体）](/v2/zh/guide/Utilities/HttpServer/HttpResponseBody.md): 该类表示一个由服务器发往客户端的 HTTP 响应体对象。
+- [HttpServer（HTTP 服务器）](/v2/zh/guide/Utilities/HttpServer/HttpServer.md): 该接口提供了在本地或局域网中启动一个轻量级 HTTP 服务器的能力，可用于处理 HTTP 请求、静态文件服务、WebSocket 通信等场景。
+- [WebSocketSession（WebSocket 会话）](/v2/zh/guide/Utilities/HttpServer/WebSocketSession.md): 该类表示一个活跃的 WebSocket 连接会话。
+- [ItemProvider](/v2/zh/guide/Utilities/ItemProvider.md): 该类表示一个延迟数据提供者。
+- [OAuth2](/v2/zh/guide/Utilities/OAuth2.md): 该接口提供了一种简单的方法来使用 OAuth2 协议进行用户身份验证和资源访问授权。
+- [文件路径工具](/v2/zh/guide/Utilities/Path.md): 该接口提供与文件和目录路径相关的实用工具。
+- [表单数据](/v2/zh/guide/Utilities/Request/FormData.md): 该类表示表单数据的键值对集合。
+- [请求头（Headers）](/v2/zh/guide/Utilities/Request/Headers.md): 该类表示 HTTP 请求或响应的头部字段集合。
+- [可读流](/v2/zh/guide/Utilities/Request/ReadableStream.md): 该类表示可以从中读取数据的流。
+- [Request 和 RequestInit](/v2/zh/guide/Utilities/Request/Request & RequestInit.md): 这些接口表示一个 HTTP 请求的完整配置。
+- [响应 （Response）](/v2/zh/guide/Utilities/Request/Response.md): 该类表示使用 fetch() API 发送的 HTTP 请求的结果。
+- [fetch 函数](/v2/zh/guide/Utilities/Request/fetch.md): 发送网络请求
+- [SFTP 客户端](/v2/zh/guide/Utilities/SSH/SFTP Client.md): 该接口提供了一种简单的方法来使用 SFTP 协议通过 SSH 安全地传输文件。
+- [SFTP 文件](/v2/zh/guide/Utilities/SSH/SFTP File.md): 通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。
+- [SSH 认证方法](/v2/zh/guide/Utilities/SSH/SSH Authentication Method.md): 该接口提供了一种使用各种方法（如密码、公钥或私钥）进行 SSH 连接认证的方法。
+- [SSH 客户端](/v2/zh/guide/Utilities/SSH/SSH Client.md): 该接口提供了一种简单的方法来使用 SSH 协议连接到远程服务器。
+- [TTY 标准输入写入器](/v2/zh/guide/Utilities/SSH/TTY Stdin Writer.md): 该接口允许你向 TTY 会话的标准输入写入数据，从而实现交互式命令执行。
+- [本地存储](/v2/zh/guide/Utilities/Storage.md): 为简单数据提供持久化存储。
+- [线程（Thread）](/v2/zh/guide/Utilities/Thread.md): 该接口提供了一种简单的方法来让你手动切换线程。
+- [UIImage](/v2/zh/guide/Utilities/UIImage.md): 该类表示图像，并提供操作和显示图像的方法。
+- [后台网络会话](/v2/zh/guide/Utilities/URLSession/BackgroundURLSession.md): 该接口提供发起、恢复与查询「后台可持续」的下载与上传任务的能力
+- [下载任务](/v2/zh/guide/Utilities/URLSession/URLSessionDownloadTask.md): 表示一个后台下载任务实例，用于在前台或后台下载文件，并可在脚本被终止后继续运行。
+- [上传任务](/v2/zh/guide/Utilities/URLSession/URLSessionUploadTask.md): 表示一个后台上传任务实例，用于在前台或后台上传文件，并可在脚本被终止后继续运行。
+- [UUID](/v2/zh/guide/Utilities/UUID.md): 该接口提供了一种简单的方法来生成唯一的 UUID 字符串。
+- [WebScoket](/v2/zh/guide/Utilities/WebScoket.md): 该接口允许你创建和管理 WebSocket 连接的接口，与服务器进行实时通信。
+- [socket.io](/v2/zh/guide/Utilities/socket.io.md): 该接口允许你通过socket.io库管理客户端与服务器之间的实时双向通信。
+- [动画和过渡](/v2/zh/guide/View Modifiers/Animation and Transition.md): 这些接口用于定义视图在属性发生变化时的过渡效果。
+- [可链式调用的修饰符](/v2/zh/guide/View Modifiers/Chaining View Modifiers.md): 该修饰符可用于连续调用多个修饰符，支持同一个修饰符在同一个视图中多次使用。
+- [通用图表标记属性 (ChartMarkProps)](/v2/zh/guide/View Modifiers/ChartMarkProps/index.md): 这些属性允许您设置每个图表标记的样式、符号、位置、注解、变换等内容。
+- [图表样式](/v2/zh/guide/View Modifiers/Charts Style.md): 这些属性允许您自定义图表视图的外观。
+- [网格布局控制](/v2/zh/guide/View Modifiers/Grid Layout Control.md): 这些属性用于控制视图在 Grid 网格布局中的行为，包括单元格的跨列、对齐方式、尺寸限制等，适用于构建灵活且精细的二维界面布局。
+- [图片样式](/v2/zh/guide/View Modifiers/Image Style.md): 这些修饰符专门用于控制图像视图的缩放、布局与渲染方式。
+- [生命周期事件](/v2/zh/guide/View Modifiers/Lifecycle Events.md): 用于在视图显示或从界面中消失时执行自定义逻辑。
+- [玻璃效果过渡效果](/v2/zh/guide/View Modifiers/Liquid Glass/Glass Effect Transition/index.md): 视图变化过程中液态玻璃材料的动画效果。
+- [示例](/v2/zh/guide/View Modifiers/Liquid Glass/Glass Effect Transition/index_example.md): 视图变化过程中液态玻璃材料的动画效果。
+- [液态玻璃效果](/v2/zh/guide/View Modifiers/Liquid Glass/Liquid Glass Effect/index.md): 在 iOS 26 中引入的液态玻璃视觉系统。
+- [示例](/v2/zh/guide/View Modifiers/Liquid Glass/Liquid Glass Effect/index_example.md): 在 iOS 26 中引入的液态玻璃视觉系统。
+- [通用修饰符](/v2/zh/guide/View Modifiers/List and Section View Modifiers/Common.md): 这些修饰符可用于精细控制 <List> 中每一行（Row）的布局与样式。
+- [新的 List 视图修饰符](/v2/zh/guide/View Modifiers/List and Section View Modifiers/New List View Modifiers.md): 这些修饰符可用于精细控制 <List> 中每一个区块（Section）的布局与样式。
+- [实时活动（LiveActivity）修饰符](/v2/zh/guide/View Modifiers/LiveActivity View Modifiers.md): 这些修饰符可用于在锁屏上自定义实时活动（LiveActivity）的外观。
+- [导航视图修饰符](/v2/zh/guide/View Modifiers/Navigation View Modifiers.md): toolbar 属性允许您在视图的导航栏或工具栏区域中添加各种项目。
+- [Picture in Picture （画中画）](/v2/zh/guide/View Modifiers/Picture in Pictuer View Modifiers.md): 这些 API 允许开发者在系统画中画窗口中渲染任何视图。
+- [弹出视图修饰符（Presentation](/v2/zh/guide/View Modifiers/Presentation View Modifiers.md): 这些修饰符用于配置通过 sheet 呈现的视图的行为和外观。
+- [数据遮罩视图修饰符](/v2/zh/guide/View Modifiers/Redaction View Modifiers.md): 该修饰符用于指定当视图内容发生变化时所应用的动画过渡效果。
+- [安全区域](/v2/zh/guide/View Modifiers/Safe Area.md): 这些属性允许你灵活地向安全区域内插入视图内容，或让视图忽略安全区域限制进行全屏布局。
+- [搜索交互](/v2/zh/guide/View Modifiers/Search Interactions.md): 你可以为列表等滚动视图添加搜索栏，控制搜索栏的显示位置、状态，监听输入变化，并动态显示搜索建议。
+- [设置环境变量 (environments)](/v2/zh/guide/View Modifiers/Set environment values (environments).md): 该修饰符用于为视图层级设置环境变量。
+- [滑动操作](/v2/zh/guide/View Modifiers/Swipe Actions/index.md): 你可以为用作 <List> 列表行的视图（如 <HStack>）添加滑动操作按钮，支持如“删除”、“编辑”、“收藏”等常见交互。
+- [示例](/v2/zh/guide/View Modifiers/Swipe Actions/index_example.md): 你可以为用作 <List> 列表行的视图（如 <HStack>）添加滑动操作按钮，支持如“删除”、“编辑”、“收藏”等常见交互。
+- [符号样式](/v2/zh/guide/View Modifiers/Symbol Style.md): 这些修饰符用于配置 SF Symbols（系统符号图标）的显示样式和动画效果
+- [文本输入框](/v2/zh/guide/View Modifiers/Text Field.md): 这些修饰符可用于自定义 TextField 组件的行为和外观，包括键盘类型、自动更正、自动大写、提交操作等。
+- [文本修饰符](/v2/zh/guide/View Modifiers/Text View Modifiers.md): 这些属性允许您自定义文本或标签视图的布局和外观。
+- [Toast提示](/v2/zh/guide/View Modifiers/Toast.md): 该修饰器用于在视图上显示一个临时提示框（Toast）。
+- [工具栏修饰符](/v2/zh/guide/View Modifiers/ToolBar View Modifiers.md): 用于控制系统工具栏（包括导航栏、底部工具栏、标签栏等）的可见性、外观样式以及行为。
+- [模糊](/v2/zh/guide/View Modifiers/blur.md): 对视图应用高斯模糊效果。
+- [边框](/v2/zh/guide/View Modifiers/border.md): 该属性用于为视图添加边框。
+- [按钮样式](/v2/zh/guide/View Modifiers/buttonStyle.md): 这个属性允许您自定义视图层级中按钮的交互行为和外观。
+- [裁剪形状](/v2/zh/guide/View Modifiers/clipShape.md): 将视图裁剪为指定形状，并保持内容比例。
+- [裁剪形状](/v2/zh/guide/View Modifiers/clipped.md): 将视图裁剪为其矩形边界
+- [反转颜色](/v2/zh/guide/View Modifiers/colorConvert.md): 反转视图的颜色，用于视觉强调或辅助功能场景。
+- [containerRelativeFrame](/v2/zh/guide/View Modifiers/containerRelativeFrame.md): 将当前视图放置在一个相对于其最近容器尺寸的“隐形框架”中。该修饰符适用于 ScrollView、Grid、布局栈等容器中，用于实现按比例布局或视图对齐。
+- [内容外边距](/v2/zh/guide/View Modifiers/contentMargins.md): 该修饰符用于为视图内容添加自定义的外边距。
+- [内容形状](/v2/zh/guide/View Modifiers/contentShape.md): 该属性用于定义视图内容的交互区域或视觉边界形状。
+- [内容过渡动画](/v2/zh/guide/View Modifiers/contentTransition.md): 该修饰符用于指定当视图内容发生变化时所应用的动画过渡效果。
+- [上下文菜单](/v2/zh/guide/View Modifiers/contextMenu.md): 该属性用于为任意视图添加系统风格的上下文菜单。
+- [控件组样式](/v2/zh/guide/View Modifiers/controlGroupStyle.md): controlGroupStyle 属性允许您为视图中的控件组设置视觉和交互样式，类似于 SwiftUI 中的外观。
+- [日期选择器样式](/v2/zh/guide/View Modifiers/datePickerStyle.md): datePickerStyle 属性允许您自定义 DatePicker 视图的外观和交互。
+- [禁用](/v2/zh/guide/View Modifiers/disabled.md): 禁用当前视图及其子视图的用户交互行为，视觉上通常为半透明状态。
+- [固定大小](/v2/zh/guide/View Modifiers/fixedSize.md): 将视图固定在其理想大小，防止其被压缩或扩展超出其内容本身所需的尺寸。
+- [flipsForRightToLeftLayoutDirection](/v2/zh/guide/View Modifiers/flipsForRightToLeftLayoutDirection.md): 设置当系统使用从右到左（Right-to-Left, RTL）布局方向时，当前视图是否应水平镜像其内容。
+- [前景色和背景样式](/v2/zh/guide/View Modifiers/foregroundStyle & background.md): 用于设置视图前景与背景视觉效果的两个常用属性。
+- [表单样式](/v2/zh/guide/View Modifiers/formStyle.md): formStyle 属性允许您自定义 Form 视图的外观和交互。
+- [frame](/v2/zh/guide/View Modifiers/frame.md): 该属性用于设置视图的尺寸（固定或弹性）以及在容器中的对齐方式。
+- [仪表盘样式](/v2/zh/guide/View Modifiers/gaugeStyle.md): gaugeStyle 属性允许您自定义 Gauge 视图的外观和交互。
+- [隐藏](/v2/zh/guide/View Modifiers/hidden.md): 设置视图是否可见。
+- [隐藏标签](/v2/zh/guide/View Modifiers/labelsHidden.md): 隐藏视图内控件的标签部分，但控件本身仍然显示。
+- [布局优先级](/v2/zh/guide/View Modifiers/layoutPriority.md): 该修饰符用于为视图指定布局优先级。
+- [列表样式](/v2/zh/guide/View Modifiers/listStyle.md): listStyle 属性允许您在使用 List 视图时自定义列表的行为和外观。
+- [遮罩](/v2/zh/guide/View Modifiers/mask.md): 该修饰符使用另一个视图的透明度（alpha 通道）作为遮罩，将目标视图按形状进行裁剪。
+- [匹配几何效果（matchedGeometryEffect）](/v2/zh/guide/View Modifiers/matchedGeometryEffect.md): 该视图修饰符允许你在不同的布局，不同的容器，不同的条件渲染状态，不同的尺寸和位置配置之间进行平滑的过渡动画。
+- [匹配过渡源（matchedTransitionSource）](/v2/zh/guide/View Modifiers/matchedTransitionSource.md): 该视图修饰符允许你标记一个视图为导航过渡的几何源。
+- [设置偏移](/v2/zh/guide/View Modifiers/offset.md): 将视图从其默认位置沿 x 和 y 方向偏移指定的距离。
+- [onDrag 和 onDrop 修饰符](/v2/zh/guide/View Modifiers/onDrag and onDrop View Modifiers.md): 这些 API 允许视图作为拖动源、拖放目标或者同时，支持内部应用和跨应用拖拽。
+- [接收外部拖拽内容](/v2/zh/guide/View Modifiers/onDropContent.md): 用于使某个视图成为接收来自其他 App 拖入的文件、图片或文本的拖放目标。
+- [不透明度](/v2/zh/guide/View Modifiers/opacity.md): 设置视图的不透明度。
+- [overlay](/v2/zh/guide/View Modifiers/overlay.md): 该修饰符用于在当前视图的上方叠加一个额外视图，形成层叠的视觉效果。
+- [间距](/v2/zh/guide/View Modifiers/padding.md): 该属性用于设置视图内容与其边缘之间的间距。
+- [选择器样式](/v2/zh/guide/View Modifiers/pickerStyle.md): pickerStyle 属性允许您自定义视图层级中选择器的外观和行为。
+- [设置位置](/v2/zh/guide/View Modifiers/position.md): 将视图的中心点定位到父视图坐标空间中的指定位置。
+- [首选配色模式](/v2/zh/guide/View Modifiers/preferredColorScheme.md): 指定该视图层级使用的系统配色模式（浅色或深色）。
+- [进度视图样式](/v2/zh/guide/View Modifiers/progressViewStyle.md): progressViewStyle 属性允许您自定义进度视图的外观。
+- [可刷新修饰符](/v2/zh/guide/View Modifiers/refresable/index.md): 将可滚动视图标记为可刷新，允许用户下拉以触发异步的数据刷新操作。
+- [示例](/v2/zh/guide/View Modifiers/refresable/refreshable_list.md): 将可滚动视图标记为可刷新，允许用户下拉以触发异步的数据刷新操作。
+- [旋转效果](/v2/zh/guide/View Modifiers/rotationEffect.md): 将视图绕指定锚点旋转指定角度。
+- [缩放效果](/v2/zh/guide/View Modifiers/scaleEffect.md): 按指定倍数缩放视图的渲染结果。
+- [阴影](/v2/zh/guide/View Modifiers/shadow.md): 为视图添加阴影效果。
+- [文本输入框样式](/v2/zh/guide/View Modifiers/textFieldStyle.md): textFieldStyle 属性允许您自定义 TextField 视图的外观和交互。
+- [强调色](/v2/zh/guide/View Modifiers/tint.md): 用于为视图设置局部的强调色，覆盖默认的系统 accent color。
+- [切换开关样式](/v2/zh/guide/View Modifiers/toggleStyle.md): toggleStyle 属性允许您自定义 Toggle 视图的外观和交互。
+- [使用 Toolbar 组件](/v2/zh/guide/View Modifiers/toolbar/Use with Toolbar Component.md): 使用 Toolbar 组件在视图的导航栏或工具栏区域中添加各种项目。
+- [使用 ToolbarProps](/v2/zh/guide/View Modifiers/toolbar/Use with ToolbarProps.md): 使用 ToolbarProps 简单设置工具栏
+- [翻译宿主](/v2/zh/guide/View Modifiers/translationHost.md): 该修饰符用于为视图层级提供翻译服务的上下文环境。
+- [小组件背景](/v2/zh/guide/View Modifiers/widgetBackground.md): 该属性用于定义小组件的背景样式，特别是针对 iOS 18 的强调（着色）渲染模式进行了优化。
+- [视频播放组件(AVPlayerView)](/v2/zh/guide/Views/AVPlayerView.md): 该组件适用于需要原生播放行为、画中画、Now Playing 集成以及后台播放的媒体中心场景。
+- [AccessoryWidgetBackground](/v2/zh/guide/Views/AccessoryWidgetBackground.md): 适用于配件类小组件（Accessory Widgets），如锁屏小组件或待机模式（StandBy）小组件。
+- [按钮](/v2/zh/guide/Views/Button.md): 一个用于触发点击操作的控件。
+- [堆叠面积图（AreaStackChart）](/v2/zh/guide/Views/Charts/AreaStackChart/index.md): 一个将数据表示为堆叠面积的图表，其中每个面积代表总值，并被分割成表示子值的段。
+- [示例](/v2/zh/guide/Views/Charts/AreaStackChart/index_example.md): 一个将数据表示为堆叠面积的图表，其中每个面积代表总值，并被分割成表示子值的段。
+- [一维柱状图（Bar1DChart）](/v2/zh/guide/Views/Charts/Bar1DChart/index.md): 一个将数据表示为一维条形的图表，通常用于表示单个值或类别。
+- [示例](/v2/zh/guide/Views/Charts/Bar1DChart/index_example.md): 一个将数据表示为一维条形的图表，通常用于表示单个值或类别。
+- [柱状图（BarChart）](/v2/zh/guide/Views/Charts/BarChart/index.md): 一个将数据表示为矩形条形，其长度与所代表的值成比例的图表。
+- [示例](/v2/zh/guide/Views/Charts/BarChart/index_example.md): 一个将数据表示为矩形条形，其长度与所代表的值成比例的图表。
+- [甘特柱状图（BarGanttChart）](/v2/zh/guide/Views/Charts/BarGanttChart/index.md): 一个将数据表示为水平条形的图表，通常用于表示项目进度或时间线。
+- [示例](/v2/zh/guide/Views/Charts/BarGanttChart/index_example.md): 一个将数据表示为水平条形的图表，通常用于表示项目进度或时间线。
+- [分组柱状图（BarGroupChart）](/v2/zh/guide/Views/Charts/BarGroupChart/index.md): 一个将数据表示为分组条形的图表，其中每个组代表一个类别，组内的条形代表子类别。
+- [示例](/v2/zh/guide/Views/Charts/BarGroupChart/index_example.md): 一个将数据表示为分组条形的图表，其中每个组代表一个类别，组内的条形代表子类别。
+- [堆叠柱状图（BarStackChart）](/v2/zh/guide/Views/Charts/BarStackChart/index.md): 一个将数据表示为堆叠条形的图表，其中每个条形代表总值，并被分割成表示子值的段。
+- [示例](/v2/zh/guide/Views/Charts/BarStackChart/index_example.md): 一个将数据表示为堆叠条形的图表，其中每个条形代表总值，并被分割成表示子值的段。
+- [环形图（DonutChart）](/v2/zh/guide/Views/Charts/DonutChart/index.md): 一个将数据表示为环形的图表，类似于饼图，但中间有一个空心部分。
+- [示例](/v2/zh/guide/Views/Charts/DonutChart/index_example.md): 一个将数据表示为环形的图表，类似于饼图，但中间有一个空心部分。
+- [热力图（HeatMapChart）](/v2/zh/guide/Views/Charts/HeatMapChart/index.md): 一个将数据表示为颜色矩阵的图表，其中每种颜色代表二维空间中的一个值。
+- [示例](/v2/zh/guide/Views/Charts/HeatMapChart/index_example.md): 一个将数据表示为颜色矩阵的图表，其中每种颜色代表二维空间中的一个值。
+- [分类折线图（LineCategoryChart）](/v2/zh/guide/Views/Charts/LineCategoryChart/index.md): 一个将数据表示为一系列点并通过线连接的图表，其中一个轴上有指定的类别。
+- [示例](/v2/zh/guide/Views/Charts/LineCategoryChart/index_example.md): 一个将数据表示为一系列点并通过线连接的图表，其中一个轴上有指定的类别。
+- [折线图（LineChart）](/v2/zh/guide/Views/Charts/LineChart/index.md): 一个将数据表示为一系列点并通过直线连接的图表。
+- [示例](/v2/zh/guide/Views/Charts/LineChart/index_example.md): 一个将数据表示为一系列点并通过直线连接的图表。
+- [多个图表示例](/v2/zh/guide/Views/Charts/Multiple Charts Example/index.md): 一个演示如何在单个视图中使用多个图表的示例。
+- [示例](/v2/zh/guide/Views/Charts/Multiple Charts Example/index_example.md): 一个演示如何在单个视图中使用多个图表的示例。
+- [饼图（PieChart）](/v2/zh/guide/Views/Charts/PieChart/index.md): 一个将数据表示为饼图切片的图表，其中每个切片代表整体的一部分。
+- [示例](/v2/zh/guide/Views/Charts/PieChart/index_example.md): 一个将数据表示为饼图切片的图表，其中每个切片代表整体的一部分。
+- [分类点状图（PointCategoryChart）](/v2/zh/guide/Views/Charts/PointCategoryChart/index.md): 一个将数据表示为按特定轴分类的点的图表，适用于可视化具有类别的离散数据。
+- [示例](/v2/zh/guide/Views/Charts/PointCategoryChart/index_example.md): 一个将数据表示为按特定轴分类的点的图表，适用于可视化具有类别的离散数据。
+- [点状图（PointChart）](/v2/zh/guide/Views/Charts/PointChart/index.md): 一个将数据表示为单个点的图表，通常用于散点图或离散数据。
+- [示例](/v2/zh/guide/Views/Charts/PointChart/index_example.md): 一个将数据表示为单个点的图表，通常用于散点图或离散数据。
+- [范围面积图（RangeAreaChart）](/v2/zh/guide/Views/Charts/RangeAreaChart/index.md): 一个将数据表示为两条线之间的面积的图表，表示一系列值。
+- [示例](/v2/zh/guide/Views/Charts/RangeAreaChart/index_example.md): 一个将数据表示为两条线之间的面积的图表，表示一系列值。
+- [矩形面积图（RectAreaChart）](/v2/zh/guide/Views/Charts/RectAreaChart/index.md): 一个将数据表示为矩形面积的图表，其中每个矩形的大小和颜色代表不同的数据值。
+- [示例](/v2/zh/guide/Views/Charts/RectAreaChart/index_example.md): 一个将数据表示为矩形面积的图表，其中每个矩形的大小和颜色代表不同的数据值。
+- [矩形图（RectChart）](/v2/zh/guide/Views/Charts/RectChart/index.md): 一个将数据表示为矩形的图表，其中每个矩形的大小和颜色代表不同的数据值。
+- [示例](/v2/zh/guide/Views/Charts/RectChart/index_example.md): 一个将数据表示为矩形的图表，其中每个矩形的大小和颜色代表不同的数据值。
+- [标尺图（RuleChart）](/v2/zh/guide/Views/Charts/RuleChart/index.md): 一个将数据表示为一系列标尺的图表，可用于表示阈值或限制。
+- [示例](/v2/zh/guide/Views/Charts/RuleChart/index_example.md): 一个将数据表示为一系列标尺的图表，可用于表示阈值或限制。
+- [标签线图（RuleLineForLabelChart）](/v2/zh/guide/Views/Charts/RuleLineForLabelChart.md): 一个将数据表示为一系列线条的图表，标签指示特定值或阈值。
+- [值线图（RuleLineForValueChart）](/v2/zh/guide/Views/Charts/RuleLineForValueChart.md): 一个将数据表示为一系列线条的图表，规则指示特定值或阈值。
+- [同心圆矩形（ConcentricRectangle）](/v2/zh/guide/Views/ConcentricRectangle.md): 它是用于创建逐步缩进（浓缩）角几何形状的矩形，适合现代 UI 设计。
+- [颜色选择器](/v2/zh/guide/Views/Controls/ColorPicker/index.md): 一个从系统颜色选择器界面中选取颜色的控件。
+- [示例](/v2/zh/guide/Views/Controls/ColorPicker/index_example.md): 一个从系统颜色选择器界面中选取颜色的控件。
+- [内容不可用视图](/v2/zh/guide/Views/Controls/ContentUnavailableView/index.md): 当应用的内容对用户不可用时，用于显示标签和其他内容的界面。
+- [示例](/v2/zh/guide/Views/Controls/ContentUnavailableView/index_example.md): 当应用的内容对用户不可用时，用于显示标签和其他内容的界面。
+- [日期、时间选择器](/v2/zh/guide/Views/Controls/DatePicker/index.md): 一个用于选择具体日期的控件。
+- [示例](/v2/zh/guide/Views/Controls/DatePicker/index_example.md): 一个用于选择具体日期的控件。
+- [仪表盘](/v2/zh/guide/Views/Controls/Gauge/index.md): 一个在一定范围内显示数值的仪表盘样式的视图。
+- [示例](/v2/zh/guide/Views/Controls/Gauge/index_example.md): 一个在一定范围内显示数值的仪表盘样式的视图。
+- [选择器](/v2/zh/guide/Views/Controls/Picker/index.md): 一个从一组选项值中进行选择的控件。
+- [示例](/v2/zh/guide/Views/Controls/Picker/index_example.md): 一个从一组选项值中进行选择的控件。
+- [进度视图](/v2/zh/guide/Views/Controls/ProgressView/index.md): 一个显示任务完成进度的视图。
+- [示例](/v2/zh/guide/Views/Controls/ProgressView/index_example.md): 一个显示任务完成进度的视图。
+- [滑块控件](/v2/zh/guide/Views/Controls/Slider/index.md): 一个在设定范围内选择数值的控件。
+- [示例](/v2/zh/guide/Views/Controls/Slider/index_example.md): 一个在设定范围内选择数值的控件。
+- [步进器](/v2/zh/guide/Views/Controls/Stepper/index.md): 一个执行递增和递减操作的控件。
+- [示例](/v2/zh/guide/Views/Controls/Stepper/index_example.md): 一个执行递增和递减操作的控件。
+- [切换开关](/v2/zh/guide/Views/Controls/Toggle/index.md): 一个在开启和关闭状态之间进行切换的控件。
+- [示例](/v2/zh/guide/Views/Controls/Toggle/index_example.md): 一个在开启和关闭状态之间进行切换的控件。
+- [对话框](/v2/zh/guide/Views/Dialog/index.md): 该接口提供了一些用于显示对话框的快捷方法。
+- [示例](/v2/zh/guide/Views/Dialog/index_example.md): 该接口提供了一些用于显示对话框的快捷方法。
+- [显示文本](/v2/zh/guide/Views/Displaying text/index.md): 显示格式化文本。
+- [示例](/v2/zh/guide/Views/Displaying text/index_example.md): 显示格式化文本。
+- [编辑器](/v2/zh/guide/Views/Editor.md): 一个提供富文本编辑界面的视图。
+- [EnvironmentValuesReader](/v2/zh/guide/Views/EnvironmentValuesReader.md): 它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。
+- [GeometryReader](/v2/zh/guide/Views/GeometryReader.md): 它能够在视图构建阶段提供当前容器的尺寸、边距、安全区域和角落内边距等信息。
+- [手势](/v2/zh/guide/Views/Gestures.md): 该接口提供了类似于 SwiftUI 的手势系统，允许任何视图响应触摸交互，如轻点、长按、拖拽、旋转和放大。
+- [图像](/v2/zh/guide/Views/Image/index.md): 在应用的用户界面中添加图像和符号。
+- [示例](/v2/zh/guide/Views/Image/index_example.md): 在应用的用户界面中添加图像和符号。
+- [流式布局组件(FlowLayout)](/v2/zh/guide/Views/Layout/FlowLayout.md): 这个视图是一个流式布局组件，它按照水平方向排列子视图，并在没有足够空间时自动换行。
+- [网格布局（Grid）](/v2/zh/guide/Views/Layout/Grid/index.md): 一个将其他视图以二维布局排列的容器视图。
+- [示例](/v2/zh/guide/Views/Layout/Grid/index_example.md): 一个将其他视图以二维布局排列的容器视图。
+- [水平布局（HStack）](/v2/zh/guide/Views/Layout/HStack/index.md): 一个在水平方向排列子视图的视图。
+- [示例](/v2/zh/guide/Views/Layout/HStack/index_example.md): 一个在水平方向排列子视图的视图。
+- [惰性水平网格布局（LazyHGrid）](/v2/zh/guide/Views/Layout/LazyHGrid/index.md): 一个以水平方向扩展的网格视图，并仅在需要时创建子视图。
+- [示例](/v2/zh/guide/Views/Layout/LazyHGrid/index_example.md): 一个以水平方向扩展的网格视图，并仅在需要时创建子视图。
+- [惰性水平布局（LazyHStack）](/v2/zh/guide/Views/Layout/LazyHStack/index.md): 一个按照水平方向扩展，并在需要时才创建子视图的容器视图。
+- [示例](/v2/zh/guide/Views/Layout/LazyHStack/index_example.md): 一个按照水平方向扩展，并在需要时才创建子视图的容器视图。
+- [惰性垂直网格布局（LazyVGrid）](/v2/zh/guide/Views/Layout/LazyVGrid/index.md): 一个以垂直方向扩展的网格视图，并仅在需要时创建子视图。
+- [示例](/v2/zh/guide/Views/Layout/LazyVGrid/index_example.md): 一个以垂直方向扩展的网格视图，并仅在需要时创建子视图。
+- [惰性垂直布局（LazyVStack）](/v2/zh/guide/Views/Layout/LazyVStack/index.md): 一个按照垂直方向扩展，并在需要时才创建子视图的容器视图。
+- [示例](/v2/zh/guide/Views/Layout/LazyVStack/index_example.md): 一个按照垂直方向扩展，并在需要时才创建子视图的容器视图。
+- [垂直布局（VStack）](/v2/zh/guide/Views/Layout/VStack/index.md): 一个在垂直方向排列子视图的视图。
+- [示例](/v2/zh/guide/Views/Layout/VStack/index_example.md): 一个在垂直方向排列子视图的视图。
+- [ZStack](/v2/zh/guide/Views/Layout/ZStack/index.md): 一个在视觉上叠加子视图，并在两个轴上对齐的视图。
+- [示例](/v2/zh/guide/Views/Layout/ZStack/index_example.md): 一个在视觉上叠加子视图，并在两个轴上对齐的视图。
+- [链接](/v2/zh/guide/Views/Link.md): 这个视图可以用来打开网页、应用特定的URL或其他协议。
+- [展开组](/v2/zh/guide/Views/List/DisclosureGroup/index.md): 一个根据展开控制状态来显示或隐藏其他内容视图的视图。
+- [示例](/v2/zh/guide/Views/List/DisclosureGroup/index_example.md): 一个根据展开控制状态来显示或隐藏其他内容视图的视图。
+- [在行中显示数据](/v2/zh/guide/Views/List/Display data inside a row/index.md)
+- [示例](/v2/zh/guide/Views/List/Display data inside a row/index_example.md)
+- [可编辑列表](/v2/zh/guide/Views/List/Editable List/index.md): 移动和删除列表项。
+- [示例](/v2/zh/guide/Views/List/Editable List/index_example.md): 移动和删除列表项。
+- [列表交互](/v2/zh/guide/Views/List/List interaction/index.md): 为列表中的行添加自定义滑动操作。
+- [示例](/v2/zh/guide/Views/List/List interaction/index_example.md): 为列表中的行添加自定义滑动操作。
+- [列表样式](/v2/zh/guide/Views/List/List style/index.md): 设置此视图中列表的样式。
+- [示例](/v2/zh/guide/Views/List/List style/list_style.md): 设置此视图中列表的样式。
+- [可刷新列表](/v2/zh/guide/Views/List/Refresable List/index.md): 为列表中的行添加下拉刷新
+- [示例](/v2/zh/guide/Views/List/Refresable List/refreshable_list.md): 为列表中的行添加下拉刷新
+- [以分区表示数据层级](/v2/zh/guide/Views/List/Represent data hierarchy in sections/index.md)
+- [示例](/v2/zh/guide/Views/List/Represent data hierarchy in sections/index_example.md)
+- [可选择的列表](/v2/zh/guide/Views/List/Selectable List.md): 实现单选和多选的列表功能。
+- [使用列表进行导航](/v2/zh/guide/Views/List/Use list for navigations/index.md)
+- [示例](/v2/zh/guide/Views/List/Use list for navigations/index_example.md)
+- [LivePhotoView](/v2/zh/guide/Views/LivePhotoView.md): 该组件适用于在界面中展示 Live Photo 的媒体中心场景。
+- [Markdown](/v2/zh/guide/Views/Markdown.md): 一个渲染 Markdown 内容的视图，允许您显示格式化文本、链接、图片等。
+- [菜单](/v2/zh/guide/Views/Menu/index.md): 使用菜单为用户提供便捷的常用命令访问。
+- [示例](/v2/zh/guide/Views/Menu/index_example.md): 使用菜单为用户提供便捷的常用命令访问。
+- [模态展示](/v2/zh/guide/Views/Modal presentaions/index.md): 在单独的视图中呈现内容，以提供更专注的交互。
+- [示例](/v2/zh/guide/Views/Modal presentaions/index_example.md): 在单独的视图中呈现内容，以提供更专注的交互。
+- [命名空间读取器（NamespaceReader）](/v2/zh/guide/Views/NamespaceReader.md): 该视图用于创建和管理几何动画命名空间。
+- [折叠分栏视图](/v2/zh/guide/Views/Navigation/NavigationSplitView (for iPad)/Collapsed split views.md)
+- [控制栏的可见性](/v2/zh/guide/Views/Navigation/NavigationSplitView (for iPad)/Control column visibility.md)
+- [三栏](/v2/zh/guide/Views/Navigation/NavigationSplitView (for iPad)/Three-column.md)
+- [两栏](/v2/zh/guide/Views/Navigation/NavigationSplitView (for iPad)/Two-column.md)
+- [NavigationStack 配合 path](/v2/zh/guide/Views/Navigation/NavigationStack/NavigationStack with path.md): 允许使用绑定的可观察数组直接操作导航历史。
+- [与 NavigationLink 一起使用](/v2/zh/guide/Views/Navigation/NavigationStack/Use with NavigationLink.md)
+- [与 navigationDestination 一起使用](/v2/zh/guide/Views/Navigation/NavigationStack/Use with navigationDestination.md)
+- [带徽章的 TabView](/v2/zh/guide/Views/Navigation/TabView/TabView with badge.md)
+- [包含多个可滚动页面的 TabView](/v2/zh/guide/Views/Navigation/TabView/TabView with multiple scrolling pages.md)
+- [TabView](/v2/zh/guide/Views/Navigation/TabView/TabView.md): 在标签界面中显示子视图集。
+- [关闭一个视图](/v2/zh/guide/Views/Present views/Dismissing a presented view/index.md): 使用Navigation.useDismiss关闭视图。
+- [示例](/v2/zh/guide/Views/Present views/Dismissing a presented view/index_example.md): 使用Navigation.useDismiss关闭视图。
+- [展示一个简单视图](/v2/zh/guide/Views/Present views/Present a simple view/index.md): 使用Navigation.present展示视图。
+- [示例](/v2/zh/guide/Views/Present views/Present a simple view/index_example.md): 使用Navigation.present展示视图。
+- [SVG](/v2/zh/guide/Views/SVG.md): 这个视图可以用来渲染SVG图像。
+- [可滚动视图](/v2/zh/guide/Views/Scroll views/index.md): 允许用户滚动查看当前显示区域无法容纳的内容。
+- [示例](/v2/zh/guide/Views/Scroll views/index_example.md): 允许用户滚动查看当前显示区域无法容纳的内容。
+- [ScrollViewReader](/v2/zh/guide/Views/ScrollViewReader.md): 允许脚本在可滚动内容（例如 List 或 ScrollView）内控制滚动位置。
+- [搜索](/v2/zh/guide/Views/Search/index.md): 允许用户在脚本界面内搜索文本或其他内容。
+- [示例](/v2/zh/guide/Views/Search/index_example.md): 允许用户在脚本界面内搜索文本或其他内容。
+- [形状](/v2/zh/guide/Views/Shapes/index.md): 绘制圆形、矩形等形状，并可使用自定义路径来定义自己设计的形状。
+- [示例](/v2/zh/guide/Views/Shapes/index_example.md): 绘制圆形、矩形等形状，并可使用自定义路径来定义自己设计的形状。
+- [键盘](/v2/zh/guide/Views/Text input/Keyboard.md): 通过这个接口与软件键盘交互。
+- [安全文本输入框（SecureField）](/v2/zh/guide/Views/Text input/SecureField/index.md): 一种可供安全输入私人文本的控件。
+- [示例](/v2/zh/guide/Views/Text input/SecureField/index_example.md): 一种可供安全输入私人文本的控件。
+- [文本输入框（TextField）](/v2/zh/guide/Views/Text input/TextField/index.md): 显示可编辑文本界面的控件。
+- [示例](/v2/zh/guide/Views/Text input/TextField/index_example.md): 显示可编辑文本界面的控件。
+- [时间标签视图](/v2/zh/guide/Views/Time-based label views.md): 这些视图支持在小组件和视图中显示实时更新的日期与时间格式。
+- [工具栏](/v2/zh/guide/Views/Toolbars/index.md): 为用户提供快速访问常用命令和控件。
+- [示例](/v2/zh/guide/Views/Toolbars/index_example.md): 为用户提供快速访问常用命令和控件。
+- [视频预览视图（VideoPreviewView）](/v2/zh/guide/Views/VideoPreviewView.md): 显示与 VideoRecorder 实例关联的实时摄像头预览的视图。
+- [控件组](/v2/zh/guide/Views/View groupings/ControlGroup.md): 一个在语义相关的上下文中，以合适的视觉方式显示控件的容器视图。
+- [ForEach](/v2/zh/guide/Views/View groupings/ForEach/index.md): 迭代动态数据
+- [示例](/v2/zh/guide/Views/View groupings/ForEach/iterating.md): 迭代动态数据
+- [表单](/v2/zh/guide/Views/View groupings/Form.md): 一个用于分组输入控件的容器，可用于设置或检查器等场景。
+- [Group](/v2/zh/guide/Views/View groupings/Group.md): 将视图分组到容器中
+- [GroupBox](/v2/zh/guide/Views/View groupings/GroupBox.md): 将视图分组到一个方框中
+- [Section](/v2/zh/guide/Views/View groupings/Section.md): 将视图分区组织
+- [网页视图](/v2/zh/guide/Views/WebView.md): 一个用于显示交互式网页内容的视图。
+- [AccessoryWidgetBackground](/v2/zh/guide/Widget/AccessoryWidgetBackground.md): 适用于配件类小组件（Accessory Widgets），如锁屏小组件或待机模式（StandBy）小组件。
+- [在小组件和灵动岛中使用动画](/v2/zh/guide/Widget/Animation for Widget and LiveActivity.md): 在小组件和灵动岛中播放动画的视图或者视图属性
+- [小组件染色模式适配指南](/v2/zh/guide/Widget/Tinted Mode Adaptation Guide.md): 了解如何将小组件适配到色调模式。
+- [小组件 API](/v2/zh/guide/Widget/Widget API.md): 小组件 API 提供静态方法和属性，用于渲染和与主屏幕小组件交互。
+- [小组件色调模式背景](/v2/zh/guide/Widget/Widget Background in Tinted Mode.md): 该属性用于定义小组件的背景样式，特别是针对 iOS 18 的强调（着色）渲染模式进行了优化。
+- [小组件快速入门](/v2/zh/guide/Widget/Widget Quick Start.md): 快速掌握小组件的使用。
+- [](/v2/zh/index.md)
+- [隐私政策](/v2/zh/privacy/policy.md)
+- [服务条款与EULA](/v2/zh/privacy/service.md)
