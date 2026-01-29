@@ -1,3 +1,5 @@
+# Glass Effect Transition
+
 This document provides a comprehensive explanation of **Glass Effect Transitions** in Scripting, including how Liquid Glass materials animate during view changes, how geometry matching works, and how to correctly use `NamespaceReader` to access SwiftUI’s `@Namespace` within TSX code.
 
 Contents include:
@@ -13,7 +15,7 @@ Contents include:
 
 ***
 
-# 1. Overview: What Is a Glass Effect Transition?
+## 1. Overview: What Is a Glass Effect Transition?
 
 A **Glass Effect Transition** defines how a Liquid Glass material animates when:
 
@@ -22,7 +24,7 @@ A **Glass Effect Transition** defines how a Liquid Glass material animates when:
 - Views switch between two states
 
 ```ts
-type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
+type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
 ```
 
 These transitions affect **only the Liquid Glass material**—not the rest of the view’s opacity or scale.
@@ -35,12 +37,12 @@ A transition controls:
 
 ***
 
-# 2. Transition Types
+## 2. Transition Types
 
 ## 2.1 identity
 
 ```tsx
-glassEffectTransition="identity"
+glassEffectTransition = "identity";
 ```
 
 Behavior:
@@ -59,7 +61,7 @@ Use cases:
 ## 2.2 materialize
 
 ```tsx
-glassEffectTransition="materialize"
+glassEffectTransition = "materialize";
 ```
 
 Behavior:
@@ -79,7 +81,7 @@ Use cases:
 ## 2.3 matchedGeometry (most powerful)
 
 ```tsx
-glassEffectTransition="matchedGeometry"
+glassEffectTransition = "matchedGeometry";
 ```
 
 Behavior:
@@ -96,7 +98,7 @@ Use cases:
 
 ***
 
-# 3. glassEffectID and namespace
+## 3. glassEffectID and namespace
 
 **The core of geometric matching**
 
@@ -150,7 +152,7 @@ Without a namespace, geometric matching does not work.
 
 ***
 
-# 4. glassEffectUnion: Unifying Glass Regions
+## 4. glassEffectUnion: Unifying Glass Regions
 
 `glassEffectUnion` merges multiple views into a **single continuous glass material region**.
 
@@ -171,7 +173,7 @@ Typically paired with matchedGeometry transitions.
 
 ***
 
-# 5. GlassEffectContainer
+## 5. GlassEffectContainer
 
 The container provides:
 
@@ -191,7 +193,7 @@ Every view participating in glass transitions should be placed inside the same c
 
 ***
 
-# 6. NamespaceReader
+## 6. NamespaceReader
 
 **Exposing SwiftUI’s `@Namespace` to TSX**
 
@@ -228,7 +230,7 @@ Therefore Scripting provides:
 
 ***
 
-# 7. Example Analysis
+## 7. Example Analysis
 
 Below is the provided example, demonstrating a dynamic menu switching between two states:
 
@@ -241,37 +243,39 @@ Below is the provided example, demonstrating a dynamic menu switching between tw
 ### Key excerpts:
 
 ```tsx
-isAlternativeMenu.value
-  ? <>
-      <Button
-        title="Home"
-        glassEffectID={{id:1, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-      <Button
-        title="Settings"
-        glassEffectID={{id:2, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-    </>
-  : <>
-      <Button
-        title="Edit"
-        glassEffectID={{id:1, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-      <Button
-        title="Erase"
-        glassEffectID={{id:3, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-        glassEffectTransition="materialize"
-      />
-      <Button
-        title="Delete"
-        glassEffectID={{id:2, namespace}}
-        glassEffectUnion={{id:1,namespace}}
-      />
-    </>
+isAlternativeMenu.value ? (
+  <>
+    <Button
+      title="Home"
+      glassEffectID={{ id: 1, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+    <Button
+      title="Settings"
+      glassEffectID={{ id: 2, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+  </>
+) : (
+  <>
+    <Button
+      title="Edit"
+      glassEffectID={{ id: 1, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+    <Button
+      title="Erase"
+      glassEffectID={{ id: 3, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+      glassEffectTransition="materialize"
+    />
+    <Button
+      title="Delete"
+      glassEffectID={{ id: 2, namespace }}
+      glassEffectUnion={{ id: 1, namespace }}
+    />
+  </>
+);
 ```
 
 ### 1. Shared union (id = 1)
@@ -289,7 +293,7 @@ This produces a smooth, unified underlying glass region.
 ### 3. “Erase” uses a different transition
 
 ```tsx
-glassEffectTransition="materialize"
+glassEffectTransition = "materialize";
 ```
 
 This button fades its material rather than matching geometry, making its appearance more distinct.
@@ -298,17 +302,15 @@ This button fades its material rather than matching geometry, making its appeara
 
 ```tsx
 withAnimation(() => {
-  isAlternativeMenu.setValue(
-    !isAlternativeMenu.value
-  )
-})
+  isAlternativeMenu.setValue(!isAlternativeMenu.value);
+});
 ```
 
 Glass transitions attach themselves to this animation transaction automatically.
 
 ***
 
-# 8. Best Practices
+## 8. Best Practices
 
 ### 1. Use a single GlassEffectContainer
 
@@ -332,7 +334,7 @@ Use materialize only for elements needing simple appearance behavior.
 
 ***
 
-# 9. Summary
+## 9. Summary
 
 Glass Effect Transitions enable highly expressive and fluid animations for Liquid Glass materials in iOS 26.
 In Scripting:

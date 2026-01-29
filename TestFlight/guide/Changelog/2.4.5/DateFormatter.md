@@ -1,9 +1,11 @@
+# DateFormatter
+
 The `DateFormatter` class provides comprehensive date and time formatting capabilities. It allows converting `Date` objects into localized strings and parsing strings back into `Date` values.
 This API wraps iOS-native date formatting behavior and supports multiple calendars, time zones, localized formats, and custom formatting templates.
 
 ***
 
-# Enums and Type Definitions
+## Enums and Type Definitions
 
 ## DateFormatterStyle
 
@@ -73,7 +75,7 @@ If a string is used, it must be a valid time-zone identifier such as:
 
 ***
 
-# Class: DateFormatter
+## Class: DateFormatter
 
 ## Initialization
 
@@ -83,7 +85,7 @@ Creates a new date formatter instance.
 
 ***
 
-# Static Methods
+## Static Methods
 
 ## `DateFormatter.localizedString(date, options)`
 
@@ -118,7 +120,7 @@ If `locale` is omitted, the system locale is used.
 
 ***
 
-# Instance Methods
+## Instance Methods
 
 ## `string(date: Date): string`
 
@@ -144,7 +146,7 @@ Generates a localized format string from the template and assigns it to `dateFor
 
 ***
 
-# Properties
+## Properties
 
 ## Core Formatting Properties
 
@@ -267,19 +269,19 @@ Only works with certain date styles (e.g., medium and long).
 
 ***
 
-# Code Examples
+## Code Examples
 
 ***
 
 ## Example 1: Localized formatting using dateStyle and timeStyle
 
 ```tsx
-const df = new DateFormatter()
-df.locale = "zh_CN"
-df.dateStyle = DateFormatterStyle.full
-df.timeStyle = DateFormatterStyle.short
+const df = new DateFormatter();
+df.locale = "zh_CN";
+df.dateStyle = DateFormatterStyle.full;
+df.timeStyle = DateFormatterStyle.short;
 
-const result = df.string(new Date())
+const result = df.string(new Date());
 // Example output: "Friday, December 12, 2025 at 3:20 PM"
 ```
 
@@ -288,12 +290,12 @@ const result = df.string(new Date())
 ## Example 2: Custom date format
 
 ```tsx
-const df = new DateFormatter()
-df.locale = "en_US"
-df.dateFormat = "yyyy-MM-dd HH:mm"
-df.timeZone = "Asia/Shanghai"
+const df = new DateFormatter();
+df.locale = "en_US";
+df.dateFormat = "yyyy-MM-dd HH:mm";
+df.timeZone = "Asia/Shanghai";
 
-const str = df.string(new Date())
+const str = df.string(new Date());
 // Example output: "2025-12-12 15:20"
 ```
 
@@ -302,12 +304,12 @@ const str = df.string(new Date())
 ## Example 3: Formatting using the Chinese lunar calendar
 
 ```tsx
-const df = new DateFormatter()
-df.calendar = "chinese"
-df.locale = "zh_CN"
-df.dateFormat = "yyyy年MM月dd日 EEEE"
+const df = new DateFormatter();
+df.calendar = "chinese";
+df.locale = "zh_CN";
+df.dateFormat = "yyyy年MM月dd日 EEEE";
 
-const lunar = df.string(new Date())
+const lunar = df.string(new Date());
 // Example output: "四十三年十月二十二日 星期五"
 ```
 
@@ -316,10 +318,10 @@ const lunar = df.string(new Date())
 ## Example 4: Parsing a date string
 
 ```tsx
-const df = new DateFormatter()
-df.dateFormat = "yyyy/MM/dd HH:mm"
+const df = new DateFormatter();
+df.dateFormat = "yyyy/MM/dd HH:mm";
 
-const date = df.date("2025/12/12 08:00")
+const date = df.date("2025/12/12 08:00");
 ```
 
 ***
@@ -327,13 +329,13 @@ const date = df.date("2025/12/12 08:00")
 ## Example 5: Using a localized template
 
 ```tsx
-const df = new DateFormatter()
-df.locale = "zh_CN"
+const df = new DateFormatter();
+df.locale = "zh_CN";
 
 // Automatically becomes a localized format, e.g., "12月12日"
-df.setLocalizedDateFormatFromTemplate("MMdd")
+df.setLocalizedDateFormatFromTemplate("MMdd");
 
-const result = df.string(new Date())
+const result = df.string(new Date());
 ```
 
 ***
@@ -343,6 +345,6 @@ const result = df.string(new Date())
 ```tsx
 const str = DateFormatter.localizedString(new Date(), {
   dateStyle: DateFormatterStyle.medium,
-  timeStyle: DateFormatterStyle.short
-})
+  timeStyle: DateFormatterStyle.short,
+});
 ```

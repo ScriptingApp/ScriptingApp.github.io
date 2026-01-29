@@ -1,9 +1,11 @@
+# 日期格式化（DateFormatter）
+
 `DateFormatter` 类用于将 `Date` 类型格式化为字符串，或将字符串解析为 `Date`。
 该类封装了 iOS 的 `DateFormatter` 能力，适用于格式化日期、时间、本地化展示、农历日期展示（通过切换日历）、相对日期显示等场景。
 
 ***
 
-# 枚举与类型定义
+## 枚举与类型定义
 
 ## DateFormatterStyle
 
@@ -72,7 +74,7 @@
 
 ***
 
-# 类：DateFormatter
+## 类：DateFormatter
 
 ## 初始化
 
@@ -82,7 +84,7 @@
 
 ***
 
-# 静态方法
+## 静态方法
 
 ## `DateFormatter.localizedString(date, options)`
 
@@ -113,7 +115,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ***
 
-# 实例方法
+## 实例方法
 
 ## `string(date: Date): string`
 
@@ -137,7 +139,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ***
 
-# 属性说明
+## 属性说明
 
 以下为所有可配置属性的功能说明。
 
@@ -260,7 +262,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ***
 
-# 示例代码
+## 示例代码
 
 以下示例展示如何使用 `DateFormatter` 进行多种日期格式化场景。
 
@@ -269,14 +271,14 @@ static dateFormat(template: string, locale?: string): string | null
 ## 示例一：使用 dateStyle 和 timeStyle 进行本地化格式化
 
 ```tsx
-import { DateFormatter } from "scripting"
+import { DateFormatter } from "scripting";
 
-const df = new DateFormatter()
-df.locale = "zh_CN"
-df.dateStyle = DateFormatterStyle.full
-df.timeStyle = DateFormatterStyle.short
+const df = new DateFormatter();
+df.locale = "zh_CN";
+df.dateStyle = DateFormatterStyle.full;
+df.timeStyle = DateFormatterStyle.short;
 
-const result = df.string(new Date())
+const result = df.string(new Date());
 // 输出示例： "2025年12月12日 星期五 下午3:20"
 ```
 
@@ -285,13 +287,13 @@ const result = df.string(new Date())
 ## 示例二：自定义日期格式模板
 
 ```tsx
-const df = new DateFormatter()
-df.locale = "en_US"
-df.dateFormat = "yyyy-MM-dd HH:mm"
+const df = new DateFormatter();
+df.locale = "en_US";
+df.dateFormat = "yyyy-MM-dd HH:mm";
 
-df.timeZone = "Asia/Shanghai"
+df.timeZone = "Asia/Shanghai";
 
-const str = df.string(new Date())
+const str = df.string(new Date());
 // 输出示例： "2025-12-12 15:20"
 ```
 
@@ -300,13 +302,13 @@ const str = df.string(new Date())
 ## 示例三：使用农历格式化（chinese calendar）
 
 ```tsx
-const df = new DateFormatter()
+const df = new DateFormatter();
 
-df.calendar = "chinese"
-df.locale = "zh_CN"
-df.dateFormat = "yyyy年MM月dd日 EEEE"
+df.calendar = "chinese";
+df.locale = "zh_CN";
+df.dateFormat = "yyyy年MM月dd日 EEEE";
 
-const lunar = df.string(new Date())
+const lunar = df.string(new Date());
 // 输出示例： "四十三年十月廿二日 星期五"
 ```
 
@@ -315,10 +317,10 @@ const lunar = df.string(new Date())
 ## 示例四：解析字符串为日期
 
 ```tsx
-const df = new DateFormatter()
-df.dateFormat = "yyyy/MM/dd HH:mm"
+const df = new DateFormatter();
+df.dateFormat = "yyyy/MM/dd HH:mm";
 
-const date = df.date("2025/12/12 08:00")
+const date = df.date("2025/12/12 08:00");
 ```
 
 ***
@@ -326,13 +328,13 @@ const date = df.date("2025/12/12 08:00")
 ## 示例五：使用模板生成本地化格式
 
 ```tsx
-const df = new DateFormatter()
-df.locale = "zh_CN"
+const df = new DateFormatter();
+df.locale = "zh_CN";
 
 // 自动设置为符合中文习惯的格式，例如 "12月12日"
-df.setLocalizedDateFormatFromTemplate("MMdd")
+df.setLocalizedDateFormatFromTemplate("MMdd");
 
-const str = df.string(new Date())
+const str = df.string(new Date());
 ```
 
 ***
@@ -342,6 +344,6 @@ const str = df.string(new Date())
 ```tsx
 const str = DateFormatter.localizedString(new Date(), {
   dateStyle: DateFormatterStyle.medium,
-  timeStyle: DateFormatterStyle.short
-})
+  timeStyle: DateFormatterStyle.short,
+});
 ```

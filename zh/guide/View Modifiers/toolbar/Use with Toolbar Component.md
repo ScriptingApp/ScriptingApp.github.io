@@ -1,23 +1,17 @@
+# 使用 Toolbar 组件
+
 Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `ToolBarProps` 对象，也支持使用与 SwiftUI 结构一致的 `<Toolbar>`、`<ToolbarItem>`、`<ToolbarItemGroup>`、`<ToolbarSpacer>`、`<DefaultToolbarItem>` 等组件，构建更灵活、更强大的导航栏和工具栏布局。
 
 这些组件能够提供更精细的控制，允许开发者像 SwiftUI 一样以声明式方式编排工具栏内容，并为复杂布局提供更高可读性和可维护性。
 
 ***
 
-# 基本概念
+## 基本概念
 
 工具栏组件始终通过视图的 `toolbar` 属性使用：
 
 ```tsx
-<List
-  toolbar={
-    <Toolbar>
-      {/* 工具栏项 */}
-    </Toolbar>
-  }
->
-  {/* 主内容 */}
-</List>
+<List toolbar={<Toolbar>{/* 工具栏项 */}</Toolbar>}>{/* 主内容 */}</List>
 ```
 
 `toolbar` 可以接受：
@@ -29,7 +23,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# Toolbar
+## Toolbar
 
 `Toolbar` 组件是工具栏的容器，用于包含多个工具栏项。它本身不定义位置，内部的 `ToolbarItem` 或 `ToolbarItemGroup` 决定实际布局。
 
@@ -46,15 +40,14 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
         <Button title="完成" action={() => handleDone()} />
       </ToolbarItem>
     </Toolbar>
-  }
->
+  }>
   {/* 主内容 */}
 </List>
 ```
 
 ***
 
-# ToolbarItem
+## ToolbarItem
 
 `ToolbarItem` 表示放置在工具栏指定位置的单个项目。
 
@@ -77,7 +70,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# ToolbarItemGroup
+## ToolbarItemGroup
 
 `ToolbarItemGroup` 用于在同一位置放置多个工具栏项目，所有子项目将作为一组呈现。
 
@@ -101,7 +94,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# ToolbarSpacer
+## ToolbarSpacer
 
 `ToolbarSpacer` 用于在工具栏项之间添加空白区域，适合需要自定义布局的场景。
 
@@ -133,7 +126,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ***
 
-# DefaultToolbarItem
+## DefaultToolbarItem
 
 ```ts
 type ToolbarDefaultItemKind = "sidebarToggle" | "search" | "title";
@@ -165,14 +158,13 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ***
 
-# 综合示例：使用 Toolbar 构建复杂工具栏
+## 综合示例：使用 Toolbar 构建复杂工具栏
 
 ```tsx
 <NavigationStack>
   <List
     toolbar={
       <Toolbar>
-
         {/* 左侧导航按钮 */}
         <ToolbarItem placement="navigation">
           <Button title="返回" action={Navigation.useDismiss()} />
@@ -194,10 +186,8 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
         <ToolbarItem placement="bottomBar">
           <Button title="帮助" action={showHelp} />
         </ToolbarItem>
-
       </Toolbar>
-    }
-  >
+    }>
     {/* 主内容 */}
   </List>
 </NavigationStack>
@@ -207,7 +197,7 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ***
 
-# 与 ToolBarProps 的关系
+## 与 ToolBarProps 的关系
 
 在 API 层面：
 
@@ -220,7 +210,7 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ***
 
-# 总结
+## 总结
 
 Toolbar 组件提供了高度灵活的工具栏布局能力，包括：
 

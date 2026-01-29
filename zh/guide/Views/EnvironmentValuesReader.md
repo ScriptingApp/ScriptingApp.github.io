@@ -1,3 +1,5 @@
+# EnvironmentValuesReader
+
 `EnvironmentValuesReader` 是 Scripting 提供的一个组件，用于读取 SwiftUI 风格的环境值（Environment Values）。
 它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。
 
@@ -6,24 +8,24 @@
 
 ***
 
-# EnvironmentValues 类型
+## EnvironmentValues 类型
 
 ```ts
 type EnvironmentValues = {
-    colorScheme: ColorScheme;
-    colorSchemeContrast: ColorSchemeContrast;
-    displayScale: number;
-    horizontalSizeClass: UserInterfaceSizeClass | null;
-    verticalSizeClass: UserInterfaceSizeClass | null;
-    dismiss: () => void;
-    dismissSearch: () => void;
-    editMode: EditMode | null;
-    widgetRenderingMode: WidgetRenderingMode;
-    showsWidgetContainerBackground: boolean;
-    isSearching: boolean;
-    isPresented: boolean;
-    activityFamily: "small" | "medium";
-    tabViewBottomAccessoryPlacement: 'expanded' | 'inline';
+  colorScheme: ColorScheme;
+  colorSchemeContrast: ColorSchemeContrast;
+  displayScale: number;
+  horizontalSizeClass: UserInterfaceSizeClass | null;
+  verticalSizeClass: UserInterfaceSizeClass | null;
+  dismiss: () => void;
+  dismissSearch: () => void;
+  editMode: EditMode | null;
+  widgetRenderingMode: WidgetRenderingMode;
+  showsWidgetContainerBackground: boolean;
+  isSearching: boolean;
+  isPresented: boolean;
+  activityFamily: "small" | "medium";
+  tabViewBottomAccessoryPlacement: "expanded" | "inline";
 };
 ```
 
@@ -130,24 +132,24 @@ type EnvironmentValues = {
 类型：`'expanded' | 'inline'`
 说明：当前 TabView 的底部辅助栏的显示方式，同 SwiftUI 中的 `tabViewBottomAccessoryPlacement`。
 
-# EnvironmentValuesReader 组件
+## EnvironmentValuesReader 组件
 
 ```ts
 type EnvironmentValuesReaderProps = {
-    /**
-     * The keys to read from the environment values.
-     */
-    keys: Array<keyof EnvironmentValues>;
-    /**
-     * The callback function to render the children, it will be called with the environment values.
-     */
-    children: (values: EnvironmentValues) => VirtualNode;
+  /**
+   * The keys to read from the environment values.
+   */
+  keys: Array<keyof EnvironmentValues>;
+  /**
+   * The callback function to render the children, it will be called with the environment values.
+   */
+  children: (values: EnvironmentValues) => VirtualNode;
 };
 ```
 
 ***
 
-# Props 说明
+## Props 说明
 
 ## keys
 
@@ -166,7 +168,7 @@ type EnvironmentValuesReaderProps = {
 
 ***
 
-# 组件定义
+## 组件定义
 
 ```ts
 declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReaderProps>;
@@ -174,24 +176,26 @@ declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReader
 
 ***
 
-# 使用示例
+## 使用示例
 
 ## 示例：读取 colorScheme 和 displayScale
 
 ```tsx
-import { EnvironmentValuesReader, Text, VStack } from "scripting"
+import { EnvironmentValuesReader, Text, VStack } from "scripting";
 
 function View() {
-  return <EnvironmentValuesReader
-    keys={["colorScheme", "displayScale"]}
-  >
-    {(env) => {
-      return <VStack>
-        <Text>Color Scheme: {env.colorScheme}</Text>
-        <Text>Scale: {env.displayScale}</Text>
-      </VStack>
-    }}
-  </EnvironmentValuesReader>
+  return (
+    <EnvironmentValuesReader keys={["colorScheme", "displayScale"]}>
+      {(env) => {
+        return (
+          <VStack>
+            <Text>Color Scheme: {env.colorScheme}</Text>
+            <Text>Scale: {env.displayScale}</Text>
+          </VStack>
+        );
+      }}
+    </EnvironmentValuesReader>
+  );
 }
 ```
 
@@ -202,10 +206,7 @@ function View() {
 ```tsx
 <EnvironmentValuesReader keys={["dismiss"]}>
   {(env) => {
-    return <Button
-      title="Close"
-      action={() => env.dismiss()}
-    />
+    return <Button title="Close" action={() => env.dismiss()} />;
   }}
 </EnvironmentValuesReader>
 ```
@@ -217,15 +218,15 @@ function View() {
 ```tsx
 <EnvironmentValuesReader keys={["horizontalSizeClass"]}>
   {(env) => {
-    const compact = env.horizontalSizeClass === "compact"
-    return compact ? <Text>Compact Layout</Text> : <Text>Regular Layout</Text>
+    const compact = env.horizontalSizeClass === "compact";
+    return compact ? <Text>Compact Layout</Text> : <Text>Regular Layout</Text>;
   }}
 </EnvironmentValuesReader>
 ```
 
 ***
 
-# 使用注意事项
+## 使用注意事项
 
 1. **必须显式指定 keys**，否则不会读取任何 environment 值。
 2. 每次所指定的 environment key 发生变化时，`children()` 会重新渲染。

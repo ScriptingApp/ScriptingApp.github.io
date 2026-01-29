@@ -1,3 +1,5 @@
+# 液态玻璃效果
+
 **GlassEffect、GlassEffectContainer、UIGlass** 等相关 API 基于 SwiftUI 新引入的 Liquid Glass 技术，让开发者能够在脚本中以 TSX 方式使用流体化、动态的玻璃材质效果，并支持过渡动画、匹配几何、联合玻璃区域等高级特性。
 
 ***
@@ -14,7 +16,7 @@ Liquid Glass 是 iOS 26 新增的视觉效果系统，用于创建带有流动�
 
 ***
 
-# 2. GlassEffect 基础用法
+## 2. GlassEffect 基础用法
 
 所有支持玻璃效果的视图，都可以通过 `glassEffect` 修饰符添加 Liquid Glass 材质。
 
@@ -22,23 +24,27 @@ Liquid Glass 是 iOS 26 新增的视觉效果系统，用于创建带有流动�
 
 ```ts
 type GlassProps = {
-  glassEffect?: boolean | UIGlass | Shape | {
-      glass: UIGlass
-      shape: Shape
-  }
+  glassEffect?:
+    | boolean
+    | UIGlass
+    | Shape
+    | {
+        glass: UIGlass;
+        shape: Shape;
+      };
 
-  glassEffectTransition?: GlassEffectTransition
+  glassEffectTransition?: GlassEffectTransition;
 
   glassEffectID?: {
-      id: string | number
-      namespace: NamespaceID
-  }
+    id: string | number;
+    namespace: NamespaceID;
+  };
 
   glassEffectUnion?: {
-      id: string | number
-      namespace: NamespaceID
-  }
-}
+    id: string | number;
+    namespace: NamespaceID;
+  };
+};
 ```
 
 ***
@@ -70,7 +76,7 @@ glassEffect 有四种主要使用方式：
 ### 方式三：设置玻璃的形状（Shape）
 
 ```tsx
-<Text glassEffect={{ glass: UIGlass.regular(), shape: { type: 'rect', cornerRadius: 10 } }}>
+<Text glassEffect={{ glass: UIGlass.regular(), shape: { type: "rect", cornerRadius: 10 } }}>
   Foo
 </Text>
 ```
@@ -80,10 +86,9 @@ glassEffect 有四种主要使用方式：
 ```tsx
 <Text
   glassEffect={{
-    type: 'rect',
-    cornerRadius: 10
-  }}
->
+    type: "rect",
+    cornerRadius: 10,
+  }}>
   Foo
 </Text>
 ```
@@ -102,7 +107,7 @@ glassEffect 有四种主要使用方式：
 
 ***
 
-# 3. UIGlass 类
+## 3. UIGlass 类
 
 `UIGlass` 用于描述玻璃材质本身，可以选用内置材质或链式组合属性。
 
@@ -129,10 +134,10 @@ glassEffect={UIGlass.regular().interactive().tint("red")}
 
 ***
 
-# 4. GlassEffectTransition（玻璃过渡动画）
+## 4. GlassEffectTransition（玻璃过渡动画）
 
 ```ts
-type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
+type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
 ```
 
 ### 三种模式说明
@@ -146,10 +151,7 @@ type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
 ### 使用方式
 
 ```tsx
-<Text 
-  glassEffect
-  glassEffectTransition="materialize"
->
+<Text glassEffect glassEffectTransition="materialize">
   Foo
 </Text>
 ```
@@ -158,7 +160,7 @@ matchedGeometry 通常需要配合 `glassEffectID` 或 `glassEffectUnion` 使用
 
 ***
 
-# 5. glassEffectID 与 glassEffectUnion
+## 5. glassEffectID 与 glassEffectUnion
 
 Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched geometry 动画或合并多块玻璃区域。
 
@@ -169,10 +171,7 @@ Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched g
 为玻璃效果赋予唯一的 ID，用于 matchedGeometry 动画。
 
 ```tsx
-<Text
-  glassEffect
-  glassEffectID={{ id: "avatar", namespace }}
->
+<Text glassEffect glassEffectID={{ id: "avatar", namespace }}>
   Foo
 </Text>
 ```
@@ -186,17 +185,14 @@ Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched g
 用于将多个玻璃效果统一为一个更大区域。
 
 ```tsx
-<Text
-  glassEffect
-  glassEffectUnion={{ id: 1, namespace }}
-/>
+<Text glassEffect glassEffectUnion={{ id: 1, namespace }} />
 ```
 
 多个视图的玻璃材质将被合并，形成更一致的视觉区域。
 
 ***
 
-# 6. GlassEffectContainer
+## 6. GlassEffectContainer
 
 `GlassEffectContainer` 是用于组织和管理玻璃效果的容器。容器内部的所有 glassEffect 视图，都能参与几何匹配、联合效果和过渡动画。
 
@@ -221,7 +217,7 @@ GlassEffectContainer 不需要额外参数，但提供了玻璃效果组织空�
 
 ***
 
-# 7. 按钮的玻璃样式 buttonStyle
+## 7. 按钮的玻璃样式 buttonStyle
 
 Scripting 在 iOS 26 提供新增按钮样式：
 
@@ -245,7 +241,7 @@ Scripting 在 iOS 26 提供新增按钮样式：
 
 ***
 
-# 8. 实战示例说明
+## 8. 实战示例说明
 
 以下示例展示完整的用法，包括：
 
@@ -278,7 +274,7 @@ Scripting 在 iOS 26 提供新增按钮样式：
 
 ***
 
-# 9. 使用建议与最佳实践
+## 9. 使用建议与最佳实践
 
 ### 1. 大量玻璃视图应包裹在同一个 GlassEffectContainer
 

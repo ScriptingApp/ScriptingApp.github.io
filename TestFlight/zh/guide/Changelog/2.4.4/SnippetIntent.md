@@ -1,3 +1,5 @@
+# SnippetIntent
+
 SnippetIntent 是一种特殊类型的 AppIntent，可在 Shortcuts 中生成原生的 Snippet UI 卡片。它适用于：
 
 - 多步骤表单式交互
@@ -15,7 +17,7 @@ SnippetIntent 特点如下：
 
 ***
 
-# 系统要求
+## 系统要求
 
 **SnippetIntent 只能在 iOS 26 及以上系统运行。**
 
@@ -28,7 +30,7 @@ SnippetIntent 特点如下：
 
 ***
 
-# 注册 SnippetIntent（app\_intents.tsx）
+## 注册 SnippetIntent（app\_intents.tsx）
 
 在 `app_intents.tsx` 中声明 SnippetIntent：
 
@@ -37,9 +39,9 @@ export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />
-  }
-})
+    return <PickColorView />;
+  },
+});
 ```
 
 再例如：
@@ -49,9 +51,9 @@ export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    return <ResultView content={content} />
-  }
-})
+    return <ResultView content={content} />;
+  },
+});
 ```
 
 要求：
@@ -62,7 +64,7 @@ export const ShowResultIntent = AppIntentManager.register({
 
 ***
 
-# SnippetIntent 返回值封装：Intent.snippetIntent
+## SnippetIntent 返回值封装：Intent.snippetIntent
 
 SnippetIntent 不能直接作为 JS 返回值，必须通过 `Intent.snippetIntent()` 包装成 `IntentSnippetIntentValue`。
 
@@ -70,27 +72,31 @@ SnippetIntent 不能直接作为 JS 返回值，必须通过 `Intent.snippetInte
 const snippetValue = Intent.snippetIntent({
   value: Intent.text("Some value returning for Shortcuts"),
   snippetIntent: ShowResultIntent({
-    content: "Example Text"
-  })
-})
+    content: "Example Text",
+  }),
+});
 
-Script.exit(snippetValue)
+Script.exit(snippetValue);
 ```
 
 ### 类型定义
 
 ```ts
 type SnippetIntentValue = {
-  value?: IntentAttributedTextValue | IntentFileURLValue | IntentJsonValue | IntentTextValue | IntentURLValue | IntentFileValue | null
-  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>
-}
+  value?:
+    | IntentAttributedTextValue
+    | IntentFileURLValue
+    | IntentJsonValue
+    | IntentTextValue
+    | IntentURLValue
+    | IntentFileValue
+    | null;
+  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>;
+};
 
-declare class IntentSnippetIntentValue extends IntentValue<
-  'SnippetIntent',
-  SnippetIntentValue
-> {
-  value: SnippetIntentValue
-  type: 'SnippetIntent'
+declare class IntentSnippetIntentValue extends IntentValue<"SnippetIntent", SnippetIntentValue> {
+  value: SnippetIntentValue;
+  type: "SnippetIntent";
 }
 ```
 
@@ -98,7 +104,7 @@ declare class IntentSnippetIntentValue extends IntentValue<
 
 ***
 
-# Snippet 确认界面：Intent.requestConfirmation
+## Snippet 确认界面：Intent.requestConfirmation
 
 SnippetIntent 支持在执行逻辑中先请求用户确认某个操作。此能力同样基于 iOS 26。
 
@@ -120,7 +126,7 @@ Intent.requestConfirmation(
 示例值：
 
 ```
-"add" | "addData" | "book" | "buy" | "call" | "checkIn" | 
+"add" | "addData" | "book" | "buy" | "call" | "checkIn" |
 "continue" | "create" | "do" | "download" | "filter" |
 "find" | "get" | "go" | "log" | "open" | "order" |
 "pay" | "play" | "playSound" | "post" | "request" |
@@ -132,10 +138,7 @@ Intent.requestConfirmation(
 ### 示例
 
 ```tsx
-await Intent.requestConfirmation(
-  "set",
-  PickColorIntent()
-)
+await Intent.requestConfirmation("set", PickColorIntent());
 ```
 
 效果：
@@ -146,7 +149,7 @@ await Intent.requestConfirmation(
 
 ***
 
-# Shortcuts 的「Show Snippet Intent」动作（iOS 26+）
+## Shortcuts 的「Show Snippet Intent」动作（iOS 26+）
 
 Shortcuts 在 iOS 26 新增动作：
 
@@ -171,7 +174,7 @@ Shortcuts 在 iOS 26 新增动作：
 
 ***
 
-# IntentMemoryStorage — 跨 AppIntent 状态共享
+## IntentMemoryStorage — 跨 AppIntent 状态共享
 
 ## 1. 为什么需要 IntentMemoryStorage
 
@@ -196,12 +199,12 @@ API 定义：
 
 ```ts
 namespace IntentMemoryStorage {
-  function get<T>(key: string): T | null
-  function set(key: string, value: any): void
-  function remove(key: string): void
-  function contains(key: string): boolean
-  function clear(): void
-  function keys(): string[]
+  function get<T>(key: string): T | null;
+  function set(key: string, value: any): void;
+  function remove(key: string): void;
+  function contains(key: string): boolean;
+  function clear(): void;
+  function keys(): string[];
 }
 ```
 
@@ -214,16 +217,15 @@ namespace IntentMemoryStorage {
 ### 示例：存储用户颜色选择
 
 ```ts
-IntentMemoryStorage.set("color", "systemBlue")
+IntentMemoryStorage.set("color", "systemBlue");
 
-const color = IntentMemoryStorage.get<Color>("color")
+const color = IntentMemoryStorage.get<Color>("color");
 ```
 
 ### 建议
 
 - 不要存储大型数据（如大图像、长文本）
 - 大型数据请使用：
-
   - `Storage`（持久键值存储）
   - `FileManager` 写入 appGroupDocumentsDirectory
 
@@ -231,7 +233,7 @@ IntentMemoryStorage 适合作为临时状态共享，不适合当作数据库使
 
 ***
 
-# 完整示例（iOS 26+）
+## 完整示例（iOS 26+）
 
 ## app\_intents.tsx
 
@@ -240,52 +242,48 @@ export const SetColorIntent = AppIntentManager.register({
   name: "SetColorIntent",
   protocol: AppIntentProtocol.AppIntent,
   perform: async (color: Color) => {
-    IntentMemoryStorage.set("color", color)
-  }
-})
+    IntentMemoryStorage.set("color", color);
+  },
+});
 
 export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />
-  }
-})
+    return <PickColorView />;
+  },
+});
 
 export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue"
-    return <ResultView content={content} color={color} />
-  }
-})
+    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue";
+    return <ResultView content={content} color={color} />;
+  },
+});
 ```
 
 ## intent.tsx
 
 ```tsx
 async function runIntent() {
-
   // 1. 通过 Snippet 请求用户确认颜色
-  await Intent.requestConfirmation(
-    "set",
-    PickColorIntent()
-  )
+  await Intent.requestConfirmation("set", PickColorIntent());
 
   // 2. 从 Shortcuts 输入中读取文本
   const textContent =
     Intent.shortcutParameter?.type === "text"
       ? Intent.shortcutParameter.value
-      : "No text parameter from Shortcuts"
+      : "No text parameter from Shortcuts";
 
   // 3. 创建 SnippetIntent 返回结果
   const snippetIntentValue = Intent.snippetIntent({
-    snippetIntent: ShowResultIntent({ content: textContent })
-  })
+    snippetIntent: ShowResultIntent({ content: textContent }),
+  });
 
-  Script.exit(snippetIntentValue)
+  Script.exit(snippetIntentValue);
 }
 
-runIntent()
+runIntent();
 ```

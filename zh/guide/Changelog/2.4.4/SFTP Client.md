@@ -1,10 +1,12 @@
+# SFTP 客户端
+
 `SFTPClient` 用于通过 SSH 连接访问远程文件系统，基于 **SFTP 协议**。
 它提供目录操作、文件操作、路径解析等能力，并可通过 `openFile()` 获得更强大的 `SFTPFile` 对象执行读取、写入等低层操作。
 
 该类实例通常由：
 
 ```ts
-const sftp = await ssh.openSFTP()
+const sftp = await ssh.openSFTP();
 ```
 
 返回。
@@ -37,7 +39,7 @@ const sftp = await ssh.openSFTP()
 #### 示例：
 
 ```ts
-await sftp.close()
+await sftp.close();
 ```
 
 ***
@@ -72,7 +74,7 @@ await sftp.close()
 #### 示例：
 
 ```ts
-const items = await sftp.readDirectory("/var/log")
+const items = await sftp.readDirectory("/var/log");
 ```
 
 ***
@@ -92,7 +94,7 @@ const items = await sftp.readDirectory("/var/log")
 #### 示例：
 
 ```ts
-await sftp.createDirectory("/home/user/new-folder")
+await sftp.createDirectory("/home/user/new-folder");
 ```
 
 ***
@@ -112,7 +114,7 @@ await sftp.createDirectory("/home/user/new-folder")
 #### 示例：
 
 ```ts
-await sftp.removeDirectory("/home/user/empty-dir")
+await sftp.removeDirectory("/home/user/empty-dir");
 ```
 
 ***
@@ -133,7 +135,7 @@ await sftp.removeDirectory("/home/user/empty-dir")
 #### 示例：
 
 ```ts
-await sftp.rename("/home/user/a.txt", "/home/user/b.txt")
+await sftp.rename("/home/user/a.txt", "/home/user/b.txt");
 ```
 
 ***
@@ -158,7 +160,7 @@ await sftp.rename("/home/user/a.txt", "/home/user/b.txt")
 #### 示例：
 
 ```ts
-const attrs = await sftp.getAttributes("/etc/hosts")
+const attrs = await sftp.getAttributes("/etc/hosts");
 ```
 
 ***
@@ -185,9 +187,9 @@ const attrs = await sftp.getAttributes("/etc/hosts")
 #### 示例：
 
 ```ts
-const file = await sftp.openFile("/home/user/log.txt", ["read"])
-const data = await file.readAll()
-await file.close()
+const file = await sftp.openFile("/home/user/log.txt", ["read"]);
+const data = await file.readAll();
+await file.close();
 ```
 
 ***
@@ -203,7 +205,7 @@ await file.close()
 #### 示例：
 
 ```ts
-await sftp.remove("/home/user/old.txt")
+await sftp.remove("/home/user/old.txt");
 ```
 
 ***
@@ -215,34 +217,34 @@ await sftp.remove("/home/user/old.txt")
 #### 示例：
 
 ```ts
-const real = await sftp.getRealPath("~/documents")
+const real = await sftp.getRealPath("~/documents");
 ```
 
 ***
 
-# 使用示例
+## 使用示例
 
 ```ts
 const ssh = await SSHClient.connect({
   host: "192.168.1.10",
-  authenticationMethod: SSHAuthenticationMethod.passwordBased("user", "pass")
-})
+  authenticationMethod: SSHAuthenticationMethod.passwordBased("user", "pass"),
+});
 
-const sftp = await ssh.openSFTP()
+const sftp = await ssh.openSFTP();
 
 // 查看目录内容
-const list = await sftp.readDirectory("/home/user")
+const list = await sftp.readDirectory("/home/user");
 
 // 打开文件读取
-const file = await sftp.openFile("/home/user/info.txt", "read")
-const data = await file.readAll()
-await file.close()
+const file = await sftp.openFile("/home/user/info.txt", "read");
+const data = await file.readAll();
+await file.close();
 
 // 创建目录
-await sftp.createDirectory("/home/user/new-folder")
+await sftp.createDirectory("/home/user/new-folder");
 
 // 删除文件
-await sftp.remove("/home/user/temp.txt")
+await sftp.remove("/home/user/temp.txt");
 
-await sftp.close()
+await sftp.close();
 ```

@@ -1,3 +1,5 @@
+# 健康统计（HealthStatistics）
+
 `HealthStatistics` 类提供了对特定健康数量类型在指定时间范围内的**统计数据访问**。通过此类，你可以获取以下汇总信息：
 
 - 总持续时间（duration）
@@ -84,24 +86,24 @@
 const stats = await Health.queryStatistics({
   type: "stepCount",
   startDate: new Date("2025-07-01"),
-  endDate: new Date("2025-07-02")
-})
+  endDate: new Date("2025-07-02"),
+});
 
-const totalSteps = stats.sumQuantity(HealthUnit.count())
-const average = stats.averageQuantity(HealthUnit.count())
-const mostRecent = stats.mostRecentQuantity(HealthUnit.count())
-const recentInterval = stats.mostRecentQuantityDateInterval()
+const totalSteps = stats.sumQuantity(HealthUnit.count());
+const average = stats.averageQuantity(HealthUnit.count());
+const mostRecent = stats.mostRecentQuantity(HealthUnit.count());
+const recentInterval = stats.mostRecentQuantityDateInterval();
 
-console.log("步数统计：")
-console.log("总步数：", totalSteps)
-console.log("平均步数：", average)
-console.log("最近记录：", mostRecent)
-console.log("记录时间区间：", recentInterval)
+console.log("步数统计：");
+console.log("总步数：", totalSteps);
+console.log("平均步数：", average);
+console.log("最近记录：", mostRecent);
+console.log("记录时间区间：", recentInterval);
 ```
 
 ***
 
-# `HealthSource` 类
+## `HealthSource` 类
 
 `HealthSource` 表示一个健康数据的来源，如某个 app 或设备（例如 iPhone、Apple Watch 等）。
 

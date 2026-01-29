@@ -1,3 +1,5 @@
+# SFTP Client
+
 `SFTPClient` provides access to a remote file system over an SSH connection using the SFTP protocol.
 It supports directory operations, file management, attribute retrieval, and path resolution.
 Files can be opened using `openFile()`, which returns an `SFTPFile` instance for reading and writing.
@@ -5,7 +7,7 @@ Files can be opened using `openFile()`, which returns an `SFTPFile` instance for
 Instances of this class are typically created through:
 
 ```ts
-const sftp = await ssh.openSFTP()
+const sftp = await ssh.openSFTP();
 ```
 
 ***
@@ -36,7 +38,7 @@ Closes the SFTP connection.
 #### Example:
 
 ```ts
-await sftp.close()
+await sftp.close();
 ```
 
 ***
@@ -71,7 +73,7 @@ An array of directory entries:
 ### Example:
 
 ```ts
-const items = await sftp.readDirectory("/var/log")
+const items = await sftp.readDirectory("/var/log");
 ```
 
 ***
@@ -91,7 +93,7 @@ A promise that resolves when the directory is created.
 ### Example:
 
 ```ts
-await sftp.createDirectory("/home/user/new-folder")
+await sftp.createDirectory("/home/user/new-folder");
 ```
 
 ***
@@ -107,7 +109,7 @@ Removes a directory. The directory must be empty.
 ### Example:
 
 ```ts
-await sftp.removeDirectory("/home/user/empty-dir")
+await sftp.removeDirectory("/home/user/empty-dir");
 ```
 
 ***
@@ -124,7 +126,7 @@ Renames or moves a file or directory.
 ### Example:
 
 ```ts
-await sftp.rename("/home/user/a.txt", "/home/user/b.txt")
+await sftp.rename("/home/user/a.txt", "/home/user/b.txt");
 ```
 
 ***
@@ -149,7 +151,7 @@ Retrieves file or directory metadata.
 ### Example:
 
 ```ts
-const attrs = await sftp.getAttributes("/etc/hosts")
+const attrs = await sftp.getAttributes("/etc/hosts");
 ```
 
 ***
@@ -174,9 +176,9 @@ Opens a file with the specified flags and returns an `SFTPFile` instance.
 ### Example:
 
 ```ts
-const file = await sftp.openFile("/home/user/log.txt", ["read"])
-const data = await file.readAll()
-await file.close()
+const file = await sftp.openFile("/home/user/log.txt", ["read"]);
+const data = await file.readAll();
+await file.close();
 ```
 
 ***
@@ -192,7 +194,7 @@ Removes a file.
 ### Example:
 
 ```ts
-await sftp.remove("/home/user/old.txt")
+await sftp.remove("/home/user/old.txt");
 ```
 
 ***
@@ -204,34 +206,34 @@ Resolves symbolic links, `~`, and relative paths to an absolute path.
 ### Example:
 
 ```ts
-const real = await sftp.getRealPath("~/documents")
+const real = await sftp.getRealPath("~/documents");
 ```
 
 ***
 
-# Usage Example
+## Usage Example
 
 ```ts
 const ssh = await SSHClient.connect({
   host: "192.168.1.10",
-  authenticationMethod: SSHAuthenticationMethod.passwordBased("user", "pass")
-})
+  authenticationMethod: SSHAuthenticationMethod.passwordBased("user", "pass"),
+});
 
-const sftp = await ssh.openSFTP()
+const sftp = await ssh.openSFTP();
 
 // Read a directory
-const list = await sftp.readDirectory("/home/user")
+const list = await sftp.readDirectory("/home/user");
 
 // Open a file and read contents
-const file = await sftp.openFile("/home/user/info.txt", "read")
-const data = await file.readAll()
-await file.close()
+const file = await sftp.openFile("/home/user/info.txt", "read");
+const data = await file.readAll();
+await file.close();
 
 // Create a directory
-await sftp.createDirectory("/home/user/new-folder")
+await sftp.createDirectory("/home/user/new-folder");
 
 // Delete a file
-await sftp.remove("/home/user/temp.txt")
+await sftp.remove("/home/user/temp.txt");
 
-await sftp.close()
+await sftp.close();
 ```

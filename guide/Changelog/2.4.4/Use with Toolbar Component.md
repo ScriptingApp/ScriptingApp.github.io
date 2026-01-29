@@ -1,8 +1,10 @@
+# Use with Toolbar Component
+
 In Scripting, views can populate their navigation bar or toolbar area using either the original `ToolBarProps` object or the declarative component-based API that mirrors SwiftUI’s toolbar system. This document explains in detail how to use the `Toolbar`, `ToolbarItem`, `ToolbarItemGroup`, `ToolbarSpacer`, and `DefaultToolbarItem` components, including parameters, types, and usage patterns.
 
 ***
 
-# Overview
+## Overview
 
 The `toolbar` property can be used in two ways:
 
@@ -12,20 +14,12 @@ The `toolbar` property can be used in two ways:
 When using the component-based API, all toolbar content is declared inside a `<Toolbar>` container, and each item defines its placement explicitly. This provides clearer structure and more precise layout control, similar to SwiftUI.
 
 ```tsx
-<List
-  toolbar={
-    <Toolbar>
-      {/* toolbar items here */}
-    </Toolbar>
-  }
->
-  {/* main content */}
-</List>
+<List toolbar={<Toolbar>{/* toolbar items here */}</Toolbar>}>{/* main content */}</List>
 ```
 
 ***
 
-# Toolbar
+## Toolbar
 
 The `<Toolbar>` component serves as a container for toolbar content. It does not define placement itself; instead, `ToolbarItem` and `ToolbarItemGroup` determine where items go.
 
@@ -42,15 +36,14 @@ The `<Toolbar>` component serves as a container for toolbar content. It does not
         <Button title="Done" action={handleDone} />
       </ToolbarItem>
     </Toolbar>
-  }
->
+  }>
   {/* content */}
 </List>
 ```
 
 ***
 
-# ToolbarItem
+## ToolbarItem
 
 `ToolbarItem` represents a single toolbar element placed at a specific position.
 
@@ -73,7 +66,7 @@ The `<Toolbar>` component serves as a container for toolbar content. It does not
 
 ***
 
-# ToolbarItemGroup
+## ToolbarItemGroup
 
 `ToolbarItemGroup` allows multiple toolbar items to be grouped together in a single placement.
 
@@ -97,7 +90,7 @@ The `<Toolbar>` component serves as a container for toolbar content. It does not
 
 ***
 
-# ToolbarSpacer
+## ToolbarSpacer
 
 `ToolbarSpacer` inserts empty space in a toolbar. It can be used to fine-tune layout between items.
 
@@ -106,7 +99,7 @@ The `<Toolbar>` component serves as a container for toolbar content. It does not
 | Parameter   | Type                    | Default     | Description                                          |
 | ----------- | ----------------------- | ----------- | ---------------------------------------------------- |
 | `sizing`    | `'fixed' \| 'flexible'` | `flexible`  | Determines whether the spacer expands or stays fixed |
-| `placement` | `ToolbarItemPlacement`  | `automatic` | Placement for the  spacer                            |
+| `placement` | `ToolbarItemPlacement`  | `automatic` | Placement for the spacer                             |
 
 ### Behavior
 
@@ -131,7 +124,7 @@ The `<Toolbar>` component serves as a container for toolbar content. It does not
 
 ***
 
-# DefaultToolbarItem
+## DefaultToolbarItem
 
 `DefaultToolbarItem` inserts system-provided toolbar items, such as the sidebar toggle button or search button.
 
@@ -152,14 +145,13 @@ The `<Toolbar>` component serves as a container for toolbar content. It does not
 
 ***
 
-# Complete Example
+## Complete Example
 
 ```tsx
 <NavigationStack>
   <List
     toolbar={
       <Toolbar>
-
         {/* Navigation button */}
         <ToolbarItem placement="navigation">
           <Button title="Back" action={Navigation.useDismiss()} />
@@ -181,10 +173,8 @@ The `<Toolbar>` component serves as a container for toolbar content. It does not
         <ToolbarItem placement="bottomBar">
           <Button title="Help" action={showHelp} />
         </ToolbarItem>
-
       </Toolbar>
-    }
-  >
+    }>
     {/* content */}
   </List>
 </NavigationStack>
@@ -192,7 +182,7 @@ The `<Toolbar>` component serves as a container for toolbar content. It does not
 
 ***
 
-# Relationship with ToolBarProps
+## Relationship with ToolBarProps
 
 | Method                                    | Description                                              |
 | ----------------------------------------- | -------------------------------------------------------- |

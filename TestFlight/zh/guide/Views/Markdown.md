@@ -7,7 +7,7 @@
 ## 导入方式
 
 ```ts
-import { Markdown } from 'scripting'
+import { Markdown } from "scripting";
 ```
 
 ***
@@ -60,10 +60,7 @@ import { Markdown } from 'scripting'
 - `'wwdc18'`
 
 ````tsx
-<Markdown
-  content="```js\nconsole.log('Hello')\n```"
-  highlighterTheme="wwdc18"
-/>
+<Markdown content="```js\nconsole.log('Hello')\n```" highlighterTheme="wwdc18" />
 ````
 
 ***
@@ -100,7 +97,7 @@ import { Markdown } from 'scripting'
 ```tsx
 <Markdown
   content={`
-# 欢迎使用 Scripting
+## 欢迎使用 Scripting
 
 以下是一个简单的示例：
 

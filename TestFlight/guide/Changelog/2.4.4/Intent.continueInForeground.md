@@ -1,3 +1,5 @@
+# Intent.continueInForeground
+
 `Intent.continueInForeground` is an API that leverages the **iOS 26+ AppIntents framework** to request the system to bring the **Scripting app** to the foreground while a Shortcut is running.
 
 This method is used when a script—invoked from Shortcuts—requires full UI interaction within the Scripting app (for example: presenting a form, editing content, picking files, showing a full screen navigation flow, etc.).
@@ -14,14 +16,14 @@ Because this is a system-level capability of AppIntents:
 
 ***
 
-# API Definition
+## API Definition
 
 ```ts
 function continueInForeground(
   dialog?: Dialog | null,
   options?: {
     alwaysConfirm?: boolean;
-  }
+  },
 ): Promise<void>;
 ```
 
@@ -38,13 +40,13 @@ type Dialog =
   | string
   | { full: string; supporting: string }
   | { full: string; supporting: string; systemImageName: string }
-  | { full: string; systemImageName: string }
+  | { full: string; systemImageName: string };
 ```
 
 Examples:
 
 ```ts
-"Do you want to continue in the app?"
+"Do you want to continue in the app?";
 ```
 
 ```ts
@@ -71,25 +73,26 @@ Controls whether the system should always ask for confirmation:
 
 ***
 
-# Execution Behavior
+## Execution Behavior
 
 When called inside `intent.tsx`:
 
 1. The Shortcut pauses execution.
-2. The system presents a confirmation dialog.
-3. If the user accepts:
 
+2. The system presents a confirmation dialog.
+
+3. If the user accepts:
    - The Scripting app opens in the foreground.
    - The script continues executing after the `await`.
-4. If the user cancels:
 
+4. If the user cancels:
    - The entire script is terminated immediately.
 
 This mirrors the behavior of Apple’s AppIntents `continueInApp()` functionality for system apps.
 
 ***
 
-# Common Use Cases
+## Common Use Cases
 
 Use `continueInForeground` when the next step **cannot** run in the background, including:
 
@@ -103,7 +106,7 @@ It should **not** be used for simple data processing or non-interactive tasks.
 
 ***
 
-# Full Code Example
+## Full Code Example
 
 Below is the full working example demonstrating how `continueInForeground` enables a Shortcut to transfer execution into the Scripting app and then return UI input back to Shortcuts.
 
@@ -118,67 +121,52 @@ import {
   Script,
   Section,
   TextField,
-  useState
-} from "scripting"
+  useState,
+} from "scripting";
 
 function View() {
-  const dismiss = Navigation.useDismiss()
-  const [text, setText] = useState("")
+  const dismiss = Navigation.useDismiss();
+  const [text, setText] = useState("");
 
-  return <NavigationStack>
+  return (
+    <NavigationStack>
+      <List navigationTitle="Intent Demo">
+        <TextField title="Enter a text" value={text} onChanged={setText} />
 
-    <List navigationTitle="Intent Demo">
-
-      <TextField
-        title="Enter a text"
-        value={text}
-        onChanged={setText}
-      />
-
-      <Section>
-        <Button
-          title="Return Text"
-          action={() => {
-            dismiss(text)
-          }}
-          disabled={!/\S+/.test(text)}
-        />
-      </Section>
-
-    </List>
-
-  </NavigationStack>
+        <Section>
+          <Button
+            title="Return Text"
+            action={() => {
+              dismiss(text);
+            }}
+            disabled={!/\S+/.test(text)}
+          />
+        </Section>
+      </List>
+    </NavigationStack>
+  );
 }
 
 async function runIntent() {
-
   // Step 1: Ask the user to continue in the foreground app
-  await Intent.continueInForeground(
-    "Do you want to open the app and continue?"
-  )
+  await Intent.continueInForeground("Do you want to open the app and continue?");
 
   // Step 2: Present UI inside the Scripting app
-  const text = await Navigation.present<string | null>(
-    <View />
-  )
+  const text = await Navigation.present<string | null>(<View />);
 
   // Step 3: Optionally go back to Shortcuts
-  Safari.openURL("shortcuts://")
+  Safari.openURL("shortcuts://");
 
   // Step 4: Return the result to Shortcuts
-  Script.exit(
-    Intent.text(
-      text ?? "No text return"
-    )
-  )
+  Script.exit(Intent.text(text ?? "No text return"));
 }
 
-runIntent()
+runIntent();
 ```
 
 ***
 
-# Notes and Recommendations
+## Notes and Recommendations
 
 1. **Requires iOS 26+**
    Do not call this API on older systems.
@@ -197,7 +185,7 @@ runIntent()
 
 ***
 
-# Summary
+## Summary
 
 `Intent.continueInForeground` enables scripts invoked from Shortcuts to request foreground execution when UI interaction is required. It is:
 

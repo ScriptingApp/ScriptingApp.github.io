@@ -1,14 +1,16 @@
+# ScrollViewReader
+
 The **ScrollViewReader** component equivalent to SwiftUI’s ScrollViewReader, allowing scripts to programmatically control scrolling position within scrollable content such as `List` or `ScrollView`.
 
 ***
 
-# ScrollViewProxy
+## ScrollViewProxy
 
 `ScrollViewProxy` represents the programmatic interface for controlling scrolling. It is provided by `ScrollViewReader` during rendering.
 
 ```ts
 interface ScrollViewProxy {
-    scrollTo: (id: string | number, anchor?: KeywordPoint | Point) => void
+  scrollTo: (id: string | number, anchor?: KeywordPoint | Point) => void;
 }
 ```
 
@@ -20,10 +22,10 @@ Scrolls the closest scrollable container until the element with the specified `k
 
 #### Parameters
 
-| Parameter | Type           | Required | Description |                                                                                                          |
-| --------- | -------------- | -------- | ----------- | -------------------------------------------------------------------------------------------------------- |
-| id        | `string`       | `number` | Yes         | The `key` of the target element. Must match the `key` assigned to a child inside the scrollable content. |
-| anchor    | `KeywordPoint` | `Point`  | No          | Controls how the target is aligned within the visible area. Optional.                                    |
+\| Parameter | Type           | Required | Description |
+\| --------- | -------------- | -------- | ----------- | -------------------------------------------------------------------------------------------------------- |
+\| id        | `string`       | `number` | Yes         | The `key` of the target element. Must match the `key` assigned to a child inside the scrollable content. |
+\| anchor    | `KeywordPoint` | `Point`  | No          | Controls how the target is aligned within the visible area. Optional.                                    |
 
 ### KeywordPoint
 
@@ -39,18 +41,18 @@ Precise alignment coordinates:
 
 ```ts
 type Point = {
-  x: number
-  y: number
-}
+  x: number;
+  y: number;
+};
 ```
 
 ***
 
-# ScrollViewReader Component
+## ScrollViewReader Component
 
 ```ts
 type ScrollViewReaderProps = {
-    children: (scrollViewProxy: ScrollViewProxy) => VirtualNode;
+  children: (scrollViewProxy: ScrollViewProxy) => VirtualNode;
 };
 declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>;
 ```
@@ -63,7 +65,7 @@ declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>;
 
 ***
 
-# Behavior and Usage Notes
+## Behavior and Usage Notes
 
 1. ScrollViewReader must wrap a `List`, `ScrollView`, or another scrollable container.
 2. The `proxy` is created once during rendering. Use `useRef` if you need to store it.
@@ -73,7 +75,7 @@ declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>;
 
 ***
 
-# Example Usage
+## Example Usage
 
 ```tsx
 import {
@@ -88,77 +90,71 @@ import {
   VStack,
   useRef,
   ScrollViewProxy,
-} from "scripting"
-
+} from "scripting";
 
 function Item({ index }: { index: number }) {
-  return <Text>
-    Item - {index}
-  </Text>
+  return <Text>Item - {index}</Text>;
 }
 
 function View() {
-  const dismiss = Navigation.useDismiss()
-  const proxyRef = useRef<ScrollViewProxy>()
+  const dismiss = Navigation.useDismiss();
+  const proxyRef = useRef<ScrollViewProxy>();
 
-  return <NavigationStack>
-    <VStack navigationTitle="ScrollViewReader">
+  return (
+    <NavigationStack>
+      <VStack navigationTitle="ScrollViewReader">
+        <ScrollViewReader>
+          {(proxy) => {
+            // Store the proxy instance
+            proxyRef.current = proxy;
 
-      <ScrollViewReader>
-        {(proxy) => {
-          // Store the proxy instance
-          proxyRef.current = proxy
+            return (
+              <List>
+                {new Array(100).fill(0).map((_, index) => (
+                  <Item key={index} index={index} />
+                ))}
+                <Text key="bottom">Bottom</Text>
+              </List>
+            );
+          }}
+        </ScrollViewReader>
 
-          return <List>
-            {new Array(100).fill(0).map((_, index) =>
-              <Item
-                key={index}
-                index={index}
-              />
-            )}
-            <Text key="bottom">
-              Bottom
-            </Text>
-          </List>
-        }}
-      </ScrollViewReader>
+        <Button
+          title="Jump"
+          action={() => {
+            if (proxyRef.current == null) {
+              console.log("no proxy found");
+              return;
+            }
 
-      <Button
-        title="Jump"
-        action={() => {
-          if (proxyRef.current == null) {
-            console.log("no proxy found")
-            return
-          }
+            const index = (Math.random() * 100) | 0;
 
-          const index = Math.random() * 100 | 0
+            withAnimation(() => {
+              proxyRef.current?.scrollTo(index);
 
-          withAnimation(() => {
-            proxyRef.current?.scrollTo(index)
-
-            // Scroll to the element identified by key="bottom"
-            // proxyRef.current?.scrollTo("bottom", "bottom")
-          })
-        }}
-      />
-
-    </VStack>
-  </NavigationStack>
+              // Scroll to the element identified by key="bottom"
+              // proxyRef.current?.scrollTo("bottom", "bottom")
+            });
+          }}
+        />
+      </VStack>
+    </NavigationStack>
+  );
 }
 
 async function run() {
   await Navigation.present({
-    element: <View />
-  })
-  Script.exit()
+    element: <View />,
+  });
+  Script.exit();
 }
 
-run()
+run();
 ```
 
 ***
 
-# How `key` Works in Scripting
+## How `key` Works in Scripting
 
 Scripting does not support `.id()` as in SwiftUI.
 Instead:
@@ -173,21 +169,21 @@ Instead:
 
 ***
 
-# Animation Support
+## Animation Support
 
 Scroll operations can be wrapped in `withAnimation` to enable smooth transitions:
 
 ```tsx
 withAnimation(() => {
-  proxy.scrollTo("targetKey", "center")
-})
+  proxy.scrollTo("targetKey", "center");
+});
 ```
 
 The animation behavior follows SwiftUI’s animation engine.
 
 ***
 
-# Important Notes
+## Important Notes
 
 1. Every scroll target must have a unique `key`.
 2. `scrollTo` will not work without a matching `key`.

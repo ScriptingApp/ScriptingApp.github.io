@@ -7,7 +7,7 @@ The `Markdown` component renders styled Markdown content within your script’s 
 ## Import
 
 ```ts
-import { Markdown } from 'scripting'
+import { Markdown } from "scripting";
 ```
 
 ***
@@ -60,10 +60,7 @@ Available options:
 - `'wwdc18'`
 
 ````tsx
-<Markdown
-  content="```js\nconsole.log('Hello')\n```"
-  highlighterTheme="wwdc18"
-/>
+<Markdown content="```js\nconsole.log('Hello')\n```" highlighterTheme="wwdc18" />
 ````
 
 ***
@@ -100,7 +97,7 @@ Controls whether the Markdown view is scrollable. Set to `false` to embed static
 ```tsx
 <Markdown
   content={`
-# Welcome to Scripting
+## Welcome to Scripting
 
 Here's a quick example:
 

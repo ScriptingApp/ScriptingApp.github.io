@@ -1,3 +1,5 @@
+# 设置环境变量 (environments)
+
 `environments` 是 Scripting 新增的视图修饰符，用于向当前视图树（View Hierarchy）注入特定的 environment values。
 它的作用与 SwiftUI 的 `.environment()` 类似，但基于 Scripting 的设计进行了显式声明和类型收敛，避免隐式行为。
 
@@ -10,7 +12,7 @@
 
 ***
 
-# 修饰符定义
+## 修饰符定义
 
 ```ts
 environments?: {
@@ -21,7 +23,7 @@ environments?: {
 
 ***
 
-# 一、editMode（编辑模式）
+## 一、editMode（编辑模式）
 
 `editMode` 用于设置当前视图树中所有支持编辑模式的组件的编辑状态。
 
@@ -35,12 +37,12 @@ environments?: {
 
 ```ts
 class EditMode {
-  readonly value: "active" | "inactive" | "transient" | "unknown"
-  readonly isEditing: boolean
+  readonly value: "active" | "inactive" | "transient" | "unknown";
+  readonly isEditing: boolean;
 
-  static active(): EditMode
-  static inactive(): EditMode
-  static transient(): EditMode
+  static active(): EditMode;
+  static inactive(): EditMode;
+  static transient(): EditMode;
 }
 ```
 
@@ -85,7 +87,7 @@ const editMode = useObservable(() => EditMode.active())
 
 ***
 
-# 二、openURL（自定义 URL 打开行为）
+## 二、openURL（自定义 URL 打开行为）
 
 `openURL` environment 允许为当前视图树定义一套自定义的 URL 打开逻辑。
 这会覆盖如 `<Link>`、`Text(url:)` 等组件的默认行为。
@@ -104,21 +106,21 @@ openURL?: (url: string) => OpenURLActionResult;
 
 ***
 
-# OpenURLActionResult
+## OpenURLActionResult
 
 自定义 URL 打开逻辑的返回类型。
 
 ```ts
 class OpenURLActionResult {
-  type: string
+  type: string;
 
-  static handled(): OpenURLActionResult
-  static discarded(): OpenURLActionResult
+  static handled(): OpenURLActionResult;
+  static discarded(): OpenURLActionResult;
 
   static systemAction(options?: {
-    url?: string
-    prefersInApp: boolean // Requires iOS26.0+
-  }): OpenURLActionResult
+    url?: string;
+    prefersInApp: boolean; // Requires iOS26.0+
+  }): OpenURLActionResult;
 }
 ```
 
@@ -140,14 +142,13 @@ class OpenURLActionResult {
     openURL: (url) => {
       return OpenURLActionResult.systemAction({
         url,
-        prefersInApp: false
-      })
-    }
-  }}
->
-  {urls.map(url =>
+        prefersInApp: false,
+      });
+    },
+  }}>
+  {urls.map((url) => (
     <Link url={url}>{url}</Link>
-  )}
+  ))}
 </Group>
 ```
 
@@ -158,7 +159,7 @@ class OpenURLActionResult {
 
 ***
 
-# 使用总结
+## 使用总结
 
 | environment key | 类型                             | 作用范围      | 使用场景         |
 | --------------- | ------------------------------ | --------- | ------------ |
@@ -167,7 +168,7 @@ class OpenURLActionResult {
 
 ***
 
-# 完整示例：同时使用 editMode 与 openURL
+## 完整示例：同时使用 editMode 与 openURL
 
 ```tsx
 const editMode = useObservable(() => EditMode.inactive())
@@ -203,7 +204,7 @@ const editMode = useObservable(() => EditMode.inactive())
 
 ***
 
-# 注意事项
+## 注意事项
 
 1. `environments` 为局部作用域，仅影响其子视图。
 2. `editMode` 必须是 `Observable<EditMode>` 才能触发界面更新。

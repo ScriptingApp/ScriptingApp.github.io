@@ -1,3 +1,5 @@
+# 提醒事项
+
 `Reminder` API 用于在 iOS 日历系统中创建、编辑和管理提醒事项。
 它支持通过 `DateComponents` 设置截止日期、管理完成状态、设置优先级、添加备注、配置重复规则，以及使用提醒的各种相关属性，例如闹钟（EventAlarm）、参与者信息、状态检测属性等。
 
@@ -9,7 +11,7 @@
 
 ***
 
-# 一、属性说明
+## 一、属性说明
 
 ### identifier: string
 
@@ -136,7 +138,7 @@
 
 ***
 
-# 二、实例方法
+## 二、实例方法
 
 ### addAlarm(alarm: EventAlarm): void
 
@@ -169,7 +171,7 @@
 
 ***
 
-# 三、静态方法
+## 三、静态方法
 
 ### `Reminder.getAll(calendars?: Calendar[]): Promise<Reminder[]>`
 
@@ -214,14 +216,14 @@
 
 ***
 
-# 四、示例
+## 四、示例
 
 ## 使用 DateComponents 设置提醒
 
 ```ts
-const reminder = new Reminder()
-reminder.title = "准备会议资料"
-reminder.notes = "周一会议前完成"
+const reminder = new Reminder();
+reminder.title = "准备会议资料";
+reminder.notes = "周一会议前完成";
 
 reminder.dueDateComponents = new DateComponents({
   year: 2025,
@@ -229,10 +231,10 @@ reminder.dueDateComponents = new DateComponents({
   day: 6,
   hour: 9,
   minute: 30,
-})
+});
 
-reminder.priority = 2
-await reminder.save()
+reminder.priority = 2;
+await reminder.save();
 ```
 
 ***
@@ -244,7 +246,7 @@ reminder.dueDateComponents = new DateComponents({
   year: 2025,
   month: 10,
   day: 6,
-})
+});
 ```
 
 ***
@@ -252,8 +254,8 @@ reminder.dueDateComponents = new DateComponents({
 ## 从 Date 创建 DateComponents
 
 ```ts
-const now = new Date()
-reminder.dueDateComponents = DateComponents.fromDate(now)
+const now = new Date();
+reminder.dueDateComponents = DateComponents.fromDate(now);
 ```
 
 ***
@@ -261,9 +263,9 @@ reminder.dueDateComponents = DateComponents.fromDate(now)
 ## 获取提醒事项
 
 ```ts
-const reminders = await Reminder.getAll()
+const reminders = await Reminder.getAll();
 for (const r of reminders) {
-  console.log(`提醒：${r.title}`)
+  console.log(`提醒：${r.title}`);
 }
 ```
 
@@ -275,7 +277,7 @@ for (const r of reminders) {
 const incompletes = await Reminder.getIncompletes({
   startDate: new Date("2025-01-01"),
   endDate: new Date("2025-01-31"),
-})
+});
 ```
 
 ***
@@ -283,8 +285,8 @@ const incompletes = await Reminder.getIncompletes({
 ## 标记提醒完成
 
 ```ts
-reminder.isCompleted = true
-await reminder.save()
+reminder.isCompleted = true;
+await reminder.save();
 ```
 
 ***
@@ -292,12 +294,12 @@ await reminder.save()
 ## 删除提醒
 
 ```ts
-await reminder.remove()
+await reminder.remove();
 ```
 
 ***
 
-# 五、补充说明
+## 五、补充说明
 
 ### 日期管理
 

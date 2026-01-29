@@ -1,3 +1,5 @@
+# Request & RequestInit
+
 The `Request` class represents a complete configuration of an HTTP request.
 It can be passed directly to the `fetch()` method or used to clone, modify, or retry an existing request.
 
@@ -15,20 +17,20 @@ In Scripting, the `Request` API behaves similarly to the browser’s Fetch API b
 
 ```ts
 class Request {
-  url: string
-  method: string
-  headers: Headers
-  body?: Data | FormData | string | ArrayBuffer
-  allowInsecureRequest?: boolean
-  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>
-  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean> // deprecated
-  timeout?: DurationInSeconds
-  signal?: AbortSignal
-  cancelToken?: CancelToken // deprecated
-  debugLabel?: string
+  url: string;
+  method: string;
+  headers: Headers;
+  body?: Data | FormData | string | ArrayBuffer;
+  allowInsecureRequest?: boolean;
+  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>;
+  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean>; // deprecated
+  timeout?: DurationInSeconds;
+  signal?: AbortSignal;
+  cancelToken?: CancelToken; // deprecated
+  debugLabel?: string;
 
-  constructor(input: string | Request, init?: RequestInit)
-  clone(): Request
+  constructor(input: string | Request, init?: RequestInit);
+  clone(): Request;
 }
 ```
 
@@ -42,10 +44,10 @@ Creates a new `Request` instance from either a URL string or an existing `Reques
 
 #### Parameters
 
-| Parameter | Type          | Description                                                          |                                                  |
-| --------- | ------------- | -------------------------------------------------------------------- | ------------------------------------------------ |
-| **input** | `string`      | `Request`                                                            | The target URL, or an existing request to clone. |
-| **init**  | `RequestInit` | Optional configuration object defining request settings (see below). |                                                  |
+\| Parameter | Type          | Description                                                          |
+\| --------- | ------------- | -------------------------------------------------------------------- | ------------------------------------------------ |
+\| **input** | `string`      | `Request`                                                            | The target URL, or an existing request to clone. |
+\| **init**  | `RequestInit` | Optional configuration object defining request settings (see below). |
 
 ***
 
@@ -81,10 +83,10 @@ const req1 = new Request("https://api.example.com/user", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ name: "Alice" }),
-})
+});
 
-const req2 = req1.clone()
-console.log(req2.method) // "POST"
+const req2 = req1.clone();
+console.log(req2.method); // "POST"
 ```
 
 ***
@@ -97,14 +99,14 @@ console.log(req2.method) // "POST"
 const request = new Request("https://api.example.com/data", {
   method: "GET",
   headers: {
-    "Accept": "application/json",
+    Accept: "application/json",
   },
   debugLabel: "Fetch User Data",
-})
+});
 
-const response = await fetch(request)
-const result = await response.json()
-console.log(result)
+const response = await fetch(request);
+const result = await response.json();
+console.log(result);
 ```
 
 ***
@@ -117,10 +119,10 @@ const request = new Request("https://api.example.com/upload", {
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ fileId: "abc123" }),
   timeout: 15,
-})
+});
 
-const response = await fetch(request)
-console.log(await response.text())
+const response = await fetch(request);
+console.log(await response.text());
 ```
 
 ***
@@ -131,18 +133,18 @@ console.log(await response.text())
 const base = new Request("https://api.example.com/posts", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-})
+});
 
-const cloned = base.clone()
-cloned.headers.set("Authorization", "Bearer token-123")
-cloned.debugLabel = "Authorized Upload"
+const cloned = base.clone();
+cloned.headers.set("Authorization", "Bearer token-123");
+cloned.debugLabel = "Authorized Upload";
 
-await fetch(cloned)
+await fetch(cloned);
 ```
 
 ***
 
-# RequestInit Interface
+## RequestInit Interface
 
 The `RequestInit` interface defines configuration options for HTTP requests.
 It is used as the second argument to `fetch()` or the optional configuration object when creating a new `Request`.
@@ -154,17 +156,17 @@ Scripting extends this interface with additional native fields.
 
 ```ts
 type RequestInit = {
-  method?: string
-  headers?: HeadersInit
-  body?: Data | FormData | string | ArrayBuffer
-  allowInsecureRequest?: boolean
-  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>
-  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean> // deprecated
-  timeout?: DurationInSeconds
-  signal?: AbortSignal
-  cancelToken?: CancelToken // deprecated
-  debugLabel?: string
-}
+  method?: string;
+  headers?: HeadersInit;
+  body?: Data | FormData | string | ArrayBuffer;
+  allowInsecureRequest?: boolean;
+  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>;
+  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean>; // deprecated
+  timeout?: DurationInSeconds;
+  signal?: AbortSignal;
+  cancelToken?: CancelToken; // deprecated
+  debugLabel?: string;
+};
 ```
 
 ***
@@ -197,7 +199,7 @@ const response = await fetch("https://example.com/data", {
   body: JSON.stringify({ id: 123 }),
   timeout: 10,
   debugLabel: "Upload JSON",
-})
+});
 ```
 
 ***
@@ -222,11 +224,11 @@ const response = await fetch("https://example.com/data", {
 ```tsx
 const response = await fetch("https://example.com/start", {
   handleRedirect: async (newRequest) => {
-    console.log("Redirect detected:", newRequest.url)
-    if (newRequest.url.includes("blocked")) return null
-    return newRequest
+    console.log("Redirect detected:", newRequest.url);
+    if (newRequest.url.includes("blocked")) return null;
+    return newRequest;
   },
-})
+});
 ```
 
 ***
@@ -236,8 +238,8 @@ const response = await fetch("https://example.com/start", {
 ```tsx
 const response = await fetch("http://insecure.example.com/data", {
   allowInsecureRequest: true,
-})
-console.log(await response.text())
+});
+console.log(await response.text());
 ```
 
 ***
@@ -247,7 +249,7 @@ console.log(await response.text())
 ```tsx
 await fetch("https://example.com/api/ping", {
   debugLabel: "Ping Request",
-})
+});
 // The log panel will display the label "Ping Request"
 ```
 
@@ -265,12 +267,12 @@ You can inspect or modify this object to control whether and how the redirect sh
 
 ```ts
 interface RedirectRequest {
-  method: string
-  url: string
-  headers: Record<string, string>
-  cookies: Cookie[]
-  body?: Data
-  timeout?: number
+  method: string;
+  url: string;
+  headers: Record<string, string>;
+  cookies: Cookie[];
+  body?: Data;
+  timeout?: number;
 }
 ```
 
@@ -309,19 +311,19 @@ When the callback returns:
 ```tsx
 const response = await fetch("https://example.com/start", {
   handleRedirect: async (redirect) => {
-    console.log("Redirecting to:", redirect.url)
+    console.log("Redirecting to:", redirect.url);
 
     // Block redirects to external domains
     if (!redirect.url.startsWith("https://example.com")) {
-      console.warn("Blocked external redirect:", redirect.url)
-      return null
+      console.warn("Blocked external redirect:", redirect.url);
+      return null;
     }
 
     // Add authorization header to redirected request
-    redirect.headers["Authorization"] = "Bearer my-token"
-    return redirect
+    redirect.headers["Authorization"] = "Bearer my-token";
+    return redirect;
   },
-})
+});
 ```
 
 ***
@@ -333,12 +335,12 @@ const response = await fetch("https://api.example.com/login", {
   handleRedirect: async (redirect) => {
     // Keep the request body when redirecting to a confirmation endpoint
     if (redirect.url.includes("/finalize")) {
-      redirect.method = "POST"
-      redirect.body = Data.fromRawString("action=confirm", "utf-8")
+      redirect.method = "POST";
+      redirect.body = Data.fromRawString("action=confirm", "utf-8");
     }
-    return redirect
+    return redirect;
   },
-})
+});
 ```
 
 ***
