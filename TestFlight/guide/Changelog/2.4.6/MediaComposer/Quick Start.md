@@ -288,6 +288,7 @@ type ExportOptions = {
   ducking?: DuckingConfig
   presetName?: ExportPreset
   outputFileType?: ExportFileType
+  colorSpacePolicy?: ColorSpacePolicy
 }
 ```
 
@@ -307,6 +308,9 @@ type ExportOptions = {
 
 - **presetName / outputFileType**
   Control encoding quality and output format
+
+- **colorSpacePolicy**
+  Color space conversion policy, default is `forceSDR`, other options are `keepSource`.
 
 ***
 

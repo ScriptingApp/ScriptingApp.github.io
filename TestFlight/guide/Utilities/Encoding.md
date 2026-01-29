@@ -45,8 +45,6 @@ These encodings allow interoperability with various text formats and systems, en
 ### Converting a String to Data and Back
 
 ```ts
-import { Data } from 'scripting'
-
 // Convert a UTF-8 string to binary data
 const text = "こんにちは世界"  // "Hello World" in Japanese
 const utf8Data = Data.fromRawString(text, "utf-8")

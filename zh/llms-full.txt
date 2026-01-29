@@ -1329,39 +1329,40 @@ const summary = await Assistant.requestStructuredData<ImageSummary>(
 
 
 ---
-url: /TestFlight/zh/guide/AssistantTool.md
+url: /TestFlight/zh/guide/AssistantTool/Assistant Tool With User Approval.md
 ---
 
-# 智能助手工具
+# 需要用户批准的 Assistant Tool
 
-Assistant Tool 是 Scripting 应用中为智能助手（Assistant）提供系统功能扩展的机制。通过定义和实现 Assistant Tool，开发者可以为 Assistant 提供设备能力访问、文件读写操作、数据分析处理等辅助功能，提升 Assistant 的智能性和实用性。
+在 Scripting 中实现 **需要用户批准（Approval）** 的 Assistant Tool。
 
-本文以一个示例工具「Request Current Location」为基础，介绍 Assistant Tool 的完整实现流程，包括工具创建、配置文件说明、执行逻辑实现以及各类函数的详细说明。
-
-***
-
-## 一、工具创建流程
-
-1. 打开任意脚本项目，在文件管理界面点击“添加 Assistant Tool”按钮。
-
-2. 在弹出的配置窗口中填写Assistant Tool 相关的信息。
-
-3. 点击“保存”后，系统会自动在脚本中生成两个文件：
-
-- `assistant_tool.json`：描述工具的元数据和参数信息。
-- `assistant_tool.tsx`：实现工具的执行逻辑。
+这类工具通常涉及 **隐私、权限、数据修改或不可逆操作**，必须在执行前获得用户明确同意。
 
 ***
 
-## 二、配置文件 assistant\_tool.json
+## 一、何时必须使用 Approval 模式
 
-该文件用于声明工具的基本信息和行为配置。以下是示例内容及字段说明：
+只要工具满足以下任一条件，就应使用 Approval 模式：
+
+- 访问用户隐私数据（定位、照片、联系人、日历、健康数据等）
+- 触发系统权限请求
+- 修改、删除或批量写入用户文件
+- 行为结果对用户具有长期或不可逆影响
+- 用户有必要在执行前理解“将发生什么”
+
+Approval 的核心目标是 **让用户知情并确认**。
+
+***
+
+## 二、assistant\_tool.json 配置要求
+
+需要 Approval 的工具必须在配置文件中声明：
 
 ```json
 {
   "displayName": "Request Current Location",
   "id": "request_current_location",
-  "description": "This tool allows you to request the one-time delivery of the latitude and longitude of the user’s current location.",
+  "description": "Requests the user's current location one time.",
   "icon": "location.fill",
   "color": "systemBlue",
   "parameters": [],
@@ -1371,123 +1372,164 @@ Assistant Tool 是 Scripting 应用中为智能助手（Assistant）提供系统
 }
 ```
 
-### 字段说明：
+### 关键字段说明
 
-| 字段                 | 类型      | 说明                  |
-| ------------------ | ------- | ------------------- |
-| `displayName`      | string  | 工具在界面中显示的名称         |
-| `id`               | string  | 工具唯一标识符，不能重复        |
-| `description`      | string  | 工具功能描述              |
-| `icon`             | string  | 使用的 SF Symbols 图标名  |
-| `color`            | string  | 工具主色调               |
-| `parameters`       | array   | 工具需要的参数（为空表示无输入）    |
-| `requireApproval`  | boolean | 是否需要用户批准            |
-| `autoApprove`      | boolean | 是否支持 Assistant 自动批准 |
-| `scriptEditorOnly` | boolean | 工具是否仅能在脚本编辑器中使用     |
+- `requireApproval: true`
+  表示工具执行前必须进入批准流程（弹出批准对话框或走自动批准逻辑）。
+
+- `autoApprove`（重要：工具层面的自动批准许可开关）
+  `autoApprove` 的含义是：**该工具是否允许被“自动批准”**。
+  自动批准是否真的发生，取决于两个条件同时满足：
+
+  - 用户在 **chat preset** 中开启了 “auto-approve tools / 自动批准工具”
+  - 该工具在 `assistant_tool.json` 中配置了 `autoApprove: true`
+
+  结论是：
+
+  - 用户开启 auto-approve，但工具 `autoApprove: false` → **仍然必须弹窗让用户手动确认**
+  - 工具 `autoApprove: true`，但用户没开启 auto-approve → **仍然必须弹窗让用户手动确认**
+  - 用户开启 auto-approve 且工具 `autoApprove: true` → **工具会自动批准并直接执行**
+
+- `scriptEditorOnly`
+  决定该工具是否仅在脚本编辑器环境中可用。
 
 ***
 
-## 三、执行逻辑 assistant\_tool.tsx 实现示例
+## 三、Approval 的两阶段模型
 
-```tsx
-type RequestCurrentLocationParams = {}
+需要 Approval 的 Assistant Tool 分为两个阶段：
 
-const locationApprovalRequest: AssistantToolApprovalRequestFn<RequestCurrentLocationParams> = async (
-  params,
-) => {
+1. **Approval Request 阶段**
+   负责生成批准对话框内容（或用于自动批准时的“解释文本”）。
+
+2. **Execute With Approval 阶段**
+   在用户确认（或自动批准）后执行真实逻辑，并返回执行结果。
+
+对应实现分别使用两个注册函数：
+
+- `AssistantTool.registerApprovalRequest`
+- `AssistantTool.registerExecuteToolWithApproval`
+
+***
+
+## 四、注册 Approval Request 函数
+
+### 注册方式
+
+```ts
+AssistantTool.registerApprovalRequest<P>(requestFn)
+```
+
+### 函数签名
+
+```ts
+type AssistantToolApprovalRequestFn<P> = (
+  params: P,
+  scriptEditorProvider?: ScriptEditorProvider
+) => Promise<{
+  title?: string
+  message: string
+  previewButton?: {
+    label: string
+    action: () => void
+  }
+  primaryButtonLabel?: string
+  secondaryButtonLabel?: string
+}>
+```
+
+***
+
+### Approval Request 的设计原则
+
+- `message` 必须清晰描述“将要做什么”与“为什么需要批准”
+- 文案面向用户表达，避免内部实现细节
+- **此阶段不应执行任何有副作用的操作**
+- 所有真实执行逻辑必须放在 execute 阶段
+
+***
+
+### 基本示例
+
+```ts
+const approvalRequest: AssistantToolApprovalRequestFn<{}> = async () => {
   return {
     message: "The assistant wants to request your current location.",
-    primaryButtonLabel: "Allow"
+    primaryButtonLabel: "Allow",
+    secondaryButtonLabel: "Cancel"
   }
 }
 
-const requestCurrentLocation: AssistantToolExecuteWithApprovalFn<RequestCurrentLocationParams> = async (
+AssistantTool.registerApprovalRequest(approvalRequest)
+```
+
+***
+
+## 五、Preview Button 的使用场景
+
+`previewButton` 用于在用户批准前展示“预期结果”，提升可预期性与信任度。
+
+适合使用 preview 的场景：
+
+- 文件修改（展示 diff）
+- 批量编辑结果预览
+- 将要导出的数据摘要
+
+### 示例：展示文件 diff
+
+```ts
+const approvalRequest: AssistantToolApprovalRequestFn<{ path: string }> = async (
   params,
-  {
-    primaryConfirmed,
-    secondaryConfirmed,
-  }
+  editor
 ) => {
-  try {
-    const location = await Location.requestCurrent()
-    if (location) {
-      return {
-        success: true,
-        message: [
-          "The user's current location info:",
-          `<latitude>${location.latitude}</latitude>`,
-          `<longitude>${location.longitude}</longitude>`
-        ].join("\n")
+  if (!editor) {
+    return { message: "This tool must be used in the script editor." }
+  }
+
+  const current = await editor.getFileContent(params.path)
+
+  return {
+    message: `The assistant wants to modify ${params.path}.`,
+    primaryButtonLabel: "Apply Changes",
+    secondaryButtonLabel: "Cancel",
+    previewButton: {
+      label: "Preview Diff",
+      action: () => {
+        if (current != null) {
+          editor.openDiffEditor(params.path, current + "\n// New content")
+        }
       }
     }
-    return {
-      success: false,
-      message: "Failed to request user's current location, ask user to check the device's location permission."
-    }
-  } catch {
-    return {
-      success: false,
-      message: "Failed to request user's current location, ask user to check the device's location permission."
-    }
   }
 }
-
-const testRequestLocationApprovalFn = AssistantTool.registerApprovalRequest(
-  locationApprovalRequest
-)
-
-const testRequestLocationExecuteFn = AssistantTool.registerExecuteToolWithApproval(
-  requestCurrentLocation
-)
-
-// 可在脚本编辑器中运行以下测试代码：
-testRequestLocationApprovalFn({})
-testRequestLocationExecuteFn({}, {
-  primaryConfirmed: true,
-  secondaryConfirmed: false
-})
 ```
 
 ***
 
-## 四、AssistantTool 注册函数详解
+## 六、注册 Execute With Approval 函数
 
-### 1. `registerApprovalRequest`
-
-注册一个函数，在执行工具前向用户请求批准。
+### 注册方式
 
 ```ts
-function registerApprovalRequest<P>(
-  requestFn: AssistantToolApprovalRequestFn<P>
-): AssistantToolApprovalRequestTestFn<P>
+AssistantTool.registerExecuteToolWithApproval<P>(executeFn)
 ```
 
-**参数说明**：
+### 函数签名
 
-- `requestFn(params, scriptEditorProvider?)`：返回提示信息，包括 message、按钮文本等。
-- `params`：工具执行时的输入参数。
-- `scriptEditorProvider`：仅在工具设置为仅限脚本编辑器使用时可用，提供脚本文件访问能力。
-
-**返回值说明**：
-
-返回的测试函数可用于在脚本编辑器中模拟触发批准请求。
+```ts
+type AssistantToolExecuteWithApprovalFn<P> = (
+  params: P,
+  userAction: UserActionForApprovalRequest,
+  scriptEditorProvider?: ScriptEditorProvider
+) => Promise<{
+  success: boolean
+  message: string
+}>
+```
 
 ***
 
-### 2. `registerExecuteToolWithApproval`
-
-注册一个需要用户批准的执行函数。
-
-```ts
-function registerExecuteToolWithApproval<P>(
-  executeFn: AssistantToolExecuteWithApprovalFn<P>
-): AssistantToolExecuteWithApprovalTestFn<P>
-```
-
-**参数说明**：
-
-- `params`：工具执行时的输入参数。
-- `userAction`：用户在批准提示中选择的操作：
+## 七、userAction 的处理规范
 
 ```ts
 type UserActionForApprovalRequest = {
@@ -1496,11 +1538,527 @@ type UserActionForApprovalRequest = {
 }
 ```
 
-- `scriptEditorProvider`：同上。
+处理原则：
 
-**返回值说明**：
+- 仅当 `primaryConfirmed === true` 时执行真实逻辑
+- `secondaryConfirmed === true` 通常表示用户取消
+- 两者都为 `false` 可视为未确认、关闭对话框或流程中断
 
-返回一个对象：
+### 示例：定位请求（含取消分支）
+
+```ts
+const executeWithApproval: AssistantToolExecuteWithApprovalFn<{}> = async (
+  params,
+  { primaryConfirmed }
+) => {
+  if (!primaryConfirmed) {
+    return {
+      success: false,
+      message: "User cancelled the location request."
+    }
+  }
+
+  try {
+    const location = await Location.requestCurrent()
+    return {
+      success: true,
+      message: [
+        "User location retrieved successfully.",
+        `<latitude>${location.latitude}</latitude>`,
+        `<longitude>${location.longitude}</longitude>`
+      ].join("\n")
+    }
+  } catch {
+    return {
+      success: false,
+      message: "Failed to retrieve user location."
+    }
+  }
+}
+```
+
+***
+
+## 八、autoApprove 与 userAction 的关系（行为层面）
+
+在“自动批准”真正发生时（用户 preset 开启 auto-approve 且工具 `autoApprove: true`）：
+
+- 系统会跳过用户手动点击过程，直接进入 execute 阶段
+- execute 阶段依然会收到 `userAction`，通常等价于“主按钮已确认”的语义（例如 `primaryConfirmed: true`）
+
+因此，你的 execute 逻辑应始终以 `primaryConfirmed` 作为“是否允许执行”的唯一门槛，这样可以同时兼容：
+
+- 用户手动点击 Allow
+- 系统自动批准并执行
+- 用户点击 Cancel 或未确认
+
+***
+
+## 九、scriptEditorProvider 在 Approval 模式下的使用
+
+- 当 `scriptEditorOnly: true`：
+
+  - approval request 和 execute 都会收到 `scriptEditorProvider`
+  - 可用于 `openDiffEditor`、批量读写、lint 信息等
+
+- 当 `scriptEditorOnly: false`：
+
+  - `scriptEditorProvider` 可能为 `undefined`
+  - 不应依赖编辑器能力
+
+***
+
+## 十、返回 message 的 UX 建议
+
+需要 Approval 的工具，返回文案需要更明确：
+
+- 用户取消：清晰说明已取消
+- 成功：摘要 + 必要的结构化字段
+- 失败：可操作建议（例如提示检查权限）
+
+示例：
+
+```text
+Location request was cancelled by the user.
+```
+
+```text
+Location retrieved successfully.
+<latitude>39.9042</latitude>
+<longitude>116.4074</longitude>
+```
+
+***
+
+## 十一、测试函数的使用
+
+注册后返回测试方法用于调试：
+
+```ts
+testApprovalFn({})
+testExecuteFn({}, { primaryConfirmed: true, secondaryConfirmed: false })
+```
+
+它用于验证逻辑路径与返回值格式，不等同于真实 UI 批准流程。
+
+***
+
+## 十二、设计建议总结
+
+- Approval 的本质是“知情 + 可控”
+- `autoApprove` 是 **工具层面的允许自动批准开关**，必须与用户 preset 同时开启才会自动执行
+- approval request 阶段只做说明与预览，不做副作用
+- execute 阶段必须严格遵循 `primaryConfirmed` 才执行真实操作
+- preview 对编辑器类工具非常关键：优先提供 diff/摘要预览
+
+
+
+---
+url: /TestFlight/zh/guide/AssistantTool/Assistant Tool Without User Approval.md
+---
+
+# 无需用户批准的 Assistant Tool
+
+无需 Approval 的 Assistant Tool 通常用于**低风险、无副作用或纯逻辑处理类能力**，可被 Assistant 直接调用并立即执行。
+
+***
+
+## 一、适用场景与设计边界
+
+在选择“无需 Approval”实现方式前，应明确以下设计原则。
+
+### 适合使用无需 Approval 的场景
+
+- 不涉及任何系统权限或隐私数据
+- 不读取或修改用户的敏感信息
+- 不会对用户产生不可逆的影响
+- 纯计算、纯解析、纯生成类任务
+
+常见示例包括：
+
+- 文本或代码格式化
+- 结构化数据解析（JSON / YAML / CSV 等）
+- 根据输入参数生成模板代码
+- 在脚本编辑器中做安全、可预测的文件修改（如补全注释）
+
+***
+
+### 不适合使用无需 Approval 的场景
+
+- 访问定位、照片、联系人、日历等隐私能力
+- 写入或覆盖用户文件，且无法回滚
+- 会触发系统弹窗或权限请求
+- 行为结果不易被用户预期
+
+上述场景应使用 **需要 Approval 的 Assistant Tool**（见文档3）。
+
+***
+
+## 二、assistant\_tool.json 配置
+
+无需 Approval 的工具在配置文件中必须明确声明：
+
+```json
+{
+  "displayName": "Format Script",
+  "id": "format_script",
+  "description": "Formats the current script files according to the project style.",
+  "icon": "wand.and.stars",
+  "color": "systemIndigo",
+  "parameters": [],
+  "requireApproval": false,
+  "autoApprove": false,
+  "scriptEditorOnly": true
+}
+```
+
+### 关键字段说明
+
+- `requireApproval: false`
+  表示该工具执行时不会弹出用户批准对话框。
+
+- `autoApprove`
+  在此模式下通常无实际意义，可设置为 `false`。
+
+- `scriptEditorOnly`
+  决定该工具是否仅在脚本编辑器中可用。
+  若为 `true`，执行函数将接收到 `ScriptEditorProvider`。
+
+***
+
+## 三、执行函数注册方式
+
+无需 Approval 的工具只需要注册一个执行函数：
+
+```ts
+AssistantTool.registerExecuteTool<P>(executeFn)
+```
+
+对应的函数类型为：
+
+```ts
+type AssistantToolExecuteFn<P> = (
+  params: P,
+  scriptEditorProvider?: ScriptEditorProvider
+) => Promise<{
+  success: boolean
+  message: string
+}>
+```
+
+***
+
+## 四、最小实现示例（无参数）
+
+```ts
+type FormatParams = {}
+
+const formatScript: AssistantToolExecuteFn<FormatParams> = async (
+  params,
+  scriptEditorProvider
+) => {
+  if (!scriptEditorProvider) {
+    return {
+      success: false,
+      message: "This tool can only be used inside the script editor."
+    }
+  }
+
+  const files = scriptEditorProvider.getAllFiles()
+
+  for (const file of files) {
+    const content = await scriptEditorProvider.getFileContent(file)
+    if (!content) continue
+
+    const formatted = content.trim()
+    await scriptEditorProvider.updateFileContent(file, formatted)
+  }
+
+  return {
+    success: true,
+    message: "All script files have been formatted successfully."
+  }
+}
+
+const testFormatTool = AssistantTool.registerExecuteTool(formatScript)
+```
+
+***
+
+## 五、带参数的实现示例
+
+### 参数定义
+
+```ts
+type ReplaceParams = {
+  searchText: string
+  replaceText: string
+}
+```
+
+### 执行逻辑
+
+```ts
+const replaceInScripts: AssistantToolExecuteFn<ReplaceParams> = async (
+  params,
+  scriptEditorProvider
+) => {
+  if (!scriptEditorProvider) {
+    return {
+      success: false,
+      message: "Script editor context is required."
+    }
+  }
+
+  const files = scriptEditorProvider.getAllFiles()
+  let affectedFiles = 0
+
+  for (const file of files) {
+    const content = await scriptEditorProvider.getFileContent(file)
+    if (!content) continue
+
+    if (!content.includes(params.searchText)) continue
+
+    const updated = content.replaceAll(
+      params.searchText,
+      params.replaceText
+    )
+
+    await scriptEditorProvider.updateFileContent(file, updated)
+    affectedFiles++
+  }
+
+  return {
+    success: true,
+    message: `Replaced text in ${affectedFiles} file(s).`
+  }
+}
+
+AssistantTool.registerExecuteTool(replaceInScripts)
+```
+
+***
+
+## 六、返回结果（message）的设计规范
+
+执行函数返回的 `message` 是 **Assistant 后续推理与回复的输入**，应遵循以下建议：
+
+- 第一行给出明确的结果摘要
+- 避免返回冗长、未结构化的内容
+- 必要时用多行文本或轻量标签结构化信息
+
+推荐模式：
+
+```text
+Operation completed successfully.
+Affected files: 3
+```
+
+或：
+
+```text
+Replaced content summary:
+<files>3</files>
+<search>foo</search>
+<replace>bar</replace>
+```
+
+***
+
+## 七、错误处理建议
+
+- 所有可预期错误应转化为 `{ success: false, message }`
+- 不要抛出未捕获异常
+- 错误信息应可读、可定位问题，但避免泄露内部实现细节
+
+示例：
+
+```ts
+return {
+  success: false,
+  message: "Invalid parameters: searchText cannot be empty."
+}
+```
+
+***
+
+## 八、进度反馈（可选）
+
+对于耗时较长的工具，可使用：
+
+```ts
+AssistantTool.report("Formatting file: index.tsx")
+```
+
+建议仅在关键阶段调用，避免频繁上报。
+
+***
+
+## 九、测试函数的使用
+
+`registerExecuteTool` 返回的测试函数可直接在脚本编辑器中运行：
+
+```ts
+testFormatTool({})
+```
+
+测试函数的作用包括：
+
+- 验证参数是否正确映射
+- 验证逻辑执行是否符合预期
+- 在无需 Assistant 会话的情况下调试工具
+
+***
+
+## 十、最佳实践总结
+
+- 无需 Approval ≠ 无风险，谨慎评估工具影响
+- 尽量让工具行为**可预测、可重复**
+- 避免隐式副作用和隐藏修改
+- 返回信息应服务于 Assistant 的下一步决策
+
+
+
+---
+url: /TestFlight/zh/guide/AssistantTool/Overview and Workflow.md
+---
+
+# AssistantTool 总览与工作流
+
+Assistant Tool 是 Scripting 中提供给 Assistant 的“可扩展工具机制”。它让脚本作者把某些能力封装成结构化工具，由 Assistant 在对话中按需调用，并把执行结果以文本 `message` 的形式回传给 Assistant 继续推理和回复用户。
+
+AssistantTool 的设计目标是两点：
+
+- 让 Assistant 获得额外能力（例如定位、文件处理、项目内批量编辑、数据处理），但仍保持可控与可审计（尤其是敏感能力要走用户批准）。
+- 让工具具备明确输入、明确输出和可测试性（注册函数返回 testFn）。
+
+***
+
+## AssistantTool 的两种执行类型
+
+从实现角度，AssistantTool 有两条主路径，对应你 API 里的两个注册函数：
+
+### 不需要用户批准（No Approval）
+
+- `assistant_tool.json`：`requireApproval: false`
+- 代码侧注册：
+
+  - `AssistantTool.registerExecuteTool<P>(executeFn)`
+
+适合：
+
+- 不涉及隐私/权限/破坏性操作
+- 纯计算、纯格式化、纯解析、纯生成内容
+- 对用户设备状态没有敏感读取
+
+### 需要用户批准（With Approval）
+
+- `assistant_tool.json`：`requireApproval: true`
+- 代码侧注册：
+
+  - `AssistantTool.registerApprovalRequest<P>(requestFn)` 生成批准弹窗内容
+  - `AssistantTool.registerExecuteToolWithApproval<P>(executeFn)` 在用户点按钮后执行
+
+适合：
+
+- 任何可能涉及隐私/权限（定位、照片、联系人、日历等）
+- 可能修改用户数据、文件、或产生副作用的操作
+- 希望用户先看预览再决定（`previewButton`）
+
+> `autoApprove`：该工具是否允许被“自动批准”
+
+***
+
+## ScriptEditorOnly 模式（是否只在脚本编辑器可用）
+
+`assistant_tool.json` 的 `scriptEditorOnly` 控制这个工具是否“仅限脚本编辑器环境”。
+
+- `scriptEditorOnly: false`
+
+  - 工具可在普通对话环境中被调用（面向终端用户）
+  - `scriptEditorProvider` 通常不会提供
+
+- `scriptEditorOnly: true`
+
+  - 工具只在脚本编辑器里可用（面向脚本作者/开发者）
+  - 执行函数会额外拿到 `scriptEditorProvider?: ScriptEditorProvider`
+  - 用于“编辑器内工具”：批量修改文件、插入/替换内容、打开 diff、读取 lint 错误等
+
+***
+
+## 工具创建与文件结构
+
+创建工具后，会生成两个核心文件：
+
+- `assistant_tool.json`
+
+  - 定义工具元信息、参数结构、是否需要批准、是否仅编辑器可用等
+- `assistant_tool.tsx`
+
+  - 编写工具逻辑，并用 `AssistantTool.register...` 系列函数注册
+
+### assistant\_tool.json（元信息的职责边界）
+
+`assistant_tool.json` 的职责是：
+
+- 给 UI 展示用（displayName/icon/color/description）
+- 给工具路由用（id 唯一标识）
+- 给调用约束用（parameters/requireApproval/autoApprove/scriptEditorOnly）
+
+它不承载执行逻辑，执行逻辑永远在 `assistant_tool.tsx` 里。
+
+***
+
+## 参数输入与类型约定
+
+工具入参来自 `assistant_tool.json` 的 `parameters`，最终会以 `params: P` 传给：
+
+- `AssistantToolApprovalRequestFn<P>(params, scriptEditorProvider?)`
+- `AssistantToolExecuteWithApprovalFn<P>(params, userAction, scriptEditorProvider?)`
+- `AssistantToolExecuteFn<P>(params, scriptEditorProvider?)`
+
+这里的关键约定是：
+
+- `P` 是你在 `assistant_tool.tsx` 里声明的参数类型（例如 `type MyParams = { ... }`）
+- 实际运行时系统负责把 JSON 参数映射成 `params`
+- 如果工具没有参数，则 `P = {}`
+
+***
+
+## Assistant 调用工具的典型流程
+
+下面用“运行期”的视角描述一次完整链路（不包含 testFn）：
+
+### A. Assistant 决定调用哪个工具
+
+Assistant 在对话中基于目标任务和可用工具列表，选择某个 `id` 的工具，并构造参数 `params`。
+
+### B. 如果 requireApproval = true
+
+1. 系统调用 `registerApprovalRequest` 注册的 `requestFn(params, scriptEditorProvider?)`
+2. requestFn 返回对话框内容：
+
+   - `message`
+   - 可选 `title`
+   - 可选 `previewButton`（用于展示预期输出、diff、或摘要）
+   - 可选按钮文案（primary/secondary）
+3. 用户点击按钮后，系统得到 `UserActionForApprovalRequest`：
+
+   - `primaryConfirmed`
+   - `secondaryConfirmed`
+4. 系统调用 `registerExecuteToolWithApproval` 注册的 `executeFn(params, userAction, scriptEditorProvider?)`
+5. executeFn 返回 `{ success, message }` 给 Assistant
+
+### C. 如果 requireApproval = false
+
+1. 系统直接调用 `registerExecuteTool` 注册的 `executeFn(params, scriptEditorProvider?)`
+2. executeFn 返回 `{ success, message }` 给 Assistant
+
+***
+
+## message 的返回约定（给 Assistant 的“工具输出协议”）
+
+执行函数统一返回：
 
 ```ts
 {
@@ -1509,92 +2067,340 @@ type UserActionForApprovalRequest = {
 }
 ```
 
-- `success`: 是否执行成功。
-- `message`: 返回给Assistant的执行成功或失败的信息。
+建议把 `message` 当成“可被 Assistant 继续消费的结构化文本”，常见策略：
+
+- 简单场景：直接自然语言描述结果
+- 需要结构化：用轻量标记（你示例里用 `<latitude>...</latitude>`）
+- 需要多段信息：用换行拼接，第一行做摘要，后续提供字段
+
+不建议在 `message` 返回超长原始内容（例如整项目所有文件内容），更推荐返回摘要 + 指引（或让用户在 UI 中通过 diff/preview 看）。
 
 ***
 
-### 3. `registerExecuteTool`
+## 测试函数（testFn）的用途与边界
 
-注册一个不需要用户批准的工具逻辑。
+每个注册函数都会返回一个 testFn，用于“在脚本编辑器中模拟调用”：
+
+- `registerApprovalRequest` → `AssistantToolApprovalRequestTestFn<P>`
+- `registerExecuteToolWithApproval` → `AssistantToolExecuteWithApprovalTestFn<P>`
+- `registerExecuteTool` → `AssistantToolExecuteTestFn<P>`
+
+testFn 的价值：
+
+- 快速验证参数映射是否正确
+- 验证工具逻辑是否按预期返回 `success/message`
+- 在开发阶段不依赖真实 Assistant 对话触发
+
+***
+
+## report(message) 的定位
+
+`AssistantTool.report(message: string)` 用于在工具执行期间上报过程信息（例如“正在读取文件…/正在生成 diff…/正在请求定位…”）。
+
+建议用法：
+
+- 长耗时任务：阶段性 report，提升可感知性
+- 与 UI/日志结合：便于调试与回溯
+- 不要高频刷屏：只在关键阶段上报
+
+
+
+---
+url: /TestFlight/zh/guide/AssistantTool/ScriptEditorProvider and Editor Types.md
+---
+
+# ScriptEditorProvider 及编辑器相关类型详解
+
+本篇文档详细说明 Assistant Tool 在 **脚本编辑器环境（scriptEditorOnly）** 下可使用的编辑器能力，包括 `ScriptEditorProvider` 接口本身，以及与之配套的 `ScriptEditorFileOperation`、`ScriptLintError` 等类型。
+
+***
+
+## 一、ScriptEditorProvider 的定位与职责
+
+`ScriptEditorProvider` 是 Assistant Tool 与 **脚本编辑器（Script Editor）** 之间的通信接口。
+
+当满足以下条件时，工具的执行函数会收到该对象：
+
+- `assistant_tool.json` 中设置了 `scriptEditorOnly: true`
+- 工具在脚本编辑器环境中被执行（包括测试函数）
+
+它的核心职责是：
+
+- 提供对脚本项目文件系统的受控访问
+- 支持结构化、可追踪的文件修改
+- 提供 lint / 语法检查结果
+- 支持 diff 预览而非直接破坏性修改
+
+***
+
+## 二、项目级信息接口
+
+### `scriptName`
 
 ```ts
-function registerExecuteTool<P>(
-  executeFn: AssistantToolExecuteFn<P>
-): AssistantToolExecuteTestFn<P>
+readonly scriptName: string
 ```
 
-**适用场景**：如操作无敏感性、不涉及设备权限时，可使用此方式。
+表示当前脚本项目的名称。
+
+常见用途：
+
+- 在返回 `message` 中标注作用范围
+- 在日志或 `AssistantTool.report` 中显示上下文信息
 
 ***
 
-### 4. 测试函数使用
+## 三、文件与目录查询接口
 
-每个注册函数会返回对应的测试函数，可在脚本中运行：
+### 判断文件是否存在
 
 ```ts
-testApprovalRequestFn({ ...params })
-testExecuteFn({ ...params }, {
-  primaryConfirmed: true,
-  secondaryConfirmed: false,
-})
-testExecuteToolFn({ ...params })
+exists(relativePath: string): boolean
 ```
 
-***
-
-## 五、脚本编辑器接口说明（ScriptEditorProvider）
-
-当工具设置为 `scriptEditorOnly: true` 时，系统提供 `ScriptEditorProvider` 接口，允许访问脚本项目的文件系统与语法信息。
-
-接口能力包括：
-
-- 文件读写（读取、更新、写入、插入、替换）
-- 差异比较（openDiffEditor）
-- 语法检查结果（getLintErrors）
-- 获取项目中所有文件/文件夹列表
-
-适用于如格式化脚本、批量修改内容等编辑类工具。
+- `relativePath` 为相对于脚本项目根目录的路径
+- 用于安全检查或条件性创建文件
 
 ***
 
-## 六、执行与用户体验流程
-
-1. Assistant 在会话中判断是否需要调用某个工具。
-2. 如果工具设置为需要批准，系统弹出批准对话框：
-   - 显示由 `registerApprovalRequest` 返回的提示信息。
-   - 用户点击“允许”后执行工具逻辑。
-3. 执行结果通过 `message` 字段返回给 Assistant，并可呈现给用户。
-
-***
-
-## 七、无需批准的工具实现方式
-
-当不需要显示批准提示时，可直接使用 `registerExecuteTool` 注册逻辑函数：
+### 获取所有文件夹
 
 ```ts
-AssistantTool.registerExecuteTool<MyParams>(async (params) => {
-  // 执行逻辑
-  return {
-    success: true,
-    message: "Tool executed successfully."
+getAllFolders(): string[]
+```
+
+返回项目中所有文件夹路径（相对路径）。
+
+典型用途：
+
+- 批量生成文件
+- 判断项目结构
+- 构建导航或分组逻辑
+
+***
+
+### 获取所有文件
+
+```ts
+getAllFiles(): string[]
+```
+
+返回项目中所有文件路径（相对路径）。
+
+典型用途：
+
+- 全项目扫描
+- 批量格式化 / 搜索 / 替换
+- lint 错误定位
+
+***
+
+## 四、文件内容读取与写入
+
+### 读取文件内容
+
+```ts
+getFileContent(relativePath: string): Promise<string | null>
+```
+
+- 文件不存在时返回 `null`
+- 建议在调用前用 `exists` 或空值判断
+
+***
+
+### 更新整个文件内容
+
+```ts
+updateFileContent(relativePath: string, content: string): Promise<boolean>
+```
+
+- 用新内容完全替换原文件
+- 适合格式化、重写等确定性操作
+- 不建议在复杂编辑场景下频繁使用
+
+***
+
+### 写入文件（自动创建）
+
+```ts
+writeToFile(relativePath: string, content: string): Promise<boolean>
+```
+
+- 文件不存在时自动创建
+- 文件存在时覆盖
+- 常用于生成新文件或模板
+
+***
+
+## 五、结构化编辑接口（推荐）
+
+相比直接整体替换文件内容，**结构化编辑接口更安全、更可控**。
+
+***
+
+### ScriptEditorFileOperation 类型
+
+```ts
+type ScriptEditorFileOperation = {
+  startLine: number
+  content: string
+}
+```
+
+语义说明：
+
+- `startLine`：**基于 1 的行号**
+- `content`：要插入或替换的文本内容
+- 不包含结束行，具体行为由调用接口决定
+
+***
+
+### 插入内容
+
+```ts
+insertContent(
+  relativePath: string,
+  operations: ScriptEditorFileOperation[]
+): Promise<boolean>
+```
+
+行为说明：
+
+- 在指定行号 **之前** 插入内容
+- 多个 operation 按数组顺序依次执行
+- 行号以原始文件为基准，建议从后往前插入以避免偏移
+
+适合场景：
+
+- 插入 import / 注释 / 新函数
+- 自动补充代码块
+
+***
+
+### 替换内容
+
+```ts
+replaceInFile(
+  relativePath: string,
+  operations: ScriptEditorFileOperation[]
+): Promise<boolean>
+```
+
+行为说明：
+
+- 从 `startLine` 开始替换对应行内容
+- 通常用于精确替换某一行或一段代码
+- 不适合模糊搜索型替换
+
+***
+
+## 六、Diff 预览接口
+
+### `openDiffEditor`
+
+```ts
+openDiffEditor(relativePath: string, content: string): void
+```
+
+该方法用于 **在不真正写入文件的前提下**，向用户展示：
+
+- 当前文件内容 vs 预期新内容
+- 清晰的改动范围
+
+推荐用法：
+
+- Approval Request 阶段
+- 作为 previewButton 的 action
+- 所有批量或破坏性修改前
+
+***
+
+## 七、Lint 与语法错误信息
+
+### ScriptLintError 类型
+
+```ts
+type ScriptLintError = {
+  line: number
+  message: string
+}
+```
+
+表示脚本中的一个 lint 或语法错误。
+
+***
+
+### 获取 lint 错误
+
+```ts
+getLintErrors(): Record<string, ScriptLintError[]>
+```
+
+返回结构：
+
+- key：文件路径（relativePath）
+- value：该文件中的 lint 错误数组
+
+***
+
+### 典型使用模式
+
+- 扫描所有 lint 错误
+- 定位错误行
+- 自动修复简单问题（需谨慎）
+- 汇总错误信息返回给 Assistant
+
+示例：
+
+```ts
+const errors = editor.getLintErrors()
+
+for (const file in errors) {
+  for (const error of errors[file]) {
+    // error.line
+    // error.message
   }
-})
+}
 ```
-
-将 `assistant_tool.json` 中的 `requireApproval` 字段设置为 `false` 即可。
 
 ***
 
-## 八、小结
+## 八、ScriptEditorProvider 的使用边界
 
-Assistant Tool 是 Scripting 应用提供的可扩展能力模块，支持用户授权、文件操作、系统调用等多种场景。开发流程主要包括：
+重要约束与建议：
 
-1. 在脚本项目中创建工具；
-2. 配置工具元信息；
-3. 实现逻辑函数并注册；
-4. 使用测试函数验证行为；
-5. 在 Assistant 会话中自动或主动触发执行。
+- 所有路径必须是 **相对路径**
+- 不应假设文件内容一定存在
+- 不要并发修改同一个文件
+- 尽量使用结构化编辑接口而非全文替换
+- 批量修改时优先提供 diff 预览
+
+***
+
+## 九、编辑器类 Assistant Tool 的推荐模式
+
+一个成熟的编辑器类工具通常遵循以下流程：
+
+1. 使用 `getAllFiles` / `getLintErrors` 扫描项目
+2. 计算将要发生的修改
+3. 在 Approval Request 阶段：
+
+   - 提供清晰说明
+   - 使用 `openDiffEditor` 作为 preview
+4. 在 Execute 阶段：
+
+   - 严格按确认结果执行
+   - 使用结构化编辑 API
+5. 返回简洁、结构化的执行结果
+
+***
+
+## 十、小结
+
+- `ScriptEditorProvider` 是 Assistant Tool 与脚本编辑器之间的桥梁
+- 它提供 **受控、结构化、可预览** 的文件操作能力
+- 编辑器类工具应优先考虑用户可理解性与可回滚性
+- 结合 Approval + preview，可以构建高信任度的编辑体验
 
 
 
@@ -1889,7 +2695,7 @@ repeatForever(autoreverses?: boolean): Animation
 #### 示例 1：基本大小动画
 
 ```tsx
-import { VStack, Button, Rectangle, useObservable, Animation, withAnimation } from "scripting"
+import { VStack, Button, Rectangle, useObservable, } from "scripting"
 
 export function Demo() {
   const size = useObservable(80)
@@ -2377,8 +3183,6 @@ import {
   Text,
   Button,
   useObservable,
-  Animation,
-  Transition
 } from "scripting"
 
 type Item = { id: string; title: string }
@@ -4535,7 +5339,6 @@ import {
   VStack,
   useRef,
   ScrollViewProxy,
-  withAnimation
 } from "scripting"
 
 function Item({ index }: { index: number }) {
@@ -12851,8 +13654,6 @@ static dateFormat(template: string, locale?: string): string | null
 ## 示例一：使用 dateStyle 和 timeStyle 进行本地化格式化
 
 ```tsx
-import { DateFormatter } from "scripting"
-
 const df = new DateFormatter()
 df.locale = "zh_CN"
 df.dateStyle = DateFormatterStyle.full
@@ -15962,772 +16763,6 @@ const options = [{ name: "A" }, { name: "B" }]
 
 
 ---
-url: /TestFlight/zh/guide/Changelog/2.4.5/VideoPreviewView.md
----
-
-# 视频预览视图（VideoPreviewView）
-
-`VideoPreviewView` 用于实时展示 `VideoRecorder` 当前相机会话的预览画面（camera preview）。
-它是 UI 层组件，不负责录制控制逻辑；录制的准备、开始、暂停、恢复与停止由 `VideoRecorder` 负责。
-
-`VideoPreviewView` 的核心职责是：将录制器内部的预览输出渲染到界面中，并支持通过通用 View props（如 `frame`、`aspectRatio` 等）进行布局。
-
-***
-
-## 组件定义
-
-```ts
-type VideoPreviewViewProps = {
-  recorder: VideoRecorder
-}
-
-declare const VideoPreviewView: FunctionComponent<VideoPreviewViewProps>
-```
-
-***
-
-## Props 说明
-
-### recorder
-
-```ts
-recorder: VideoRecorder
-```
-
-绑定的 `VideoRecorder` 实例。`VideoPreviewView` 会从该实例获取预览画面来源。
-
-#### 行为约定
-
-- 当 `recorder.prepare()` 成功后，预览画面可用并开始更新。
-- 当 `recorder.dispose()` 被调用后，预览画面停止并释放底层资源。
-- `VideoPreviewView` 不会自动调用 `prepare()` 或自动开始录制。
-
-***
-
-## 与 VideoRecorder 状态的关系
-
-`VideoPreviewView` 的显示效果通常与 `VideoRecorder.state` 对应如下（具体表现可能受系统行为影响）：
-
-| Recorder 状态 | 预览表现           |
-| ----------- | -------------- |
-| `idle`      | 尚未准备，可能为空画面    |
-| `preparing` | 正在准备中，画面可能尚不可用 |
-| `ready`     | 预览可用           |
-| `recording` | 正常实时预览         |
-| `paused`    | 通常停留在暂停时的最后一帧  |
-| `finishing` | 停止更新或逐步停止      |
-| `finished`  | 不再更新           |
-| `failed`    | 不可用            |
-
-***
-
-## 推荐用法与生命周期管理
-
-建议将 `VideoRecorder` 作为页面级对象创建，并在页面卸载时调用 `dispose()` 释放资源。
-同时，使用 `onStateChanged` 监听状态，以驱动 UI 文案、按钮可用性、错误提示等。
-
-要点：
-
-- `VideoRecorder` 建议通过 `useMemo` 创建，避免每次渲染重复构造。
-- 在 `useEffect` 中绑定 `onStateChanged`，并在 cleanup 中调用 `dispose()`。
-- 录制前必须 `await recorder.prepare()`。
-
-***
-
-## 完整示例
-
-```tsx
-function View() {
-  // Access dismiss function.
-  const dismiss = Navigation.useDismiss()
-  const recorder = useMemo(() => {
-    return new VideoRecorder({
-      camera: {
-        position: "front",
-      },
-      frameRate: 30,
-      audioEnabled: true,
-      orientation: "portrait",
-      sessionPreset: "hd1280x720",
-      videoCodec: "hevc"
-    })
-  }, [])
-  const [state, setState] = useState<VideoRecorderState>("idle")
-
-  useEffect(() => {
-    recorder.onStateChanged = (state, details) => {
-      setState(state)
-
-      if (state === "failed") {
-        Dialog.alert(details!)
-      }
-    }
-
-    return () => {
-      recorder.dispose()
-    }
-  }, [])
-
-  return <NavigationStack>
-    <List
-      navigationTitle="Page Title"
-      navigationBarTitleDisplayMode="inline"
-      toolbar={{
-        topBarLeading: <Button
-          title="Done"
-          action={dismiss}
-        />
-      }}
-    >
-      <Text>State: {state}</Text>
-
-      <Button
-        title="Start"
-        action={async () => {
-          await recorder.prepare()
-          recorder.startRecording(
-            Path.join(
-              FileManager.documentsDirectory,
-              "test.mov"
-            )
-          )
-        }}
-      />
-
-      <Button
-        title="Pause"
-        action={() => {
-          recorder.pauseRecording()
-        }}
-      />
-
-      <Button
-        title="Resume"
-        action={() => {
-          recorder.resumeRecording()
-        }}
-      />
-
-      <Button
-        title="Stop"
-        action={async () => {
-          await recorder.stopRecording()
-        }}
-      />
-
-      <VideoPreviewView
-        recorder={recorder}
-        frame={{
-          width: 300
-        }}
-        aspectRatio={{
-          value: 3 / 4,
-          contentMode: "fill"
-        }}
-      />
-    </List>
-  </NavigationStack>
-}
-```
-
-***
-
-## 布局与渲染建议
-
-### 使用 frame 控制尺寸
-
-`VideoPreviewView` 支持通过通用的 `frame` 属性约束宽高。例如：
-
-- 仅指定 `width`：配合 `aspectRatio` 确定最终高度
-- 指定 `width` + `height`：强制固定大小（可能导致裁剪或拉伸，取决于 aspect ratio 与 content mode）
-
-### 使用 aspectRatio 控制比例与填充策略
-
-示例：
-
-```tsx
-<VideoPreviewView
-  recorder={recorder}
-  aspectRatio={{ value: 3 / 4, contentMode: "fill" }}
-/>
-```
-
-- `value`：宽高比
-- `contentMode: "fill"`：按比例填充并裁剪
-- 若你希望完整显示画面且允许留边，可使用 `contentMode: "fit"`（如果你们的通用 props 支持该值）
-
-***
-
-## 常见注意事项
-
-### 必须 prepare 才能稳定显示预览
-
-`VideoPreviewView` 绑定 `recorder` 并不意味着会自动启动会话。若未 `prepare()`：
-
-- 预览可能为空
-- 或短时间内不可用
-- 不建议依赖隐式行为
-
-最佳实践：在 Start 按钮中 `await recorder.prepare()` 后再 `startRecording()`，如示例所示。
-
-### 释放资源
-
-- 页面关闭或不再需要预览时，务必调用 `recorder.dispose()`。
-- 建议使用 `useEffect` cleanup 释放，避免相机占用导致后续页面无法打开摄像头或耗电。
-
-### 错误处理
-
-当 `state === "failed"` 时，建议：
-
-- 立即提示 `details`（如示例 `Dialog.alert(details!)`）
-- 同时在 UI 上禁用录制按钮，或提供重试逻辑（例如 `await recorder.reset()` 后再 `prepare()`）
-
-***
-
-## 组件职责边界
-
-- `VideoRecorder`：负责录制控制与状态机（prepare/start/pause/resume/stop/reset/dispose）
-- `VideoPreviewView`：负责画面显示与 UI 布局（通过 `frame` / `aspectRatio` 等通用属性）
-
-
-
----
-url: /TestFlight/zh/guide/Changelog/2.4.5/VideoRecorder.md
----
-
-# 视频录制（VideoRecorder）
-
-`VideoRecorder` 用于在 Scripting 中创建和控制一个可编程的视频录制会话，完整封装了相机选择、音视频采集、编码、暂停/恢复、缩放、对焦、补光灯控制以及最终文件写入流程。
-
-该 API 适用于自定义相机界面、视频采集工具、自动化录制脚本等场景。
-
-***
-
-## 核心能力概览
-
-- 支持前置与后置摄像头
-- 支持指定摄像头类型（广角、超广角、长焦等）
-- 支持多种帧率（24 / 30 / 60 / 120）
-- 支持音频录制的启用与禁用
-- 支持多种系统 Session Preset
-- 支持多种视频编码格式（HEVC / H.264 / ProRes 等）
-- 支持录制过程中的暂停与恢复
-- 支持对焦点、曝光点独立控制
-- 支持变焦与平滑变焦（ramp）
-- 支持补光灯（Torch）控制
-- 明确的状态机与状态回调
-- 明确的生命周期管理（prepare / reset / dispose）
-
-***
-
-## 类型定义
-
-### CameraPosition
-
-```ts
-type CameraPosition = "front" | "back"
-```
-
-表示使用的摄像头朝向。
-
-***
-
-### CameraType
-
-```ts
-type CameraType =
-  | "wide"
-  | "ultraWide"
-  | "telephoto"
-  | "trueDepth"
-  | "dual"
-  | "dualWide"
-  | "triple"
-```
-
-表示摄像头的物理类型。
-是否支持某一类型取决于设备硬件能力。
-
-***
-
-### VideoRecorderState
-
-```ts
-type VideoRecorderState =
-  | "idle"
-  | "preparing"
-  | "ready"
-  | "recording"
-  | "paused"
-  | "finishing"
-  | "finished"
-  | "failed"
-```
-
-#### 状态说明
-
-| 状态          | 含义             |
-| ----------- | -------------- |
-| `idle`      | 初始状态，尚未配置资源    |
-| `preparing` | 正在配置相机会话与音视频管线 |
-| `ready`     | 已准备完成，可以开始录制   |
-| `recording` | 正在录制           |
-| `paused`    | 录制已暂停          |
-| `finishing` | 正在结束录制并写入文件    |
-| `finished`  | 录制完成           |
-| `failed`    | 发生错误，录制失败      |
-
-***
-
-### VideoCaptureSessionPreset
-
-```ts
-type VideoCaptureSessionPreset =
-  | "high"
-  | "medium"
-  | "low"
-  | "cif352x288"
-  | "vga640x480"
-  | "iFrame960x540"
-  | "iFrame1280x720"
-  | "hd1280x720"
-  | "hd1920x1080"
-  | "hd4K3840x2160"
-```
-
-表示捕捉会话的分辨率预设。
-
-***
-
-### VideoCodec
-
-```ts
-type VideoCodec =
-  | "hevc"
-  | "h264"
-  | "jpeg"
-  | "JPEGXL"
-  | "proRes4444"
-  | "appleProRes4444XQ"
-  | "proRes422"
-  | "proRes422HQ"
-  | "proRes422LT"
-  | "proRes422Proxy"
-  | "proResRAW"
-  | "proResRAWHQ"
-  | "hevcWithAlpha"
-```
-
-表示视频编码格式。
-具体是否可用取决于设备与系统支持情况。
-
-***
-
-### VideoOrientation
-
-```ts
-type VideoOrientation =
-  | "portrait"
-  | "landscapeLeft"
-  | "landscapeRight"
-```
-
-表示输出视频的方向。
-
-***
-
-## 构造函数
-
-```ts
-new VideoRecorder(settings?)
-```
-
-### settings 参数
-
-```ts
-{
-  camera?: {
-    position: CameraPosition
-    preferredTypes?: CameraType[]
-  }
-  frameRate?: number
-  audioEnabled?: boolean
-  sessionPreset?: VideoCaptureSessionPreset
-  videoCodec?: VideoCodec
-  videoBitRate?: number
-  orientation?: VideoOrientation
-  mirrorFrontCamera?: boolean
-}
-```
-
-#### 参数说明
-
-- **camera**
-
-  - `position`
-    使用的摄像头位置，默认 `"back"`
-  - `preferredTypes`
-    偏好的摄像头类型列表
-    如果未提供，内部将根据摄像头位置自动选择合适的类型
-
-- **frameRate**
-  目标帧率，支持 24 / 30 / 60 / 120，默认 30
-  实际帧率受设备与分辨率限制
-
-- **audioEnabled**
-  是否录制音频，默认 `true`
-
-- **sessionPreset**
-  捕捉会话分辨率预设，默认 `"high"`
-
-- **videoCodec**
-  视频编码格式，默认 `"hevc"`
-
-- **videoBitRate**
-  视频平均码率（bit/s），未指定时由系统自动选择
-
-- **orientation**
-  输出视频方向，默认 `"portrait"`
-
-- **mirrorFrontCamera**
-  前置摄像头是否镜像，默认 `true`
-  仅在使用前置摄像头时生效
-
-***
-
-## 只读属性
-
-### minZoomFactor
-
-```ts
-readonly minZoomFactor: number
-```
-
-当前设备支持的最小变焦倍率。
-
-***
-
-### maxZoomFactor
-
-```ts
-readonly maxZoomFactor: number
-```
-
-当前设备支持的最大变焦倍率。
-
-***
-
-### currentZoomFactor
-
-```ts
-readonly currentZoomFactor: number
-```
-
-当前变焦倍率。
-
-***
-
-### displayZoomFactor
-
-```ts
-readonly displayZoomFactor: number
-```
-
-用户可读的变焦倍率。
-
-***
-
-### hasTorch
-
-```ts
-readonly hasTorch: boolean
-```
-
-当前摄像头是否支持补光灯。
-
-***
-
-### torchMode
-
-```ts
-readonly torchMode: "auto" | "on" | "off"
-```
-
-当前补光灯模式。
-
-***
-
-## 状态与回调
-
-### state
-
-```ts
-state: VideoRecorderState
-```
-
-表示当前录制器所处的状态。
-
-***
-
-### onStateChanged
-
-```ts
-onStateChanged?: (
-  state: VideoRecorderState,
-  details?: string
-) => void
-```
-
-状态变化回调。
-
-- 当 `state === "failed"`
-  `details` 为错误信息描述
-
-- 当 `state === "finished"`
-  `details` 为最终视频文件的完整保存路径
-
-***
-
-## 方法说明
-
-### prepare()
-
-```ts
-prepare(): Promise<void>
-```
-
-准备录制器资源，包括相机会话、输入输出与音视频管线配置。
-
-#### 使用约束
-
-- 必须在 `startRecording` 之前调用
-- 成功后状态变为 `ready`
-- 失败会进入 `failed` 状态
-
-***
-
-### startRecording(toPath)
-
-```ts
-startRecording(toPath: string): void
-```
-
-开始录制视频。
-
-#### 参数
-
-- **toPath**
-  视频文件保存路径（完整路径）
-
-#### 使用约束
-
-- 仅允许在 `ready` 状态下调用
-- 调用后状态变为 `recording`
-
-***
-
-### pauseRecording()
-
-```ts
-pauseRecording(): void
-```
-
-暂停当前录制。
-
-#### 使用约束
-
-- 仅允许在 `recording` 状态下调用
-- 调用后状态变为 `paused`
-- 时间线会被正确压缩，不产生空白帧
-
-***
-
-### resumeRecording()
-
-```ts
-resumeRecording(): void
-```
-
-恢复已暂停的录制。
-
-#### 使用约束
-
-- 仅允许在 `paused` 状态下调用
-- 调用后状态回到 `recording`
-
-***
-
-### stopRecording()
-
-```ts
-stopRecording(): Promise<void>
-```
-
-停止录制并生成最终视频文件。
-
-#### 行为说明
-
-- 状态先进入 `finishing`
-- 文件写入完成后进入 `finished`
-- 最终文件路径通过 `onStateChanged` 回调返回
-
-***
-
-### reset()
-
-```ts
-reset(): Promise<void>
-```
-
-重置录制器状态，用于开始新一轮录制。
-
-#### 使用场景
-
-- 已完成一次录制
-- 或录制失败后希望复用同一实例
-
-#### 行为说明
-
-- 成功后状态回到 `idle`
-- 可再次调用 `prepare`
-
-***
-
-### setTorchMode()
-
-```ts
-setTorchMode(mode: "auto" | "off" | "on"): void
-```
-
-设置补光灯模式。
-
-***
-
-### setFocusPoint()
-
-```ts
-setFocusPoint(point: { x: number; y: number }): void
-```
-
-设置对焦点。
-
-- 坐标为归一化值，范围 `0.0 ~ 1.0`
-- `(0,0)` 表示画面左上角，`(1,1)` 表示右下角
-
-***
-
-### setExposurePoint()
-
-```ts
-setExposurePoint(point: { x: number; y: number }): void
-```
-
-设置曝光点，坐标规则与对焦点一致。
-
-***
-
-### resetFocus()
-
-```ts
-resetFocus(): void
-```
-
-恢复自动对焦模式。
-
-***
-
-### resetExposure()
-
-```ts
-resetExposure(): void
-```
-
-恢复自动曝光模式。
-
-***
-
-### setZoomFactor()
-
-```ts
-setZoomFactor(factor: number): void
-```
-
-立即设置变焦倍率。
-
-- 值应位于 `minZoomFactor` 与 `maxZoomFactor` 之间
-
-***
-
-### rampZoomFactor()
-
-```ts
-rampZoomFactor(toFactor: number, rate: number): void
-```
-
-以平滑方式调整变焦倍率。
-
-- `toFactor` 为目标倍率
-- `rate` 为变化速率，单位为每秒的 2 次幂变化
-
-***
-
-### resetZoom()
-
-```ts
-resetZoom(): void
-```
-
-将变焦倍率恢复为默认值（通常为 1.0）。
-
-***
-
-### dispose()
-
-```ts
-dispose(): Promise<void>
-```
-
-释放并销毁录制器。
-
-#### 使用约束
-
-- 调用后实例不可再使用
-- 会释放相机、音频与底层系统资源
-- 建议在页面或脚本生命周期结束时调用
-
-***
-
-## 典型使用流程
-
-```ts
-const recorder = new VideoRecorder({
-  camera: { position: "back" },
-  frameRate: 60,
-  videoCodec: "hevc"
-})
-
-recorder.onStateChanged = (state, details) => {
-  if (state === "finished") {
-    console.log("Video saved at:", details)
-  }
-}
-
-await recorder.prepare()
-recorder.startRecording("/path/to/tmp/demo.mov")
-```
-
-***
-
-## 使用建议
-
-- 始终监听 `onStateChanged` 以掌握完整状态变化
-- 不要在未调用 `prepare` 的情况下开始录制
-- 每次完成录制后，如需复用实例，应先调用 `reset`
-- 生命周期结束时务必调用 `dispose` 释放资源
-
-
-
----
 url: /TestFlight/zh/guide/Changelog/2.4.5/WebViewController.md
 ---
 
@@ -17039,318 +17074,463 @@ url: /TestFlight/zh/guide/Changelog/2.4.6/Device/index.md
 
 # 设备
 
-`Device` 命名空间提供当前运行设备的基础信息、系统环境、屏幕与电池状态、语言与地区设置，以及部分与设备能力相关的方法（如唤醒锁、网络接口信息）。
+`Device` 命名空间提供对当前设备硬件、系统环境、语言区域、屏幕信息、电池状态、方向感知、接近传感器以及网络接口等信息的访问能力，并提供相关状态变化的监听接口。
 
-该 API 常用于：
-
-- 设备差异化逻辑（iPhone / iPad / Mac）
-- UI 布局与适配
-- 多语言与本地化判断
-- 网络调试与诊断
-- 防止脚本执行期间设备休眠
+该 API 主要用于根据设备环境动态调整 UI、行为逻辑或系统能力使用方式。
 
 ***
 
-## 设备与系统信息
+## Orientation
 
-### `Device.model: string`
-
-设备型号名称，例如 `"iPhone"`、`"iPad"`。
-
-***
-
-### `Device.systemName: string`
-
-当前操作系统名称，例如 `"iOS"`、`"iPadOS"`、`"macOS"`。
-
-***
-
-### `Device.systemVersion: string`
-
-当前操作系统版本号，例如 `"17.2"`。
-
-***
-
-### `Device.isiPhone: boolean`
-
-当前设备是否为 iPhone。
-
-***
-
-### `Device.isiPad: boolean`
-
-当前设备是否为 iPad。
-
-***
-
-### `Device.isiOSAppOnMac: boolean`
-
-当前进程是否为 **iPhone / iPad App 运行在 Mac 上**（Mac Catalyst / Apple Silicon Mac）。
-
-***
-
-## 屏幕信息
-
-### `Device.screen`
-
-当前主屏幕的信息。
+表示设备当前的物理朝向。
 
 ```ts
-{
-  width: number
-  height: number
-  scale: number
-}
+type Orientation =
+  | "portrait"
+  | "portraitUpsideDown"
+  | "landscapeLeft"
+  | "landscapeRight"
+  | "faceUp"
+  | "faceDown"
+  | "unknown"
 ```
 
-字段说明：
+### 说明
 
-- `width`：屏幕逻辑宽度（pt）
-- `height`：屏幕逻辑高度（pt）
-- `scale`：屏幕缩放因子（如 2 / 3）
-
-常用于布局计算、画布尺寸、截图或渲染比例控制。
-
-***
-
-## 方向与姿态
-
-### `Device.isPortrait: boolean`
-
-当前设备是否处于竖屏方向。
+- `portrait`：竖屏，Home 键在下（或标准竖屏方向）
+- `portraitUpsideDown`：竖屏倒置
+- `landscapeLeft`：横屏，设备向左旋转
+- `landscapeRight`：横屏，设备向右旋转
+- `faceUp`：设备平放，屏幕朝上
+- `faceDown`：设备平放，屏幕朝下
+- `unknown`：无法确定方向
 
 ***
 
-### `Device.isLandscape: boolean`
+## NetworkInterface
 
-当前设备是否处于横屏方向。
-
-***
-
-### `Device.isFlat: boolean`
-
-设备是否平放（例如放在桌面上）。
-
-该值通常基于设备姿态传感器，用于高级交互或方向判断。
-
-***
-
-## 外观与主题
-
-### `Device.colorScheme: ColorScheme`
-
-当前系统外观模式。
-
-可能的值通常包括：
-
-- `light`
-- `dark`
-
-可用于根据系统外观自动调整 UI 主题或样式。
-
-***
-
-## 电池信息
-
-### `Device.batteryState`
-
-当前电池状态：
-
-```ts
-"full" | "charging" | "unplugged" | "unknown"
-```
-
-说明：
-
-- `full`：电池已充满
-- `charging`：正在充电
-- `unplugged`：未连接电源
-- `unknown`：状态不可用
-
-***
-
-### `Device.batteryLevel: number`
-
-当前电量百分比，取值范围：
-
-- `0.0` \~ `1.0`
-- 当电量不可用时，可能返回 `-1`
-
-***
-
-## 语言与地区设置
-
-### `Device.systemLocale: string`
-
-系统当前使用的 Locale，例如：
-
-```text
-"en_US"
-```
-
-***
-
-### `Device.preferredLanguages: string[]`
-
-用户偏好的语言列表（按优先级排序），例如：
-
-```ts
-["en-US", "zh-Hans-CN"]
-```
-
-推荐用于多语言内容选择。
-
-***
-
-### `Device.systemLocales: string[]` （已废弃）
-
-用户偏好的 Locale 列表。
-
-> 已废弃，请使用 `Device.preferredLanguages`。
-
-***
-
-### `Device.systemLanguageTag: string`
-
-当前语言的 BCP-47 语言标签，例如：
-
-```text
-"en-US"
-```
-
-***
-
-### `Device.systemLanguageCode: string`
-
-当前语言代码，例如：
-
-```text
-"en"
-```
-
-***
-
-### `Device.systemCountryCode: string | undefined`
-
-当前国家 / 地区代码，例如：
-
-```text
-"US"
-```
-
-如果系统未设置国家信息，可能为 `undefined`。
-
-***
-
-### `Device.systemScriptCode: string | undefined`
-
-当前语言的书写系统代码，例如：
-
-```text
-"Hans"   // zh_CN_Hans
-```
-
-常用于区分简体 / 繁体等书写系统。
-
-***
-
-## 唤醒锁（Wake Lock）
-
-唤醒锁用于防止设备在脚本运行期间自动休眠。
-
-### `Device.isWakeLockEnabled: Promise<boolean>`
-
-获取当前是否启用了唤醒锁。
-
-```ts
-const enabled = await Device.isWakeLockEnabled
-```
-
-***
-
-### `Device.setWakeLockEnabled(enabled: boolean): void`
-
-启用或关闭唤醒锁。
-
-```ts
-Device.setWakeLockEnabled(true)
-```
-
-说明：
-
-- 仅在 **Scripting App** 中可用
-- 启用后可防止屏幕自动熄灭或设备进入休眠
-- 建议在不需要时及时关闭，以节省电量
-
-***
-
-## 网络接口信息
-
-### `Device.NetworkInterface`
-
-网络接口对象结构：
+描述单个网络接口地址的信息。
 
 ```ts
 type NetworkInterface = {
   address: string
   netmask: string | null
-  family: 'IPv4' | 'IPv6'
+  family: "IPv4" | "IPv6"
   mac: string | null
   isInternal: boolean
   cidr: string | null
 }
 ```
 
-字段说明：
+### 字段说明
 
 - `address`：IP 地址
 - `netmask`：子网掩码
-- `family`：地址类型（IPv4 / IPv6）
-- `mac`：MAC 地址（部分系统可能为 null）
-- `isInternal`：是否为内部接口（如回环接口）
-- `cidr`：CIDR 表示法（如 `192.168.1.10/24`）
+- `family`：地址族，IPv4 或 IPv6
+- `mac`：MAC 地址（部分系统或接口可能为 null）
+- `isInternal`：是否为内部接口（如 loopback）
+- `cidr`：CIDR 表示形式，例如 `192.168.1.10/24`
 
 ***
 
-### `Device.networkInterfaces(): Record<string, NetworkInterface[]>`
+## BatteryState
 
-获取设备当前的网络接口信息。
-
-返回值结构：
+表示当前电池状态。
 
 ```ts
-{
-  [interfaceName: string]: NetworkInterface[]
-}
+type BatteryState = "full" | "charging" | "unplugged" | "unknown"
 ```
 
-示例：
+### 说明
 
-```ts
-const interfaces = Device.networkInterfaces()
-
-for (const name in interfaces) {
-  for (const info of interfaces[name]) {
-    console.log(name, info.address, info.family)
-  }
-}
-```
-
-常见用途：
-
-- 获取本地 IP 地址
-- 区分 Wi-Fi / 蜂窝网络 / 回环接口
-- 网络调试与诊断
-- 模拟 Node.js `os.networkInterfaces()` 行为
+- `full`：电量已充满
+- `charging`：正在充电
+- `unplugged`：未连接电源
+- `unknown`：无法确定状态
 
 ***
 
-## 使用建议
+## Device Information
 
-- 语言与地区相关逻辑优先使用 `preferredLanguages`
-- 唤醒锁应在任务完成后及时关闭
-- 网络接口信息可能因系统权限或网络状态变化而不同
-- 不要假设某个接口名称一定存在（如 `en0`）
+### model
+
+```ts
+const model: string
+```
+
+设备型号，例如 `"iPhone"`、`"iPad"`。
+
+***
+
+### localizedModel
+
+```ts
+const localizedModel: string
+```
+
+本地化后的设备型号名称。
+
+***
+
+### systemVersion
+
+```ts
+const systemVersion: string
+```
+
+当前操作系统版本号，例如 `"18.2"`。
+
+***
+
+### systemName
+
+```ts
+const systemName: string
+```
+
+操作系统名称，例如 `"iOS"`、`"iPadOS"`、`"macOS"`。
+
+***
+
+### isiPad / isiPhone
+
+```ts
+const isiPad: boolean
+const isiPhone: boolean
+```
+
+指示当前设备是否为 iPad 或 iPhone。
+
+***
+
+### screen
+
+```ts
+const screen: {
+  width: number
+  height: number
+  scale: number
+}
+```
+
+屏幕信息：
+
+- `width`：屏幕宽度（逻辑像素）
+- `height`：屏幕高度（逻辑像素）
+- `scale`：屏幕缩放比例（如 2、3）
+
+***
+
+## Battery & Sensors
+
+### batteryState
+
+```ts
+const batteryState: BatteryState
+```
+
+当前电池状态。
+
+***
+
+### batteryLevel
+
+```ts
+const batteryLevel: number
+```
+
+当前电量百分比，范围为 `0.0` 到 `1.0`。
+
+***
+
+### proximityState
+
+```ts
+const proximityState: boolean
+```
+
+接近传感器状态，`true` 表示设备靠近用户（例如通话时贴近耳朵）。
+
+***
+
+## Orientation & Layout
+
+### isLandscape / isPortrait / isFlat
+
+```ts
+const isLandscape: boolean
+const isPortrait: boolean
+const isFlat: boolean
+```
+
+- `isLandscape`：是否处于横屏
+- `isPortrait`：是否处于竖屏
+- `isFlat`：设备是否平放（face up / face down）
+
+***
+
+### orientation
+
+```ts
+const orientation: Orientation
+```
+
+当前设备物理方向。
+
+***
+
+## Appearance & Environment
+
+### colorScheme
+
+```ts
+const colorScheme: ColorScheme
+```
+
+当前系统颜色模式，例如浅色或深色模式。
+
+***
+
+### isiOSAppOnMac
+
+```ts
+const isiOSAppOnMac: boolean
+```
+
+指示当前进程是否为运行在 macOS 上的 iPhone / iPad App（Mac Catalyst 或 iOS App on Mac）。
+
+***
+
+## Locale & Language
+
+### systemLocale
+
+```ts
+const systemLocale: string
+```
+
+当前系统 Locale，例如 `"en_US"`。
+
+***
+
+### preferredLanguages
+
+```ts
+const preferredLanguages: string[]
+```
+
+用户偏好的语言列表，例如：
+
+```ts
+["en-US", "zh-Hans-CN"]
+```
+
+***
+
+### systemLocales（已废弃）
+
+```ts
+const systemLocales: string[]
+```
+
+已废弃，请使用 `preferredLanguages`。
+
+***
+
+### systemLanguageTag
+
+```ts
+const systemLanguageTag: string
+```
+
+语言标签，例如 `"en-US"`。
+
+***
+
+### systemLanguageCode
+
+```ts
+const systemLanguageCode: string
+```
+
+语言代码，例如 `"en"`。
+
+***
+
+### systemCountryCode
+
+```ts
+const systemCountryCode: string | undefined
+```
+
+国家代码，例如 `"US"`。
+
+***
+
+### systemScriptCode
+
+```ts
+const systemScriptCode: string | undefined
+```
+
+书写系统代码，例如 `"Hans"`（简体中文）。
+
+***
+
+## Wake Lock
+
+### isWakeLockEnabled
+
+```ts
+const isWakeLockEnabled: Promise<boolean>
+```
+
+查询当前是否启用了屏幕唤醒锁定（防止设备自动锁屏）。
+
+***
+
+### setWakeLockEnabled
+
+```ts
+function setWakeLockEnabled(enabled: boolean): void
+```
+
+启用或禁用 Wake Lock。
+
+说明：
+
+- 仅在 **Scripting App** 内可用
+- 启用后可防止设备自动休眠
+
+***
+
+## Battery Listeners
+
+### addBatteryStateListener
+
+```ts
+function addBatteryStateListener(
+  callback: (state: BatteryState) => void
+): void
+```
+
+监听电池状态变化。
+
+***
+
+### removeBatteryStateListener
+
+```ts
+function removeBatteryStateListener(
+  callback?: (state: BatteryState) => void
+): void
+```
+
+移除电池状态监听器。
+
+- 未传入 `callback` 时将移除所有监听器
+
+***
+
+### addBatteryLevelListener
+
+```ts
+function addBatteryLevelListener(
+  callback: (level: number) => void
+): void
+```
+
+监听电量变化。
+
+***
+
+### removeBatteryLevelListener
+
+```ts
+function removeBatteryLevelListener(
+  callback?: (level: number) => void
+): void
+```
+
+移除电量监听器。
+
+***
+
+## Orientation Listeners
+
+### addOrientationListener
+
+```ts
+function addOrientationListener(
+  callback: (orientation: Orientation) => void
+): void
+```
+
+开始监听设备方向变化。
+
+注意事项：
+
+- 必须先调用该方法才能接收方向变化
+- 系统方向锁开启时不会生效
+
+***
+
+### removeOrientationListener
+
+```ts
+function removeOrientationListener(
+  callback?: (orientation: Orientation) => void
+): void
+```
+
+移除方向监听器。
+
+- 未传入 `callback` 时将停止所有方向监听并结束观察
+
+***
+
+## Proximity Listeners
+
+### addProximityStateListener
+
+```ts
+function addProximityStateListener(
+  callback: (state: boolean) => void
+): void
+```
+
+监听接近传感器状态变化。
+
+***
+
+### removeProximityStateListener
+
+```ts
+function removeProximityStateListener(
+  callback?: (state: boolean) => void
+): void
+```
+
+移除接近传感器监听器。
+
+***
+
+## Network
+
+### networkInterfaces
+
+```ts
+function networkInterfaces(): Record<string, NetworkInterface[]>
+```
+
+获取当前设备的网络接口信息。
+
+返回值说明：
+
+- Key：接口名称（如 `en0`、`lo0`）
+- Value：该接口对应的地址信息数组
+
+适用于网络诊断、本地 IP 获取、调试用途。
 
 
 
@@ -18760,6 +18940,7 @@ type ExportOptions = {
   ducking?: DuckingConfig
   presetName?: ExportPreset
   outputFileType?: ExportFileType
+  colorSpacePolicy?: ColorSpacePolicy
 }
 ```
 
@@ -18779,6 +18960,9 @@ type ExportOptions = {
 
 - **presetName / outputFileType**
   控制编码质量与文件格式
+
+- **colorSpacePolicy**
+  控制输出文件的颜色空间，默认为`forceSDR`，可选`keepSource`。
 
 ***
 
@@ -19149,542 +19333,6 @@ type AudioSessionOutputVolumeListener = (newValue: number, oldValue: number) => 
 ***
 
 通过此接口，你可以在 Scripting 应用中对音频会话进行深度管理，非常适合构建对音频依赖较高的脚本，如音乐播放器和视频会议工具等。
-
-
-
----
-url: /TestFlight/zh/guide/Changelog/2.4.6/VideoRecorder.md
----
-
-# 视频录制（VideoRecorder）
-
-`VideoRecorder` 用于在 Scripting 中创建和控制一个可编程的视频录制会话，完整封装了相机选择、音视频采集、编码、暂停/恢复、缩放、对焦、补光灯控制以及最终文件写入流程。
-
-该 API 适用于自定义相机界面、视频采集工具、自动化录制脚本等场景。
-
-***
-
-## 核心能力概览
-
-- 支持前置与后置摄像头
-- 支持指定摄像头类型（广角、超广角、长焦等）
-- 支持多种帧率（24 / 30 / 60 / 120）
-- 支持音频录制的启用与禁用
-- 支持多种系统 Session Preset
-- 支持多种视频编码格式（HEVC / H.264 / ProRes 等）
-- 支持录制过程中的暂停与恢复
-- 支持对焦点、曝光点独立控制
-- 支持变焦与平滑变焦（ramp）
-- 支持补光灯（Torch）控制
-- 明确的状态机与状态回调
-- 明确的生命周期管理（prepare / reset / dispose）
-
-***
-
-## 类型定义
-
-### CameraPosition
-
-```ts
-type CameraPosition = "front" | "back"
-```
-
-表示使用的摄像头朝向。
-
-***
-
-### CameraType
-
-```ts
-type CameraType =
-  | "wide"
-  | "ultraWide"
-  | "telephoto"
-  | "trueDepth"
-  | "dual"
-  | "dualWide"
-  | "triple"
-```
-
-表示摄像头的物理类型。
-是否支持某一类型取决于设备硬件能力。
-
-***
-
-### VideoRecorderState
-
-```ts
-type VideoRecorderState =
-  | "idle"
-  | "preparing"
-  | "ready"
-  | "recording"
-  | "paused"
-  | "finishing"
-  | "finished"
-  | "failed"
-```
-
-#### 状态说明
-
-| 状态          | 含义             |
-| ----------- | -------------- |
-| `idle`      | 初始状态，尚未配置资源    |
-| `preparing` | 正在配置相机会话与音视频管线 |
-| `ready`     | 已准备完成，可以开始录制   |
-| `recording` | 正在录制           |
-| `paused`    | 录制已暂停          |
-| `finishing` | 正在结束录制并写入文件    |
-| `finished`  | 录制完成           |
-| `failed`    | 发生错误，录制失败      |
-
-***
-
-### VideoCaptureSessionPreset
-
-```ts
-type VideoCaptureSessionPreset =
-  | "high"
-  | "medium"
-  | "low"
-  | "cif352x288"
-  | "vga640x480"
-  | "iFrame960x540"
-  | "iFrame1280x720"
-  | "hd1280x720"
-  | "hd1920x1080"
-  | "hd4K3840x2160"
-```
-
-表示捕捉会话的分辨率预设。
-
-***
-
-### VideoCodec
-
-```ts
-type VideoCodec =
-  | "hevc"
-  | "h264"
-  | "jpeg"
-  | "JPEGXL"
-  | "proRes4444"
-  | "appleProRes4444XQ"
-  | "proRes422"
-  | "proRes422HQ"
-  | "proRes422LT"
-  | "proRes422Proxy"
-  | "proResRAW"
-  | "proResRAWHQ"
-  | "hevcWithAlpha"
-```
-
-表示视频编码格式。
-具体是否可用取决于设备与系统支持情况。
-
-***
-
-### VideoOrientation
-
-```ts
-type VideoOrientation =
-  | "portrait"
-  | "landscapeLeft"
-  | "landscapeRight"
-```
-
-表示输出视频的方向。
-
-***
-
-## 构造函数
-
-```ts
-new VideoRecorder(settings?)
-```
-
-### settings 参数
-
-```ts
-{
-  camera?: {
-    position: CameraPosition
-    preferredTypes?: CameraType[]
-  }
-  frameRate?: number
-  audioEnabled?: boolean
-  sessionPreset?: VideoCaptureSessionPreset
-  videoCodec?: VideoCodec
-  videoBitRate?: number
-  orientation?: VideoOrientation
-  mirrorFrontCamera?: boolean
-}
-```
-
-#### 参数说明
-
-- **camera**
-
-  - `position`
-    使用的摄像头位置，默认 `"back"`
-  - `preferredTypes`
-    偏好的摄像头类型列表
-    如果未提供，内部将根据摄像头位置自动选择合适的类型
-
-- **frameRate**
-  目标帧率，支持 24 / 30 / 60 / 120，默认 30
-  实际帧率受设备与分辨率限制
-
-- **audioEnabled**
-  是否录制音频，默认 `true`
-
-- **sessionPreset**
-  捕捉会话分辨率预设，默认 `"high"`
-
-- **videoCodec**
-  视频编码格式，默认 `"hevc"`
-
-- **videoBitRate**
-  视频平均码率（bit/s），未指定时由系统自动选择
-
-- **orientation**
-  输出视频方向，默认 `"portrait"`
-
-- **mirrorFrontCamera**
-  前置摄像头是否镜像，默认 `true`
-  仅在使用前置摄像头时生效
-
-***
-
-## 只读属性
-
-### minZoomFactor
-
-```ts
-readonly minZoomFactor: number
-```
-
-当前设备支持的最小变焦倍率。
-
-***
-
-### maxZoomFactor
-
-```ts
-readonly maxZoomFactor: number
-```
-
-当前设备支持的最大变焦倍率。
-
-***
-
-### currentZoomFactor
-
-```ts
-readonly currentZoomFactor: number
-```
-
-当前变焦倍率。
-
-***
-
-### displayZoomFactor
-
-```ts
-readonly displayZoomFactor: number
-```
-
-用户可读的变焦倍率。
-
-***
-
-### hasTorch
-
-```ts
-readonly hasTorch: boolean
-```
-
-当前摄像头是否支持补光灯。
-
-***
-
-### torchMode
-
-```ts
-readonly torchMode: "auto" | "on" | "off"
-```
-
-当前补光灯模式。
-
-***
-
-## 状态与回调
-
-### state
-
-```ts
-state: VideoRecorderState
-```
-
-表示当前录制器所处的状态。
-
-***
-
-### onStateChanged
-
-```ts
-onStateChanged?: (
-  state: VideoRecorderState,
-  details?: string
-) => void
-```
-
-状态变化回调。
-
-- 当 `state === "failed"`
-  `details` 为错误信息描述
-
-- 当 `state === "finished"`
-  `details` 为最终视频文件的完整保存路径
-
-***
-
-## 方法说明
-
-### prepare()
-
-```ts
-prepare(): Promise<void>
-```
-
-准备录制器资源，包括相机会话、输入输出与音视频管线配置。
-
-#### 使用约束
-
-- 必须在 `startRecording` 之前调用
-- 成功后状态变为 `ready`
-- 失败会进入 `failed` 状态
-
-***
-
-### startRecording(toPath)
-
-```ts
-startRecording(toPath: string): void
-```
-
-开始录制视频。
-
-#### 参数
-
-- **toPath**
-  视频文件保存路径（完整路径）
-
-#### 使用约束
-
-- 仅允许在 `ready` 状态下调用
-- 调用后状态变为 `recording`
-
-***
-
-### pauseRecording()
-
-```ts
-pauseRecording(): void
-```
-
-暂停当前录制。
-
-#### 使用约束
-
-- 仅允许在 `recording` 状态下调用
-- 调用后状态变为 `paused`
-- 时间线会被正确压缩，不产生空白帧
-
-***
-
-### resumeRecording()
-
-```ts
-resumeRecording(): void
-```
-
-恢复已暂停的录制。
-
-#### 使用约束
-
-- 仅允许在 `paused` 状态下调用
-- 调用后状态回到 `recording`
-
-***
-
-### stopRecording()
-
-```ts
-stopRecording(): Promise<void>
-```
-
-停止录制并生成最终视频文件。
-
-#### 行为说明
-
-- 状态先进入 `finishing`
-- 文件写入完成后进入 `finished`
-- 最终文件路径通过 `onStateChanged` 回调返回
-
-***
-
-### reset()
-
-```ts
-reset(): Promise<void>
-```
-
-重置录制器状态，用于开始新一轮录制。
-
-#### 使用场景
-
-- 已完成一次录制
-- 或录制失败后希望复用同一实例
-
-#### 行为说明
-
-- 成功后状态回到 `idle`
-- 可再次调用 `prepare`
-
-***
-
-### setTorchMode()
-
-```ts
-setTorchMode(mode: "auto" | "off" | "on"): void
-```
-
-设置补光灯模式。
-
-***
-
-### setFocusPoint()
-
-```ts
-setFocusPoint(point: { x: number; y: number }): void
-```
-
-设置对焦点。
-
-- 坐标为归一化值，范围 `0.0 ~ 1.0`
-- `(0,0)` 表示画面左上角，`(1,1)` 表示右下角
-
-***
-
-### setExposurePoint()
-
-```ts
-setExposurePoint(point: { x: number; y: number }): void
-```
-
-设置曝光点，坐标规则与对焦点一致。
-
-***
-
-### resetFocus()
-
-```ts
-resetFocus(): void
-```
-
-恢复自动对焦模式。
-
-***
-
-### resetExposure()
-
-```ts
-resetExposure(): void
-```
-
-恢复自动曝光模式。
-
-***
-
-### setZoomFactor()
-
-```ts
-setZoomFactor(factor: number): void
-```
-
-立即设置变焦倍率。
-
-- 值应位于 `minZoomFactor` 与 `maxZoomFactor` 之间
-
-***
-
-### rampZoomFactor()
-
-```ts
-rampZoomFactor(toFactor: number, rate: number): void
-```
-
-以平滑方式调整变焦倍率。
-
-- `toFactor` 为目标倍率
-- `rate` 为变化速率，单位为每秒的 2 次幂变化
-
-***
-
-### resetZoom()
-
-```ts
-resetZoom(): void
-```
-
-将变焦倍率恢复为默认值（通常为 1.0）。
-
-***
-
-### dispose()
-
-```ts
-dispose(): Promise<void>
-```
-
-释放并销毁录制器。
-
-#### 使用约束
-
-- 调用后实例不可再使用
-- 会释放相机、音频与底层系统资源
-- 建议在页面或脚本生命周期结束时调用
-
-***
-
-## 典型使用流程
-
-```ts
-const recorder = new VideoRecorder({
-  camera: { position: "back" },
-  frameRate: 60,
-  videoCodec: "hevc"
-})
-
-recorder.onStateChanged = (state, details) => {
-  if (state === "finished") {
-    console.log("Video saved at:", details)
-  }
-}
-
-await recorder.prepare()
-recorder.startRecording("/path/to/tmp/demo.mov")
-```
-
-***
-
-## 使用建议
-
-- 始终监听 `onStateChanged` 以掌握完整状态变化
-- 不要在未调用 `prepare` 的情况下开始录制
-- 每次完成录制后，如需复用实例，应先调用 `reset`
-- 生命周期结束时务必调用 `dispose` 释放资源
 
 
 
@@ -20203,6 +19851,4321 @@ FileManager.removeFileBookmark(bookmarkName)
 - 对视频、音频、文档等资源优先使用文件路径
 - 对需要长期访问的文件务必创建书签
 - 在资源不再使用时移除对应书签
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/Device.md
+---
+
+# 设备
+
+`Device` 命名空间提供对当前设备硬件、系统环境、语言区域、屏幕信息、电池状态、方向感知、接近传感器以及网络接口等信息的访问能力，并提供相关状态变化的监听接口。
+
+该 API 主要用于根据设备环境动态调整 UI、行为逻辑或系统能力使用方式。
+
+***
+
+## Orientation
+
+表示设备当前的物理朝向。
+
+```ts
+type Orientation =
+  | "portrait"
+  | "portraitUpsideDown"
+  | "landscapeLeft"
+  | "landscapeRight"
+  | "faceUp"
+  | "faceDown"
+  | "unknown"
+```
+
+### 说明
+
+- `portrait`：竖屏，Home 键在下（或标准竖屏方向）
+- `portraitUpsideDown`：竖屏倒置
+- `landscapeLeft`：横屏，设备向左旋转
+- `landscapeRight`：横屏，设备向右旋转
+- `faceUp`：设备平放，屏幕朝上
+- `faceDown`：设备平放，屏幕朝下
+- `unknown`：无法确定方向
+
+***
+
+## NetworkInterface
+
+描述单个网络接口地址的信息。
+
+```ts
+type NetworkInterface = {
+  address: string
+  netmask: string | null
+  family: "IPv4" | "IPv6"
+  mac: string | null
+  isInternal: boolean
+  cidr: string | null
+}
+```
+
+### 字段说明
+
+- `address`：IP 地址
+- `netmask`：子网掩码
+- `family`：地址族，IPv4 或 IPv6
+- `mac`：MAC 地址（部分系统或接口可能为 null）
+- `isInternal`：是否为内部接口（如 loopback）
+- `cidr`：CIDR 表示形式，例如 `192.168.1.10/24`
+
+***
+
+## BatteryState
+
+表示当前电池状态。
+
+```ts
+type BatteryState = "full" | "charging" | "unplugged" | "unknown"
+```
+
+### 说明
+
+- `full`：电量已充满
+- `charging`：正在充电
+- `unplugged`：未连接电源
+- `unknown`：无法确定状态
+
+***
+
+## Device Information
+
+### model
+
+```ts
+const model: string
+```
+
+设备型号，例如 `"iPhone"`、`"iPad"`。
+
+***
+
+### localizedModel
+
+```ts
+const localizedModel: string
+```
+
+本地化后的设备型号名称。
+
+***
+
+### systemVersion
+
+```ts
+const systemVersion: string
+```
+
+当前操作系统版本号，例如 `"18.2"`。
+
+***
+
+### systemName
+
+```ts
+const systemName: string
+```
+
+操作系统名称，例如 `"iOS"`、`"iPadOS"`、`"macOS"`。
+
+***
+
+### isiPad / isiPhone
+
+```ts
+const isiPad: boolean
+const isiPhone: boolean
+```
+
+指示当前设备是否为 iPad 或 iPhone。
+
+***
+
+### screen
+
+```ts
+const screen: {
+  width: number
+  height: number
+  scale: number
+}
+```
+
+屏幕信息：
+
+- `width`：屏幕宽度（逻辑像素）
+- `height`：屏幕高度（逻辑像素）
+- `scale`：屏幕缩放比例（如 2、3）
+
+***
+
+## Battery & Sensors
+
+### batteryState
+
+```ts
+const batteryState: BatteryState
+```
+
+当前电池状态。
+
+***
+
+### batteryLevel
+
+```ts
+const batteryLevel: number
+```
+
+当前电量百分比，范围为 `0.0` 到 `1.0`。
+
+***
+
+### proximityState
+
+```ts
+const proximityState: boolean
+```
+
+接近传感器状态，`true` 表示设备靠近用户（例如通话时贴近耳朵）。
+
+***
+
+## Orientation & Layout
+
+### isLandscape / isPortrait / isFlat
+
+```ts
+const isLandscape: boolean
+const isPortrait: boolean
+const isFlat: boolean
+```
+
+- `isLandscape`：是否处于横屏
+- `isPortrait`：是否处于竖屏
+- `isFlat`：设备是否平放（face up / face down）
+
+***
+
+### orientation
+
+```ts
+const orientation: Orientation
+```
+
+当前设备物理方向。
+
+***
+
+## Appearance & Environment
+
+### colorScheme
+
+```ts
+const colorScheme: ColorScheme
+```
+
+当前系统颜色模式，例如浅色或深色模式。
+
+***
+
+### isiOSAppOnMac
+
+```ts
+const isiOSAppOnMac: boolean
+```
+
+指示当前进程是否为运行在 macOS 上的 iPhone / iPad App（Mac Catalyst 或 iOS App on Mac）。
+
+***
+
+## Locale & Language
+
+### systemLocale
+
+```ts
+const systemLocale: string
+```
+
+当前系统 Locale，例如 `"en_US"`。
+
+***
+
+### preferredLanguages
+
+```ts
+const preferredLanguages: string[]
+```
+
+用户偏好的语言列表，例如：
+
+```ts
+["en-US", "zh-Hans-CN"]
+```
+
+***
+
+### systemLocales（已废弃）
+
+```ts
+const systemLocales: string[]
+```
+
+已废弃，请使用 `preferredLanguages`。
+
+***
+
+### systemLanguageTag
+
+```ts
+const systemLanguageTag: string
+```
+
+语言标签，例如 `"en-US"`。
+
+***
+
+### systemLanguageCode
+
+```ts
+const systemLanguageCode: string
+```
+
+语言代码，例如 `"en"`。
+
+***
+
+### systemCountryCode
+
+```ts
+const systemCountryCode: string | undefined
+```
+
+国家代码，例如 `"US"`。
+
+***
+
+### systemScriptCode
+
+```ts
+const systemScriptCode: string | undefined
+```
+
+书写系统代码，例如 `"Hans"`（简体中文）。
+
+***
+
+## Wake Lock
+
+### isWakeLockEnabled
+
+```ts
+const isWakeLockEnabled: Promise<boolean>
+```
+
+查询当前是否启用了屏幕唤醒锁定（防止设备自动锁屏）。
+
+***
+
+### setWakeLockEnabled
+
+```ts
+function setWakeLockEnabled(enabled: boolean): void
+```
+
+启用或禁用 Wake Lock。
+
+说明：
+
+- 仅在 **Scripting App** 内可用
+- 启用后可防止设备自动休眠
+
+***
+
+## Battery Listeners
+
+### addBatteryStateListener
+
+```ts
+function addBatteryStateListener(
+  callback: (state: BatteryState) => void
+): void
+```
+
+监听电池状态变化。
+
+***
+
+### removeBatteryStateListener
+
+```ts
+function removeBatteryStateListener(
+  callback?: (state: BatteryState) => void
+): void
+```
+
+移除电池状态监听器。
+
+- 未传入 `callback` 时将移除所有监听器
+
+***
+
+### addBatteryLevelListener
+
+```ts
+function addBatteryLevelListener(
+  callback: (level: number) => void
+): void
+```
+
+监听电量变化。
+
+***
+
+### removeBatteryLevelListener
+
+```ts
+function removeBatteryLevelListener(
+  callback?: (level: number) => void
+): void
+```
+
+移除电量监听器。
+
+***
+
+## Orientation Listeners
+
+### addOrientationListener
+
+```ts
+function addOrientationListener(
+  callback: (orientation: Orientation) => void
+): void
+```
+
+开始监听设备方向变化。
+
+注意事项：
+
+- 必须先调用该方法才能接收方向变化
+- 系统方向锁开启时不会生效
+
+***
+
+### removeOrientationListener
+
+```ts
+function removeOrientationListener(
+  callback?: (orientation: Orientation) => void
+): void
+```
+
+移除方向监听器。
+
+- 未传入 `callback` 时将停止所有方向监听并结束观察
+
+***
+
+## Proximity Listeners
+
+### addProximityStateListener
+
+```ts
+function addProximityStateListener(
+  callback: (state: boolean) => void
+): void
+```
+
+监听接近传感器状态变化。
+
+***
+
+### removeProximityStateListener
+
+```ts
+function removeProximityStateListener(
+  callback?: (state: boolean) => void
+): void
+```
+
+移除接近传感器监听器。
+
+***
+
+## Network
+
+### networkInterfaces
+
+```ts
+function networkInterfaces(): Record<string, NetworkInterface[]>
+```
+
+获取当前设备的网络接口信息。
+
+返回值说明：
+
+- Key：接口名称（如 `en0`、`lo0`）
+- Value：该接口对应的地址信息数组
+
+适用于网络诊断、本地 IP 获取、调试用途。
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/Location.md
+---
+
+# 定位（Location）
+
+Location API 用于获取设备的地理位置、进行正向与反向地理编码、从系统地图中选择位置，以及访问设备的方向与指南针信息。该 API 适用于脚本运行环境、交互式界面以及部分支持位置更新的小组件场景，并遵循系统的权限与精度限制。
+
+## LocationAccuracy
+
+表示脚本期望接收的位置精度级别。
+
+**类型定义**
+
+```ts
+type LocationAccuracy =
+  | "best"
+  | "tenMeters"
+  | "hundredMeters"
+  | "kilometer"
+  | "threeKilometers"
+  | "bestForNavigation"
+  | "reduced"
+```
+
+**说明**
+
+- `best`
+  请求设备可提供的最高精度。
+
+- `tenMeters`
+  大约 10 米级别的精度。
+
+- `hundredMeters`
+  大约 100 米级别的精度。
+
+- `kilometer`
+  大约 1 公里级别的精度。
+
+- `threeKilometers`
+  较粗略的 3 公里级别精度。
+
+- `bestForNavigation`
+  面向导航场景，精度和更新频率最高，耗电量也更高。
+
+- `reduced`
+  使用系统提供的低精度位置，常见于用户仅授权“模糊位置”的情况。
+
+## LocationInfo
+
+表示一个基础的地理坐标信息。
+
+**类型定义**
+
+```ts
+type LocationInfo = {
+  latitude: number
+  longitude: number
+  timestamp: number
+}
+```
+
+**字段说明**
+
+- `latitude`
+  纬度，单位为度。
+
+- `longitude`
+  经度，单位为度。
+
+- `timestamp`
+  位置采集时间，毫秒级时间戳。
+
+## LocationPlacemark
+
+表示一个对人类友好的地理位置信息，通常由地理编码或反向地理编码返回。
+
+**类型定义**
+
+```ts
+type LocationPlacemark = {
+  location?: LocationInfo
+  region?: string
+  timeZone?: string
+  name?: string
+  thoroughfare?: string
+  subThoroughfare?: string
+  locality?: string
+  subLocality?: string
+  administrativeArea?: string
+  subAdministrativeArea?: string
+  postalCode?: string
+  isoCountryCode?: string
+  country?: string
+  inlandWater?: string
+  ocean?: string
+  areasOfInterest?: string[]
+}
+```
+
+**说明**
+
+Placemark 可能包含地址、城市、省份、国家、兴趣点等信息。具体字段是否存在取决于系统地图数据和地理位置本身。
+
+## Heading
+
+Heading 表示设备的方向与指南针相关信息。
+
+**类型定义**
+
+```ts
+type Heading = {
+  headingAccuracy: number
+  trueHeading: number
+  magneticHeading: number
+  timestamp: Date
+  x: number
+  y: number
+  z: number
+}
+```
+
+**字段说明**
+
+- `headingAccuracy`
+  报告方向与真实地磁方向之间的最大误差，单位为度。
+
+- `trueHeading`
+  相对于真北的方向角，单位为度。
+
+- `magneticHeading`
+  相对于磁北的方向角，单位为度。
+
+- `timestamp`
+  方向数据生成的时间。
+
+- `x`、`y`、`z`
+  三轴地磁场原始数据，单位为微特斯拉。
+
+## 授权与配置
+
+### isAuthorizedForWidgetUpdates
+
+```ts
+const isAuthorizedForWidgetUpdates: boolean
+```
+
+表示当前小组件是否有资格接收位置更新。该值受系统权限和小组件能力限制影响。
+
+### accuracy
+
+```ts
+const accuracy: LocationAccuracy
+```
+
+当前配置的位置精度级别。
+
+### setAccuracy
+
+```ts
+function setAccuracy(accuracy: LocationAccuracy): Promise<void>
+```
+
+设置脚本期望的位置精度。更高的精度可能会增加耗电量，并可能触发系统权限请求。
+
+**示例**
+
+```ts
+await Location.setAccuracy("hundredMeters")
+```
+
+## 获取当前位置
+
+### requestCurrent
+
+```ts
+function requestCurrent(
+  options?: { forceRequest?: boolean }
+): Promise<LocationInfo | null>
+```
+
+请求当前设备的位置。
+
+默认情况下，如果系统中存在可用的缓存位置，会直接返回缓存结果；如果不存在缓存位置，则会发起一次新的定位请求。
+
+当 `forceRequest` 为 `true` 时，会忽略缓存位置，始终请求最新位置。
+
+**示例**
+
+```ts
+const location = await Location.requestCurrent()
+
+if (location) {
+  console.log(location.latitude, location.longitude)
+}
+```
+
+强制请求最新位置：
+
+```ts
+const location = await Location.requestCurrent({
+  forceRequest: true
+})
+```
+
+### pickFromMap
+
+```ts
+function pickFromMap(): Promise<LocationInfo | null>
+```
+
+打开系统内置地图界面，让用户手动选择一个位置。
+
+**示例**
+
+```ts
+const picked = await Location.pickFromMap()
+
+if (picked) {
+  console.log("Picked location:", picked.latitude, picked.longitude)
+}
+```
+
+## 地理编码
+
+### reverseGeocode
+
+```ts
+function reverseGeocode(options: {
+  latitude: number
+  longitude: number
+  locale?: string
+}): Promise<LocationPlacemark[] | null>
+```
+
+将经纬度坐标转换为可读的地址信息。
+
+**示例**
+
+```ts
+const placemarks = await Location.reverseGeocode({
+  latitude: 39.9042,
+  longitude: 116.4074,
+  locale: "zh-CN"
+})
+
+console.log(placemarks?.[0]?.locality)
+```
+
+### geocodeAddress
+
+```ts
+function geocodeAddress(options: {
+  address: string
+  locale?: string
+}): Promise<LocationPlacemark[] | null>
+```
+
+将文本地址转换为地理位置信息。
+
+**示例**
+
+```ts
+const results = await Location.geocodeAddress({
+  address: "天安门",
+  locale: "zh-CN"
+})
+
+const location = results?.[0]?.location
+```
+
+## 方向与指南针
+
+### requestHeading
+
+```ts
+function requestHeading(): Promise<Heading | null>
+```
+
+获取最近一次上报的方向信息。如果尚未开始方向更新，则返回 `null`。
+
+**示例**
+
+```ts
+const heading = await Location.requestHeading()
+
+if (heading) {
+  console.log(heading.trueHeading)
+}
+```
+
+### startUpdatingHeading
+
+```ts
+function startUpdatingHeading(): Promise<void>
+```
+
+开始持续监听设备方向变化。
+
+### stopUpdatingHeading
+
+```ts
+function stopUpdatingHeading(): void
+```
+
+停止方向更新。
+
+### addHeadingListener
+
+```ts
+function addHeadingListener(
+  listener: (heading: Heading) => void
+): void
+```
+
+添加一个方向变化监听器。
+
+**示例**
+
+```ts
+await Location.startUpdatingHeading()
+
+Location.addHeadingListener(heading => {
+  console.log("Heading:", heading.trueHeading)
+})
+```
+
+### removeHeadingListener
+
+```ts
+function removeHeadingListener(
+  listener?: (heading: Heading) => void
+): void
+```
+
+移除方向监听器。如果未传入参数，将移除所有监听器。
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/SQLite/Configuration.md
+---
+
+# 配置
+
+`SQLite.Configuration` 用于定义数据库在打开和运行期间的全局行为。
+它控制 SQLite 的核心参数，例如外键约束、日志模式、忙等待策略、只读模式以及并发读取数量，并提供一个用于数据库初始化和结构准备的回调入口。
+
+SQLite 在 Scripting 中是**全局 API**，无需导入。
+在实际使用中，**所有 SQLite 相关操作都应放在 `try / catch` 中**，以便捕获运行时错误（如 SQL 错误、I/O 错误或结构冲突）。
+
+```ts
+try {
+  const path = Path.join(FileManager.documentsDirectory, "example.sqlite")
+
+  const config = new SQLite.Configuration()
+  config.foreignKeysEnabled = true
+  config.journalMode = "wal"
+  config.busyMode = 2
+  config.maximumReaderCount = 4
+  config.label = "main-db"
+
+  config.prepareDatabase(db => {
+    db.createTable("users", {
+      ifNotExists: true,
+      columns: [
+        { name: "id", type: "integer", primaryKey: true, autoIncrement: true },
+        { name: "name", type: "text", notNull: true }
+      ]
+    })
+
+    db.createIndex("users_name_idx", {
+      table: "users",
+      columns: ["name"],
+      ifNotExists: true
+    })
+  })
+
+  const queue = SQLite.openQueue(path, config)
+} catch (e) {
+  // 处理数据库相关错误
+}
+```
+
+***
+
+## 类型定义
+
+```ts
+class Configuration {
+  foreignKeysEnabled: boolean
+  readonly: boolean
+  label: string | null
+  busyMode: "immediateError" | DurationInSeconds
+  journalMode: "wal" | "default"
+  maximumReaderCount: number
+
+  prepareDatabase(setup: (db: Database) => void): void
+}
+```
+
+***
+
+## 属性说明
+
+### foreignKeysEnabled
+
+是否启用 SQLite 的外键约束。
+
+启用后，SQLite 将强制执行 `REFERENCES` 定义，并应用 `ON DELETE` / `ON UPDATE` 规则。
+
+```ts
+const config = new SQLite.Configuration()
+config.foreignKeysEnabled = true
+```
+
+使用建议：
+
+- 当表结构中使用了外键时，应开启该选项以保证数据一致性
+- 若关闭，该外键声明仍存在于表结构中，但不会被实际约束
+
+***
+
+### readonly
+
+以只读模式打开数据库。
+
+```ts
+const config = new SQLite.Configuration()
+config.readonly = true
+
+const pool = SQLite.openPool(path, config)
+```
+
+使用建议：
+
+- 适用于只读分析、统计或安全查看数据的场景
+- 所有写入操作（包括 DDL / DML）都会失败
+
+***
+
+### label
+
+用于标识数据库连接的可选标签，一般用于调试、日志或内部诊断。
+
+```ts
+const config = new SQLite.Configuration()
+config.label = "cache-db"
+```
+
+***
+
+### busyMode
+
+用于控制数据库被锁定（busy）时的行为。
+
+可选值：
+
+- `"immediateError"`：当数据库被占用时立即失败
+- `DurationInSeconds`：等待指定秒数后仍无法获取锁则失败
+
+```ts
+const config = new SQLite.Configuration()
+config.busyMode = "immediateError"
+```
+
+```ts
+const config = new SQLite.Configuration()
+config.busyMode = 2
+```
+
+使用建议：
+
+- 对延迟敏感的脚本或 UI 相关逻辑，可使用 `"immediateError"`
+- 一般业务场景建议设置 1～3 秒的等待时间
+
+***
+
+### journalMode
+
+控制 SQLite 的日志模式。
+
+- `"default"`：使用系统默认日志模式
+- `"wal"`：启用 Write-Ahead Logging（预写日志）
+
+```ts
+const config = new SQLite.Configuration()
+config.journalMode = "wal"
+```
+
+使用建议：
+
+- 推荐在需要并发读取的场景下使用 `wal`
+- 如需最大兼容性或行为与系统保持一致，可使用 `default`
+
+***
+
+### maximumReaderCount
+
+设置最大并发读连接数量（主要影响 `DatabasePool`）。
+
+```ts
+const config = new SQLite.Configuration()
+config.maximumReaderCount = 4
+
+const pool = SQLite.openPool(path, config)
+```
+
+使用建议：
+
+- 适用于读多写少的场景
+- 不宜设置过大，以免增加资源消耗
+
+***
+
+## 方法说明
+
+### prepareDatabase(setup)
+
+注册一个数据库初始化回调，用于在数据库准备阶段执行结构性操作。
+
+常见用途包括：
+
+- 创建表和索引
+- 执行 schema 初始化或迁移
+- 设置 PRAGMA 参数
+
+```ts
+const config = new SQLite.Configuration()
+
+config.prepareDatabase(db => {
+  db.execute("PRAGMA user_version = 1")
+
+  db.createTable("events", {
+    ifNotExists: true,
+    columns: [
+      { name: "id", type: "integer", primaryKey: true },
+      { name: "createdAt", type: "date", notNull: true, indexed: true },
+      { name: "payload", type: "text" }
+    ]
+  })
+})
+```
+
+注意事项：
+
+- 该回调应保持**确定性和快速执行**
+- 不建议在此进行大批量数据写入
+- 如需数据库迁移，可结合 `db.schemaVersion()` 或自定义版本号判断
+
+***
+
+## 推荐使用模式
+
+### 基础配置模板
+
+```ts
+function makeConfig() {
+  const config = new SQLite.Configuration()
+  config.foreignKeysEnabled = true
+  config.journalMode = "wal"
+  config.busyMode = 2
+  config.maximumReaderCount = 4
+  return config
+}
+```
+
+***
+
+### 配合 Queue 或 Pool 使用
+
+```ts
+try {
+  const path = Path.join(FileManager.documentsDirectory, "app.sqlite")
+  const config = makeConfig()
+
+  const queue = SQLite.openQueue(path, config)
+  // 或
+  const pool = SQLite.openPool(path, config)
+} catch (e) {
+  // 处理错误
+}
+```
+
+***
+
+## 常见问题与误用
+
+- 使用外键但未开启 `foreignKeysEnabled`
+- 将 `maximumReaderCount` 设置得过大
+- 在高并发写入场景下使用 `"immediateError"`
+- 在 `prepareDatabase` 中执行耗时或大量数据写入逻辑
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/SQLite/Database.md
+---
+
+# 数据库（Database）
+
+`Database` 表示一次 **具体的数据库访问上下文**。
+它是 SQLite API 中的核心对象，所有 SQL 执行、数据查询、Schema 读取、事务与保存点操作，最终都通过 `Database` 完成。
+
+在 Scripting 中，`Database` **不会被直接创建**，而是由 `DatabaseQueue` 或 `DatabasePool` 在 `read` / `write` 回调中提供。
+
+***
+
+## 类型定义
+
+```ts
+class Database {
+  readonly changesCount: number
+  readonly totalChangesCount: number
+  readonly isInsideTransaction: boolean
+  readonly lastErrorMessage: string | null
+  readonly lastInsertedRowID: number
+
+  schemaVersion(): number
+
+  tableExists(tableName: string, schemaName?: string): boolean
+  isTableHasUniqueKeys(tableName: string, uniqueKeys: string[]): boolean
+
+  columnsIn(tableName: string, schemaName?: string): ColumnInfo[]
+
+  primaryKey(tableName: string, schemaName?: string): PrimaryKeyInfo
+  foreignKeys(tableName: string, schemaName?: string): ForeignKeyInfo[]
+  indexes(tableName: string, schemaName?: string): IndexInfo[]
+
+  makeStatement(sql: string): Statement
+  cachedStatement(sql: string): Statement
+
+  inTransaction(operations: () => TransactionCompletion): void
+  inSavepoint(operations: () => TransactionCompletion): void
+
+  execute(sql: string, arguments?: StatementArguments): void
+
+  createTable(name: string, options: {
+    columns: ColumnDefinition[]
+    ifNotExists?: boolean
+  }): void
+  renameTable(name: string, newName: string): void
+  dropTable(name: string): void
+
+  createIndex(name: string, options: {
+    table: string
+    columns: string[]
+    unique?: boolean
+    ifNotExists?: boolean
+    condition?: string
+  }): void
+  dropIndex(name: string): void
+  dropIndexOn(tableName: string, columns: string[]): void
+
+  fetchAll<T>(sql: string, arguments?: StatementArguments): T[]
+  fetchSet<T>(sql: string, arguments?: StatementArguments): T[]
+  fetchOne<T>(sql: string, arguments?: StatementArguments): T
+  fetchCursor<T>(
+    sql: string,
+    perform: (next: () => {
+      row: T | null
+      error: string | null
+    }) => void,
+    arguments?: StatementArguments
+  ): void
+}
+```
+
+***
+
+## Database 的角色与边界
+
+`Database` 的职责包括：
+
+- 执行 SQL（DDL / DML）
+- 创建与管理 Statement
+- 查询和读取数据
+- 提供 Schema 元信息
+- 管理事务和保存点
+
+但它 **不负责**：
+
+- 并发调度（由 Queue / Pool 负责）
+- 生命周期管理（由 Queue / Pool 控制）
+- 跨线程或跨回调复用
+
+***
+
+## Database 的获取方式
+
+`Database` 只能在 `DatabaseQueue` 或 `DatabasePool` 的回调中使用：
+
+```ts
+queue.write(db => {
+  db.execute("INSERT INTO users (name) VALUES (?)", ["Alice"])
+})
+
+const users = queue.read(db =>
+  db.fetchAll("SELECT * FROM users")
+)
+```
+
+***
+
+## 状态属性
+
+### changesCount
+
+返回 **最近一次 SQL 操作** 影响的行数。
+
+```ts
+db.execute("DELETE FROM logs")
+console.log(db.changesCount)
+```
+
+***
+
+### totalChangesCount
+
+返回自数据库连接建立以来 **累计影响的行数**。
+
+```ts
+console.log(db.totalChangesCount)
+```
+
+***
+
+### isInsideTransaction
+
+指示当前是否处于事务或保存点中。
+
+```ts
+if (db.isInsideTransaction) {
+  console.log("inside transaction")
+}
+```
+
+***
+
+### lastErrorMessage
+
+返回最近一次 SQLite 错误信息（若有）。
+
+```ts
+if (db.lastErrorMessage) {
+  console.error(db.lastErrorMessage)
+}
+```
+
+***
+
+### lastInsertedRowID
+
+返回最近一次插入操作生成的 RowID。
+
+```ts
+db.execute("INSERT INTO users (name) VALUES (?)", ["Bob"])
+console.log(db.lastInsertedRowID)
+```
+
+***
+
+## Schema 版本
+
+### schemaVersion
+
+返回数据库当前的 schema 版本。
+
+```ts
+const version = db.schemaVersion()
+```
+
+常用于迁移逻辑：
+
+```ts
+if (db.schemaVersion() < 2) {
+  // 执行迁移
+}
+```
+
+***
+
+## Schema 查询 API
+
+### tableExists
+
+判断表是否存在。
+
+```ts
+if (db.tableExists("users")) {
+  // ...
+}
+```
+
+***
+
+### isTableHasUniqueKeys
+
+判断表是否具有指定的唯一键组合。
+
+```ts
+const exists = db.isTableHasUniqueKeys(
+  "users",
+  ["email"]
+)
+```
+
+***
+
+### columnsIn
+
+查询表中所有列的信息。
+
+```ts
+const columns = db.columnsIn("users")
+```
+
+***
+
+### primaryKey / foreignKeys / indexes
+
+获取主键、外键与索引信息。
+
+```ts
+const pk = db.primaryKey("users")
+const fks = db.foreignKeys("orders")
+const indexes = db.indexes("users")
+```
+
+***
+
+## Statement 创建
+
+### makeStatement
+
+创建一个新的 Statement。
+
+```ts
+const stmt = db.makeStatement(
+  "SELECT * FROM users WHERE id = ?"
+)
+```
+
+***
+
+### cachedStatement
+
+创建或获取一个缓存的 Statement。
+
+```ts
+const stmt = db.cachedStatement(
+  "SELECT * FROM users WHERE id = ?"
+)
+```
+
+***
+
+## 事务与保存点
+
+### inTransaction
+
+在事务中执行一组操作。
+
+```ts
+db.inTransaction(() => {
+  db.execute("INSERT INTO users (name) VALUES (?)", ["Tom"])
+  db.execute("INSERT INTO users (name) VALUES (?)", ["Jerry"])
+  return "commit"
+})
+```
+
+***
+
+### inSavepoint
+
+在保存点中执行操作，支持嵌套。
+
+```ts
+db.inSavepoint(() => {
+  db.execute("DELETE FROM cache")
+  return "rollback"
+})
+```
+
+说明：
+
+- 返回 `"commit"` 提交
+- 返回 `"rollback"` 回滚
+- 抛出异常将自动回滚
+
+***
+
+## 执行 SQL
+
+### execute
+
+执行任意 SQL（不返回结果）。
+
+```ts
+db.execute(
+  "UPDATE users SET name = ? WHERE id = ?",
+  ["Alice", 1]
+)
+```
+
+适合：
+
+- DDL
+- INSERT / UPDATE / DELETE
+- 不关心返回结果的语句
+
+***
+
+## 表与索引管理
+
+### createTable
+
+使用结构化方式创建表。
+
+```ts
+db.createTable("tasks", {
+  ifNotExists: true,
+  columns: [
+    { name: "id", type: "integer", primaryKey: true },
+    { name: "title", type: "text", notNull: true },
+    { name: "done", type: "boolean", defaultValue: false }
+  ]
+})
+```
+
+***
+
+### renameTable / dropTable
+
+```ts
+db.renameTable("tasks", "todos")
+db.dropTable("todos")
+```
+
+***
+
+### createIndex
+
+```ts
+db.createIndex("tasks_title_idx", {
+  table: "tasks",
+  columns: ["title"],
+  ifNotExists: true
+})
+```
+
+***
+
+### dropIndex / dropIndexOn
+
+```ts
+db.dropIndex("tasks_title_idx")
+db.dropIndexOn("tasks", ["title"])
+```
+
+***
+
+## 数据查询 API
+
+### fetchAll
+
+返回所有结果行。
+
+```ts
+const users = db.fetchAll<{ id: number; name: string }>(
+  "SELECT * FROM users"
+)
+```
+
+***
+
+### fetchSet
+
+以 Set 形式返回结果（自动去重）。
+
+```ts
+const names = db.fetchSet<{ name: string }>(
+  "SELECT name FROM users"
+)
+```
+
+***
+
+### fetchOne
+
+返回单条结果。
+
+```ts
+const user = db.fetchOne<{ id: number; name: string }>(
+  "SELECT * FROM users WHERE id = ?",
+  [1]
+)
+```
+
+***
+
+### fetchCursor
+
+使用游标逐条读取结果。
+
+```ts
+db.fetchCursor(
+  "SELECT * FROM logs",
+  next => {
+    let result
+    while ((result = next()).row) {
+      console.log(result.row)
+    }
+  }
+)
+```
+
+适合：
+
+- 大数据量查询
+- 流式处理
+- 避免一次性加载全部数据
+
+***
+
+## 使用约束与注意事项
+
+- `Database` 只能在其所属的 `read / write` 回调中使用
+- 不可跨回调保存或传递 Database 实例
+- 不可跨线程使用
+- 事务必须在同一个 Database 上完成
+
+***
+
+## 常见误用
+
+- 在回调外部持有 Database 引用
+- 在事务外执行依赖事务状态的逻辑
+- 对一次性查询过度使用 `fetchCursor`
+- 混用 Queue / Pool 的并发语义
+
+***
+
+## 总结
+
+`Database` 是 SQLite API 的**核心执行单元**：
+
+- 提供完整的 SQL 执行与查询能力
+- 管理 Statement、事务和 Schema
+- 明确并发和生命周期边界
+- 与 Queue / Pool 形成清晰分工
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/SQLite/DatabaseMigrator.md
+---
+
+# 数据库迁移（DatabaseMigrator）
+
+`DatabaseMigrator` 用于 **管理和执行数据库结构迁移（schema migrations）**。
+它提供了一套有序、可追踪、可回放的迁移机制，用于在数据库版本演进过程中安全地修改表结构、索引和其他 schema 元素。
+
+在 Scripting 的 SQLite API 中，`DatabaseMigrator` 通常与 `DatabaseQueue` 或 `DatabasePool` 配合使用，在数据库打开或应用启动阶段执行。
+
+***
+
+## 设计目标
+
+`DatabaseMigrator` 的核心设计目标包括：
+
+- 以 **显式标识符（identifier）** 管理迁移顺序
+- 保证迁移 **只执行一次**，且按注册顺序执行
+- 支持在迁移过程中安全地操作 `Database`
+- 提供外键检查控制能力，适配复杂迁移场景
+- 提供迁移状态查询能力，便于调试和诊断
+
+***
+
+## 类型定义
+
+```ts
+type DatabaseMigratorForeignKeyChecks =
+  | "deferred"
+  | "immediate"
+
+class DatabaseMigrator {
+  eraseDatabaseOnSchemaChange: boolean
+  readonly migrations: string[]
+
+  disablingDeferredForeignKeyChecks(): void
+
+  registerMigration(
+    identifier: string,
+    migration: (db: Database) => void
+  ): void
+
+  registerMigration(
+    identifier: string,
+    foreignKeyChecks: DatabaseMigratorForeignKeyChecks,
+    migration: (db: Database) => void
+  ): void
+
+  migrate(
+    writer: DatabaseQueue | DatabasePool,
+    upToTargetIdentifier?: string
+  ): void
+
+  appliedMigrations(db: Database): string[]
+  appliedIdentifiers(db: Database): string[]
+  completedMigrations(db: Database): string[]
+  hasCompletedMigrations(db: Database): boolean
+  hasBeenSuperseded(db: Database): boolean
+}
+```
+
+***
+
+## 基本使用流程
+
+一个典型的数据库迁移流程包括：
+
+1. 创建 `DatabaseMigrator`
+2. 注册一组迁移（按顺序）
+3. 在数据库启动阶段执行 `migrate`
+
+```ts
+const migrator = new SQLite.DatabaseMigrator()
+
+migrator.registerMigration("create_users", db => {
+  db.createTable("users", {
+    columns: [
+      { name: "id", type: "integer", primaryKey: true },
+      { name: "name", type: "text", notNull: true }
+    ]
+  })
+})
+
+migrator.registerMigration("add_email_to_users", db => {
+  db.execute("ALTER TABLE users ADD COLUMN email TEXT")
+})
+
+migrator.migrate(queue)
+```
+
+***
+
+## 迁移标识符（identifier）
+
+每个迁移都必须有一个 **唯一的 identifier**，用于：
+
+- 标识迁移的执行状态
+- 确定迁移顺序
+- 防止重复执行
+
+迁移按注册顺序执行，而不是按 identifier 字符串排序。
+
+**建议规则：**
+
+- identifier 一旦发布不可修改
+- 使用清晰、稳定的命名
+- 避免复用或删除已发布的迁移
+
+***
+
+## registerMigration
+
+### 基础注册方式
+
+```ts
+migrator.registerMigration("create_posts", db => {
+  db.createTable("posts", {
+    columns: [
+      { name: "id", type: "integer", primaryKey: true },
+      { name: "title", type: "text" }
+    ]
+  })
+})
+```
+
+该迁移将在执行时获得一个可写的 `Database` 实例。
+
+***
+
+### 带外键检查策略的注册
+
+```ts
+migrator.registerMigration(
+  "add_foreign_key",
+  "deferred",
+  db => {
+    db.execute(`
+      CREATE TABLE comments (
+        id INTEGER PRIMARY KEY,
+        postId INTEGER REFERENCES posts(id)
+      )
+    `)
+  }
+)
+```
+
+***
+
+## 外键检查策略（DatabaseMigratorForeignKeyChecks）
+
+### deferred
+
+- 外键约束在事务结束时统一检查
+- 适合涉及多张表、顺序复杂的迁移
+
+### immediate
+
+- 外键约束在每条语句执行后立即检查
+- 适合结构简单、依赖清晰的迁移
+
+***
+
+## disablingDeferredForeignKeyChecks
+
+禁用迁移过程中的 **延迟外键检查**。
+
+```ts
+migrator.disablingDeferredForeignKeyChecks()
+```
+
+使用场景：
+
+- 数据库或平台不支持延迟外键
+- 迁移逻辑明确不依赖外键约束
+- 希望在执行过程中尽早暴露错误
+
+***
+
+## migrate
+
+执行迁移。
+
+```ts
+migrator.migrate(queue)
+```
+
+或仅执行到指定迁移为止：
+
+```ts
+migrator.migrate(queue, "add_email_to_users")
+```
+
+说明：
+
+- 使用 `DatabaseQueue` 或 `DatabasePool` 的写通道执行
+- 每个迁移在事务中执行
+- 已执行的迁移不会重复执行
+
+***
+
+## eraseDatabaseOnSchemaChange
+
+是否在检测到 schema 不兼容变化时 **清空数据库并重新执行迁移**。
+
+```ts
+migrator.eraseDatabaseOnSchemaChange = true
+```
+
+使用建议：
+
+- 适用于缓存类数据库
+- 不适用于用户关键数据
+- 一旦启用，数据可能被全部清除
+
+***
+
+## 迁移状态查询 API
+
+### migrations
+
+返回所有已注册迁移的 identifier 列表。
+
+```ts
+console.log(migrator.migrations)
+```
+
+***
+
+### appliedMigrations / appliedIdentifiers
+
+返回数据库中已应用的迁移。
+
+```ts
+const applied = migrator.appliedMigrations(db)
+```
+
+***
+
+### completedMigrations
+
+返回已成功完成的迁移列表。
+
+```ts
+const completed = migrator.completedMigrations(db)
+```
+
+***
+
+### hasCompletedMigrations
+
+判断数据库是否已完成所有注册的迁移。
+
+```ts
+if (migrator.hasCompletedMigrations(db)) {
+  console.log("all migrations completed")
+}
+```
+
+***
+
+### hasBeenSuperseded
+
+判断当前数据库是否被新的迁移定义“取代”。
+
+```ts
+if (migrator.hasBeenSuperseded(db)) {
+  console.log("database schema is outdated")
+}
+```
+
+通常表示：
+
+- 迁移定义发生了变化
+- 数据库 schema 与当前代码不匹配
+
+***
+
+## 使用建议与注意事项
+
+- 迁移函数应 **只包含 schema 相关操作**
+- 避免在迁移中执行大量数据写入
+- 不要修改或删除已发布的迁移
+- 对生产数据，谨慎使用 `eraseDatabaseOnSchemaChange`
+- 迁移应保持幂等、确定性和可重复性
+
+***
+
+## 总结
+
+`DatabaseMigrator` 提供了一套 **可靠、可控、可追踪的数据库迁移机制**：
+
+- 基于 identifier 的顺序迁移
+- 内置事务与外键检查支持
+- 可查询的迁移状态
+- 与 Queue / Pool 无缝集成
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/SQLite/DatabaseQueue and DatabasePool.md
+---
+
+# DatabaseQueue 和 DatabasePool
+
+`DatabaseQueue` 和 `DatabasePool` 是 SQLite API 中**负责数据库并发模型和生命周期管理**的组件。
+它们决定了：
+
+- 数据库如何被调度访问
+- 是否支持并发读取
+- Database 实例的生命周期边界
+- 事务与读写隔离行为
+
+两者都不直接执行 SQL，而是通过向回调中提供 `Database` 实例来完成实际操作。
+
+***
+
+## DatabaseQueue
+
+`DatabaseQueue` 提供 **串行（Serial）数据库访问模型**。
+所有数据库操作（读和写）都会在同一队列中顺序执行。
+
+### 类型定义
+
+```ts
+class DatabaseQueue {
+  readonly path: string
+  readonly configuration: Configuration
+
+  read<T>(callback: (database: Database) => T): T
+  write<T>(callback: (database: Database) => T): T
+
+  inDatabase<T>(operations: (database: Database) => T): T
+  inTranscation(operations: () => TransactionCompletion): void
+
+  releaseMemory(): void
+  interrupt(): void
+  close(): void
+}
+```
+
+***
+
+### 并发模型
+
+- 所有 `read` 和 `write` 调用 **串行执行**
+- 任意时刻只有一个 `Database` 实例在工作
+- 不存在并发访问、锁竞争或读写冲突问题
+
+***
+
+### 基本用法
+
+```ts
+const queue = SQLite.openQueue(path)
+
+queue.write(db => {
+  db.execute("INSERT INTO logs (message) VALUES (?)", ["hello"])
+})
+
+const logs = queue.read(db =>
+  db.fetchAll("SELECT * FROM logs")
+)
+```
+
+***
+
+### read 与 write
+
+- `read`：语义上表示只读操作
+- `write`：语义上表示写操作
+
+在 `DatabaseQueue` 中：
+
+- 两者在行为上 **没有并发差异**
+- 主要用于提高代码可读性和表达意图
+
+***
+
+### inDatabase
+
+`inDatabase` 允许直接在队列中执行一段数据库逻辑。
+
+```ts
+queue.inDatabase(db => {
+  db.execute("VACUUM")
+})
+```
+
+通常用于：
+
+- 管理类操作
+- 不区分读写的内部逻辑
+
+***
+
+### inTranscation
+
+在队列级别开启事务。
+
+```ts
+queue.inTranscation(() => {
+  // 所有操作在一个事务中执行
+  return "commit"
+})
+```
+
+说明：
+
+- 该方法作用于队列关联的 Database
+- 适合整体事务控制
+- 不支持并发嵌套
+
+***
+
+### 使用场景
+
+推荐使用 `DatabaseQueue` 的情况：
+
+- 写操作频繁
+- 业务逻辑依赖严格执行顺序
+- 脚本简单，数据量中小
+- 希望避免并发带来的复杂性
+
+***
+
+## DatabasePool
+
+`DatabasePool` 提供 **并发读取 + 串行写入** 的访问模型。
+它允许多个只读操作并发执行，同时保证写操作的安全性。
+
+### 类型定义
+
+```ts
+class DatabasePool {
+  readonly path: string
+  readonly configuration: Configuration
+
+  read<T>(callback: (database: Database) => T): T
+  write<T>(callback: (database: Database) => T): T
+
+  releaseMemory(): void
+  interrupt(): void
+  close(): void
+}
+```
+
+***
+
+### 并发模型
+
+- 多个 `read` 回调可并发执行
+- `write` 回调 **串行执行**
+- 写操作会与所有读操作进行必要的同步
+
+这种模型非常适合 **读多写少** 的场景。
+
+***
+
+### 基本用法
+
+```ts
+const pool = SQLite.openPool(path)
+
+const items = pool.read(db =>
+  db.fetchAll("SELECT * FROM items")
+)
+
+pool.write(db => {
+  db.execute("DELETE FROM items WHERE expired = 1")
+})
+```
+
+***
+
+### read 与 write 的语义差异
+
+在 `DatabasePool` 中：
+
+- `read`
+
+  - 使用只读连接
+  - 可并发执行
+  - 不允许写操作
+
+- `write`
+
+  - 使用写连接
+  - 串行执行
+  - 会阻塞其他写操作
+
+***
+
+### 使用场景
+
+推荐使用 `DatabasePool` 的情况：
+
+- 查询频繁、写入较少
+- 大量列表、搜索、统计类查询
+- 多个脚本或任务同时读取同一数据库
+- 对吞吐量和响应性能有要求
+
+***
+
+## DatabaseQueue vs DatabasePool
+
+### 核心区别对比
+
+| 维度    | DatabaseQueue | DatabasePool |
+| ----- | ------------- | ------------ |
+| 并发模型  | 串行            | 多读并发，写入串行    |
+| 读操作   | 串行            | 并发           |
+| 写操作   | 串行            | 串行           |
+| 实现复杂度 | 低             | 较高           |
+| 性能    | 稳定但吞吐量较低      | 高吞吐量         |
+| 使用难度  | 简单            | 中等           |
+
+***
+
+### 如何选择
+
+**优先选择 DatabaseQueue，如果：**
+
+- 你不确定是否需要并发
+- 写操作较多
+- 更看重逻辑简单和稳定性
+
+**选择 DatabasePool，如果：**
+
+- 数据库以查询为主
+- 有明显的并发读取需求
+- 希望提高整体性能
+
+***
+
+## 生命周期管理
+
+两者都提供相同的生命周期管理方法：
+
+### releaseMemory
+
+释放 SQLite 内部缓存。
+
+```ts
+queue.releaseMemory()
+pool.releaseMemory()
+```
+
+***
+
+### interrupt
+
+中断当前正在执行的数据库操作。
+
+```ts
+queue.interrupt()
+pool.interrupt()
+```
+
+***
+
+### close
+
+关闭数据库连接，释放资源。
+
+```ts
+queue.close()
+pool.close()
+```
+
+说明：
+
+- 调用 `close` 后，不应再执行任何数据库操作
+- 关闭后相关的 `Database` 和 `Statement` 都将失效
+
+***
+
+## 使用注意事项
+
+- 不要在 `read` 回调中执行写操作（尤其是 DatabasePool）
+- 不要在回调外部保存 `Database` 实例
+- 不要在多个 Queue / Pool 之间混用同一个 Database
+- 确保所有事务在同一个回调内完成
+
+***
+
+## 总结
+
+`DatabaseQueue` 和 `DatabasePool` 是 SQLite API 中**最关键的并发抽象层**：
+
+- `DatabaseQueue`：简单、安全、顺序明确
+- `DatabasePool`：高性能、适合读密集型场景
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/SQLite/Quick Start.md
+---
+
+# 快速开始
+
+SQLite 模块为 Scripting 提供了一套完整的本地数据库访问能力，适用于数据持久化、结构化查询、事务处理以及高并发读取等场景。
+
+```ts
+try {
+  const path = Path.join(FileManager.documentsDirectory, "example.sqlite")
+  const queue = SQLite.openQueue(path)
+
+  queue.write(db => {
+    db.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)")
+    db.execute("INSERT INTO users (name) VALUES (?)", ["Alice"])
+  })
+
+  const users = queue.read(db =>
+    db.fetchAll<{ id: number; name: string }>(
+      "SELECT * FROM users"
+    )
+  )
+} catch(e) {
+  // ...
+}
+```
+
+***
+
+## Configuration（数据库配置）
+
+`Configuration` 用于定义数据库连接的全局行为，例如外键、日志模式、并发策略等。
+
+```ts
+const config = new SQLite.Configuration()
+config.foreignKeysEnabled = true
+config.journalMode = "wal"
+config.maximumReaderCount = 4
+
+config.prepareDatabase(db => {
+  db.createTable("posts", {
+    columns: [
+      { name: "id", type: "integer", primaryKey: true },
+      { name: "title", type: "text", notNull: true }
+    ],
+    ifNotExists: true
+  })
+})
+
+const path = Path.join(FileManager.documentsDirectory, "example.sqlite")
+const queue = SQLite.openQueue(path, config)
+```
+
+`prepareDatabase` 常用于表结构和索引的初始化。
+
+***
+
+## Database（数据库连接）
+
+`Database` 表示一次具体的数据库访问上下文，所有 SQL 执行、查询、事务操作都通过它完成。
+
+### 执行 SQL
+
+```ts
+db.execute(
+  "UPDATE users SET name = ? WHERE id = ?",
+  ["Bob", 1]
+)
+```
+
+### 查询数据
+
+```ts
+const user = db.fetchOne<{ id: number; name: string }>(
+  "SELECT * FROM users WHERE id = ?",
+  [1]
+)
+```
+
+### 批量查询
+
+```ts
+const rows = db.fetchAll<{ id: number; name: string }>(
+  "SELECT * FROM users"
+)
+```
+
+***
+
+## 表结构与 Schema 查询
+
+### 判断表是否存在
+
+```ts
+if (db.tableExists("users")) {
+  console.log("users table exists")
+}
+```
+
+### 查询列信息
+
+```ts
+const columns = db.columnsIn("users")
+```
+
+### 查询主键
+
+```ts
+const pk = db.primaryKey("users")
+```
+
+### 查询外键与索引
+
+```ts
+const foreignKeys = db.foreignKeys("orders")
+const indexes = db.indexes("users")
+```
+
+***
+
+## 事务与保存点
+
+### 显式事务
+
+```ts
+db.inTransaction(() => {
+  db.execute("INSERT INTO users (name) VALUES (?)", ["Tom"])
+  db.execute("INSERT INTO users (name) VALUES (?)", ["Jerry"])
+  return "commit"
+})
+```
+
+### 保存点
+
+```ts
+db.inSavepoint(() => {
+  db.execute("DELETE FROM users WHERE id = ?", [10])
+  return "rollback"
+})
+```
+
+事务通过返回 `"commit"` 或 `"rollback"` 明确控制结果。
+
+***
+
+## Statement（预编译语句）
+
+`Statement` 用于复用 SQL，提高执行效率，并提供参数校验能力。
+
+```ts
+const stmt = db.cachedStatement(
+  "INSERT INTO users (name) VALUES (:name)"
+)
+
+stmt.execute({ name: "Alice" })
+stmt.execute({ name: "Bob" })
+```
+
+也可以单独校验参数：
+
+```ts
+stmt.validateArguments({ name: "Charlie" })
+```
+
+***
+
+## 数据读取方式
+
+### fetchOne
+
+```ts
+const user = db.fetchOne<{ name: string }>(
+  "SELECT name FROM users WHERE id = ?",
+  [1]
+)
+```
+
+### fetchSet
+
+```ts
+const names = db.fetchSet<{ name: string }>(
+  "SELECT DISTINCT name FROM users"
+)
+```
+
+### fetchCursor（游标式读取）
+
+```ts
+db.fetchCursor(
+  "SELECT * FROM logs",
+  next => {
+    let result
+    while ((result = next()).row) {
+      console.log(result.row)
+    }
+    return null
+  }
+)
+```
+
+适合大数据量或流式处理场景。
+
+***
+
+## 表与索引管理
+
+### 创建表
+
+```ts
+db.createTable("tasks", {
+  columns: [
+    { name: "id", type: "integer", primaryKey: true },
+    { name: "title", type: "text", notNull: true },
+    { name: "done", type: "boolean", defaultValue: false }
+  ],
+  ifNotExists: true
+})
+```
+
+### 创建索引
+
+```ts
+db.createIndex("task_title_index", {
+  table: "tasks",
+  columns: ["title"],
+  ifNotExists: true
+})
+```
+
+### 删除表或索引
+
+```ts
+db.dropTable("tasks")
+db.dropIndex("task_title_index")
+```
+
+***
+
+## DatabaseQueue（串行数据库）
+
+`DatabaseQueue` 适合写操作频繁、对执行顺序敏感的场景。
+
+```ts
+const queue = SQLite.openQueue("/path/to/data.sqlite")
+
+queue.write(db => {
+  db.execute("INSERT INTO logs (message) VALUES (?)", ["hello"])
+})
+
+queue.read(db => {
+  return db.fetchAll("SELECT * FROM logs")
+})
+```
+
+***
+
+## DatabasePool（并发数据库）
+
+`DatabasePool` 适合多读少写、高并发查询的场景。
+
+```ts
+const pool = SQLite.openPool("/path/to/data.sqlite")
+
+const items = pool.read(db =>
+  db.fetchAll("SELECT * FROM items")
+)
+
+pool.write(db => {
+  db.execute("DELETE FROM items WHERE expired = 1")
+})
+```
+
+***
+
+## 资源管理与控制
+
+### 中断执行
+
+```ts
+db.interrupt()
+```
+
+### 释放缓存
+
+```ts
+db.releaseMemory()
+```
+
+### 关闭数据库
+
+```ts
+db.close()
+```
+
+***
+
+## 总结
+
+通过在各个 API 节点中嵌入简短示例，SQLite 模块的整体使用方式可以被快速理解：
+
+- Configuration 负责数据库行为定义
+- Database 提供所有核心能力
+- Queue / Pool 明确并发模型
+- Statement 用于高性能 SQL 执行
+- Schema API 提供结构化数据库管理能力
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/SQLite/Schema & Value Types.md
+---
+
+# 基础类型（Schema & Value Types）
+
+基础类型（Schema & Value Types）
+
+***
+
+## ColumnInfo
+
+`ColumnInfo` 描述一张表中某一列的结构信息，通常用于 **schema 检查、调试、迁移逻辑**。
+
+该类型由 `Database.columnsIn()` 返回。
+
+```ts
+type ColumnInfo = {
+  name: string
+  type: string
+  defaultValueSQL: string | null
+  isNotNull: boolean
+  primaryKeyIndex: number
+}
+```
+
+### 字段说明
+
+- `name`
+  列名
+
+- `type`
+  SQLite 声明的列类型（如 `integer`、`text`、`real`）
+
+- `defaultValueSQL`
+  列的默认值 SQL 表达式，若无默认值则为 `null`
+
+- `isNotNull`
+  是否声明为 `NOT NULL`
+
+- `primaryKeyIndex`
+  该列在主键中的顺序
+
+  - `0` 表示不是主键
+  - `>= 1` 表示联合主键中的位置
+
+### 示例
+
+```ts
+const columns = db.columnsIn("users")
+
+for (const column of columns) {
+  console.log(column.name, column.type)
+}
+```
+
+***
+
+## PrimaryKeyInfo
+
+`PrimaryKeyInfo` 描述一张表的主键信息。
+
+该类型由 `Database.primaryKey()` 返回。
+
+```ts
+type PrimaryKeyInfo = {
+  columns: string[]
+  rowIDColumn: string | null
+  isRowID: boolean
+}
+```
+
+### 字段说明
+
+- `columns`
+  主键列名列表（支持联合主键）
+
+- `rowIDColumn`
+  若主键映射到 SQLite 的 `rowid`，则为对应列名，否则为 `null`
+
+- `isRowID`
+  是否使用 SQLite 隐式的 `rowid` 作为主键
+
+### 示例
+
+```ts
+const pk = db.primaryKey("users")
+
+if (pk.isRowID) {
+  console.log("table uses rowid as primary key")
+} else {
+  console.log("primary key columns:", pk.columns)
+}
+```
+
+***
+
+## ForeignKeyInfo
+
+`ForeignKeyInfo` 描述一条外键约束的信息。
+
+该类型由 `Database.foreignKeys()` 返回。
+
+```ts
+type ForeignKeyInfo = {
+  id: number
+  originColumns: string[]
+  destinationTable: string
+  destinationColumns: string[]
+  mapping: {
+    origin: string
+    destination: string
+  }[]
+}
+```
+
+### 字段说明
+
+- `id`
+  外键约束的内部标识
+
+- `originColumns`
+  当前表中的外键列
+
+- `destinationTable`
+  被引用的目标表名
+
+- `destinationColumns`
+  目标表中被引用的列
+
+- `mapping`
+  外键列与目标列的一一映射关系
+
+### 示例
+
+```ts
+const foreignKeys = db.foreignKeys("orders")
+
+for (const fk of foreignKeys) {
+  console.log(
+    fk.originColumns,
+    "->",
+    fk.destinationTable,
+    fk.destinationColumns
+  )
+}
+```
+
+***
+
+## IndexInfo
+
+`IndexInfo` 描述表中索引的结构信息。
+
+该类型由 `Database.indexes()` 返回。
+
+```ts
+type IndexInfo = {
+  name: string
+  columns: string[]
+  isUnique: boolean
+  origin: "createIndex" | "primaryKeyConstraint" | "uniqueConstraint"
+}
+```
+
+### 字段说明
+
+- `name`
+  索引名称
+
+- `columns`
+  索引包含的列
+
+- `isUnique`
+  是否为唯一索引
+
+- `origin`
+  索引的来源：
+
+  - `createIndex`：通过 `CREATE INDEX` 创建
+  - `primaryKeyConstraint`：主键自动生成
+  - `uniqueConstraint`：唯一约束生成
+
+### 示例
+
+```ts
+const indexes = db.indexes("users")
+
+for (const index of indexes) {
+  console.log(index.name, index.columns)
+}
+```
+
+***
+
+## DatabaseValue
+
+`DatabaseValue` 表示 SQLite 支持的值类型集合，用于参数绑定和默认值声明。
+
+```ts
+type DatabaseValue =
+  | string
+  | number
+  | boolean
+  | Data
+  | Date
+  | null
+```
+
+### 使用场景
+
+- SQL 参数绑定
+- `ColumnDefinition.defaultValue`
+- `StatementArguments`
+
+### 示例
+
+```ts
+db.execute(
+  "INSERT INTO logs (message, createdAt) VALUES (?, ?)",
+  ["hello", new Date()]
+)
+```
+
+***
+
+## StatementArguments
+
+`StatementArguments` 定义 SQL 语句支持的参数形式。
+
+```ts
+type StatementArguments =
+  | DatabaseValue[]
+  | Record<string, DatabaseValue>
+```
+
+### 示例
+
+位置参数：
+
+```ts
+db.execute(
+  "UPDATE users SET name = ? WHERE id = ?",
+  ["Alice", 1]
+)
+```
+
+命名参数：
+
+```ts
+db.execute(
+  "UPDATE users SET name = :name WHERE id = :id",
+  { name: "Bob", id: 1 }
+)
+```
+
+***
+
+## TransactionCompletion
+
+`TransactionCompletion` 用于控制事务或保存点的最终结果。
+
+```ts
+type TransactionCompletion = "commit" | "rollback"
+```
+
+### 示例
+
+```ts
+db.inTransaction(() => {
+  db.execute("DELETE FROM cache")
+  return "commit"
+})
+```
+
+***
+
+## DatabaseCollation
+
+`DatabaseCollation` 表示字符串排序和比较规则。
+
+```ts
+type DatabaseCollation =
+  | "binary"
+  | "rtrim"
+  | "nocase"
+  | "caseInsensitiveCompare"
+  | "localizedCaseInsensitiveCompare"
+  | "localizedCompare"
+  | "localizedStandardCompare"
+  | "unicodeCompare"
+```
+
+### 示例
+
+```ts
+db.createTable("users", {
+  columns: [
+    {
+      name: "name",
+      type: "text",
+      collation: "localizedCaseInsensitiveCompare"
+    }
+  ]
+})
+```
+
+***
+
+## ForeignKeyAction
+
+`ForeignKeyAction` 定义外键在更新或删除时的行为。
+
+```ts
+type ForeignKeyAction =
+  | "cascade"
+  | "restrict"
+  | "setNull"
+  | "setDefault"
+```
+
+### 示例
+
+```ts
+{
+  name: "userId",
+  type: "integer",
+  references: {
+    table: "users",
+    column: "id",
+    onDelete: "cascade"
+  }
+}
+```
+
+***
+
+## ColumnReferences
+
+`ColumnReferences` 描述列级别的外键引用关系。
+
+```ts
+type ColumnReferences = {
+  table: string
+  column?: string
+  onDelete?: ForeignKeyAction
+  onUpdate?: ForeignKeyAction
+  deferred?: boolean
+}
+```
+
+***
+
+## ColumnDefinition
+
+`ColumnDefinition` 用于声明表结构中的列定义。
+
+```ts
+type ColumnDefinition = {
+  name: string
+  type: string
+  primaryKey?: boolean
+  autoIncrement?: boolean
+  notNull?: boolean
+  unique?: boolean
+  indexed?: boolean
+  checkSQL?: string
+  collation?: DatabaseCollation
+  defaultValue?: DatabaseValue
+  defaultSQL?: string
+  references?: ColumnReferences
+}
+```
+
+### 示例
+
+```ts
+{
+  name: "email",
+  type: "text",
+  notNull: true,
+  unique: true
+}
+```
+
+***
+
+## 总结
+
+这些基础类型构成了 SQLite 模块的**结构化基础**：
+
+- `ColumnInfo / PrimaryKeyInfo / ForeignKeyInfo / IndexInfo`
+  用于**读取和理解数据库结构**
+
+- `ColumnDefinition / ColumnReferences / ForeignKeyAction`
+  用于**声明和创建表结构**
+
+- `DatabaseValue / StatementArguments`
+  用于**安全地传递数据**
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/SQLite/Statement.md
+---
+
+# 语句（Statement）
+
+`Statement` 表示一条 **已编译（prepared）的 SQL 语句**。
+它用于提高重复执行 SQL 的性能、保证参数绑定的安全性，并为复杂场景提供更明确的参数校验机制。
+
+在 Scripting 的 SQLite API 中，`Statement` 通常由 `Database` 创建和管理，开发者不需要也不能自行构造。
+
+***
+
+## 类型定义
+
+```ts
+class Statement {
+  readonly sql: string
+  readonly columnNames: string[]
+  readonly isReadonly: boolean
+
+  setArguments(arguments: StatementArguments): void
+  setUncheckedArguments(arguments: StatementArguments): void
+  validateArguments(arguments: StatementArguments): void
+  execute(arguments?: StatementArguments): void
+}
+```
+
+***
+
+## StatementArguments
+
+`StatementArguments` 定义了 **Statement 和 SQL 执行时支持的参数形式**。
+它是 SQLite API 中所有参数绑定行为的统一类型。
+
+```ts
+type StatementArguments =
+  | DatabaseValue[]
+  | Record<string, DatabaseValue>
+```
+
+### 支持的两种形式
+
+#### 位置参数（Positional Arguments）
+
+使用 `?` 占位符，参数按顺序绑定。
+
+```ts
+const stmt = db.cachedStatement(
+  "UPDATE users SET name = ? WHERE id = ?"
+)
+
+stmt.execute(["Alice", 1])
+```
+
+特点：
+
+- 参数顺序必须与 SQL 中的 `?` 顺序一致
+- 简单、直接
+- 不适合参数较多或可读性要求高的场景
+
+***
+
+#### 命名参数（Named Arguments）
+
+使用 `:name` 形式的命名占位符。
+
+```ts
+const stmt = db.cachedStatement(
+  "UPDATE users SET name = :name WHERE id = :id"
+)
+
+stmt.execute({ name: "Bob", id: 2 })
+```
+
+特点：
+
+- 参数语义清晰
+- 顺序无关
+- 推荐在复杂 SQL 或长期维护的代码中使用
+
+***
+
+### DatabaseValue 约束
+
+`StatementArguments` 中的值必须是 `DatabaseValue` 类型：
+
+```ts
+type DatabaseValue =
+  | string
+  | number
+  | boolean
+  | Data
+  | Date
+  | null
+```
+
+不支持的类型（如对象、数组、函数）会导致参数校验或执行失败。
+
+***
+
+## 设计目标与使用场景
+
+`Statement` 的核心目标包括：
+
+- **复用 SQL 编译结果**，减少解析开销
+- **集中管理参数绑定逻辑**
+- **在执行前提供参数校验能力**
+- **提升性能与稳定性**
+
+推荐使用 `Statement` 的场景：
+
+- 循环或批量执行相同 SQL
+- 对参数完整性要求高
+- 性能敏感路径
+- 需要将 SQL 定义与执行逻辑解耦
+
+对于一次性 SQL，直接使用 `Database.execute` 即可。
+
+***
+
+## 创建 Statement
+
+### makeStatement
+
+每次调用都会创建一个新的 Statement 实例。
+
+```ts
+const stmt = db.makeStatement(
+  "INSERT INTO users (name) VALUES (?)"
+)
+```
+
+适用于：
+
+- 低频使用
+- 生命周期短
+- 不需要缓存的 SQL
+
+***
+
+### cachedStatement
+
+返回一个 **可复用的缓存 Statement**，同一条 SQL 只会被编译一次。
+
+```ts
+const stmt = db.cachedStatement(
+  "INSERT INTO users (name) VALUES (:name)"
+)
+```
+
+适用于：
+
+- 高频执行
+- 批量写入
+- 性能敏感路径
+
+***
+
+## 属性说明
+
+### sql
+
+返回 Statement 对应的原始 SQL 字符串。
+
+```ts
+console.log(stmt.sql)
+```
+
+***
+
+### columnNames
+
+返回查询语句的结果列名列表。
+
+```ts
+const query = db.cachedStatement(
+  "SELECT id, name FROM users"
+)
+
+console.log(query.columnNames)
+// ["id", "name"]
+```
+
+说明：
+
+- 仅对 `SELECT` 语句有意义
+- 常用于动态映射、调试或通用查询封装
+
+***
+
+### isReadonly
+
+表示该 Statement 是否为只读语句。
+
+```ts
+if (stmt.isReadonly) {
+  console.log("this statement does not modify data")
+}
+```
+
+说明：
+
+- `SELECT` 通常为只读
+- `INSERT / UPDATE / DELETE` 为非只读
+- 可用于权限控制或执行前检查
+
+***
+
+## 参数绑定与执行流程
+
+### execute
+
+执行 Statement，可选择是否在此时传入参数。
+
+```ts
+stmt.execute({ name: "Charlie" })
+```
+
+或在已设置参数的情况下直接执行：
+
+```ts
+stmt.setArguments({ name: "Alice" })
+stmt.execute()
+```
+
+规则说明：
+
+- 若 `execute` 传入参数，将覆盖之前设置的参数
+- 若未传入参数，则使用最近一次 `setArguments` 的值
+
+***
+
+### setArguments
+
+设置参数并进行 **完整校验**，但不立即执行。
+
+```ts
+stmt.setArguments({ name: "Alice" })
+```
+
+适用场景：
+
+- 参数准备与执行分离
+- 多步骤逻辑中复用同一组参数
+- 希望尽早发现参数问题
+
+***
+
+### validateArguments
+
+仅对参数进行校验，不执行 SQL。
+
+```ts
+stmt.validateArguments({ name: "Alice" })
+```
+
+校验内容包括：
+
+- 是否缺少必需参数
+- 命名参数是否与 SQL 匹配
+- 参数数量是否正确
+- 参数类型是否符合 `DatabaseValue`
+
+常用于：
+
+- 执行前预检查
+- 构建更严格的上层 API
+
+***
+
+### setUncheckedArguments
+
+设置参数但 **跳过参数校验**。
+
+```ts
+stmt.setUncheckedArguments({ name: "Alice" })
+```
+
+说明：
+
+- 性能更高
+- 错误会延迟到执行阶段才暴露
+- 仅在你完全确认参数正确时使用
+
+***
+
+## 与 Database.execute 的关系
+
+以下两种方式在功能上等价，但语义和使用场景不同：
+
+```ts
+db.execute(
+  "INSERT INTO users (name) VALUES (?)",
+  ["Alice"]
+)
+```
+
+```ts
+const stmt = db.cachedStatement(
+  "INSERT INTO users (name) VALUES (?)"
+)
+stmt.execute(["Alice"])
+```
+
+推荐选择：
+
+| 场景    | 建议                  |
+| ----- | ------------------- |
+| 一次性执行 | `Database.execute`  |
+| 重复执行  | `Statement`         |
+| 性能敏感  | `cachedStatement`   |
+| 强参数校验 | `validateArguments` |
+
+***
+
+## 生命周期与使用约束
+
+- `Statement` 的生命周期 **隶属于创建它的 Database**
+- Database 关闭后，Statement 不可再使用
+- 不可跨 Database 实例复用 Statement
+- Statement 本身不是并发安全的
+  应始终在其所属的 `read / write` 回调中使用
+
+***
+
+## 常见误用
+
+- 在不同 Database 实例中复用同一个 Statement
+- 对一次性 SQL 过度使用 Statement
+- 滥用 `setUncheckedArguments`
+- Database 已关闭后仍执行 Statement
+- 传入非 `DatabaseValue` 类型的参数
+
+***
+
+## 总结
+
+`Statement` 是 SQLite API 中用于 **高性能、强约束 SQL 执行** 的核心组件：
+
+- 明确区分 SQL 编译与执行
+- 统一参数模型（`StatementArguments`）
+- 支持严格与非严格参数绑定
+- 与 `Database.execute` 形成清晰职责分工
+
+在需要性能、可维护性和参数安全性的场景中，`Statement` 是首选工具。
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index.md
+---
+
+# 快速掌握视频录制
+
+`VideoRecorder` 是 Scripting 提供的高层视频采集与录制接口，对底层 `AVCaptureSession`、`AVAssetWriter`、音视频同步、方向处理等复杂逻辑进行了封装，以 **状态驱动** 的方式向脚本侧暴露一个稳定、可组合的录制 API。
+
+该模块适用于：
+
+- 视频录制（支持暂停 / 恢复）
+- 同步音频录制
+- 高帧率 / 高码率 / ProRes 编码
+- 拍照（录像过程中抓帧）
+- 实时对焦、曝光、变焦、补光灯控制
+- 与 UI 解耦的预览展示（通过 `VideoRecorderPreviewView`）
+
+***
+
+## 核心设计理念
+
+### 状态机驱动
+
+`VideoRecorder` 内部采用明确的状态机模型，所有操作都受当前状态约束，避免非法调用导致的崩溃或未定义行为。
+
+```ts
+type State =
+  | "idle"
+  | "preparing"
+  | "ready"
+  | "recording"
+  | "paused"
+  | "stopping"
+  | "finished"
+  | "failed"
+```
+
+- **idle**
+  初始状态，尚未创建或已重置会话
+
+- **preparing**
+  正在配置采集会话、设备、编码参数
+
+- **ready**
+  会话已准备完成，可以开始录制
+
+- **recording**
+  正在录制视频（音视频同步写入）
+
+- **paused**
+  录制已暂停，时间线被冻结
+
+- **stopping**
+  正在结束录制并写入文件尾
+
+- **finished**
+  录制完成，`details` 中包含输出文件路径
+
+- **failed**
+  出现错误，`details` 中包含错误信息
+
+***
+
+## Capture Session
+
+```ts
+class AVCaptureSession {
+  private constructor()
+}
+```
+
+`VideoRecorder.session` 暴露的是一个只读的 `AVCaptureSession` 实例，用于：
+
+- 绑定预览视图
+- 与其他需要底层 Session 的组件协作
+
+该对象**不能自行创建或修改**，生命周期由 `VideoRecorder` 管理。
+
+***
+
+## 录制配置（Configuration）
+
+```ts
+type Configuration = {
+  camera?: {
+    position: "front" | "back"
+    preferredTypes?: CameraType[]
+  }
+  frameRate?: number
+  audioEnabled?: boolean
+  sessionPreset?: SessionPreset
+  videoCodec?: VideoCodec
+  videoBitRate?: number
+  orientation?: VideoOrientation
+  mirrorFrontCamera?: boolean
+  autoConfigAppAudioSession?: boolean
+}
+```
+
+### camera
+
+- `position`
+  使用前置或后置摄像头
+
+- `preferredTypes`
+  优先选择的物理摄像头类型，例如：
+
+  - `"wide"`
+  - `"ultraWide"`
+  - `"telephoto"`
+  - `"triple"`
+
+如果不提供，将根据 `position` 自动选择系统默认组合。
+
+***
+
+### frameRate
+
+支持的帧率：
+
+- 24
+- 30（默认）
+- 60
+- 120（设备支持的前提下）
+
+***
+
+### audioEnabled
+
+是否录制音频，默认 `true`。
+
+***
+
+### sessionPreset
+
+控制采集分辨率与质量，例如：
+
+- `"high"`
+- `"hd1920x1080"`
+- `"hd4K3840x2160"`
+
+***
+
+### videoCodec
+
+支持多种编码格式，包括：
+
+- `"hevc"`（默认）
+- `"h264"`
+- `"hevcWithAlpha"`
+- `"proRes422"`
+- `"proRes4444"`
+- `"appleProRes4444XQ"`
+- `"proResRAW"` 等
+
+⚠️ 部分 ProRes 编码对设备与系统版本有要求。
+
+***
+
+### videoBitRate
+
+视频码率（bps），默认 `5_000_000`。
+仅对部分编码器生效。
+
+***
+
+### orientation
+
+录制时的视频方向：
+
+- `"portrait"`（默认）
+- `"landscapeLeft"`
+- `"landscapeRight"`
+
+该值影响最终文件的方向元数据与写入顺序。
+
+***
+
+### mirrorFrontCamera
+
+是否镜像前置摄像头画面，默认 `false`。
+
+***
+
+### autoConfigAppAudioSession
+
+是否由系统自动配置 `AVAudioSession`，默认 `true`。
+
+- `true`
+  系统会根据摄像头方向、麦克风位置自动调整 Audio Session
+  **不会在录制结束后恢复原状态**
+
+- `false`
+  由应用自行管理 Audio Session
+  ⚠️ 如果配置不兼容，可能导致录制失败
+
+***
+
+## 状态与监听
+
+### 获取当前状态
+
+```ts
+function getState(): Promise<State>
+```
+
+返回当前 `VideoRecorder` 的状态。
+
+***
+
+### 监听状态变化
+
+```ts
+function addStateListener(
+  listener: (state: State, details?: string) => void
+): void
+```
+
+- `state`
+  新状态
+
+- `details`
+
+  - `failed`：错误信息
+  - `finished`：输出文件路径
+
+```ts
+function removeStateListener(
+  listener?: (state: State, details?: string) => void
+): void
+```
+
+不传参数将移除所有监听器。
+
+***
+
+## 生命周期控制
+
+### prepare
+
+```ts
+function prepare(configuration?: Configuration): Promise<void>
+```
+
+- 创建并配置采集会话
+- 请求相机 / 麦克风权限
+- 初始化编码器
+
+成功后进入 `ready` 状态。
+
+***
+
+### start
+
+```ts
+function start(toPath: string): Promise<void>
+```
+
+- 开始录制
+- 视频写入指定路径
+- 进入 `recording` 状态
+
+***
+
+### pause / resume
+
+```ts
+function pause(): Promise<void>
+function resume(): Promise<void>
+```
+
+- 暂停与恢复时间线
+- 不会生成新文件
+- 适用于长时间录制、分段控制
+
+***
+
+### stop
+
+```ts
+function stop(options?: {
+  closeSession?: boolean
+}): Promise<void>
+```
+
+- 正常结束录制
+- 进入 `finished` 状态
+- `details` 中返回最终文件路径
+
+***
+
+### cancel
+
+```ts
+function cancel(options?: {
+  closeSession?: boolean
+}): Promise<void>
+```
+
+- 中断录制
+- 删除已生成的文件
+- 不进入 `finished`
+
+***
+
+### reset
+
+```ts
+function reset(): Promise<void>
+```
+
+- 关闭采集会话
+- 清理内部状态
+- 状态回到 `idle`
+
+适用于彻底释放资源或重新切换摄像头。
+
+***
+
+## 拍照能力
+
+```ts
+function takePhoto(): Promise<UIImage | null>
+```
+
+- 仅在 `recording` 状态有效
+- 返回当前帧的静态图片
+- 不影响视频录制
+
+***
+
+## 相机控制能力
+
+### 补光灯（Torch）
+
+```ts
+const hasTorch: boolean
+const torchMode: "auto" | "on" | "off"
+
+function setTorchMode(mode: "auto" | "on" | "off"): void
+```
+
+***
+
+### 对焦与曝光
+
+```ts
+function setFocusPoint(point: { x: number; y: number }): void
+function setExposurePoint(point: { x: number; y: number }): void
+
+function resetFocus(): void
+function resetExposure(): void
+```
+
+- 坐标为 **归一化坐标**（0\~1）
+- 左上角为 `{ x: 0, y: 0 }`
+
+***
+
+### 变焦
+
+```ts
+const minZoomFactor: number
+const maxZoomFactor: number
+const currentZoomFactor: number
+
+function setZoomFactor(factor: number): void
+function rampZoomFactor(toFactor: number, rate: number): void
+function resetZoom(): void
+```
+
+iOS 18+ 额外提供：
+
+```ts
+const displayZoomFactor: number
+const displayZoomFactorMultiplier: number
+```
+
+用于 UI 层展示更符合用户直觉的倍率值。
+
+***
+
+## 典型使用流程
+
+```ts
+await VideoRecorder.prepare(config)
+await VideoRecorder.start(path)
+
+// recording
+await VideoRecorder.pause()
+await VideoRecorder.resume()
+
+await VideoRecorder.stop()
+// or
+await VideoRecorder.cancel()
+
+await VideoRecorder.reset()
+```
+
+***
+
+## 使用建议与注意事项
+
+- `prepare → start → stop / cancel` 是一条完整生命周期
+- 不建议在 `recording` 状态切换摄像头，应先 `reset`
+- 高帧率 + ProRes 对设备性能与存储要求较高
+- 若关闭 `autoConfigAppAudioSession`，需自行保证音频会话兼容性
+- 预览 UI 与录制逻辑解耦，推荐通过 `VideoRecorderPreviewView` 展示画面
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index_example.md
+---
+
+# 示例
+
+```tsx
+import { Button, Navigation, NavigationStack, Script, useEffect, Path, MagnifyGesture, useObservable, VideoRecorderPreviewView, VStack, Toolbar, ToolbarItem, ToolbarItemGroup } from "scripting"
+
+const recorder = VideoRecorder
+
+function View() {
+  // Access dismiss function.
+  const dismiss = Navigation.useDismiss()
+  const state = useObservable<VideoRecorder.State>("idle")
+  const displayZoom = useObservable(1)
+  const startZoom = useObservable(1)
+  const volume = useObservable(0)
+  const toastVisible = useObservable(false)
+  const toastMessage = useObservable("")
+  const position = useObservable<VideoRecorder.CameraPosition>("back")
+
+  function showToast(message: string) {
+    toastVisible.setValue(true)
+    toastMessage.setValue(message)
+  }
+
+  useEffect(() => {
+
+    const listener = (value: number, old: number) => {
+      console.log("old:", old, "new:", value)
+      volume.setValue(value)
+    }
+    SharedAudioSession.addOutputVolumeListener(listener)
+
+    return () => {
+      SharedAudioSession.removeOutputVolumeListener(listener)
+    }
+  }, [])
+
+  async function prepare() {
+    await recorder.prepare({
+      camera: {
+        position: position.value,
+        // preferredTypes: ["triple"]
+      },
+      frameRate: 30,
+      audioEnabled: true,
+      orientation: "portrait",
+      sessionPreset: "high",
+      videoCodec: "appleProRes4444XQ",
+      // autoConfigAppAudioSession: false
+    })
+  }
+
+  useEffect(() => {
+    prepare().then(() => {
+      recorder.start(
+        Path.join(
+          FileManager.documentsDirectory,
+          "test.mov"
+        )
+      )
+    }).catch(e => {
+      showToast("Failed to prepare:" + String(e))
+    })
+    recorder.addStateListener((
+      newState, details
+    ) => {
+      state.setValue(newState)
+
+      if (newState === "ready") {
+        // recorder.rampZoomFactor(0.5, 4
+      }
+
+      if (newState === "failed") {
+        Dialog.alert(details!)
+      }
+
+    })
+
+    return () => {
+      recorder.reset()
+    }
+  }, [])
+
+  return <NavigationStack>
+    <VStack
+      toolbar={
+        <Toolbar>
+          <ToolbarItem
+            placement="topBarLeading"
+          >
+            <Button
+              title="Done"
+              systemImage="xmark"
+              action={dismiss}
+            />
+          </ToolbarItem>
+          <ToolbarItem
+            placement="topBarTrailing"
+          >
+            <Button
+              title="Toggle Torch"
+              action={() => {
+                if (recorder.torchMode === "on") {
+                  recorder.setTorchMode("off")
+                } else {
+                  recorder.setTorchMode("on")
+                }
+              }}
+            />
+          </ToolbarItem>
+          <ToolbarItemGroup
+            placement="bottomBar"
+          >
+            {state.value == "idle" && <Button
+              title="Prepare"
+              action={async () => {
+                try {
+                  await recorder.prepare()
+                } catch (e) {
+                  showToast("Failed to prepare:" + e)
+                }
+              }}
+            />}
+            {(state.value == "idle" || state.value == "ready") && <Button
+              title="Toggle Camera"
+              action={async () => {
+                try {
+                  position.setValue(
+                    position.value == "back"
+                      ? "front"
+                      : "back"
+                  )
+                  await recorder.reset()
+                  await prepare()
+                } catch (e) {
+                  showToast("Failed to toggle camera:" + e)
+                }
+              }}
+            />}
+            {state.value == "ready" && <Button
+              title="Start"
+              action={async () => {
+                try {
+                  await recorder.start(
+                    Path.join(
+                      FileManager.documentsDirectory,
+                      "test.mov"
+                    )
+                  )
+                } catch (e) {
+                  showToast("Failed to start:" + e)
+                }
+              }}
+            />}
+            {state.value == "recording" && <Button
+              title="Pause"
+              action={async () => {
+                try {
+                  await recorder.pause()
+                } catch (e) {
+                  console.error("Failed to call pause", e)
+                }
+              }}
+            />}
+            {state.value == "paused" && <Button
+              title="Resume"
+              action={async () => {
+                try {
+                  await recorder.resume()
+                } catch (e) {
+                  showToast("Failed to resume:" + e)
+                }
+              }}
+            />}
+            {state.value == "recording" && <Button
+              title="Cancel"
+              action={async () => {
+                try {
+                  await recorder.cancel()
+                } catch (e) {
+                  showToast("Failed to cancel:" + e)
+                }
+              }}
+            />}
+            {state.value == "recording" && <Button
+              title="Stop"
+              action={async () => {
+                try {
+                  await recorder.stop()
+                  await prepare()
+                } catch (e) {
+                  showToast("Failed to stop: " + e)
+                }
+              }}
+            />}
+          </ToolbarItemGroup>
+        </Toolbar>
+      }
+      toast={{
+        isPresented: toastVisible,
+        message: toastMessage.value,
+        position: "top"
+      }}
+    >
+
+      {/*  <Text>State: {state.value}</Text>
+      <Text>OutputVolume: {volume.value}</Text> */}
+      <VideoRecorderPreviewView
+        key="videoRecorder"
+        ignoresSafeArea
+        frame={{
+          width: Device.screen.width
+        }}
+        aspectRatio={{
+          value: 3 / 4,
+          contentMode: "fill"
+        }}
+        gesture={
+          MagnifyGesture()
+            .onChanged(details => {
+              recorder.setZoomFactor(
+                details.magnification * startZoom.value
+              )
+              displayZoom.setValue(
+                recorder.displayZoomFactor
+              )
+            })
+            .onEnded(details => {
+              recorder.setZoomFactor(
+                details.magnification * startZoom.value
+              )
+              displayZoom.setValue(
+                recorder.displayZoomFactor
+              )
+              startZoom.setValue(
+                recorder.currentZoomFactor
+              )
+            })
+        }
+      />
+    </VStack >
+  </NavigationStack >
+}
+
+async function run() {
+  // Present view.
+  await Navigation.present({
+    element: <View />
+  })
+
+  // Avoiding memory leaks.
+  Script.exit()
+}
+
+run()
+```
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/VideoRecorder/VideoRecorderPreviewView.md
+---
+
+# 视频预览
+
+`VideoRecorderPreviewView` 是用于显示 `VideoRecorder` 实时视频画面的预览视图组件。
+它本身 **不负责任何录制逻辑**，仅用于将 `VideoRecorder.session` 中的视频流渲染到 UI 层，并提供必要的显示与裁剪能力。
+
+该组件通常与 `VideoRecorder` 搭配使用，用于：
+
+- 实时显示摄像头画面
+- 支持不同的视频填充模式（videoGravity）
+- 处理镜像显示（常用于前置摄像头）
+- 支持圆角、裁剪等视觉效果
+- 与手势系统组合实现缩放、对焦等交互
+
+***
+
+## 设计原则
+
+### 视图与录制逻辑解耦
+
+- `VideoRecorderPreviewView` **不持有录制状态**
+- 不触发 `prepare / start / stop`
+- 不感知 `VideoRecorder.State`
+
+它只依赖 `VideoRecorder.session`，并在内部将其绑定到系统的预览渲染层。
+
+***
+
+### 单向依赖关系
+
+```
+VideoRecorder  ──▶  AVCaptureSession  ──▶  VideoRecorderPreviewView
+```
+
+- Session 由 `VideoRecorder` 管理
+- PreviewView 只负责显示
+
+***
+
+## Props 定义
+
+```ts
+type VideoRecorderPreviewViewProps = {
+  videoGravity?: "resizeAspect" | "resizeAspectFill" | "resize"
+  isVideoMirrored?: boolean
+  cornerRadius?: number
+  masksToBounds?: boolean
+}
+```
+
+***
+
+## videoGravity
+
+```ts
+videoGravity?: "resizeAspect" | "resizeAspectFill" | "resize"
+```
+
+控制视频内容在视图中的填充方式，对应 `AVLayerVideoGravity`：
+
+- `resizeAspect`
+  等比例缩放，完整显示视频内容，可能留黑边
+
+- `resizeAspectFill`（默认）
+  等比例填充，可能裁剪边缘
+
+- `resize`
+  拉伸填满视图，不保持比例
+
+适合根据 UI 设计需求选择。
+
+***
+
+## isVideoMirrored
+
+```ts
+isVideoMirrored?: boolean
+```
+
+是否镜像显示视频画面，常用于前置摄像头。
+
+- `true`
+  画面左右翻转，符合自拍预期
+
+- `false`（默认）
+  保持原始方向
+
+> 注意：
+> 该属性只影响**预览显示**，不影响最终录制文件是否镜像。
+
+***
+
+## cornerRadius
+
+```ts
+cornerRadius?: number
+```
+
+设置预览视图背景的圆角半径。
+
+- 默认值：`0`
+- 仅对视图背景生效
+- 若需要裁剪视频内容，需要同时设置 `masksToBounds = true`
+
+***
+
+## masksToBounds
+
+```ts
+masksToBounds?: boolean
+```
+
+是否裁剪子内容到视图边界。
+
+- `false`（默认）
+  圆角仅作用于背景，不裁剪视频内容
+
+- `true`
+  视频画面会被裁剪到圆角区域
+
+通常与 `cornerRadius` 配合使用。
+
+***
+
+## 生命周期与更新行为
+
+### 与 SwiftUI / 声明式 UI 的关系
+
+`VideoRecorderPreviewView` 是一个声明式组件，其底层通常对应一个持久存在的原生预览视图（如 `AVCaptureVideoPreviewLayer`）。
+
+在以下情况下需要特别注意：
+
+- **重新创建视图实例**
+  会导致底层预览层重新绑定 session
+
+- **频繁触发视图重建**
+  可能引起短暂卡顿或画面闪烁
+
+***
+
+### key 的重要性
+
+在动态 UI 场景中（例如切换摄像头、切换配置）：
+
+```tsx
+<VideoRecorderPreviewView
+  key="videoRecorder"
+  ...
+/>
+```
+
+- 建议显式提供稳定且唯一的 `key`
+- 用于确保预览视图与当前 `AVCaptureSession` 正确绑定
+- 防止 SwiftUI / React-style diff 误判导致多次销毁与重建
+
+***
+
+## 与 VideoRecorder 的协作方式
+
+### 会话来源
+
+`VideoRecorderPreviewView` 内部使用的是：
+
+```ts
+VideoRecorder.session
+```
+
+该 session 的生命周期由 `VideoRecorder` 控制。
+
+***
+
+### 会话重置时的行为
+
+当调用：
+
+```ts
+await VideoRecorder.reset()
+```
+
+- 底层 `AVCaptureSession` 会被关闭
+- 预览画面会停止更新或变为空白
+- 重新 `prepare` 后画面恢复
+
+PreviewView 本身无需额外处理。
+
+***
+
+## 手势与交互（组合方式）
+
+`VideoRecorderPreviewView` 本身 **不内置任何手势逻辑**，但可以与手势系统组合使用：
+
+```tsx
+<VideoRecorderPreviewView
+  gesture={
+    MagnifyGesture()
+      .onChanged(details => {
+        VideoRecorder.setZoomFactor(...)
+      })
+  }
+/>
+```
+
+常见交互包括：
+
+- 双指缩放 → 调用 `setZoomFactor`
+- 单击 → 转换为归一化坐标后调用 `setFocusPoint`
+- 长按 → 锁定曝光
+
+***
+
+## 常见使用建议
+
+- 不要在 `recording` 状态频繁重建 PreviewView
+- 切换摄像头时建议：
+
+  1. `reset`
+  2. `prepare`
+  3. 保持 PreviewView key 稳定
+- 镜像、圆角等视觉效果应优先放在 PreviewView 层处理
+- 所有录制控制逻辑应通过 `VideoRecorder` API 完成
+
+***
+
+## 典型使用示例（简化）
+
+```tsx
+<VideoRecorderPreviewView
+  key="videoRecorder"
+  videoGravity="resizeAspectFill"
+  isVideoMirrored={true}
+  cornerRadius={12}
+  masksToBounds={true}
+/>
+```
+
+***
+
+## 总结
+
+`VideoRecorderPreviewView` 是一个 **纯显示组件**：
+
+- 负责实时视频画面的渲染
+- 不参与录制状态与控制
+- 与 `VideoRecorder` 通过 `AVCaptureSession` 单向协作
+- 适合与手势、布局、动画等 UI 能力自由组合
+
+
+
+---
+url: /TestFlight/zh/guide/Changelog/2.4.7/Widget API.md
+---
+
+# 小组件 API
+
+`Widget` 类提供了一组静态方法和属性，用于在 Scripting app 中创建、预览和刷新主屏幕小组件。通过此 API，可以渲染小组件 UI，访问用户配置参数，并控制小组件的刷新策略。
+
+***
+
+## 类：`Widget`
+
+此类为静态类，不能实例化，所有成员均为静态。
+
+***
+
+### 静态属性
+
+#### `Widget.family: WidgetFamily`
+
+获取用户当前配置的小组件尺寸类型（即小组件的 family）。
+常见取值包括：
+
+- `"systemSmall"` – 小尺寸组件
+- `"systemMedium"` – 中尺寸组件
+- `"systemLarge"` – 大尺寸组件
+- `"accessoryRectangular"` – 锁屏矩形组件
+- `"accessoryCircular"` – 锁屏圆形组件
+
+> **类型：** `WidgetFamily`
+
+***
+
+#### `Widget.displaySize: WidgetDisplaySize`
+
+获取当前小组件的显示尺寸（单位为点）。根据小组件的 family 和设备分辨率决定具体大小。
+
+> **类型：** `{ width: number; height: number }`
+
+***
+
+#### `Widget.parameter: string`
+
+如果用户在主屏幕小组件中设置了 `参数` 字段，并通过点击该小组件打开并运行脚本，可以通过该属性访问该参数的值。
+适用于根据不同用户配置动态渲染不同的小组件内容。
+
+> **类型：** `string`
+
+***
+
+### 静态方法
+
+#### `Widget.present(element, options?): void`
+
+##### 类型定义
+
+```ts
+Widget.present(element: VirtualNode, reloadPolicy?: WidgetReloadPolicy): void
+
+Widget.present(element: VirtualNode, optoins?: {
+  reloadPolicy?: WidgetReloadPolicy
+  relevance?: WidgetRelevance
+}): void
+```
+
+用于在小组件上渲染 UI。传入一个 React 风格的 JSX 节点（即 VirtualNode）作为渲染内容。可选地传入刷新策略以控制 WidgetKit 请求新时间线的时机。
+
+##### 参数说明
+
+- `element` (`VirtualNode`) – 小组件 UI 的 JSX 树。
+- `reloadPolicy` (`WidgetReloadPolicy`，可选) – 控制 WidgetKit 请求新时间线的策略，默认为 `atEnd`。
+- `relevance` (`WidgetRelevance`，可选) – 小组件的相关性，用于决定小组件的展示优先级。
+
+##### 示例
+
+```tsx
+function WidgetView() {
+  return <VStack>
+    <Image
+      systemName="globe"
+      resizable
+      scaleToFit
+      frame={{
+        width: 28,
+        height: 28
+      }}
+    />
+    <Text>Hello Scripting!</Text>
+  </VStack>
+}
+
+Widget.present(<WidgetView />, {
+  policy: "after",
+  date: new Date(Date.now() + 1000 * 60 * 5) // 5分钟后刷新
+})
+```
+
+> **返回值：** `void`
+
+***
+
+#### `Widget.preview(options?: PreviewOptions): Promise<void>`
+
+用于在 `index.tsx` 中预览小组件效果。可以为小组件配置不同参数选项，模拟其在不同参数下的外观。
+此方法仅支持在 `index.tsx` 中调用，在 `widget.tsx` 或 `intent.tsx` 中不可用。
+
+##### 参数说明
+
+- `options`（可选）– 预览配置项。
+
+```ts
+interface PreviewOptions {
+  family?: WidgetFamily
+  parameters?: {
+    options: Record<string, string> // 参数名到 JSON 字符串的映射
+    default: string                 // 默认使用的参数键
+  }
+}
+```
+
+##### 示例
+
+```tsx
+const options = {
+  "Param 1": JSON.stringify({ color: "red" }),
+  "Param 2": JSON.stringify({ color: "blue" }),
+}
+
+await Widget.preview({
+  family: "systemSmall",
+  parameters: {
+    options,
+    default: "Param 1"
+  }
+})
+console.log("Widget preview dismissed")
+```
+
+> **返回值：** `Promise<void>`
+> 如果参数设置不正确，将抛出异常。
+
+***
+
+#### `Widget.reloadAll(): void`
+
+请求 WidgetKit 重新加载所有由 Scripting 创建的小组件时间线。
+在小组件依赖的数据变化时调用此方法可以立即触发刷新。
+
+> **返回值：** `void`
+
+***
+
+## 相关类型
+
+### `WidgetFamily`
+
+表示小组件的尺寸类型：
+
+```ts
+type WidgetFamily =
+  | "systemSmall"
+  | "systemMedium"
+  | "systemLarge"
+  | "accessoryCircular"
+  | "accessoryRectangular"
+```
+
+***
+
+### `WidgetDisplaySize`
+
+表示小组件当前的显示尺寸（单位：点）：
+
+```ts
+interface WidgetDisplaySize {
+  width: number
+  height: number
+}
+```
+
+***
+
+### `WidgetReloadPolicy`
+
+定义小组件的刷新策略：
+
+```ts
+type WidgetReloadPolicy =
+  | { policy: "atEnd" } // 时间线结束后刷新（默认）
+  | { policy: "after", date: Date } // 指定时间之后刷新
+```
+
+***
+
+### `WidgetRelevance`
+
+定义小组件的相关性级别：
+
+```ts
+type WidgetRelevance = {
+  score: number // 分数，用于让系统决定小组件的展示优先级
+  duration?: DurationInSeconds // 持续时间，单位为秒
+}
+```
+
+***
+
+## 使用说明
+
+- `Widget.present` 应在 `widget.tsx` 中调用，用于定义和显示小组件实际内容。
+- `Widget.preview` 仅用于 `index.tsx` 中测试和预览小组件，不会被系统实际渲染。
+- 使用 `Widget.parameter` 时，若参数为结构化数据（如对象），需使用 `JSON.parse()` 解析。
+- 脚本结束后应调用 `Script.exit()` 以确保小组件正常退出。
 
 
 
@@ -23767,318 +27730,463 @@ url: /TestFlight/zh/guide/Device Capabilities/Device/index.md
 
 # 设备
 
-`Device` 命名空间提供当前运行设备的基础信息、系统环境、屏幕与电池状态、语言与地区设置，以及部分与设备能力相关的方法（如唤醒锁、网络接口信息）。
+`Device` 命名空间提供对当前设备硬件、系统环境、语言区域、屏幕信息、电池状态、方向感知、接近传感器以及网络接口等信息的访问能力，并提供相关状态变化的监听接口。
 
-该 API 常用于：
-
-- 设备差异化逻辑（iPhone / iPad / Mac）
-- UI 布局与适配
-- 多语言与本地化判断
-- 网络调试与诊断
-- 防止脚本执行期间设备休眠
+该 API 主要用于根据设备环境动态调整 UI、行为逻辑或系统能力使用方式。
 
 ***
 
-## 设备与系统信息
+## Orientation
 
-### `Device.model: string`
-
-设备型号名称，例如 `"iPhone"`、`"iPad"`。
-
-***
-
-### `Device.systemName: string`
-
-当前操作系统名称，例如 `"iOS"`、`"iPadOS"`、`"macOS"`。
-
-***
-
-### `Device.systemVersion: string`
-
-当前操作系统版本号，例如 `"17.2"`。
-
-***
-
-### `Device.isiPhone: boolean`
-
-当前设备是否为 iPhone。
-
-***
-
-### `Device.isiPad: boolean`
-
-当前设备是否为 iPad。
-
-***
-
-### `Device.isiOSAppOnMac: boolean`
-
-当前进程是否为 **iPhone / iPad App 运行在 Mac 上**（Mac Catalyst / Apple Silicon Mac）。
-
-***
-
-## 屏幕信息
-
-### `Device.screen`
-
-当前主屏幕的信息。
+表示设备当前的物理朝向。
 
 ```ts
-{
-  width: number
-  height: number
-  scale: number
-}
+type Orientation =
+  | "portrait"
+  | "portraitUpsideDown"
+  | "landscapeLeft"
+  | "landscapeRight"
+  | "faceUp"
+  | "faceDown"
+  | "unknown"
 ```
 
-字段说明：
+### 说明
 
-- `width`：屏幕逻辑宽度（pt）
-- `height`：屏幕逻辑高度（pt）
-- `scale`：屏幕缩放因子（如 2 / 3）
-
-常用于布局计算、画布尺寸、截图或渲染比例控制。
-
-***
-
-## 方向与姿态
-
-### `Device.isPortrait: boolean`
-
-当前设备是否处于竖屏方向。
+- `portrait`：竖屏，Home 键在下（或标准竖屏方向）
+- `portraitUpsideDown`：竖屏倒置
+- `landscapeLeft`：横屏，设备向左旋转
+- `landscapeRight`：横屏，设备向右旋转
+- `faceUp`：设备平放，屏幕朝上
+- `faceDown`：设备平放，屏幕朝下
+- `unknown`：无法确定方向
 
 ***
 
-### `Device.isLandscape: boolean`
+## NetworkInterface
 
-当前设备是否处于横屏方向。
-
-***
-
-### `Device.isFlat: boolean`
-
-设备是否平放（例如放在桌面上）。
-
-该值通常基于设备姿态传感器，用于高级交互或方向判断。
-
-***
-
-## 外观与主题
-
-### `Device.colorScheme: ColorScheme`
-
-当前系统外观模式。
-
-可能的值通常包括：
-
-- `light`
-- `dark`
-
-可用于根据系统外观自动调整 UI 主题或样式。
-
-***
-
-## 电池信息
-
-### `Device.batteryState`
-
-当前电池状态：
-
-```ts
-"full" | "charging" | "unplugged" | "unknown"
-```
-
-说明：
-
-- `full`：电池已充满
-- `charging`：正在充电
-- `unplugged`：未连接电源
-- `unknown`：状态不可用
-
-***
-
-### `Device.batteryLevel: number`
-
-当前电量百分比，取值范围：
-
-- `0.0` \~ `1.0`
-- 当电量不可用时，可能返回 `-1`
-
-***
-
-## 语言与地区设置
-
-### `Device.systemLocale: string`
-
-系统当前使用的 Locale，例如：
-
-```text
-"en_US"
-```
-
-***
-
-### `Device.preferredLanguages: string[]`
-
-用户偏好的语言列表（按优先级排序），例如：
-
-```ts
-["en-US", "zh-Hans-CN"]
-```
-
-推荐用于多语言内容选择。
-
-***
-
-### `Device.systemLocales: string[]` （已废弃）
-
-用户偏好的 Locale 列表。
-
-> 已废弃，请使用 `Device.preferredLanguages`。
-
-***
-
-### `Device.systemLanguageTag: string`
-
-当前语言的 BCP-47 语言标签，例如：
-
-```text
-"en-US"
-```
-
-***
-
-### `Device.systemLanguageCode: string`
-
-当前语言代码，例如：
-
-```text
-"en"
-```
-
-***
-
-### `Device.systemCountryCode: string | undefined`
-
-当前国家 / 地区代码，例如：
-
-```text
-"US"
-```
-
-如果系统未设置国家信息，可能为 `undefined`。
-
-***
-
-### `Device.systemScriptCode: string | undefined`
-
-当前语言的书写系统代码，例如：
-
-```text
-"Hans"   // zh_CN_Hans
-```
-
-常用于区分简体 / 繁体等书写系统。
-
-***
-
-## 唤醒锁（Wake Lock）
-
-唤醒锁用于防止设备在脚本运行期间自动休眠。
-
-### `Device.isWakeLockEnabled: Promise<boolean>`
-
-获取当前是否启用了唤醒锁。
-
-```ts
-const enabled = await Device.isWakeLockEnabled
-```
-
-***
-
-### `Device.setWakeLockEnabled(enabled: boolean): void`
-
-启用或关闭唤醒锁。
-
-```ts
-Device.setWakeLockEnabled(true)
-```
-
-说明：
-
-- 仅在 **Scripting App** 中可用
-- 启用后可防止屏幕自动熄灭或设备进入休眠
-- 建议在不需要时及时关闭，以节省电量
-
-***
-
-## 网络接口信息
-
-### `Device.NetworkInterface`
-
-网络接口对象结构：
+描述单个网络接口地址的信息。
 
 ```ts
 type NetworkInterface = {
   address: string
   netmask: string | null
-  family: 'IPv4' | 'IPv6'
+  family: "IPv4" | "IPv6"
   mac: string | null
   isInternal: boolean
   cidr: string | null
 }
 ```
 
-字段说明：
+### 字段说明
 
 - `address`：IP 地址
 - `netmask`：子网掩码
-- `family`：地址类型（IPv4 / IPv6）
-- `mac`：MAC 地址（部分系统可能为 null）
-- `isInternal`：是否为内部接口（如回环接口）
-- `cidr`：CIDR 表示法（如 `192.168.1.10/24`）
+- `family`：地址族，IPv4 或 IPv6
+- `mac`：MAC 地址（部分系统或接口可能为 null）
+- `isInternal`：是否为内部接口（如 loopback）
+- `cidr`：CIDR 表示形式，例如 `192.168.1.10/24`
 
 ***
 
-### `Device.networkInterfaces(): Record<string, NetworkInterface[]>`
+## BatteryState
 
-获取设备当前的网络接口信息。
-
-返回值结构：
+表示当前电池状态。
 
 ```ts
-{
-  [interfaceName: string]: NetworkInterface[]
-}
+type BatteryState = "full" | "charging" | "unplugged" | "unknown"
 ```
 
-示例：
+### 说明
 
-```ts
-const interfaces = Device.networkInterfaces()
-
-for (const name in interfaces) {
-  for (const info of interfaces[name]) {
-    console.log(name, info.address, info.family)
-  }
-}
-```
-
-常见用途：
-
-- 获取本地 IP 地址
-- 区分 Wi-Fi / 蜂窝网络 / 回环接口
-- 网络调试与诊断
-- 模拟 Node.js `os.networkInterfaces()` 行为
+- `full`：电量已充满
+- `charging`：正在充电
+- `unplugged`：未连接电源
+- `unknown`：无法确定状态
 
 ***
 
-## 使用建议
+## Device Information
 
-- 语言与地区相关逻辑优先使用 `preferredLanguages`
-- 唤醒锁应在任务完成后及时关闭
-- 网络接口信息可能因系统权限或网络状态变化而不同
-- 不要假设某个接口名称一定存在（如 `en0`）
+### model
+
+```ts
+const model: string
+```
+
+设备型号，例如 `"iPhone"`、`"iPad"`。
+
+***
+
+### localizedModel
+
+```ts
+const localizedModel: string
+```
+
+本地化后的设备型号名称。
+
+***
+
+### systemVersion
+
+```ts
+const systemVersion: string
+```
+
+当前操作系统版本号，例如 `"18.2"`。
+
+***
+
+### systemName
+
+```ts
+const systemName: string
+```
+
+操作系统名称，例如 `"iOS"`、`"iPadOS"`、`"macOS"`。
+
+***
+
+### isiPad / isiPhone
+
+```ts
+const isiPad: boolean
+const isiPhone: boolean
+```
+
+指示当前设备是否为 iPad 或 iPhone。
+
+***
+
+### screen
+
+```ts
+const screen: {
+  width: number
+  height: number
+  scale: number
+}
+```
+
+屏幕信息：
+
+- `width`：屏幕宽度（逻辑像素）
+- `height`：屏幕高度（逻辑像素）
+- `scale`：屏幕缩放比例（如 2、3）
+
+***
+
+## Battery & Sensors
+
+### batteryState
+
+```ts
+const batteryState: BatteryState
+```
+
+当前电池状态。
+
+***
+
+### batteryLevel
+
+```ts
+const batteryLevel: number
+```
+
+当前电量百分比，范围为 `0.0` 到 `1.0`。
+
+***
+
+### proximityState
+
+```ts
+const proximityState: boolean
+```
+
+接近传感器状态，`true` 表示设备靠近用户（例如通话时贴近耳朵）。
+
+***
+
+## Orientation & Layout
+
+### isLandscape / isPortrait / isFlat
+
+```ts
+const isLandscape: boolean
+const isPortrait: boolean
+const isFlat: boolean
+```
+
+- `isLandscape`：是否处于横屏
+- `isPortrait`：是否处于竖屏
+- `isFlat`：设备是否平放（face up / face down）
+
+***
+
+### orientation
+
+```ts
+const orientation: Orientation
+```
+
+当前设备物理方向。
+
+***
+
+## Appearance & Environment
+
+### colorScheme
+
+```ts
+const colorScheme: ColorScheme
+```
+
+当前系统颜色模式，例如浅色或深色模式。
+
+***
+
+### isiOSAppOnMac
+
+```ts
+const isiOSAppOnMac: boolean
+```
+
+指示当前进程是否为运行在 macOS 上的 iPhone / iPad App（Mac Catalyst 或 iOS App on Mac）。
+
+***
+
+## Locale & Language
+
+### systemLocale
+
+```ts
+const systemLocale: string
+```
+
+当前系统 Locale，例如 `"en_US"`。
+
+***
+
+### preferredLanguages
+
+```ts
+const preferredLanguages: string[]
+```
+
+用户偏好的语言列表，例如：
+
+```ts
+["en-US", "zh-Hans-CN"]
+```
+
+***
+
+### systemLocales（已废弃）
+
+```ts
+const systemLocales: string[]
+```
+
+已废弃，请使用 `preferredLanguages`。
+
+***
+
+### systemLanguageTag
+
+```ts
+const systemLanguageTag: string
+```
+
+语言标签，例如 `"en-US"`。
+
+***
+
+### systemLanguageCode
+
+```ts
+const systemLanguageCode: string
+```
+
+语言代码，例如 `"en"`。
+
+***
+
+### systemCountryCode
+
+```ts
+const systemCountryCode: string | undefined
+```
+
+国家代码，例如 `"US"`。
+
+***
+
+### systemScriptCode
+
+```ts
+const systemScriptCode: string | undefined
+```
+
+书写系统代码，例如 `"Hans"`（简体中文）。
+
+***
+
+## Wake Lock
+
+### isWakeLockEnabled
+
+```ts
+const isWakeLockEnabled: Promise<boolean>
+```
+
+查询当前是否启用了屏幕唤醒锁定（防止设备自动锁屏）。
+
+***
+
+### setWakeLockEnabled
+
+```ts
+function setWakeLockEnabled(enabled: boolean): void
+```
+
+启用或禁用 Wake Lock。
+
+说明：
+
+- 仅在 **Scripting App** 内可用
+- 启用后可防止设备自动休眠
+
+***
+
+## Battery Listeners
+
+### addBatteryStateListener
+
+```ts
+function addBatteryStateListener(
+  callback: (state: BatteryState) => void
+): void
+```
+
+监听电池状态变化。
+
+***
+
+### removeBatteryStateListener
+
+```ts
+function removeBatteryStateListener(
+  callback?: (state: BatteryState) => void
+): void
+```
+
+移除电池状态监听器。
+
+- 未传入 `callback` 时将移除所有监听器
+
+***
+
+### addBatteryLevelListener
+
+```ts
+function addBatteryLevelListener(
+  callback: (level: number) => void
+): void
+```
+
+监听电量变化。
+
+***
+
+### removeBatteryLevelListener
+
+```ts
+function removeBatteryLevelListener(
+  callback?: (level: number) => void
+): void
+```
+
+移除电量监听器。
+
+***
+
+## Orientation Listeners
+
+### addOrientationListener
+
+```ts
+function addOrientationListener(
+  callback: (orientation: Orientation) => void
+): void
+```
+
+开始监听设备方向变化。
+
+注意事项：
+
+- 必须先调用该方法才能接收方向变化
+- 系统方向锁开启时不会生效
+
+***
+
+### removeOrientationListener
+
+```ts
+function removeOrientationListener(
+  callback?: (orientation: Orientation) => void
+): void
+```
+
+移除方向监听器。
+
+- 未传入 `callback` 时将停止所有方向监听并结束观察
+
+***
+
+## Proximity Listeners
+
+### addProximityStateListener
+
+```ts
+function addProximityStateListener(
+  callback: (state: boolean) => void
+): void
+```
+
+监听接近传感器状态变化。
+
+***
+
+### removeProximityStateListener
+
+```ts
+function removeProximityStateListener(
+  callback?: (state: boolean) => void
+): void
+```
+
+移除接近传感器监听器。
+
+***
+
+## Network
+
+### networkInterfaces
+
+```ts
+function networkInterfaces(): Record<string, NetworkInterface[]>
+```
+
+获取当前设备的网络接口信息。
+
+返回值说明：
+
+- Key：接口名称（如 `en0`、`lo0`）
+- Value：该接口对应的地址信息数组
+
+适用于网络诊断、本地 IP 获取、调试用途。
 
 
 
@@ -29036,130 +33144,13 @@ url: /TestFlight/zh/guide/Device Capabilities/Location.md
 
 # 定位
 
-全局 `Location` API 提供对设备地理位置信息的访问能力，包括一次性定位、逆地理编码、用户手动选点、定位精度控制、以及用于小组件的权限检测等功能。
+Location API 用于获取设备的地理位置、进行正向与反向地理编码、从系统地图中选择位置，以及访问设备的方向与指南针信息。该 API 适用于脚本运行环境、交互式界面以及部分支持位置更新的小组件场景，并遵循系统的权限与精度限制。
 
-***
+## LocationAccuracy
 
-## 功能概览
+表示脚本期望接收的位置精度级别。
 
-你可以通过该 API 实现以下功能：
-
-- 获取设备当前位置（支持缓存）
-- 用户通过地图界面手动选择位置
-- 将经纬度转换为可读的地址（逆地理编码）
-- 设置定位精度（耗电量和等待时间可控）
-- 检查小组件是否获得定位权限
-
-> **注意：** 该 API 为全局 API，无需额外导入。
-
-***
-
-## 接口文档
-
-### `Location.isAuthorizedForWidgetUpdates(): Promise<boolean>`
-
-检查小组件是否拥有获取定位更新的权限。
-
-```ts
-const isAuthorized = await Location.isAuthorizedForWidgetUpdates()
-if (!isAuthorized) {
-  console.log("小组件没有获取定位的权限")
-}
-```
-
-***
-
-### `Location.setAccuracy(accuracy: LocationAccuracy): Promise<void>`
-
-设置期望的定位精度。精度越高，耗电和等待时间也可能增加。
-
-#### 可选值
-
-| 精度值                 | 描述      |
-| ------------------- | ------- |
-| `"best"`            | 最高可用精度  |
-| `"tenMeters"`       | 10 米以内  |
-| `"hundredMeters"`   | 100 米以内 |
-| `"kilometer"`       | 1 公里以内  |
-| `"threeKilometers"` | 3 公里以内  |
-
-```ts
-await Location.setAccuracy("hundredMeters")
-```
-
-***
-
-### `Location.requestCurrent(options?: { forceRequest?: boolean }): Promise<LocationInfo | null>`
-
-请求一次设备当前的位置信息。
-
-默认情况下，如果存在缓存位置（例如启动时从系统获取到的位置），将立即返回该缓存值。如果未缓存，则会触发新的定位请求。
-
-你可以通过传入 `{ forceRequest: true }` 强制跳过缓存，始终发起新请求。
-
-#### 参数
-
-| 参数名            | 类型        | 是否必填 | 描述                          |
-| -------------- | --------- | ---- | --------------------------- |
-| `forceRequest` | `boolean` | 否    | 若为 `true`，将忽略缓存，始终发起新的定位请求。 |
-
-```ts
-const location = await Location.requestCurrent({ forceRequest: true })
-if (location) {
-  console.log("纬度:", location.latitude)
-  console.log("经度:", location.longitude)
-  console.log("时间戳:", location.timestamp)
-}
-```
-
-***
-
-### `Location.pickFromMap(): Promise<LocationInfo | null>`
-
-打开内置地图界面，允许用户手动选择一个位置。
-
-```ts
-const selected = await Location.pickFromMap()
-if (selected) {
-  console.log("用户选择的位置:", selected.latitude, selected.longitude)
-}
-```
-
-***
-
-### `Location.reverseGeocode(options): Promise<LocationPlacemark[] | null>`
-
-将经纬度转换为人类可读的地理信息（如街道、城市、国家等）。
-
-#### 参数
-
-| 字段          | 类型       | 是否必填 | 描述                             |
-| ----------- | -------- | ---- | ------------------------------ |
-| `latitude`  | `number` | 是    | 纬度（单位：度）                       |
-| `longitude` | `number` | 是    | 经度（单位：度）                       |
-| `locale`    | `string` | 否    | 可选语言区域（如 `"zh-CN"`），默认使用设备语言设置 |
-
-```ts
-const placemarks = await Location.reverseGeocode({
-  latitude: 31.2304,
-  longitude: 121.4737,
-  locale: "zh-CN"
-})
-
-if (placemarks?.length) {
-  const place = placemarks[0]
-  console.log("城市:", place.locality)
-  console.log("国家:", place.country)
-}
-```
-
-***
-
-## 类型定义
-
-### `LocationAccuracy`
-
-表示定位精度选项：
+**类型定义**
 
 ```ts
 type LocationAccuracy =
@@ -29168,36 +33159,63 @@ type LocationAccuracy =
   | "hundredMeters"
   | "kilometer"
   | "threeKilometers"
+  | "bestForNavigation"
+  | "reduced"
 ```
 
-***
+**说明**
 
-### `LocationInfo`
+- `best`
+  请求设备可提供的最高精度。
 
-表示一个带有时间戳的地理坐标点：
+- `tenMeters`
+  大约 10 米级别的精度。
+
+- `hundredMeters`
+  大约 100 米级别的精度。
+
+- `kilometer`
+  大约 1 公里级别的精度。
+
+- `threeKilometers`
+  较粗略的 3 公里级别精度。
+
+- `bestForNavigation`
+  面向导航场景，精度和更新频率最高，耗电量也更高。
+
+- `reduced`
+  使用系统提供的低精度位置，常见于用户仅授权“模糊位置”的情况。
+
+## LocationInfo
+
+表示一个基础的地理坐标信息。
+
+**类型定义**
 
 ```ts
 type LocationInfo = {
-  /**
-   * 纬度，单位：度
-   */
   latitude: number
-  /**
-   * 经度，单位：度
-   */
   longitude: number
-  /**
-   * 获取该位置的时间戳（单位：毫秒）
-   */
   timestamp: number
 }
 ```
 
-***
+**字段说明**
 
-### `LocationPlacemark`
+- `latitude`
+  纬度，单位为度。
 
-表示一个可读的地理位置，通常由逆地理编码返回，包含详细的地址结构信息：
+- `longitude`
+  经度，单位为度。
+
+- `timestamp`
+  位置采集时间，毫秒级时间戳。
+
+## LocationPlacemark
+
+表示一个对人类友好的地理位置信息，通常由地理编码或反向地理编码返回。
+
+**类型定义**
 
 ```ts
 type LocationPlacemark = {
@@ -29220,32 +33238,144 @@ type LocationPlacemark = {
 }
 ```
 
-#### 字段说明
+**说明**
 
-| 字段                      | 类型             | 描述                                |
-| ----------------------- | -------------- | --------------------------------- |
-| `location`              | `LocationInfo` | 坐标点信息（通常等于请求的经纬度）                 |
-| `region`                | `string`       | 区域名，如省/州                          |
-| `timeZone`              | `string`       | 时区标识（如 `"Asia/Shanghai"`）         |
-| `name`                  | `string`       | 地点名称，如建筑物、地标等                     |
-| `thoroughfare`          | `string`       | 街道名称，如 `"中关村大街"`                  |
-| `subThoroughfare`       | `string`       | 详细地址，如门牌号                         |
-| `locality`              | `string`       | 城市或镇                              |
-| `subLocality`           | `string`       | 区、街道等子区域                          |
-| `administrativeArea`    | `string`       | 省份、州或其他一级行政区域                     |
-| `subAdministrativeArea` | `string`       | 县、区等次级行政区域                        |
-| `postalCode`            | `string`       | 邮政编码                              |
-| `isoCountryCode`        | `string`       | 国家代码（ISO 3166-1 alpha-2，如 `"CN"`） |
-| `country`               | `string`       | 国家全名，如 `"中国"`                     |
-| `inlandWater`           | `string`       | 附近的内陆水体名称，如湖泊、河流                  |
-| `ocean`                 | `string`       | 附近的海洋名称                           |
-| `areasOfInterest`       | `string[]`     | 附近的兴趣点/地标数组，如 `"东方明珠"`            |
+Placemark 可能包含地址、城市、省份、国家、兴趣点等信息。具体字段是否存在取决于系统地图数据和地理位置本身。
 
-***
+## Heading
 
-## 示例用法
+Heading 表示设备的方向与指南针相关信息。
 
-### 逆地理编码
+**类型定义**
+
+```ts
+type Heading = {
+  headingAccuracy: number
+  trueHeading: number
+  magneticHeading: number
+  timestamp: Date
+  x: number
+  y: number
+  z: number
+}
+```
+
+**字段说明**
+
+- `headingAccuracy`
+  报告方向与真实地磁方向之间的最大误差，单位为度。
+
+- `trueHeading`
+  相对于真北的方向角，单位为度。
+
+- `magneticHeading`
+  相对于磁北的方向角，单位为度。
+
+- `timestamp`
+  方向数据生成的时间。
+
+- `x`、`y`、`z`
+  三轴地磁场原始数据，单位为微特斯拉。
+
+## 授权与配置
+
+### isAuthorizedForWidgetUpdates
+
+```ts
+const isAuthorizedForWidgetUpdates: boolean
+```
+
+表示当前小组件是否有资格接收位置更新。该值受系统权限和小组件能力限制影响。
+
+### accuracy
+
+```ts
+const accuracy: LocationAccuracy
+```
+
+当前配置的位置精度级别。
+
+### setAccuracy
+
+```ts
+function setAccuracy(accuracy: LocationAccuracy): Promise<void>
+```
+
+设置脚本期望的位置精度。更高的精度可能会增加耗电量，并可能触发系统权限请求。
+
+**示例**
+
+```ts
+await Location.setAccuracy("hundredMeters")
+```
+
+## 获取当前位置
+
+### requestCurrent
+
+```ts
+function requestCurrent(
+  options?: { forceRequest?: boolean }
+): Promise<LocationInfo | null>
+```
+
+请求当前设备的位置。
+
+默认情况下，如果系统中存在可用的缓存位置，会直接返回缓存结果；如果不存在缓存位置，则会发起一次新的定位请求。
+
+当 `forceRequest` 为 `true` 时，会忽略缓存位置，始终请求最新位置。
+
+**示例**
+
+```ts
+const location = await Location.requestCurrent()
+
+if (location) {
+  console.log(location.latitude, location.longitude)
+}
+```
+
+强制请求最新位置：
+
+```ts
+const location = await Location.requestCurrent({
+  forceRequest: true
+})
+```
+
+### pickFromMap
+
+```ts
+function pickFromMap(): Promise<LocationInfo | null>
+```
+
+打开系统内置地图界面，让用户手动选择一个位置。
+
+**示例**
+
+```ts
+const picked = await Location.pickFromMap()
+
+if (picked) {
+  console.log("Picked location:", picked.latitude, picked.longitude)
+}
+```
+
+## 地理编码
+
+### reverseGeocode
+
+```ts
+function reverseGeocode(options: {
+  latitude: number
+  longitude: number
+  locale?: string
+}): Promise<LocationPlacemark[] | null>
+```
+
+将经纬度坐标转换为可读的地址信息。
+
+**示例**
 
 ```ts
 const placemarks = await Location.reverseGeocode({
@@ -29254,53 +33384,96 @@ const placemarks = await Location.reverseGeocode({
   locale: "zh-CN"
 })
 
-if (placemarks?.length) {
-  const place = placemarks[0]
-  console.log("国家:", place.country)
-  console.log("城市:", place.locality)
-  console.log("街道:", place.thoroughfare, place.subThoroughfare)
-  console.log("地标名称:", place.name)
-  console.log("邮编:", place.postalCode)
-  console.log("兴趣点:", place.areasOfInterest?.join(", "))
-}
+console.log(placemarks?.[0]?.locality)
 ```
 
-***
-
-### 地址格式化工具
+### geocodeAddress
 
 ```ts
-function formatAddress(p: LocationPlacemark): string {
-  return [
-    p.country,
-    p.administrativeArea,
-    p.locality,
-    p.subLocality,
-    p.thoroughfare,
-    p.subThoroughfare
-  ].filter(Boolean).join(", ")
+function geocodeAddress(options: {
+  address: string
+  locale?: string
+}): Promise<LocationPlacemark[] | null>
+```
+
+将文本地址转换为地理位置信息。
+
+**示例**
+
+```ts
+const results = await Location.geocodeAddress({
+  address: "天安门",
+  locale: "zh-CN"
+})
+
+const location = results?.[0]?.location
+```
+
+## 方向与指南针
+
+### requestHeading
+
+```ts
+function requestHeading(): Promise<Heading | null>
+```
+
+获取最近一次上报的方向信息。如果尚未开始方向更新，则返回 `null`。
+
+**示例**
+
+```ts
+const heading = await Location.requestHeading()
+
+if (heading) {
+  console.log(heading.trueHeading)
 }
 ```
 
-***
+### startUpdatingHeading
 
-## 最佳实践与使用建议
+```ts
+function startUpdatingHeading(): Promise<void>
+```
 
-- 使用 `areasOfInterest` 和 `name` 显示更友好的位置信息（如地标名）
-- 使用 `postalCode`、`locality`、`administrativeArea` 自动填写表单或记录标签
-- 使用 `timestamp` 判断位置数据是否新鲜
-- 使用 `timeZone` 进行本地时间转换或事件提醒
-- 在调用 `requestCurrent` 前使用 `setAccuracy` 控制精度
-- 对小组件使用 `isAuthorizedForWidgetUpdates()` 检查权限
+开始持续监听设备方向变化。
 
-***
+### stopUpdatingHeading
 
-## 说明
+```ts
+function stopUpdatingHeading(): void
+```
 
-- 逆地理编码可能返回多个结果，通常第一个最相关
-- 若获取失败，API 将返回 `null`
-- 若未强制刷新，系统会优先使用缓存位置，响应更快
-- 小组件受限于系统权限机制，务必检测权限状态
+停止方向更新。
+
+### addHeadingListener
+
+```ts
+function addHeadingListener(
+  listener: (heading: Heading) => void
+): void
+```
+
+添加一个方向变化监听器。
+
+**示例**
+
+```ts
+await Location.startUpdatingHeading()
+
+Location.addHeadingListener(heading => {
+  console.log("Heading:", heading.trueHeading)
+})
+```
+
+### removeHeadingListener
+
+```ts
+function removeHeadingListener(
+  listener?: (heading: Heading) => void
+): void
+```
+
+移除方向监听器。如果未传入参数，将移除所有监听器。
 
 
 
@@ -30186,6 +34359,7 @@ type ExportOptions = {
   ducking?: DuckingConfig
   presetName?: ExportPreset
   outputFileType?: ExportFileType
+  colorSpacePolicy?: ColorSpacePolicy
 }
 ```
 
@@ -30205,6 +34379,9 @@ type ExportOptions = {
 
 - **presetName / outputFileType**
   控制编码质量与文件格式
+
+- **colorSpacePolicy**
+  控制输出文件的颜色空间，默认为`forceSDR`，可选`keepSource`。
 
 ***
 
@@ -34820,538 +38997,926 @@ console.log(results)
 
 
 ---
-url: /TestFlight/zh/guide/Device Capabilities/VideoRecorder.md
+url: /TestFlight/zh/guide/Device Capabilities/VideoRecorder/VideoRecorder/index.md
 ---
 
-# 视频录制（VideoRecorder）
+# 快速掌握视频录制
 
-`VideoRecorder` 用于在 Scripting 中创建和控制一个可编程的视频录制会话，完整封装了相机选择、音视频采集、编码、暂停/恢复、缩放、对焦、补光灯控制以及最终文件写入流程。
+`VideoRecorder` 是 Scripting 提供的高层视频采集与录制接口，对底层 `AVCaptureSession`、`AVAssetWriter`、音视频同步、方向处理等复杂逻辑进行了封装，以 **状态驱动** 的方式向脚本侧暴露一个稳定、可组合的录制 API。
 
-该 API 适用于自定义相机界面、视频采集工具、自动化录制脚本等场景。
+该模块适用于：
 
-***
-
-## 核心能力概览
-
-- 支持前置与后置摄像头
-- 支持指定摄像头类型（广角、超广角、长焦等）
-- 支持多种帧率（24 / 30 / 60 / 120）
-- 支持音频录制的启用与禁用
-- 支持多种系统 Session Preset
-- 支持多种视频编码格式（HEVC / H.264 / ProRes 等）
-- 支持录制过程中的暂停与恢复
-- 支持对焦点、曝光点独立控制
-- 支持变焦与平滑变焦（ramp）
-- 支持补光灯（Torch）控制
-- 明确的状态机与状态回调
-- 明确的生命周期管理（prepare / reset / dispose）
+- 视频录制（支持暂停 / 恢复）
+- 同步音频录制
+- 高帧率 / 高码率 / ProRes 编码
+- 拍照（录像过程中抓帧）
+- 实时对焦、曝光、变焦、补光灯控制
+- 与 UI 解耦的预览展示（通过 `VideoRecorderPreviewView`）
 
 ***
 
-## 类型定义
+## 核心设计理念
 
-### CameraPosition
+### 状态机驱动
+
+`VideoRecorder` 内部采用明确的状态机模型，所有操作都受当前状态约束，避免非法调用导致的崩溃或未定义行为。
 
 ```ts
-type CameraPosition = "front" | "back"
-```
-
-表示使用的摄像头朝向。
-
-***
-
-### CameraType
-
-```ts
-type CameraType =
-  | "wide"
-  | "ultraWide"
-  | "telephoto"
-  | "trueDepth"
-  | "dual"
-  | "dualWide"
-  | "triple"
-```
-
-表示摄像头的物理类型。
-是否支持某一类型取决于设备硬件能力。
-
-***
-
-### VideoRecorderState
-
-```ts
-type VideoRecorderState =
+type State =
   | "idle"
   | "preparing"
   | "ready"
   | "recording"
   | "paused"
-  | "finishing"
+  | "stopping"
   | "finished"
   | "failed"
 ```
 
-#### 状态说明
+- **idle**
+  初始状态，尚未创建或已重置会话
 
-| 状态          | 含义             |
-| ----------- | -------------- |
-| `idle`      | 初始状态，尚未配置资源    |
-| `preparing` | 正在配置相机会话与音视频管线 |
-| `ready`     | 已准备完成，可以开始录制   |
-| `recording` | 正在录制           |
-| `paused`    | 录制已暂停          |
-| `finishing` | 正在结束录制并写入文件    |
-| `finished`  | 录制完成           |
-| `failed`    | 发生错误，录制失败      |
+- **preparing**
+  正在配置采集会话、设备、编码参数
 
-***
+- **ready**
+  会话已准备完成，可以开始录制
 
-### VideoCaptureSessionPreset
+- **recording**
+  正在录制视频（音视频同步写入）
 
-```ts
-type VideoCaptureSessionPreset =
-  | "high"
-  | "medium"
-  | "low"
-  | "cif352x288"
-  | "vga640x480"
-  | "iFrame960x540"
-  | "iFrame1280x720"
-  | "hd1280x720"
-  | "hd1920x1080"
-  | "hd4K3840x2160"
-```
+- **paused**
+  录制已暂停，时间线被冻结
 
-表示捕捉会话的分辨率预设。
+- **stopping**
+  正在结束录制并写入文件尾
+
+- **finished**
+  录制完成，`details` 中包含输出文件路径
+
+- **failed**
+  出现错误，`details` 中包含错误信息
 
 ***
 
-### VideoCodec
+## Capture Session
 
 ```ts
-type VideoCodec =
-  | "hevc"
-  | "h264"
-  | "jpeg"
-  | "JPEGXL"
-  | "proRes4444"
-  | "appleProRes4444XQ"
-  | "proRes422"
-  | "proRes422HQ"
-  | "proRes422LT"
-  | "proRes422Proxy"
-  | "proResRAW"
-  | "proResRAWHQ"
-  | "hevcWithAlpha"
+class AVCaptureSession {
+  private constructor()
+}
 ```
 
-表示视频编码格式。
-具体是否可用取决于设备与系统支持情况。
+`VideoRecorder.session` 暴露的是一个只读的 `AVCaptureSession` 实例，用于：
+
+- 绑定预览视图
+- 与其他需要底层 Session 的组件协作
+
+该对象**不能自行创建或修改**，生命周期由 `VideoRecorder` 管理。
 
 ***
 
-### VideoOrientation
+## 录制配置（Configuration）
 
 ```ts
-type VideoOrientation =
-  | "portrait"
-  | "landscapeLeft"
-  | "landscapeRight"
-```
-
-表示输出视频的方向。
-
-***
-
-## 构造函数
-
-```ts
-new VideoRecorder(settings?)
-```
-
-### settings 参数
-
-```ts
-{
+type Configuration = {
   camera?: {
-    position: CameraPosition
+    position: "front" | "back"
     preferredTypes?: CameraType[]
   }
   frameRate?: number
   audioEnabled?: boolean
-  sessionPreset?: VideoCaptureSessionPreset
+  sessionPreset?: SessionPreset
   videoCodec?: VideoCodec
   videoBitRate?: number
   orientation?: VideoOrientation
   mirrorFrontCamera?: boolean
+  autoConfigAppAudioSession?: boolean
 }
 ```
 
-#### 参数说明
+### camera
 
-- **camera**
+- `position`
+  使用前置或后置摄像头
 
-  - `position`
-    使用的摄像头位置，默认 `"back"`
-  - `preferredTypes`
-    偏好的摄像头类型列表
-    如果未提供，内部将根据摄像头位置自动选择合适的类型
+- `preferredTypes`
+  优先选择的物理摄像头类型，例如：
 
-- **frameRate**
-  目标帧率，支持 24 / 30 / 60 / 120，默认 30
-  实际帧率受设备与分辨率限制
+  - `"wide"`
+  - `"ultraWide"`
+  - `"telephoto"`
+  - `"triple"`
 
-- **audioEnabled**
-  是否录制音频，默认 `true`
-
-- **sessionPreset**
-  捕捉会话分辨率预设，默认 `"high"`
-
-- **videoCodec**
-  视频编码格式，默认 `"hevc"`
-
-- **videoBitRate**
-  视频平均码率（bit/s），未指定时由系统自动选择
-
-- **orientation**
-  输出视频方向，默认 `"portrait"`
-
-- **mirrorFrontCamera**
-  前置摄像头是否镜像，默认 `true`
-  仅在使用前置摄像头时生效
+如果不提供，将根据 `position` 自动选择系统默认组合。
 
 ***
 
-## 只读属性
+### frameRate
 
-### minZoomFactor
+支持的帧率：
 
-```ts
-readonly minZoomFactor: number
-```
-
-当前设备支持的最小变焦倍率。
-
-***
-
-### maxZoomFactor
-
-```ts
-readonly maxZoomFactor: number
-```
-
-当前设备支持的最大变焦倍率。
+- 24
+- 30（默认）
+- 60
+- 120（设备支持的前提下）
 
 ***
 
-### currentZoomFactor
+### audioEnabled
 
-```ts
-readonly currentZoomFactor: number
-```
-
-当前变焦倍率。
+是否录制音频，默认 `true`。
 
 ***
 
-### displayZoomFactor
+### sessionPreset
 
-```ts
-readonly displayZoomFactor: number
-```
+控制采集分辨率与质量，例如：
 
-用户可读的变焦倍率。
-
-***
-
-### hasTorch
-
-```ts
-readonly hasTorch: boolean
-```
-
-当前摄像头是否支持补光灯。
+- `"high"`
+- `"hd1920x1080"`
+- `"hd4K3840x2160"`
 
 ***
 
-### torchMode
+### videoCodec
 
-```ts
-readonly torchMode: "auto" | "on" | "off"
-```
+支持多种编码格式，包括：
 
-当前补光灯模式。
+- `"hevc"`（默认）
+- `"h264"`
+- `"hevcWithAlpha"`
+- `"proRes422"`
+- `"proRes4444"`
+- `"appleProRes4444XQ"`
+- `"proResRAW"` 等
 
-***
-
-## 状态与回调
-
-### state
-
-```ts
-state: VideoRecorderState
-```
-
-表示当前录制器所处的状态。
+⚠️ 部分 ProRes 编码对设备与系统版本有要求。
 
 ***
 
-### onStateChanged
+### videoBitRate
 
-```ts
-onStateChanged?: (
-  state: VideoRecorderState,
-  details?: string
-) => void
-```
-
-状态变化回调。
-
-- 当 `state === "failed"`
-  `details` 为错误信息描述
-
-- 当 `state === "finished"`
-  `details` 为最终视频文件的完整保存路径
+视频码率（bps），默认 `5_000_000`。
+仅对部分编码器生效。
 
 ***
 
-## 方法说明
+### orientation
 
-### prepare()
+录制时的视频方向：
 
-```ts
-prepare(): Promise<void>
-```
+- `"portrait"`（默认）
+- `"landscapeLeft"`
+- `"landscapeRight"`
 
-准备录制器资源，包括相机会话、输入输出与音视频管线配置。
-
-#### 使用约束
-
-- 必须在 `startRecording` 之前调用
-- 成功后状态变为 `ready`
-- 失败会进入 `failed` 状态
+该值影响最终文件的方向元数据与写入顺序。
 
 ***
 
-### startRecording(toPath)
+### mirrorFrontCamera
 
-```ts
-startRecording(toPath: string): void
-```
-
-开始录制视频。
-
-#### 参数
-
-- **toPath**
-  视频文件保存路径（完整路径）
-
-#### 使用约束
-
-- 仅允许在 `ready` 状态下调用
-- 调用后状态变为 `recording`
+是否镜像前置摄像头画面，默认 `false`。
 
 ***
 
-### pauseRecording()
+### autoConfigAppAudioSession
 
-```ts
-pauseRecording(): void
-```
+是否由系统自动配置 `AVAudioSession`，默认 `true`。
 
-暂停当前录制。
+- `true`
+  系统会根据摄像头方向、麦克风位置自动调整 Audio Session
+  **不会在录制结束后恢复原状态**
 
-#### 使用约束
-
-- 仅允许在 `recording` 状态下调用
-- 调用后状态变为 `paused`
-- 时间线会被正确压缩，不产生空白帧
+- `false`
+  由应用自行管理 Audio Session
+  ⚠️ 如果配置不兼容，可能导致录制失败
 
 ***
 
-### resumeRecording()
+## 状态与监听
+
+### 获取当前状态
 
 ```ts
-resumeRecording(): void
+function getState(): Promise<State>
 ```
 
-恢复已暂停的录制。
-
-#### 使用约束
-
-- 仅允许在 `paused` 状态下调用
-- 调用后状态回到 `recording`
+返回当前 `VideoRecorder` 的状态。
 
 ***
 
-### stopRecording()
+### 监听状态变化
 
 ```ts
-stopRecording(): Promise<void>
+function addStateListener(
+  listener: (state: State, details?: string) => void
+): void
 ```
 
-停止录制并生成最终视频文件。
+- `state`
+  新状态
 
-#### 行为说明
+- `details`
 
-- 状态先进入 `finishing`
-- 文件写入完成后进入 `finished`
-- 最终文件路径通过 `onStateChanged` 回调返回
+  - `failed`：错误信息
+  - `finished`：输出文件路径
+
+```ts
+function removeStateListener(
+  listener?: (state: State, details?: string) => void
+): void
+```
+
+不传参数将移除所有监听器。
 
 ***
 
-### reset()
+## 生命周期控制
+
+### prepare
 
 ```ts
-reset(): Promise<void>
+function prepare(configuration?: Configuration): Promise<void>
 ```
 
-重置录制器状态，用于开始新一轮录制。
+- 创建并配置采集会话
+- 请求相机 / 麦克风权限
+- 初始化编码器
 
-#### 使用场景
-
-- 已完成一次录制
-- 或录制失败后希望复用同一实例
-
-#### 行为说明
-
-- 成功后状态回到 `idle`
-- 可再次调用 `prepare`
+成功后进入 `ready` 状态。
 
 ***
 
-### setTorchMode()
+### start
 
 ```ts
-setTorchMode(mode: "auto" | "off" | "on"): void
+function start(toPath: string): Promise<void>
 ```
 
-设置补光灯模式。
+- 开始录制
+- 视频写入指定路径
+- 进入 `recording` 状态
 
 ***
 
-### setFocusPoint()
+### pause / resume
 
 ```ts
-setFocusPoint(point: { x: number; y: number }): void
+function pause(): Promise<void>
+function resume(): Promise<void>
 ```
 
-设置对焦点。
-
-- 坐标为归一化值，范围 `0.0 ~ 1.0`
-- `(0,0)` 表示画面左上角，`(1,1)` 表示右下角
+- 暂停与恢复时间线
+- 不会生成新文件
+- 适用于长时间录制、分段控制
 
 ***
 
-### setExposurePoint()
+### stop
 
 ```ts
-setExposurePoint(point: { x: number; y: number }): void
+function stop(options?: {
+  closeSession?: boolean
+}): Promise<void>
 ```
 
-设置曝光点，坐标规则与对焦点一致。
+- 正常结束录制
+- 进入 `finished` 状态
+- `details` 中返回最终文件路径
 
 ***
 
-### resetFocus()
+### cancel
 
 ```ts
-resetFocus(): void
+function cancel(options?: {
+  closeSession?: boolean
+}): Promise<void>
 ```
 
-恢复自动对焦模式。
+- 中断录制
+- 删除已生成的文件
+- 不进入 `finished`
 
 ***
 
-### resetExposure()
+### reset
 
 ```ts
-resetExposure(): void
+function reset(): Promise<void>
 ```
 
-恢复自动曝光模式。
+- 关闭采集会话
+- 清理内部状态
+- 状态回到 `idle`
+
+适用于彻底释放资源或重新切换摄像头。
 
 ***
 
-### setZoomFactor()
+## 拍照能力
 
 ```ts
-setZoomFactor(factor: number): void
+function takePhoto(): Promise<UIImage | null>
 ```
 
-立即设置变焦倍率。
-
-- 值应位于 `minZoomFactor` 与 `maxZoomFactor` 之间
+- 仅在 `recording` 状态有效
+- 返回当前帧的静态图片
+- 不影响视频录制
 
 ***
 
-### rampZoomFactor()
+## 相机控制能力
+
+### 补光灯（Torch）
 
 ```ts
-rampZoomFactor(toFactor: number, rate: number): void
+const hasTorch: boolean
+const torchMode: "auto" | "on" | "off"
+
+function setTorchMode(mode: "auto" | "on" | "off"): void
 ```
-
-以平滑方式调整变焦倍率。
-
-- `toFactor` 为目标倍率
-- `rate` 为变化速率，单位为每秒的 2 次幂变化
 
 ***
 
-### resetZoom()
+### 对焦与曝光
 
 ```ts
-resetZoom(): void
+function setFocusPoint(point: { x: number; y: number }): void
+function setExposurePoint(point: { x: number; y: number }): void
+
+function resetFocus(): void
+function resetExposure(): void
 ```
 
-将变焦倍率恢复为默认值（通常为 1.0）。
+- 坐标为 **归一化坐标**（0\~1）
+- 左上角为 `{ x: 0, y: 0 }`
 
 ***
 
-### dispose()
+### 变焦
 
 ```ts
-dispose(): Promise<void>
+const minZoomFactor: number
+const maxZoomFactor: number
+const currentZoomFactor: number
+
+function setZoomFactor(factor: number): void
+function rampZoomFactor(toFactor: number, rate: number): void
+function resetZoom(): void
 ```
 
-释放并销毁录制器。
+iOS 18+ 额外提供：
 
-#### 使用约束
+```ts
+const displayZoomFactor: number
+const displayZoomFactorMultiplier: number
+```
 
-- 调用后实例不可再使用
-- 会释放相机、音频与底层系统资源
-- 建议在页面或脚本生命周期结束时调用
+用于 UI 层展示更符合用户直觉的倍率值。
 
 ***
 
 ## 典型使用流程
 
 ```ts
-const recorder = new VideoRecorder({
-  camera: { position: "back" },
-  frameRate: 60,
-  videoCodec: "hevc"
-})
+await VideoRecorder.prepare(config)
+await VideoRecorder.start(path)
 
-recorder.onStateChanged = (state, details) => {
-  if (state === "finished") {
-    console.log("Video saved at:", details)
-  }
-}
+// recording
+await VideoRecorder.pause()
+await VideoRecorder.resume()
 
-await recorder.prepare()
-recorder.startRecording("/path/to/tmp/demo.mov")
+await VideoRecorder.stop()
+// or
+await VideoRecorder.cancel()
+
+await VideoRecorder.reset()
 ```
 
 ***
 
-## 使用建议
+## 使用建议与注意事项
 
-- 始终监听 `onStateChanged` 以掌握完整状态变化
-- 不要在未调用 `prepare` 的情况下开始录制
-- 每次完成录制后，如需复用实例，应先调用 `reset`
-- 生命周期结束时务必调用 `dispose` 释放资源
+- `prepare → start → stop / cancel` 是一条完整生命周期
+- 不建议在 `recording` 状态切换摄像头，应先 `reset`
+- 高帧率 + ProRes 对设备性能与存储要求较高
+- 若关闭 `autoConfigAppAudioSession`，需自行保证音频会话兼容性
+- 预览 UI 与录制逻辑解耦，推荐通过 `VideoRecorderPreviewView` 展示画面
+
+
+
+---
+url: /TestFlight/zh/guide/Device Capabilities/VideoRecorder/VideoRecorder/index_example.md
+---
+
+# 示例
+
+```tsx
+import { Button, Navigation, NavigationStack, Script, useEffect, Path, MagnifyGesture, useObservable, VideoRecorderPreviewView, VStack, Toolbar, ToolbarItem, ToolbarItemGroup } from "scripting"
+
+const recorder = VideoRecorder
+
+function View() {
+  // Access dismiss function.
+  const dismiss = Navigation.useDismiss()
+  const state = useObservable<VideoRecorder.State>("idle")
+  const displayZoom = useObservable(1)
+  const startZoom = useObservable(1)
+  const volume = useObservable(0)
+  const toastVisible = useObservable(false)
+  const toastMessage = useObservable("")
+  const position = useObservable<VideoRecorder.CameraPosition>("back")
+
+  function showToast(message: string) {
+    toastVisible.setValue(true)
+    toastMessage.setValue(message)
+  }
+
+  useEffect(() => {
+
+    const listener = (value: number, old: number) => {
+      console.log("old:", old, "new:", value)
+      volume.setValue(value)
+    }
+    SharedAudioSession.addOutputVolumeListener(listener)
+
+    return () => {
+      SharedAudioSession.removeOutputVolumeListener(listener)
+    }
+  }, [])
+
+  async function prepare() {
+    await recorder.prepare({
+      camera: {
+        position: position.value,
+        // preferredTypes: ["triple"]
+      },
+      frameRate: 30,
+      audioEnabled: true,
+      orientation: "portrait",
+      sessionPreset: "high",
+      videoCodec: "appleProRes4444XQ",
+      // autoConfigAppAudioSession: false
+    })
+  }
+
+  useEffect(() => {
+    prepare().then(() => {
+      recorder.start(
+        Path.join(
+          FileManager.documentsDirectory,
+          "test.mov"
+        )
+      )
+    }).catch(e => {
+      showToast("Failed to prepare:" + String(e))
+    })
+    recorder.addStateListener((
+      newState, details
+    ) => {
+      state.setValue(newState)
+
+      if (newState === "ready") {
+        // recorder.rampZoomFactor(0.5, 4
+      }
+
+      if (newState === "failed") {
+        Dialog.alert(details!)
+      }
+
+    })
+
+    return () => {
+      recorder.reset()
+    }
+  }, [])
+
+  return <NavigationStack>
+    <VStack
+      toolbar={
+        <Toolbar>
+          <ToolbarItem
+            placement="topBarLeading"
+          >
+            <Button
+              title="Done"
+              systemImage="xmark"
+              action={dismiss}
+            />
+          </ToolbarItem>
+          <ToolbarItem
+            placement="topBarTrailing"
+          >
+            <Button
+              title="Toggle Torch"
+              action={() => {
+                if (recorder.torchMode === "on") {
+                  recorder.setTorchMode("off")
+                } else {
+                  recorder.setTorchMode("on")
+                }
+              }}
+            />
+          </ToolbarItem>
+          <ToolbarItemGroup
+            placement="bottomBar"
+          >
+            {state.value == "idle" && <Button
+              title="Prepare"
+              action={async () => {
+                try {
+                  await recorder.prepare()
+                } catch (e) {
+                  showToast("Failed to prepare:" + e)
+                }
+              }}
+            />}
+            {(state.value == "idle" || state.value == "ready") && <Button
+              title="Toggle Camera"
+              action={async () => {
+                try {
+                  position.setValue(
+                    position.value == "back"
+                      ? "front"
+                      : "back"
+                  )
+                  await recorder.reset()
+                  await prepare()
+                } catch (e) {
+                  showToast("Failed to toggle camera:" + e)
+                }
+              }}
+            />}
+            {state.value == "ready" && <Button
+              title="Start"
+              action={async () => {
+                try {
+                  await recorder.start(
+                    Path.join(
+                      FileManager.documentsDirectory,
+                      "test.mov"
+                    )
+                  )
+                } catch (e) {
+                  showToast("Failed to start:" + e)
+                }
+              }}
+            />}
+            {state.value == "recording" && <Button
+              title="Pause"
+              action={async () => {
+                try {
+                  await recorder.pause()
+                } catch (e) {
+                  console.error("Failed to call pause", e)
+                }
+              }}
+            />}
+            {state.value == "paused" && <Button
+              title="Resume"
+              action={async () => {
+                try {
+                  await recorder.resume()
+                } catch (e) {
+                  showToast("Failed to resume:" + e)
+                }
+              }}
+            />}
+            {state.value == "recording" && <Button
+              title="Cancel"
+              action={async () => {
+                try {
+                  await recorder.cancel()
+                } catch (e) {
+                  showToast("Failed to cancel:" + e)
+                }
+              }}
+            />}
+            {state.value == "recording" && <Button
+              title="Stop"
+              action={async () => {
+                try {
+                  await recorder.stop()
+                  await prepare()
+                } catch (e) {
+                  showToast("Failed to stop: " + e)
+                }
+              }}
+            />}
+          </ToolbarItemGroup>
+        </Toolbar>
+      }
+      toast={{
+        isPresented: toastVisible,
+        message: toastMessage.value,
+        position: "top"
+      }}
+    >
+
+      {/*  <Text>State: {state.value}</Text>
+      <Text>OutputVolume: {volume.value}</Text> */}
+      <VideoRecorderPreviewView
+        key="videoRecorder"
+        ignoresSafeArea
+        frame={{
+          width: Device.screen.width
+        }}
+        aspectRatio={{
+          value: 3 / 4,
+          contentMode: "fill"
+        }}
+        gesture={
+          MagnifyGesture()
+            .onChanged(details => {
+              recorder.setZoomFactor(
+                details.magnification * startZoom.value
+              )
+              displayZoom.setValue(
+                recorder.displayZoomFactor
+              )
+            })
+            .onEnded(details => {
+              recorder.setZoomFactor(
+                details.magnification * startZoom.value
+              )
+              displayZoom.setValue(
+                recorder.displayZoomFactor
+              )
+              startZoom.setValue(
+                recorder.currentZoomFactor
+              )
+            })
+        }
+      />
+    </VStack >
+  </NavigationStack >
+}
+
+async function run() {
+  // Present view.
+  await Navigation.present({
+    element: <View />
+  })
+
+  // Avoiding memory leaks.
+  Script.exit()
+}
+
+run()
+```
+
+
+
+---
+url: /TestFlight/zh/guide/Device Capabilities/VideoRecorder/VideoRecorderPreviewView.md
+---
+
+# 视频预览
+
+`VideoRecorderPreviewView` 是用于显示 `VideoRecorder` 实时视频画面的预览视图组件。
+它本身 **不负责任何录制逻辑**，仅用于将 `VideoRecorder.session` 中的视频流渲染到 UI 层，并提供必要的显示与裁剪能力。
+
+该组件通常与 `VideoRecorder` 搭配使用，用于：
+
+- 实时显示摄像头画面
+- 支持不同的视频填充模式（videoGravity）
+- 处理镜像显示（常用于前置摄像头）
+- 支持圆角、裁剪等视觉效果
+- 与手势系统组合实现缩放、对焦等交互
+
+***
+
+## 设计原则
+
+### 视图与录制逻辑解耦
+
+- `VideoRecorderPreviewView` **不持有录制状态**
+- 不触发 `prepare / start / stop`
+- 不感知 `VideoRecorder.State`
+
+它只依赖 `VideoRecorder.session`，并在内部将其绑定到系统的预览渲染层。
+
+***
+
+### 单向依赖关系
+
+```
+VideoRecorder  ──▶  AVCaptureSession  ──▶  VideoRecorderPreviewView
+```
+
+- Session 由 `VideoRecorder` 管理
+- PreviewView 只负责显示
+
+***
+
+## Props 定义
+
+```ts
+type VideoRecorderPreviewViewProps = {
+  videoGravity?: "resizeAspect" | "resizeAspectFill" | "resize"
+  isVideoMirrored?: boolean
+  cornerRadius?: number
+  masksToBounds?: boolean
+}
+```
+
+***
+
+## videoGravity
+
+```ts
+videoGravity?: "resizeAspect" | "resizeAspectFill" | "resize"
+```
+
+控制视频内容在视图中的填充方式，对应 `AVLayerVideoGravity`：
+
+- `resizeAspect`
+  等比例缩放，完整显示视频内容，可能留黑边
+
+- `resizeAspectFill`（默认）
+  等比例填充，可能裁剪边缘
+
+- `resize`
+  拉伸填满视图，不保持比例
+
+适合根据 UI 设计需求选择。
+
+***
+
+## isVideoMirrored
+
+```ts
+isVideoMirrored?: boolean
+```
+
+是否镜像显示视频画面，常用于前置摄像头。
+
+- `true`
+  画面左右翻转，符合自拍预期
+
+- `false`（默认）
+  保持原始方向
+
+> 注意：
+> 该属性只影响**预览显示**，不影响最终录制文件是否镜像。
+
+***
+
+## cornerRadius
+
+```ts
+cornerRadius?: number
+```
+
+设置预览视图背景的圆角半径。
+
+- 默认值：`0`
+- 仅对视图背景生效
+- 若需要裁剪视频内容，需要同时设置 `masksToBounds = true`
+
+***
+
+## masksToBounds
+
+```ts
+masksToBounds?: boolean
+```
+
+是否裁剪子内容到视图边界。
+
+- `false`（默认）
+  圆角仅作用于背景，不裁剪视频内容
+
+- `true`
+  视频画面会被裁剪到圆角区域
+
+通常与 `cornerRadius` 配合使用。
+
+***
+
+## 生命周期与更新行为
+
+### 与 SwiftUI / 声明式 UI 的关系
+
+`VideoRecorderPreviewView` 是一个声明式组件，其底层通常对应一个持久存在的原生预览视图（如 `AVCaptureVideoPreviewLayer`）。
+
+在以下情况下需要特别注意：
+
+- **重新创建视图实例**
+  会导致底层预览层重新绑定 session
+
+- **频繁触发视图重建**
+  可能引起短暂卡顿或画面闪烁
+
+***
+
+### key 的重要性
+
+在动态 UI 场景中（例如切换摄像头、切换配置）：
+
+```tsx
+<VideoRecorderPreviewView
+  key="videoRecorder"
+  ...
+/>
+```
+
+- 建议显式提供稳定且唯一的 `key`
+- 用于确保预览视图与当前 `AVCaptureSession` 正确绑定
+- 防止 SwiftUI / React-style diff 误判导致多次销毁与重建
+
+***
+
+## 与 VideoRecorder 的协作方式
+
+### 会话来源
+
+`VideoRecorderPreviewView` 内部使用的是：
+
+```ts
+VideoRecorder.session
+```
+
+该 session 的生命周期由 `VideoRecorder` 控制。
+
+***
+
+### 会话重置时的行为
+
+当调用：
+
+```ts
+await VideoRecorder.reset()
+```
+
+- 底层 `AVCaptureSession` 会被关闭
+- 预览画面会停止更新或变为空白
+- 重新 `prepare` 后画面恢复
+
+PreviewView 本身无需额外处理。
+
+***
+
+## 手势与交互（组合方式）
+
+`VideoRecorderPreviewView` 本身 **不内置任何手势逻辑**，但可以与手势系统组合使用：
+
+```tsx
+<VideoRecorderPreviewView
+  gesture={
+    MagnifyGesture()
+      .onChanged(details => {
+        VideoRecorder.setZoomFactor(...)
+      })
+  }
+/>
+```
+
+常见交互包括：
+
+- 双指缩放 → 调用 `setZoomFactor`
+- 单击 → 转换为归一化坐标后调用 `setFocusPoint`
+- 长按 → 锁定曝光
+
+***
+
+## 常见使用建议
+
+- 不要在 `recording` 状态频繁重建 PreviewView
+- 切换摄像头时建议：
+
+  1. `reset`
+  2. `prepare`
+  3. 保持 PreviewView key 稳定
+- 镜像、圆角等视觉效果应优先放在 PreviewView 层处理
+- 所有录制控制逻辑应通过 `VideoRecorder` API 完成
+
+***
+
+## 典型使用示例（简化）
+
+```tsx
+<VideoRecorderPreviewView
+  key="videoRecorder"
+  videoGravity="resizeAspectFill"
+  isVideoMirrored={true}
+  cornerRadius={12}
+  masksToBounds={true}
+/>
+```
+
+***
+
+## 总结
+
+`VideoRecorderPreviewView` 是一个 **纯显示组件**：
+
+- 负责实时视频画面的渲染
+- 不参与录制状态与控制
+- 与 `VideoRecorder` 通过 `AVCaptureSession` 单向协作
+- 适合与手势、布局、动画等 UI 能力自由组合
 
 
 
@@ -40324,8 +44889,6 @@ static dateFormat(template: string, locale?: string): string | null
 ## 示例一：使用 dateStyle 和 timeStyle 进行本地化格式化
 
 ```tsx
-import { DateFormatter } from "scripting"
-
 const df = new DateFormatter()
 df.locale = "zh_CN"
 df.dateStyle = DateFormatterStyle.full
@@ -40455,8 +45018,6 @@ url: /TestFlight/zh/guide/Utilities/Encoding.md
 ### 示例一：UTF-8 编码与解码
 
 ```ts
-import { Data } from 'scripting'
-
 // 使用 UTF-8 将字符串转换为二进制数据
 const text = "こんにちは世界" // 日语“你好，世界”
 const utf8Data = Data.fromRawString(text, "utf-8")
@@ -45873,8 +50434,6 @@ function keys(): string[]
 ## 示例 1：保存与读取简单类型
 
 ```ts
-import { Storage } from "scripting"
-
 Storage.set("username", "Thom")
 const name = Storage.get<string>("username")
 console.log(name) // "Thom"
@@ -45899,8 +50458,6 @@ console.log(profile?.age) // 30
 ## 示例 3：保存与读取 Data
 
 ```ts
-import { Data, Storage } from "scripting"
-
 const bytes = Data.fromUTF8("hello")
 Storage.setData("payload", bytes)
 
@@ -48216,7 +52773,7 @@ repeatForever(autoreverses?: boolean): Animation
 #### 示例 1：基本大小动画
 
 ```tsx
-import { VStack, Button, Rectangle, useObservable, Animation, withAnimation } from "scripting"
+import { VStack, Button, Rectangle, useObservable, } from "scripting"
 
 export function Demo() {
   const size = useObservable(80)
@@ -48704,8 +53261,6 @@ import {
   Text,
   Button,
   useObservable,
-  Animation,
-  Transition
 } from "scripting"
 
 type Item = { id: string; title: string }
@@ -65049,7 +69604,7 @@ function MyWidget() {
 ### 示例 3: 带有自定义视图的切换
 
 ```tsx
-import { Toggle, View } from 'scripting'
+import { Toggle, HStack } from 'scripting'
 
 function MyComponent() {
   const [isEnabled, setIsEnabled] = useState(false)
@@ -65059,10 +69614,10 @@ function MyComponent() {
       value={isEnabled} 
       onChanged={newValue => setIsEnabled(newValue)}
     >
-      <View>
+      <HStack>
         <Text>启用功能</Text>
         <Image imageUrl="https://example.com/feature-icon.png" />
-      </View>
+      </HStack>
     </Toggle>
   )
 }
@@ -74752,7 +79307,6 @@ import {
   VStack,
   useRef,
   ScrollViewProxy,
-  withAnimation
 } from "scripting"
 
 function Item({ index }: { index: number }) {
@@ -76218,236 +80772,6 @@ run()
 
 
 ---
-url: /TestFlight/zh/guide/Views/VideoPreviewView.md
----
-
-# 视频预览视图（VideoPreviewView）
-
-`VideoPreviewView` 用于实时展示 `VideoRecorder` 当前相机会话的预览画面（camera preview）。
-它是 UI 层组件，不负责录制控制逻辑；录制的准备、开始、暂停、恢复与停止由 `VideoRecorder` 负责。
-
-`VideoPreviewView` 的核心职责是：将录制器内部的预览输出渲染到界面中，并支持通过通用 View props（如 `frame`、`aspectRatio` 等）进行布局。
-
-***
-
-## 组件定义
-
-```ts
-type VideoPreviewViewProps = {
-  recorder: VideoRecorder
-}
-
-declare const VideoPreviewView: FunctionComponent<VideoPreviewViewProps>
-```
-
-***
-
-## Props 说明
-
-### recorder
-
-```ts
-recorder: VideoRecorder
-```
-
-绑定的 `VideoRecorder` 实例。`VideoPreviewView` 会从该实例获取预览画面来源。
-
-#### 行为约定
-
-- 当 `recorder.prepare()` 成功后，预览画面可用并开始更新。
-- 当 `recorder.dispose()` 被调用后，预览画面停止并释放底层资源。
-- `VideoPreviewView` 不会自动调用 `prepare()` 或自动开始录制。
-
-***
-
-## 与 VideoRecorder 状态的关系
-
-`VideoPreviewView` 的显示效果通常与 `VideoRecorder.state` 对应如下（具体表现可能受系统行为影响）：
-
-| Recorder 状态 | 预览表现           |
-| ----------- | -------------- |
-| `idle`      | 尚未准备，可能为空画面    |
-| `preparing` | 正在准备中，画面可能尚不可用 |
-| `ready`     | 预览可用           |
-| `recording` | 正常实时预览         |
-| `paused`    | 通常停留在暂停时的最后一帧  |
-| `finishing` | 停止更新或逐步停止      |
-| `finished`  | 不再更新           |
-| `failed`    | 不可用            |
-
-***
-
-## 推荐用法与生命周期管理
-
-建议将 `VideoRecorder` 作为页面级对象创建，并在页面卸载时调用 `dispose()` 释放资源。
-同时，使用 `onStateChanged` 监听状态，以驱动 UI 文案、按钮可用性、错误提示等。
-
-要点：
-
-- `VideoRecorder` 建议通过 `useMemo` 创建，避免每次渲染重复构造。
-- 在 `useEffect` 中绑定 `onStateChanged`，并在 cleanup 中调用 `dispose()`。
-- 录制前必须 `await recorder.prepare()`。
-
-***
-
-## 完整示例
-
-```tsx
-function View() {
-  // Access dismiss function.
-  const dismiss = Navigation.useDismiss()
-  const recorder = useMemo(() => {
-    return new VideoRecorder({
-      camera: {
-        position: "front",
-      },
-      frameRate: 30,
-      audioEnabled: true,
-      orientation: "portrait",
-      sessionPreset: "hd1280x720",
-      videoCodec: "hevc"
-    })
-  }, [])
-  const [state, setState] = useState<VideoRecorderState>("idle")
-
-  useEffect(() => {
-    recorder.onStateChanged = (state, details) => {
-      setState(state)
-
-      if (state === "failed") {
-        Dialog.alert(details!)
-      }
-    }
-
-    return () => {
-      recorder.dispose()
-    }
-  }, [])
-
-  return <NavigationStack>
-    <List
-      navigationTitle="Page Title"
-      navigationBarTitleDisplayMode="inline"
-      toolbar={{
-        topBarLeading: <Button
-          title="Done"
-          action={dismiss}
-        />
-      }}
-    >
-      <Text>State: {state}</Text>
-
-      <Button
-        title="Start"
-        action={async () => {
-          await recorder.prepare()
-          recorder.startRecording(
-            Path.join(
-              FileManager.documentsDirectory,
-              "test.mov"
-            )
-          )
-        }}
-      />
-
-      <Button
-        title="Pause"
-        action={() => {
-          recorder.pauseRecording()
-        }}
-      />
-
-      <Button
-        title="Resume"
-        action={() => {
-          recorder.resumeRecording()
-        }}
-      />
-
-      <Button
-        title="Stop"
-        action={async () => {
-          await recorder.stopRecording()
-        }}
-      />
-
-      <VideoPreviewView
-        recorder={recorder}
-        frame={{
-          width: 300
-        }}
-        aspectRatio={{
-          value: 3 / 4,
-          contentMode: "fill"
-        }}
-      />
-    </List>
-  </NavigationStack>
-}
-```
-
-***
-
-## 布局与渲染建议
-
-### 使用 frame 控制尺寸
-
-`VideoPreviewView` 支持通过通用的 `frame` 属性约束宽高。例如：
-
-- 仅指定 `width`：配合 `aspectRatio` 确定最终高度
-- 指定 `width` + `height`：强制固定大小（可能导致裁剪或拉伸，取决于 aspect ratio 与 content mode）
-
-### 使用 aspectRatio 控制比例与填充策略
-
-示例：
-
-```tsx
-<VideoPreviewView
-  recorder={recorder}
-  aspectRatio={{ value: 3 / 4, contentMode: "fill" }}
-/>
-```
-
-- `value`：宽高比
-- `contentMode: "fill"`：按比例填充并裁剪
-- 若你希望完整显示画面且允许留边，可使用 `contentMode: "fit"`（如果你们的通用 props 支持该值）
-
-***
-
-## 常见注意事项
-
-### 必须 prepare 才能稳定显示预览
-
-`VideoPreviewView` 绑定 `recorder` 并不意味着会自动启动会话。若未 `prepare()`：
-
-- 预览可能为空
-- 或短时间内不可用
-- 不建议依赖隐式行为
-
-最佳实践：在 Start 按钮中 `await recorder.prepare()` 后再 `startRecording()`，如示例所示。
-
-### 释放资源
-
-- 页面关闭或不再需要预览时，务必调用 `recorder.dispose()`。
-- 建议使用 `useEffect` cleanup 释放，避免相机占用导致后续页面无法打开摄像头或耗电。
-
-### 错误处理
-
-当 `state === "failed"` 时，建议：
-
-- 立即提示 `details`（如示例 `Dialog.alert(details!)`）
-- 同时在 UI 上禁用录制按钮，或提供重试逻辑（例如 `await recorder.reset()` 后再 `prepare()`）
-
-***
-
-## 组件职责边界
-
-- `VideoRecorder`：负责录制控制与状态机（prepare/start/pause/resume/stop/reset/dispose）
-- `VideoPreviewView`：负责画面显示与 UI 布局（通过 `frame` / `aspectRatio` 等通用属性）
-
-
-
----
 url: /TestFlight/zh/guide/Views/View groupings/ControlGroup.md
 ---
 
@@ -77778,7 +82102,18 @@ url: /TestFlight/zh/guide/Widget/Widget API.md
 
 ### 静态方法
 
-#### `Widget.present(element: VirtualNode, reloadPolicy?: WidgetReloadPolicy): void`
+#### `Widget.present(element, options?): void`
+
+##### 类型定义
+
+```ts
+Widget.present(element: VirtualNode, reloadPolicy?: WidgetReloadPolicy): void
+
+Widget.present(element: VirtualNode, optoins?: {
+  reloadPolicy?: WidgetReloadPolicy
+  relevance?: WidgetRelevance
+}): void
+```
 
 用于在小组件上渲染 UI。传入一个 React 风格的 JSX 节点（即 VirtualNode）作为渲染内容。可选地传入刷新策略以控制 WidgetKit 请求新时间线的时机。
 
@@ -77786,6 +82121,7 @@ url: /TestFlight/zh/guide/Widget/Widget API.md
 
 - `element` (`VirtualNode`) – 小组件 UI 的 JSX 树。
 - `reloadPolicy` (`WidgetReloadPolicy`，可选) – 控制 WidgetKit 请求新时间线的策略，默认为 `atEnd`。
+- `relevance` (`WidgetRelevance`，可选) – 小组件的相关性，用于决定小组件的展示优先级。
 
 ##### 示例
 
@@ -77908,16 +82244,25 @@ type WidgetReloadPolicy =
 
 ***
 
+### `WidgetRelevance`
+
+定义小组件的相关性级别：
+
+```ts
+type WidgetRelevance = {
+  score: number // 分数，用于让系统决定小组件的展示优先级
+  duration?: DurationInSeconds // 持续时间，单位为秒
+}
+```
+
+***
+
 ## 使用说明
 
 - `Widget.present` 应在 `widget.tsx` 中调用，用于定义和显示小组件实际内容。
 - `Widget.preview` 仅用于 `index.tsx` 中测试和预览小组件，不会被系统实际渲染。
 - 使用 `Widget.parameter` 时，若参数为结构化数据（如对象），需使用 `JSON.parse()` 解析。
 - 脚本结束后应调用 `Script.exit()` 以确保小组件正常退出。
-
-***
-
-如需导出为 Markdown 文档或用于帮助中心，请告诉我，我可以为你生成格式化版本。
 
 
 
@@ -78258,7 +82603,7 @@ iOS 自动化工具
 
 > by thomfang
 
-[开始](/zh/guide/Quick Start) | [下载](https://apps.apple.com/app/apple-store/id6479691128)
+[开始](/TestFlight/zh/guide/Quick Start) | [下载](https://apps.apple.com/app/apple-store/id6479691128)
 
 ## Features
 

@@ -88,7 +88,6 @@ import {
   VStack,
   useRef,
   ScrollViewProxy,
-  withAnimation
 } from "scripting"
 
 

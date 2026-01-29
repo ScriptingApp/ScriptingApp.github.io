@@ -285,7 +285,7 @@ repeatForever(autoreverses?: boolean): Animation
 #### 示例 1：基本大小动画
 
 ```tsx
-import { VStack, Button, Rectangle, useObservable, Animation, withAnimation } from "scripting"
+import { VStack, Button, Rectangle, useObservable, } from "scripting"
 
 export function Demo() {
   const size = useObservable(80)
@@ -773,8 +773,6 @@ import {
   Text,
   Button,
   useObservable,
-  Animation,
-  Transition
 } from "scripting"
 
 type Item = { id: string; title: string }

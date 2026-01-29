@@ -274,8 +274,6 @@ Only works with certain date styles (e.g., medium and long).
 ## Example 1: Localized formatting using dateStyle and timeStyle
 
 ```tsx
-import { DateFormatter, DateFormatterStyle } from "scripting"
-
 const df = new DateFormatter()
 df.locale = "zh_CN"
 df.dateStyle = DateFormatterStyle.full

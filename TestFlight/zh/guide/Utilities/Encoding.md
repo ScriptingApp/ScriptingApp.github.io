@@ -46,8 +46,6 @@
 ### 示例一：UTF-8 编码与解码
 
 ```ts
-import { Data } from 'scripting'
-
 // 使用 UTF-8 将字符串转换为二进制数据
 const text = "こんにちは世界" // 日语“你好，世界”
 const utf8Data = Data.fromRawString(text, "utf-8")

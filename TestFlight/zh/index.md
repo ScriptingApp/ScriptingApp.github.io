@@ -4,7 +4,7 @@ iOS 自动化工具
 
 > by thomfang
 
-[开始](/zh/guide/Quick Start) | [下载](https://apps.apple.com/app/apple-store/id6479691128)
+[开始](/TestFlight/zh/guide/Quick Start) | [下载](https://apps.apple.com/app/apple-store/id6479691128)
 
 ## Features
 

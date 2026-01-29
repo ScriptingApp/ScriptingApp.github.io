@@ -7,7 +7,10 @@
 - [Assistant Quick Start](/TestFlight/guide/Assistant/Assistant Quick Start.md): Quickly master the use of Assistant.
 - [requestStreaming](/TestFlight/guide/Assistant/requestStreaming.md): Requests a streaming response from the Assistant.
 - [requestStructuredData](/TestFlight/guide/Assistant/requestStructuredData.md): Request structured JSON data.
-- [AssistantTool](/TestFlight/guide/AssistantTool.md): Custom tools for the assistant.
+- [Assistant Tool With User Approval](/TestFlight/guide/AssistantTool/Assistant Tool With User Approval.md): Learn how to implement an Assistant Tool with user approval.
+- [Assistant Tool Without User Approval](/TestFlight/guide/AssistantTool/Assistant Tool Without User Approval.md): Learn how to implement an Assistant Tool without user approval.
+- [Overview and Workflow](/TestFlight/guide/AssistantTool/Overview and Workflow.md): Learn about the overview and workflow of AssistantTools.
+- [ScriptEditorProvider and Editor Types](/TestFlight/guide/AssistantTool/ScriptEditorProvider and Editor Types.md): Learn about ScriptEditorProvider and Editor Types.
 - [Animation and Transition](/TestFlight/guide/Changelog/2.4.3/Animation and Transition.md): These interfaces define how view transitions occur when their properties change.
 - [EnvironmentValuesReader](/TestFlight/guide/Changelog/2.4.3/EnvironmentValuesReader.md): This view allows you to read environment values from the current view hierarchy.
 - [ForEach](/TestFlight/guide/Changelog/2.4.3/ForEach/index.md): Iterating over dynamic data
@@ -60,8 +63,6 @@
 - [ReorderableForEach](/TestFlight/guide/Changelog/2.4.5/ReorderableForEach/index.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
 - [Example](/TestFlight/guide/Changelog/2.4.5/ReorderableForEach/index_example.md): A high-level component in Scripting that provides built-in drag-to-reorder capability.
 - [Selectable List](/TestFlight/guide/Changelog/2.4.5/Selectable List.md): Implements selectable and multiselectable list features.
-- [VideoPreviewView](/TestFlight/guide/Changelog/2.4.5/VideoPreviewView.md): A view that displays the live camera preview associated with a VideoRecorder instance.
-- [VideoRecorder](/TestFlight/guide/Changelog/2.4.5/VideoRecorder.md): A high-level API for recording video with fine-grained control over camera configuration, audio capture, encoding, pause/resume behavior, and final file output.
 - [WebViewController](/TestFlight/guide/Changelog/2.4.5/WebViewController.md): It is designed for use cases like custom in-app browsers, rendering dynamic HTML, or communicating with JavaScript running in a web context.
 - [Device](/TestFlight/guide/Changelog/2.4.6/Device/index.md): New networkInterfaces method.
 - [Example](/TestFlight/guide/Changelog/2.4.6/Device/index_example.md): New networkInterfaces method.
@@ -71,9 +72,21 @@
 - [MediaTime](/TestFlight/guide/Changelog/2.4.6/MediaComposer/MediaTime.md): This class represents a media time.
 - [Quick Start](/TestFlight/guide/Changelog/2.4.6/MediaComposer/Quick Start.md): Quickly master the use of MediaComposer.
 - [SharedAudioSession](/TestFlight/guide/Changelog/2.4.6/SharedAudioSession.md): New outputVolume property and addOutputVolumeChangedListener and removeOutputVolumeChangedListener methods.
-- [VideoRecorder](/TestFlight/guide/Changelog/2.4.6/VideoRecorder.md): New displayZoomFactor property for displaying user-readable zoom factor.
 - [onDrag and onDrop View Modifiers](/TestFlight/guide/Changelog/2.4.6/onDrag and onDrop View Modifiers.md): These APIs enable views to act as drag sources, drop destinations, or both, supporting intra-app and cross-app drag-and-drop scenarios.
 - [onDropContent](/TestFlight/guide/Changelog/2.4.6/onDropContent.md): New Observable support, perform function has been adjusted, return an array of ItemProvider objects for deferred loading data.
+- [Device](/TestFlight/guide/Changelog/2.4.7/Device.md): Add proximityState、orientation and addProximityListener, etc.
+- [Location](/TestFlight/guide/Changelog/2.4.7/Location.md): Add requestHeading、 addHeadingListener、removeHeadingListener, etc.
+- [Configuration](/TestFlight/guide/Changelog/2.4.7/SQLite/Configuration.md): The configuration parameters of the SQLite module.
+- [](/TestFlight/guide/Changelog/2.4.7/SQLite/Database.md)
+- [DatabaseMigrator](/TestFlight/guide/Changelog/2.4.7/SQLite/DatabaseMigrator.md): It is responsible for managing and executing database schema migrations.
+- [DatabaseQueue and DatabasePool](/TestFlight/guide/Changelog/2.4.7/SQLite/DatabaseQueue and DatabasePool.md): DatabaseQueue and DatabasePool are used to support concurrent database access.
+- [Quick Start](/TestFlight/guide/Changelog/2.4.7/SQLite/Quick Start.md): Quickly master the use of SQLite.
+- [Schema & Value Types](/TestFlight/guide/Changelog/2.4.7/SQLite/Schema & Value Types.md): The basic types of SQLite.
+- [Statement](/TestFlight/guide/Changelog/2.4.7/SQLite/Statement.md): It is designed to improve performance for repeated execution, ensure safe parameter binding, and provide explicit argument validation for complex workflows.
+- [Quick Start](/TestFlight/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index.md): Learn how to use VideoRecorder.
+- [Example](/TestFlight/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index_example.md): Learn how to use VideoRecorder.
+- [VideoRecorderPreviewView](/TestFlight/guide/Changelog/2.4.7/VideoRecorder/VideoRecorderPreviewView.md): Learn how to use VideoRecorderPreviewView.
+- [Widget API](/TestFlight/guide/Changelog/2.4.7/Widget API.md): Widget.present method adds relevance parameter to control widget priority.
 - [Control Widget](/TestFlight/guide/Control Widget.md): Add custom Button or Toggle controls to the Control Center or Lock Screen
 - [Custom Keyboard](/TestFlight/guide/Custom Keyboard.md): Create custom keyboards with unique layouts and functionalities.
 - [AVMetadataItem](/TestFlight/guide/Device Capabilities/AVMetadataItem.md): AVMetadataItem is a class that represents a metadata item in an audio or video asset.
@@ -155,7 +168,9 @@
 - [SpeechRecognition](/TestFlight/guide/Device Capabilities/SpeechRecognition/index.md): The interface for managing the speech recognizer process.
 - [Example](/TestFlight/guide/Device Capabilities/SpeechRecognition/index_example.md): The interface for managing the speech recognizer process.
 - [Translation](/TestFlight/guide/Device Capabilities/Translation.md): This interface provides language translation capabilities, allowing you to translate text between different languages.
-- [VideoRecorder](/TestFlight/guide/Device Capabilities/VideoRecorder.md): A high-level API for recording video with fine-grained control over camera configuration, audio capture, encoding, pause/resume behavior, and final file output.
+- [VideoRecorder](/TestFlight/guide/Device Capabilities/VideoRecorder/VideoRecorder/index.md): Learn how to use VideoRecorder.
+- [Example](/TestFlight/guide/Device Capabilities/VideoRecorder/VideoRecorder/index_example.md): Learn how to use VideoRecorder.
+- [VideoRecorderPreviewView](/TestFlight/guide/Device Capabilities/VideoRecorder/VideoRecorderPreviewView.md): Learn how to use VideoRecorderPreviewView.
 - [Vision](/TestFlight/guide/Device Capabilities/Vision.md): The module provides APIs for text recognition tasks.
 - [Weather](/TestFlight/guide/Device Capabilities/Weather/index.md): This interface provides access to real-time and forecast weather data.
 - [Example](/TestFlight/guide/Device Capabilities/Weather/index_example.md): This interface provides access to real-time and forecast weather data.
@@ -429,7 +444,6 @@
 - [Time-based label views](/TestFlight/guide/Views/Time-based label views.md): These views allow you to display live-updating or formatted date and time strings in widgets and views.
 - [Toolbars](/TestFlight/guide/Views/Toolbars/index.md): Provide immediate access to frequently used commands and controls.
 - [Example](/TestFlight/guide/Views/Toolbars/index_example.md): Provide immediate access to frequently used commands and controls.
-- [VideoPreviewView](/TestFlight/guide/Views/VideoPreviewView.md): A view that displays the live camera preview associated with a VideoRecorder instance.
 - [ControlGroup](/TestFlight/guide/Views/View groupings/ControlGroup.md): A container view that displays semantically-related controls in a visually-appropriate manner for the context.
 - [ForEach](/TestFlight/guide/Views/View groupings/ForEach/index.md): Iterating over dynamic data
 - [Example](/TestFlight/guide/Views/View groupings/ForEach/iterating.md): Iterating over dynamic data

@@ -290,6 +290,7 @@ type ExportOptions = {
   ducking?: DuckingConfig
   presetName?: ExportPreset
   outputFileType?: ExportFileType
+  colorSpacePolicy?: ColorSpacePolicy
 }
 ```
 
@@ -309,6 +310,9 @@ type ExportOptions = {
 
 - **presetName / outputFileType**
   控制编码质量与文件格式
+
+- **colorSpacePolicy**
+  控制输出文件的颜色空间，默认为`forceSDR`，可选`keepSource`。
 
 ***
 

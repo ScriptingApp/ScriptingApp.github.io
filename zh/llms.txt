@@ -7,7 +7,10 @@
 - [快速了解智能助手](/TestFlight/zh/guide/Assistant/Assistant Quick Start.md): 快速掌握智能助手的使用。
 - [请求流式数据](/TestFlight/zh/guide/Assistant/requestStreaming.md): 请求从智能助手获取流式响应。
 - [请求结构化数据](/TestFlight/zh/guide/Assistant/requestStructuredData.md): 请求结构化的 JSON 数据。
-- [智能助手工具](/TestFlight/zh/guide/AssistantTool.md): 自定义提供给智能助手使用的工具。
+- [需要用户批准的 Assistant Tool](/TestFlight/zh/guide/AssistantTool/Assistant Tool With User Approval.md): 掌握如何实现需要用户批准的智能助手工具。
+- [无需用户批准的 Assistant Tool](/TestFlight/zh/guide/AssistantTool/Assistant Tool Without User Approval.md): 掌握如何实现无需用户批准的智能助手工具。
+- [AssistantTool 总览与工作流](/TestFlight/zh/guide/AssistantTool/Overview and Workflow.md): 了解智能助手工具的概述和工作流程。
+- [ScriptEditorProvider 及编辑器相关类型详解](/TestFlight/zh/guide/AssistantTool/ScriptEditorProvider and Editor Types.md): 了解 ScriptEditorProvider 及编辑器相关类型。
 - [动画和过渡](/TestFlight/zh/guide/Changelog/2.4.3/Animation and Transition.md): 这些接口用于定义视图在属性发生变化时的过渡效果。
 - [EnvironmentValuesReader](/TestFlight/zh/guide/Changelog/2.4.3/EnvironmentValuesReader.md): 它允许脚本在视图层级中访问当前环境的上下文信息，例如颜色模式、尺寸类别、是否正在搜索、是否被呈现、编辑模式等。
 - [ForEach](/TestFlight/zh/guide/Changelog/2.4.3/ForEach/index.md): 迭代动态数据
@@ -60,8 +63,6 @@
 - [可拖拽的 ForEach (ReorderableForEach)](/TestFlight/zh/guide/Changelog/2.4.5/ReorderableForEach/index.md): 提供内置的拖拽重排功能的高级组件。
 - [示例](/TestFlight/zh/guide/Changelog/2.4.5/ReorderableForEach/index_example.md): 提供内置的拖拽重排功能的高级组件。
 - [可选择的列表](/TestFlight/zh/guide/Changelog/2.4.5/Selectable List.md): 实现单选和多选的列表功能。
-- [视频预览视图（VideoPreviewView）](/TestFlight/zh/guide/Changelog/2.4.5/VideoPreviewView.md): 显示与 VideoRecorder 实例关联的实时摄像头预览的视图。
-- [视频录制（VideoRecorder）](/TestFlight/zh/guide/Changelog/2.4.5/VideoRecorder.md): 提供对摄像头配置、音频捕获、编码、暂停/恢复行为以及最终文件输出的细粒度控制，以实现视频录制的高级 API。
 - [WebView 控制器](/TestFlight/zh/guide/Changelog/2.4.5/WebViewController.md): 它允许你在脚本中加载 HTML、展示 Web 页面、执行 JavaScript 脚本，并与页面中的 JavaScript 进行消息通信。
 - [设备](/TestFlight/zh/guide/Changelog/2.4.6/Device/index.md): 新增 networkInterfaces 方法。
 - [示例](/TestFlight/zh/guide/Changelog/2.4.6/Device/index_example.md): 新增 networkInterfaces 方法。
@@ -71,9 +72,21 @@
 - [MediaTime](/TestFlight/zh/guide/Changelog/2.4.6/MediaComposer/MediaTime.md): 该类表示媒体时间。
 - [快速开始](/TestFlight/zh/guide/Changelog/2.4.6/MediaComposer/Quick Start.md): 快速掌握 MediaComposer 的使用。
 - [SharedAudioSession](/TestFlight/zh/guide/Changelog/2.4.6/SharedAudioSession.md): 新增 outputVolume 属性，以及 addOutputVolumeChangedListener 和 removeOutputVolumeChangedListener 方法。
-- [视频录制（VideoRecorder）](/TestFlight/zh/guide/Changelog/2.4.6/VideoRecorder.md): 新增 displayZoomFactor 属性，用于展示用户可读的缩放比例。
 - [onDrag 和 onDrop 修饰符](/TestFlight/zh/guide/Changelog/2.4.6/onDrag and onDrop View Modifiers.md): 这些 API 允许视图作为拖动源、拖放目标或者同时，支持内部应用和跨应用拖拽。
 - [接收外部拖拽内容](/TestFlight/zh/guide/Changelog/2.4.6/onDropContent.md): 新增Observable支持，perform 函数有调整，返回一个 ItemProvider 对象的数组，用于延迟加载数据。
+- [设备](/TestFlight/zh/guide/Changelog/2.4.7/Device.md): 新增 proximityState、orientation 属性以及 addProximityListener 等监听方法。
+- [定位（Location）](/TestFlight/zh/guide/Changelog/2.4.7/Location.md): 新增 requestHeading、 addHeadingListener、removeHeadingListener 等方法。
+- [配置](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Configuration.md): SQLite 模块的配置参数。
+- [数据库（Database）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Database.md): SQLite API 的核心对象：所有 SQL 执行、查询、模式检查、事务处理以及保存点管理都通过 Database 进行。
+- [数据库迁移（DatabaseMigrator）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/DatabaseMigrator.md): 它负责管理和执行数据库模式迁移。
+- [DatabaseQueue 和 DatabasePool](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/DatabaseQueue and DatabasePool.md): DatabaseQueue 和 DatabasePool 用于支持并发数据库访问。
+- [快速开始](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Quick Start.md): 快速掌握SQLite的使用
+- [基础类型（Schema & Value Types）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Schema & Value Types.md): SQLite 基础类型。
+- [语句（Statement）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Statement.md): 它设计用于提高重复执行的性能，确保参数绑定安全，为复杂的工作流提供明确的参数验证。
+- [快速掌握视频录制](/TestFlight/zh/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index.md): 了解VideoRecorder的API
+- [示例](/TestFlight/zh/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index_example.md): 了解VideoRecorder的API
+- [视频预览](/TestFlight/zh/guide/Changelog/2.4.7/VideoRecorder/VideoRecorderPreviewView.md): 使用 VideoRecorderPreviewView UI组件进行视频预览
+- [小组件 API](/TestFlight/zh/guide/Changelog/2.4.7/Widget API.md): Widget.present 方法新增 relevance 参数，用于控制小组件的优先级。
 - [控制中心的小组件](/TestFlight/zh/guide/Control Widget.md): 在控制中心或锁屏界面添加按钮（Button）或开关（Toggle）控件。
 - [自定义键盘](/TestFlight/zh/guide/Custom Keyboard.md): 创建具有独特布局和功能的自定义键盘。
 - [AVMetadataItem](/TestFlight/zh/guide/Device Capabilities/AVMetadataItem.md): AVMetadataItem 是一个类，表示音频或视频资源中的元数据项。
@@ -155,7 +168,9 @@
 - [语音识别](/TestFlight/zh/guide/Device Capabilities/SpeechRecognition/index.md): 用于管理语音识别过程的接口。
 - [示例](/TestFlight/zh/guide/Device Capabilities/SpeechRecognition/index_example.md): 用于管理语音识别过程的接口。
 - [翻译](/TestFlight/zh/guide/Device Capabilities/Translation.md): 该接口提供语言翻译功能，允许您在不同语言之间翻译文本。
-- [视频录制（VideoRecorder）](/TestFlight/zh/guide/Device Capabilities/VideoRecorder.md): 提供对摄像头配置、音频捕获、编码、暂停/恢复行为以及最终文件输出的细粒度控制，以实现视频录制的高级 API。
+- [快速掌握视频录制](/TestFlight/zh/guide/Device Capabilities/VideoRecorder/VideoRecorder/index.md): 了解VideoRecorder的API
+- [示例](/TestFlight/zh/guide/Device Capabilities/VideoRecorder/VideoRecorder/index_example.md): 了解VideoRecorder的API
+- [视频预览](/TestFlight/zh/guide/Device Capabilities/VideoRecorder/VideoRecorderPreviewView.md): 使用 VideoRecorderPreviewView UI组件进行视频预览
 - [视觉](/TestFlight/zh/guide/Device Capabilities/Vision.md): 该模块提供了用于文本识别的 API。
 - [天气](/TestFlight/zh/guide/Device Capabilities/Weather/index.md): 该接口提供对实时天气和天气预报数据的访问。
 - [示例](/TestFlight/zh/guide/Device Capabilities/Weather/index_example.md): 该接口提供对实时天气和天气预报数据的访问。
@@ -429,7 +444,6 @@
 - [时间标签视图](/TestFlight/zh/guide/Views/Time-based label views.md): 这些视图支持在小组件和视图中显示实时更新的日期与时间格式。
 - [工具栏](/TestFlight/zh/guide/Views/Toolbars/index.md): 为用户提供快速访问常用命令和控件。
 - [示例](/TestFlight/zh/guide/Views/Toolbars/index_example.md): 为用户提供快速访问常用命令和控件。
-- [视频预览视图（VideoPreviewView）](/TestFlight/zh/guide/Views/VideoPreviewView.md): 显示与 VideoRecorder 实例关联的实时摄像头预览的视图。
 - [控件组](/TestFlight/zh/guide/Views/View groupings/ControlGroup.md): 一个在语义相关的上下文中，以合适的视觉方式显示控件的容器视图。
 - [ForEach](/TestFlight/zh/guide/Views/View groupings/ForEach/index.md): 迭代动态数据
 - [示例](/TestFlight/zh/guide/Views/View groupings/ForEach/iterating.md): 迭代动态数据

@@ -146,8 +146,6 @@ function keys(): string[]
 ## 示例 1：保存与读取简单类型
 
 ```ts
-import { Storage } from "scripting"
-
 Storage.set("username", "Thom")
 const name = Storage.get<string>("username")
 console.log(name) // "Thom"
@@ -172,8 +170,6 @@ console.log(profile?.age) // 30
 ## 示例 3：保存与读取 Data
 
 ```ts
-import { Data, Storage } from "scripting"
-
 const bytes = Data.fromUTF8("hello")
 Storage.setData("payload", bytes)
 

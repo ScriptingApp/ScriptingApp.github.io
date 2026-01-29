@@ -269,8 +269,6 @@ static dateFormat(template: string, locale?: string): string | null
 ## 示例一：使用 dateStyle 和 timeStyle 进行本地化格式化
 
 ```tsx
-import { DateFormatter } from "scripting"
-
 const df = new DateFormatter()
 df.locale = "zh_CN"
 df.dateStyle = DateFormatterStyle.full

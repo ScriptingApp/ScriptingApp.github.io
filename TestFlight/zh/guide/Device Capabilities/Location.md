@@ -1,129 +1,12 @@
 # 定位
 
-全局 `Location` API 提供对设备地理位置信息的访问能力，包括一次性定位、逆地理编码、用户手动选点、定位精度控制、以及用于小组件的权限检测等功能。
+Location API 用于获取设备的地理位置、进行正向与反向地理编码、从系统地图中选择位置，以及访问设备的方向与指南针信息。该 API 适用于脚本运行环境、交互式界面以及部分支持位置更新的小组件场景，并遵循系统的权限与精度限制。
 
-***
+## LocationAccuracy
 
-## 功能概览
+表示脚本期望接收的位置精度级别。
 
-你可以通过该 API 实现以下功能：
-
-- 获取设备当前位置（支持缓存）
-- 用户通过地图界面手动选择位置
-- 将经纬度转换为可读的地址（逆地理编码）
-- 设置定位精度（耗电量和等待时间可控）
-- 检查小组件是否获得定位权限
-
-> **注意：** 该 API 为全局 API，无需额外导入。
-
-***
-
-## 接口文档
-
-### `Location.isAuthorizedForWidgetUpdates(): Promise<boolean>`
-
-检查小组件是否拥有获取定位更新的权限。
-
-```ts
-const isAuthorized = await Location.isAuthorizedForWidgetUpdates()
-if (!isAuthorized) {
-  console.log("小组件没有获取定位的权限")
-}
-```
-
-***
-
-### `Location.setAccuracy(accuracy: LocationAccuracy): Promise<void>`
-
-设置期望的定位精度。精度越高，耗电和等待时间也可能增加。
-
-#### 可选值
-
-| 精度值                 | 描述      |
-| ------------------- | ------- |
-| `"best"`            | 最高可用精度  |
-| `"tenMeters"`       | 10 米以内  |
-| `"hundredMeters"`   | 100 米以内 |
-| `"kilometer"`       | 1 公里以内  |
-| `"threeKilometers"` | 3 公里以内  |
-
-```ts
-await Location.setAccuracy("hundredMeters")
-```
-
-***
-
-### `Location.requestCurrent(options?: { forceRequest?: boolean }): Promise<LocationInfo | null>`
-
-请求一次设备当前的位置信息。
-
-默认情况下，如果存在缓存位置（例如启动时从系统获取到的位置），将立即返回该缓存值。如果未缓存，则会触发新的定位请求。
-
-你可以通过传入 `{ forceRequest: true }` 强制跳过缓存，始终发起新请求。
-
-#### 参数
-
-| 参数名            | 类型        | 是否必填 | 描述                          |
-| -------------- | --------- | ---- | --------------------------- |
-| `forceRequest` | `boolean` | 否    | 若为 `true`，将忽略缓存，始终发起新的定位请求。 |
-
-```ts
-const location = await Location.requestCurrent({ forceRequest: true })
-if (location) {
-  console.log("纬度:", location.latitude)
-  console.log("经度:", location.longitude)
-  console.log("时间戳:", location.timestamp)
-}
-```
-
-***
-
-### `Location.pickFromMap(): Promise<LocationInfo | null>`
-
-打开内置地图界面，允许用户手动选择一个位置。
-
-```ts
-const selected = await Location.pickFromMap()
-if (selected) {
-  console.log("用户选择的位置:", selected.latitude, selected.longitude)
-}
-```
-
-***
-
-### `Location.reverseGeocode(options): Promise<LocationPlacemark[] | null>`
-
-将经纬度转换为人类可读的地理信息（如街道、城市、国家等）。
-
-#### 参数
-
-| 字段          | 类型       | 是否必填 | 描述                             |
-| ----------- | -------- | ---- | ------------------------------ |
-| `latitude`  | `number` | 是    | 纬度（单位：度）                       |
-| `longitude` | `number` | 是    | 经度（单位：度）                       |
-| `locale`    | `string` | 否    | 可选语言区域（如 `"zh-CN"`），默认使用设备语言设置 |
-
-```ts
-const placemarks = await Location.reverseGeocode({
-  latitude: 31.2304,
-  longitude: 121.4737,
-  locale: "zh-CN"
-})
-
-if (placemarks?.length) {
-  const place = placemarks[0]
-  console.log("城市:", place.locality)
-  console.log("国家:", place.country)
-}
-```
-
-***
-
-## 类型定义
-
-### `LocationAccuracy`
-
-表示定位精度选项：
+**类型定义**
 
 ```ts
 type LocationAccuracy =
@@ -132,36 +15,63 @@ type LocationAccuracy =
   | "hundredMeters"
   | "kilometer"
   | "threeKilometers"
+  | "bestForNavigation"
+  | "reduced"
 ```
 
-***
+**说明**
 
-### `LocationInfo`
+- `best`
+  请求设备可提供的最高精度。
 
-表示一个带有时间戳的地理坐标点：
+- `tenMeters`
+  大约 10 米级别的精度。
+
+- `hundredMeters`
+  大约 100 米级别的精度。
+
+- `kilometer`
+  大约 1 公里级别的精度。
+
+- `threeKilometers`
+  较粗略的 3 公里级别精度。
+
+- `bestForNavigation`
+  面向导航场景，精度和更新频率最高，耗电量也更高。
+
+- `reduced`
+  使用系统提供的低精度位置，常见于用户仅授权“模糊位置”的情况。
+
+## LocationInfo
+
+表示一个基础的地理坐标信息。
+
+**类型定义**
 
 ```ts
 type LocationInfo = {
-  /**
-   * 纬度，单位：度
-   */
   latitude: number
-  /**
-   * 经度，单位：度
-   */
   longitude: number
-  /**
-   * 获取该位置的时间戳（单位：毫秒）
-   */
   timestamp: number
 }
 ```
 
-***
+**字段说明**
 
-### `LocationPlacemark`
+- `latitude`
+  纬度，单位为度。
 
-表示一个可读的地理位置，通常由逆地理编码返回，包含详细的地址结构信息：
+- `longitude`
+  经度，单位为度。
+
+- `timestamp`
+  位置采集时间，毫秒级时间戳。
+
+## LocationPlacemark
+
+表示一个对人类友好的地理位置信息，通常由地理编码或反向地理编码返回。
+
+**类型定义**
 
 ```ts
 type LocationPlacemark = {
@@ -184,32 +94,144 @@ type LocationPlacemark = {
 }
 ```
 
-#### 字段说明
+**说明**
 
-| 字段                      | 类型             | 描述                                |
-| ----------------------- | -------------- | --------------------------------- |
-| `location`              | `LocationInfo` | 坐标点信息（通常等于请求的经纬度）                 |
-| `region`                | `string`       | 区域名，如省/州                          |
-| `timeZone`              | `string`       | 时区标识（如 `"Asia/Shanghai"`）         |
-| `name`                  | `string`       | 地点名称，如建筑物、地标等                     |
-| `thoroughfare`          | `string`       | 街道名称，如 `"中关村大街"`                  |
-| `subThoroughfare`       | `string`       | 详细地址，如门牌号                         |
-| `locality`              | `string`       | 城市或镇                              |
-| `subLocality`           | `string`       | 区、街道等子区域                          |
-| `administrativeArea`    | `string`       | 省份、州或其他一级行政区域                     |
-| `subAdministrativeArea` | `string`       | 县、区等次级行政区域                        |
-| `postalCode`            | `string`       | 邮政编码                              |
-| `isoCountryCode`        | `string`       | 国家代码（ISO 3166-1 alpha-2，如 `"CN"`） |
-| `country`               | `string`       | 国家全名，如 `"中国"`                     |
-| `inlandWater`           | `string`       | 附近的内陆水体名称，如湖泊、河流                  |
-| `ocean`                 | `string`       | 附近的海洋名称                           |
-| `areasOfInterest`       | `string[]`     | 附近的兴趣点/地标数组，如 `"东方明珠"`            |
+Placemark 可能包含地址、城市、省份、国家、兴趣点等信息。具体字段是否存在取决于系统地图数据和地理位置本身。
 
-***
+## Heading
 
-## 示例用法
+Heading 表示设备的方向与指南针相关信息。
 
-### 逆地理编码
+**类型定义**
+
+```ts
+type Heading = {
+  headingAccuracy: number
+  trueHeading: number
+  magneticHeading: number
+  timestamp: Date
+  x: number
+  y: number
+  z: number
+}
+```
+
+**字段说明**
+
+- `headingAccuracy`
+  报告方向与真实地磁方向之间的最大误差，单位为度。
+
+- `trueHeading`
+  相对于真北的方向角，单位为度。
+
+- `magneticHeading`
+  相对于磁北的方向角，单位为度。
+
+- `timestamp`
+  方向数据生成的时间。
+
+- `x`、`y`、`z`
+  三轴地磁场原始数据，单位为微特斯拉。
+
+## 授权与配置
+
+### isAuthorizedForWidgetUpdates
+
+```ts
+const isAuthorizedForWidgetUpdates: boolean
+```
+
+表示当前小组件是否有资格接收位置更新。该值受系统权限和小组件能力限制影响。
+
+### accuracy
+
+```ts
+const accuracy: LocationAccuracy
+```
+
+当前配置的位置精度级别。
+
+### setAccuracy
+
+```ts
+function setAccuracy(accuracy: LocationAccuracy): Promise<void>
+```
+
+设置脚本期望的位置精度。更高的精度可能会增加耗电量，并可能触发系统权限请求。
+
+**示例**
+
+```ts
+await Location.setAccuracy("hundredMeters")
+```
+
+## 获取当前位置
+
+### requestCurrent
+
+```ts
+function requestCurrent(
+  options?: { forceRequest?: boolean }
+): Promise<LocationInfo | null>
+```
+
+请求当前设备的位置。
+
+默认情况下，如果系统中存在可用的缓存位置，会直接返回缓存结果；如果不存在缓存位置，则会发起一次新的定位请求。
+
+当 `forceRequest` 为 `true` 时，会忽略缓存位置，始终请求最新位置。
+
+**示例**
+
+```ts
+const location = await Location.requestCurrent()
+
+if (location) {
+  console.log(location.latitude, location.longitude)
+}
+```
+
+强制请求最新位置：
+
+```ts
+const location = await Location.requestCurrent({
+  forceRequest: true
+})
+```
+
+### pickFromMap
+
+```ts
+function pickFromMap(): Promise<LocationInfo | null>
+```
+
+打开系统内置地图界面，让用户手动选择一个位置。
+
+**示例**
+
+```ts
+const picked = await Location.pickFromMap()
+
+if (picked) {
+  console.log("Picked location:", picked.latitude, picked.longitude)
+}
+```
+
+## 地理编码
+
+### reverseGeocode
+
+```ts
+function reverseGeocode(options: {
+  latitude: number
+  longitude: number
+  locale?: string
+}): Promise<LocationPlacemark[] | null>
+```
+
+将经纬度坐标转换为可读的地址信息。
+
+**示例**
 
 ```ts
 const placemarks = await Location.reverseGeocode({
@@ -218,50 +240,93 @@ const placemarks = await Location.reverseGeocode({
   locale: "zh-CN"
 })
 
-if (placemarks?.length) {
-  const place = placemarks[0]
-  console.log("国家:", place.country)
-  console.log("城市:", place.locality)
-  console.log("街道:", place.thoroughfare, place.subThoroughfare)
-  console.log("地标名称:", place.name)
-  console.log("邮编:", place.postalCode)
-  console.log("兴趣点:", place.areasOfInterest?.join(", "))
-}
+console.log(placemarks?.[0]?.locality)
 ```
 
-***
-
-### 地址格式化工具
+### geocodeAddress
 
 ```ts
-function formatAddress(p: LocationPlacemark): string {
-  return [
-    p.country,
-    p.administrativeArea,
-    p.locality,
-    p.subLocality,
-    p.thoroughfare,
-    p.subThoroughfare
-  ].filter(Boolean).join(", ")
+function geocodeAddress(options: {
+  address: string
+  locale?: string
+}): Promise<LocationPlacemark[] | null>
+```
+
+将文本地址转换为地理位置信息。
+
+**示例**
+
+```ts
+const results = await Location.geocodeAddress({
+  address: "天安门",
+  locale: "zh-CN"
+})
+
+const location = results?.[0]?.location
+```
+
+## 方向与指南针
+
+### requestHeading
+
+```ts
+function requestHeading(): Promise<Heading | null>
+```
+
+获取最近一次上报的方向信息。如果尚未开始方向更新，则返回 `null`。
+
+**示例**
+
+```ts
+const heading = await Location.requestHeading()
+
+if (heading) {
+  console.log(heading.trueHeading)
 }
 ```
 
-***
+### startUpdatingHeading
 
-## 最佳实践与使用建议
+```ts
+function startUpdatingHeading(): Promise<void>
+```
 
-- 使用 `areasOfInterest` 和 `name` 显示更友好的位置信息（如地标名）
-- 使用 `postalCode`、`locality`、`administrativeArea` 自动填写表单或记录标签
-- 使用 `timestamp` 判断位置数据是否新鲜
-- 使用 `timeZone` 进行本地时间转换或事件提醒
-- 在调用 `requestCurrent` 前使用 `setAccuracy` 控制精度
-- 对小组件使用 `isAuthorizedForWidgetUpdates()` 检查权限
+开始持续监听设备方向变化。
 
-***
+### stopUpdatingHeading
 
-## 说明
+```ts
+function stopUpdatingHeading(): void
+```
 
-- 逆地理编码可能返回多个结果，通常第一个最相关
-- 若获取失败，API 将返回 `null`
-- 若未强制刷新，系统会优先使用缓存位置，响应更快
-- 小组件受限于系统权限机制，务必检测权限状态
+停止方向更新。
+
+### addHeadingListener
+
+```ts
+function addHeadingListener(
+  listener: (heading: Heading) => void
+): void
+```
+
+添加一个方向变化监听器。
+
+**示例**
+
+```ts
+await Location.startUpdatingHeading()
+
+Location.addHeadingListener(heading => {
+  console.log("Heading:", heading.trueHeading)
+})
+```
+
+### removeHeadingListener
+
+```ts
+function removeHeadingListener(
+  listener?: (heading: Heading) => void
+): void
+```
+
+移除方向监听器。如果未传入参数，将移除所有监听器。

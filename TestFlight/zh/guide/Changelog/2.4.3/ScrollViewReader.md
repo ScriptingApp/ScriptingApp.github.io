@@ -96,7 +96,6 @@ import {
   VStack,
   useRef,
   ScrollViewProxy,
-  withAnimation
 } from "scripting"
 
 function Item({ index }: { index: number }) {

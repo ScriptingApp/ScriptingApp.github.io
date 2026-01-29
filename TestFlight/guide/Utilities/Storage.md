@@ -129,8 +129,6 @@ Returns an array of all keys stored in the current storage domain.
 ## Example 1: Store and retrieve simple values
 
 ```ts
-import { Storage } from "scripting"
-
 Storage.set("username", "Thom")
 
 const name = Storage.get<string>("username")
@@ -156,8 +154,6 @@ console.log(profile?.age) // 30
 ## Example 3: Store and read binary Data
 
 ```ts
-import { Data, Storage } from "scripting"
-
 const bytes = Data.fromUTF8("hello")
 Storage.setData("payload", bytes)
 
