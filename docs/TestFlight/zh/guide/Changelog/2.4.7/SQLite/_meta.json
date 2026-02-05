@@ -1,37 +1,38 @@
 [
   {
     "type": "file",
-    "name": "Quick Start",
-    "label": "快速开始"
+    "name": "Overview",
+    "label": "概述",
+    "tag": "PRO"
   },
   {
     "type": "file",
-    "name": "DatabaseQueue and DatabasePool",
-    "label": "DatabaseQueue 和 DatabasePool"
+    "name": "Database and Connection",
+    "label": "数据库和连接",
+    "tag": "PRO"
   },
   {
     "type": "file",
-    "name": "Database",
-    "label": "数据库（Database）"
+    "name": "Executing SQL and Query",
+    "label": "执行 SQL 和查询",
+    "tag": "PRO"
   },
   {
     "type": "file",
-    "name": "Configuration",
-    "label": "配置"
+    "name": "Transcation",
+    "label": "事务（Transcation）",
+    "tag": "PRO"
   },
   {
     "type": "file",
-    "name": "Schema & Value Types",
-    "label": "基础类型（Schema & Value Types）"
+    "name": "Schema Management",
+    "label": "模式管理（Schema Management）",
+    "tag": "PRO"
   },
   {
     "type": "file",
-    "name": "Statement",
-    "label": "语句（Statement）"
-  },
-  {
-    "type": "file",
-    "name": "DatabaseMigrator",
-    "label": "数据库迁移（DatabaseMigrator）"
+    "name": "Schema Introspection",
+    "label": "模式探测（Schema Introspection）",
+    "tag": "PRO"
   }
 ]

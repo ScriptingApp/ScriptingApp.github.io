@@ -14,7 +14,7 @@ description: 该接口允许您在日历中创建、编辑和管理提醒事项�
 
 ---
 
-## 一、属性说明
+##一、属性说明
 
 ### identifier: string
 
@@ -141,7 +141,7 @@ description: 该接口允许您在日历中创建、编辑和管理提醒事项�
 
 ---
 
-## 二、实例方法
+##二、实例方法
 
 ### addAlarm(alarm: EventAlarm): void
 
@@ -174,7 +174,7 @@ description: 该接口允许您在日历中创建、编辑和管理提醒事项�
 
 ---
 
-## 三、静态方法
+##三、静态方法
 
 ### `Reminder.getAll(calendars?: Calendar[]): Promise<Reminder[]>`
 
@@ -219,7 +219,7 @@ description: 该接口允许您在日历中创建、编辑和管理提醒事项�
 
 ---
 
-## 四、示例
+##四、示例
 
 ## 使用 DateComponents 设置提醒
 
@@ -302,7 +302,7 @@ await reminder.remove();
 
 ---
 
-## 五、补充说明
+##五、补充说明
 
 ### 日期管理
 

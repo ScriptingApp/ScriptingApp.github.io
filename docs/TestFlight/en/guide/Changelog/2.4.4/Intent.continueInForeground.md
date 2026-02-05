@@ -20,7 +20,7 @@ Because this is a system-level capability of AppIntents:
 
 ---
 
-## API Definition
+##API Definition
 
 ```ts
 function continueInForeground(
@@ -77,7 +77,7 @@ Controls whether the system should always ask for confirmation:
 
 ---
 
-## Execution Behavior
+##Execution Behavior
 
 When called inside `intent.tsx`:
 
@@ -94,7 +94,7 @@ This mirrors the behavior of Apple’s AppIntents `continueInApp()` functionalit
 
 ---
 
-## Common Use Cases
+##Common Use Cases
 
 Use `continueInForeground` when the next step **cannot** run in the background, including:
 
@@ -108,7 +108,7 @@ It should **not** be used for simple data processing or non-interactive tasks.
 
 ---
 
-## Full Code Example
+##Full Code Example
 
 Below is the full working example demonstrating how `continueInForeground` enables a Shortcut to transfer execution into the Scripting app and then return UI input back to Shortcuts.
 
@@ -168,7 +168,7 @@ runIntent();
 
 ---
 
-## Notes and Recommendations
+##Notes and Recommendations
 
 1. **Requires iOS 26+**
    Do not call this API on older systems.
@@ -187,7 +187,7 @@ runIntent();
 
 ---
 
-## Summary
+##Summary
 
 `Intent.continueInForeground` enables scripts invoked from Shortcuts to request foreground execution when UI interaction is required. It is:
 

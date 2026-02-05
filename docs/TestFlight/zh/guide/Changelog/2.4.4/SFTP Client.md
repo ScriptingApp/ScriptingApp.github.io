@@ -226,7 +226,7 @@ const real = await sftp.getRealPath("~/documents");
 
 ---
 
-## 使用示例
+##使用示例
 
 ```ts
 const ssh = await SSHClient.connect({

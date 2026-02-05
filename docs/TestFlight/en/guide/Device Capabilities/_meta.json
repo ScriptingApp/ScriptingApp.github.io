@@ -154,8 +154,8 @@
   },
   {
     "type": "file",
-    "name": "Audio Player",
-    "label": "Audio Player"
+    "name": "AVPlayer",
+    "label": "AVPlayer"
   },
   {
     "type": "dir",

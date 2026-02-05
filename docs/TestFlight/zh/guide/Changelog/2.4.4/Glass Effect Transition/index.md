@@ -18,7 +18,7 @@ Scripting 完整支持这些特性，并通过 `glassEffectTransition`、`glassE
 
 ---
 
-## 1. 概述：什么是 Glass Effect Transition
+##1. 概述：什么是 Glass Effect Transition
 
 `glassEffectTransition` 用于指定 Liquid Glass 在视图出现、消失或布局变化期间应如何过渡。
 
@@ -36,7 +36,7 @@ Glass Effect Transition 控制三个核心内容：
 
 ---
 
-## 2. 三种过渡类型
+##2. 三种过渡类型
 
 ## 2.1 identity（无过渡）
 
@@ -99,7 +99,7 @@ glassEffectTransition = "matchedGeometry";
 
 ---
 
-## 3. glassEffectID 与 namespace：匹配几何的核心
+##3. glassEffectID 与 namespace：匹配几何的核心
 
 ## 3.1 为什么需要 ID？
 
@@ -148,7 +148,7 @@ SwiftUI 的 matchedGeometry 效果依赖 `@Namespace`，在 Scripting 中我们�
 
 ---
 
-## 4. glassEffectUnion：玻璃材质的联合区域
+##4. glassEffectUnion：玻璃材质的联合区域
 
 除了匹配几何形状外，Liquid Glass 还能把多个玻璃区域合并为一个连续材质区域：
 
@@ -169,7 +169,7 @@ glassEffectUnion={{
 
 ---
 
-## 5. 示例解析
+##5. 示例解析
 
 以下示例展示菜单在两种布局之间切换，并使用动画呈现玻璃过渡：
 
@@ -249,7 +249,7 @@ glassEffectTransition = "materialize";
 
 ---
 
-## 6. NamespaceReader：Scripting 如何暴露 @Namespace
+##6. NamespaceReader：Scripting 如何暴露 @Namespace
 
 在 SwiftUI 中：
 
@@ -288,7 +288,7 @@ glassEffectID={{ id: x, namespace }}
 
 ---
 
-## 7. 动画触发方式（withAnimation）
+##7. 动画触发方式（withAnimation）
 
 玻璃过渡不会自行动画，必须使用动画触发状态切换：
 
@@ -302,7 +302,7 @@ withAnimation(() => {
 
 ---
 
-## 8. 最佳实践
+##8. 最佳实践
 
 ### 1. 所有参与动画的视图必须在同一个 GlassEffectContainer
 
@@ -326,7 +326,7 @@ withAnimation(() => {
 
 ---
 
-## 9. 总结
+##9. 总结
 
 Glass Effect Transition 是 iOS 26 Liquid Glass 系统的核心特性之一，它让玻璃材质在视图切换中具备几何匹配、材质渐变与联合区域动画。
 

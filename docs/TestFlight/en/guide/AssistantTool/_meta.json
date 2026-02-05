@@ -22,5 +22,11 @@
     "name": "ScriptEditorProvider and Editor Types",
     "label": "ScriptEditorProvider and Editor Types",
     "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "AssistantTool User-Initiated Cancellation",
+    "label": "AssistantTool User-Initiated Cancellation",
+    "tag": "PRO"
   }
 ]

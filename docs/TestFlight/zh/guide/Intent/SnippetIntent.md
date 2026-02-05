@@ -21,7 +21,7 @@ SnippetIntent 特点如下：
 
 ---
 
-## 系统要求
+##系统要求
 
 **SnippetIntent 只能在 iOS 26 及以上系统运行。**
 
@@ -34,7 +34,7 @@ SnippetIntent 特点如下：
 
 ---
 
-## 注册 SnippetIntent（app_intents.tsx）
+##注册 SnippetIntent（app_intents.tsx）
 
 在 `app_intents.tsx` 中声明 SnippetIntent：
 
@@ -68,7 +68,7 @@ export const ShowResultIntent = AppIntentManager.register({
 
 ---
 
-## SnippetIntent 返回值封装：Intent.snippetIntent
+##SnippetIntent 返回值封装：Intent.snippetIntent
 
 SnippetIntent 不能直接作为 JS 返回值，必须通过 `Intent.snippetIntent()` 包装成 `IntentSnippetIntentValue`。
 
@@ -108,7 +108,7 @@ declare class IntentSnippetIntentValue extends IntentValue<"SnippetIntent", Snip
 
 ---
 
-## Snippet 确认界面：Intent.requestConfirmation
+##Snippet 确认界面：Intent.requestConfirmation
 
 SnippetIntent 支持在执行逻辑中先请求用户确认某个操作。此能力同样基于 iOS 26。
 
@@ -153,7 +153,7 @@ await Intent.requestConfirmation("set", PickColorIntent());
 
 ---
 
-## Shortcuts 的「Show Snippet Intent」动作（iOS 26+）
+##Shortcuts 的「Show Snippet Intent」动作（iOS 26+）
 
 Shortcuts 在 iOS 26 新增动作：
 
@@ -178,7 +178,7 @@ Shortcuts 在 iOS 26 新增动作：
 
 ---
 
-## IntentMemoryStorage — 跨 AppIntent 状态共享
+##IntentMemoryStorage — 跨 AppIntent 状态共享
 
 ## 1. 为什么需要 IntentMemoryStorage
 
@@ -237,7 +237,7 @@ IntentMemoryStorage 适合作为临时状态共享，不适合当作数据库使
 
 ---
 
-## 完整示例（iOS 26+）
+##完整示例（iOS 26+）
 
 ## app_intents.tsx
 

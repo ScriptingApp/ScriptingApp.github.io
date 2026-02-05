@@ -18,7 +18,7 @@ Contents include:
 
 ---
 
-## 1. Overview: What Is a Glass Effect Transition?
+##1. Overview: What Is a Glass Effect Transition?
 
 A **Glass Effect Transition** defines how a Liquid Glass material animates when:
 
@@ -40,7 +40,7 @@ A transition controls:
 
 ---
 
-## 2. Transition Types
+##2. Transition Types
 
 ## 2.1 identity
 
@@ -101,7 +101,7 @@ Use cases:
 
 ---
 
-## 3. glassEffectID and namespace
+##3. glassEffectID and namespace
 
 **The core of geometric matching**
 
@@ -155,7 +155,7 @@ Without a namespace, geometric matching does not work.
 
 ---
 
-## 4. glassEffectUnion: Unifying Glass Regions
+##4. glassEffectUnion: Unifying Glass Regions
 
 `glassEffectUnion` merges multiple views into a **single continuous glass material region**.
 
@@ -176,7 +176,7 @@ Typically paired with matchedGeometry transitions.
 
 ---
 
-## 5. GlassEffectContainer
+##5. GlassEffectContainer
 
 The container provides:
 
@@ -196,7 +196,7 @@ Every view participating in glass transitions should be placed inside the same c
 
 ---
 
-## 6. NamespaceReader
+##6. NamespaceReader
 
 **Exposing SwiftUI’s `@Namespace` to TSX**
 
@@ -233,7 +233,7 @@ Therefore Scripting provides:
 
 ---
 
-## 7. Example Analysis
+##7. Example Analysis
 
 Below is the provided example, demonstrating a dynamic menu switching between two states:
 
@@ -313,7 +313,7 @@ Glass transitions attach themselves to this animation transaction automatically.
 
 ---
 
-## 8. Best Practices
+##8. Best Practices
 
 ### 1. Use a single GlassEffectContainer
 
@@ -337,7 +337,7 @@ Use materialize only for elements needing simple appearance behavior.
 
 ---
 
-## 9. Summary
+##9. Summary
 
 Glass Effect Transitions enable highly expressive and fluid animations for Liquid Glass materials in iOS 26.
 In Scripting:

@@ -178,7 +178,7 @@ These functions allow developers to:
 
 ## Progress Reporting
 
-`AssistantTool.report(message: string)` can be used to emit progress updates while a tool is running.
+`AssistantTool.report(message: string, id?: string)` can be used to emit progress updates while a tool is running. The parameter `id` can be used to update an existing report.
 
 Typical use cases include:
 

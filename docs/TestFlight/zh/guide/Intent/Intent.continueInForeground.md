@@ -25,7 +25,7 @@ tag: PRO
 
 ---
 
-## API 定义
+##API 定义
 
 ```ts
 function continueInForeground(
@@ -38,7 +38,7 @@ function continueInForeground(
 
 ---
 
-## 参数说明
+##参数说明
 
 ## dialog?: Dialog | null
 
@@ -94,7 +94,7 @@ type Dialog =
 
 ---
 
-## 执行流程
+##执行流程
 
 执行 `await Intent.continueInForeground(...)` 时：
 
@@ -110,7 +110,7 @@ type Dialog =
 
 ---
 
-## 典型应用场景
+##典型应用场景
 
 推荐在以下场景调用：
 
@@ -129,7 +129,7 @@ type Dialog =
 
 ---
 
-## 完整示例代码
+##完整示例代码
 
 以下示例展示如何从 Shortcuts 通过 `continueInForeground` 切换到 Scripting App 前台，然后展示 UI 让用户输入文本，输入结束后再返回 Shortcuts。
 
@@ -189,7 +189,7 @@ runIntent();
 
 ---
 
-## 注意事项与最佳实践
+##注意事项与最佳实践
 
 - **必须运行在 iOS 26+**，否则会抛出异常或行为不可用。
 - 若脚本依赖用户输入、复杂 UI 或操作，请使用该 API 触发前台模式。

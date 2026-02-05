@@ -94,6 +94,14 @@
     "tag": "PRO"
   },
   {
+    "type": "dir",
+    "name": "SQLite",
+    "label": "SQLite",
+    "collapsible": true,
+    "collapsed": true,
+    "tag": "PRO"
+  },
+  {
     "type": "file",
     "name": "OAuth2",
     "label": "OAuth2"

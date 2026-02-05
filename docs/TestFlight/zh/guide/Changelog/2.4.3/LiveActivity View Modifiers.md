@@ -9,7 +9,7 @@ Scripting 支持与 SwiftUI 等效的 Live Activity 外观控制修饰符。这�
 
 ---
 
-## 修饰符定义
+##修饰符定义
 
 ```ts
 /**
@@ -31,7 +31,7 @@ activitySystemActionForegroundColor?: Color | {
 
 ---
 
-## 属性说明
+##属性说明
 
 ## 1. activityBackgroundTint
 
@@ -63,7 +63,7 @@ activitySystemActionForegroundColor?: Color | {
 
 ---
 
-## 示例：在 Live Activity UI Builder 中使用
+##示例：在 Live Activity UI Builder 中使用
 
 Live Activity 的 UI builder 必须返回包含多个区域（content / compactLeading / compactTrailing / minimal等）的对象结构。
 
@@ -91,7 +91,7 @@ function ActivityView() {
 
 ---
 
-## 使用说明
+##使用说明
 
 - **修饰符仅在 Live Activity UI 中有效**，并且只影响 **锁屏界面** 的外观。
 - 必须在 Live Activity UI builder 的 `content` 中使用。

@@ -37,6 +37,33 @@ type Orientation =
 
 ---
 
+## InterfaceOrientation
+
+表示App UI 的可旋转方向
+
+```ts
+type InterfaceOrientation =
+  | "portrait"
+  | "portraitUpsideDown"
+  | "landscape"
+  | "landscapeLeft"
+  | "landscapeRight"
+  | "all"
+  | "allButUpsideDown"
+```
+
+### 说明
+
+* `portrait`：竖屏，Home 键在下（或标准竖屏方向）
+* `portraitUpsideDown`：竖屏倒置
+* `landscape`：横屏，设备向左旋转
+* `landscapeLeft`：横屏，设备向左旋转
+* `landscapeRight`：横屏，设备向右旋转
+* `all`：所有可旋转方向
+* `allButUpsideDown`：除了竖屏，所有可旋转方向
+
+---
+
 ## NetworkInterface
 
 描述单个网络接口地址的信息。
@@ -208,6 +235,28 @@ const orientation: Orientation
 当前设备物理方向。
 
 ---
+
+### supportedInterfaceOrientations
+
+```ts
+var supportedInterfaceOrientations: InterfaceOrientation[]
+```
+
+获取和设置当前支持的旋转方向。
+
+#### 示例
+
+```tsx
+function Page() {
+  useEffect(() => {
+    Device.supportedInterfaceOrientations = ["all"]
+    return () => {
+      Device.supportedInterfaceOrientations = ["portrait"]
+    }
+  }, [])
+  return <VStack>...</VStack>
+}
+```
 
 ## Appearance & Environment
 

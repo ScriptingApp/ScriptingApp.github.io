@@ -147,7 +147,7 @@ await fetch(cloned);
 
 ---
 
-## RequestInit Interface
+##RequestInit Interface
 
 The `RequestInit` interface defines configuration options for HTTP requests.
 It is used as the second argument to `fetch()` or the optional configuration object when creating a new `Request`.

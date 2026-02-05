@@ -10,7 +10,7 @@ description: 它能够在视图构建阶段提供当前容器的尺寸、边距�
 
 ---
 
-## GeometryProxy
+##GeometryProxy
 
 当 `GeometryReader` 构建其子内容时，会将一个 `GeometryProxy` 实例传递给 `children` 回调。开发者可以使用此对象访问与当前容器相关的布局信息。
 
@@ -37,7 +37,7 @@ interface GeometryProxy {
 
 ---
 
-## GeometryProxy 属性说明
+##GeometryProxy 属性说明
 
 ## 1. size
 
@@ -111,7 +111,7 @@ readonly containerCornerInsets: {
 
 ---
 
-## GeometryReader
+##GeometryReader
 
 ```ts
 type GeometryReaderProps = {
@@ -128,7 +128,7 @@ declare const GeometryReader: FunctionComponent<GeometryReaderProps>;
 
 ---
 
-## 工作机制
+##工作机制
 
 1. GeometryReader 占据父布局中的位置，并在布局阶段获取当前容器的尺寸与安全区域信息。
 2. 将 `GeometryProxy` 注入给 `children(proxy)` 回调。
@@ -138,7 +138,7 @@ declare const GeometryReader: FunctionComponent<GeometryReaderProps>;
 
 ---
 
-## 示例：居中布局
+##示例：居中布局
 
 ```tsx
 import { GeometryReader, Text, VStack } from "scripting";
@@ -167,7 +167,7 @@ function View() {
 
 ---
 
-## 示例：根据安全区域调整布局
+##示例：根据安全区域调整布局
 
 ```tsx
 <GeometryReader>
@@ -187,7 +187,7 @@ function View() {
 
 ---
 
-## 示例（iOS 26+）：读取 containerCornerInsets
+##示例（iOS 26+）：读取 containerCornerInsets
 
 ```tsx
 <GeometryReader>
@@ -206,7 +206,7 @@ function View() {
 
 ---
 
-## 使用建议
+##使用建议
 
 - 在需要响应容器尺寸时使用 GeometryReader，例如图片缩放、动态布局、等比布局。
 - 避免将大量复杂布局放入 GeometryReader 内，可能影响性能（同 SwiftUI）。

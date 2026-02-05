@@ -19,7 +19,7 @@ Liquid Glass 是 iOS 26 新增的视觉效果系统，用于创建带有流动�
 
 ---
 
-## 2. GlassEffect 基础用法
+##2. GlassEffect 基础用法
 
 所有支持玻璃效果的视图，都可以通过 `glassEffect` 修饰符添加 Liquid Glass 材质。
 
@@ -110,7 +110,7 @@ glassEffect 有四种主要使用方式：
 
 ---
 
-## 3. UIGlass 类
+##3. UIGlass 类
 
 `UIGlass` 用于描述玻璃材质本身，可以选用内置材质或链式组合属性。
 
@@ -137,7 +137,7 @@ glassEffect={UIGlass.regular().interactive().tint("red")}
 
 ---
 
-## 4. GlassEffectTransition（玻璃过渡动画）
+##4. GlassEffectTransition（玻璃过渡动画）
 
 ```ts
 type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
@@ -163,7 +163,7 @@ matchedGeometry 通常需要配合 `glassEffectID` 或 `glassEffectUnion` 使用
 
 ---
 
-## 5. glassEffectID 与 glassEffectUnion
+##5. glassEffectID 与 glassEffectUnion
 
 Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched geometry 动画或合并多块玻璃区域。
 
@@ -195,7 +195,7 @@ Liquid Glass 支持“识别”不同视图间的玻璃效果，用于 matched g
 
 ---
 
-## 6. GlassEffectContainer
+##6. GlassEffectContainer
 
 `GlassEffectContainer` 是用于组织和管理玻璃效果的容器。容器内部的所有 glassEffect 视图，都能参与几何匹配、联合效果和过渡动画。
 
@@ -220,7 +220,7 @@ GlassEffectContainer 不需要额外参数，但提供了玻璃效果组织空�
 
 ---
 
-## 7. 按钮的玻璃样式 buttonStyle
+##7. 按钮的玻璃样式 buttonStyle
 
 Scripting 在 iOS 26 提供新增按钮样式：
 
@@ -244,7 +244,7 @@ Scripting 在 iOS 26 提供新增按钮样式：
 
 ---
 
-## 8. 实战示例说明
+##8. 实战示例说明
 
 以下示例展示完整的用法，包括：
 
@@ -277,7 +277,7 @@ Scripting 在 iOS 26 提供新增按钮样式：
 
 ---
 
-## 9. 使用建议与最佳实践
+##9. 使用建议与最佳实践
 
 ### 1. 大量玻璃视图应包裹在同一个 GlassEffectContainer
 

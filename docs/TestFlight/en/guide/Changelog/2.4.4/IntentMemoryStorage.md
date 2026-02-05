@@ -13,7 +13,7 @@ This document describes its real behavior, its storage scopes, how the system ma
 
 ---
 
-## Overview
+##Overview
 
 Each AppIntent in Scripting runs inside its own **Script Execution Context** (JSContext).
 When:
@@ -49,7 +49,7 @@ IntentMemoryStorage is:
 
 ---
 
-## Storage Scopes
+##Storage Scopes
 
 IntentMemoryStorage provides two scopes.
 
@@ -79,7 +79,7 @@ Both scopes are **temporary** and tied to the system’s handling of the Extensi
 
 ---
 
-## System Lifecycle and JSContext Behavior
+##System Lifecycle and JSContext Behavior
 
 IntentMemoryStorage’s behavior is entirely dependent on how the OS manages the AppIntent/Widget Extension process.
 
@@ -154,7 +154,7 @@ Therefore:
 
 ---
 
-## API Definition
+##API Definition
 
 ```ts
 namespace IntentMemoryStorage {
@@ -174,7 +174,7 @@ Notes:
 
 ---
 
-## API Details
+##API Details
 
 ## get
 
@@ -261,7 +261,7 @@ Shared keys must be tracked manually by the developer.
 
 ---
 
-## Usage Scenarios
+##Usage Scenarios
 
 ## Script-scoped (default)
 
@@ -284,7 +284,7 @@ Good for:
 
 ---
 
-## Not Recommended For
+##Not Recommended For
 
 - Persistent data
 - Large objects (images, binary, long text)
@@ -299,7 +299,7 @@ Use instead:
 
 ---
 
-## Examples
+##Examples
 
 ## Script-scoped
 
@@ -327,7 +327,7 @@ const id = IntentMemoryStorage.get<string>("sessionID", { shared: true });
 
 ---
 
-## Storage Structure Example
+##Storage Structure Example
 
 If you store:
 
@@ -360,7 +360,7 @@ Both disappear once the system kills the Extension process.
 
 ---
 
-## Best Practices
+##Best Practices
 
 - Treat MemoryStorage as an in-memory _cache_, not a storage layer
 - Never assume the value will exist

@@ -1,13 +1,13 @@
 import fs from "fs";
 import path from "path";
+import { zip } from "compressing";
 
-const resourcePath = path.join(__dirname, "..", "Scripting Documentation");
+const version = "App Store";
+
+const resourcePath = path.join(__dirname, "..", "scripting", version, "Scripting Documentation");
+
 const docsPath = path.join(__dirname, "..", "docs");
-const version = "v2.4.6";
 const base = "guide";
-
-// const proTag =
-// "<span style={{ backgroundColor:'#007bff',color:'white',borderRadius:'6px',padding:'2px 6px',fontSize:'0.7em',marginLeft:'8px'}}>PRO</span>";
 
 function readFile(filePath) {
   try {
@@ -146,10 +146,12 @@ const processLanguages = (docItem) => {
   processDocItem(docItem, "", "zh");
 };
 
-// 读取 JSON 配置并开始处理
-const processDocs = () => {
+(async () => {
+  await zip.uncompress(
+    path.join(__dirname, "..", "scripting", version, "Scripting Documentation.scripting"),
+    path.join(__dirname, "..", "scripting", version, "Scripting Documentation"),
+  );
+
   const docJson = JSON.parse(readFile(path.join(resourcePath, "doc.json")));
   docJson.forEach((item) => processLanguages(item));
-};
-
-processDocs();
+})().catch((e) => console.error(e));

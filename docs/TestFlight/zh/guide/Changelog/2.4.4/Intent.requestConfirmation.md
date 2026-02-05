@@ -18,7 +18,7 @@ tag: PRO
 
 ---
 
-## API 定义
+##API 定义
 
 ```ts
 function requestConfirmation(
@@ -33,7 +33,7 @@ function requestConfirmation(
 
 ---
 
-## 参数说明
+##参数说明
 
 ## actionName: ConfirmationActionName
 
@@ -119,7 +119,7 @@ type Dialog =
 
 ---
 
-## 执行流程
+##执行流程
 
 调用 `await Intent.requestConfirmation(...)` 时脚本执行顺序如下：
 
@@ -135,7 +135,7 @@ type Dialog =
 
 ---
 
-## 使用场景
+##使用场景
 
 以下场景推荐使用 `requestConfirmation`：
 
@@ -151,7 +151,7 @@ type Dialog =
 
 ---
 
-## 完整示例代码
+##完整示例代码
 
 以下示例展示如何使用 `requestConfirmation` 请求用户确认一次颜色选择，并在确认后继续执行脚本。
 
@@ -195,7 +195,7 @@ runIntent();
 
 ---
 
-## 注意事项与最佳实践
+##注意事项与最佳实践
 
 - **必须运行在 iOS 26+**
   提前检查系统版本或优雅降级。

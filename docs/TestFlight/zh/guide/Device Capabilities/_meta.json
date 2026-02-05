@@ -154,8 +154,8 @@
   },
   {
     "type": "file",
-    "name": "Audio Player",
-    "label": "音频播放器"
+    "name": "AVPlayer",
+    "label": "音视频播放器"
   },
   {
     "type": "dir",

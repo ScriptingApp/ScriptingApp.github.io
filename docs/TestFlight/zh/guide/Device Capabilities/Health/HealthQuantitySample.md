@@ -97,7 +97,7 @@ const sample = HealthQuantitySample.create({
 
 ---
 
-## 子类：HealthCumulativeQuantitySample
+##子类：HealthCumulativeQuantitySample
 
 `HealthCumulativeQuantitySample` 表示累计型的健康数据，例如总步数、总距离或总能量消耗等。
 
@@ -126,7 +126,7 @@ console.log(`总活动能量: ${totalKcal} 千卡`);
 
 ---
 
-## 子类：HealthDiscreteQuantitySample
+##子类：HealthDiscreteQuantitySample
 
 `HealthDiscreteQuantitySample` 表示一系列离散时间点上的测量值，例如心率、步数或温度变化等。
 

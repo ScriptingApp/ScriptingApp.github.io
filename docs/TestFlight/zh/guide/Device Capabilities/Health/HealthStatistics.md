@@ -107,7 +107,7 @@ console.log("记录时间区间：", recentInterval);
 
 ---
 
-## `HealthSource` 类
+##`HealthSource` 类
 
 `HealthSource` 表示一个健康数据的来源，如某个 app 或设备（例如 iPhone、Apple Watch 等）。
 

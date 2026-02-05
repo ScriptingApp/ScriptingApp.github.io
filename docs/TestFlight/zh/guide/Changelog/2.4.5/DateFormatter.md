@@ -8,7 +8,7 @@ description: 用于将 Date 类型格式化为字符串，或将字符串解析�
 
 ---
 
-## 枚举与类型定义
+##枚举与类型定义
 
 ## DateFormatterStyle
 
@@ -77,7 +77,7 @@ description: 用于将 Date 类型格式化为字符串，或将字符串解析�
 
 ---
 
-## 类：DateFormatter
+##类：DateFormatter
 
 ## 初始化
 
@@ -87,7 +87,7 @@ description: 用于将 Date 类型格式化为字符串，或将字符串解析�
 
 ---
 
-## 静态方法
+##静态方法
 
 ## `DateFormatter.localizedString(date, options)`
 
@@ -118,7 +118,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ---
 
-## 实例方法
+##实例方法
 
 ## `string(date: Date): string`
 
@@ -142,7 +142,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ---
 
-## 属性说明
+##属性说明
 
 以下为所有可配置属性的功能说明。
 
@@ -265,7 +265,7 @@ static dateFormat(template: string, locale?: string): string | null
 
 ---
 
-## 示例代码
+##示例代码
 
 以下示例展示如何使用 `DateFormatter` 进行多种日期格式化场景。
 

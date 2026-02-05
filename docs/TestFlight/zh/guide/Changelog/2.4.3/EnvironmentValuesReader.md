@@ -11,7 +11,7 @@ description: 它允许脚本在视图层级中访问当前环境的上下文信�
 
 ---
 
-## EnvironmentValues 类型
+##EnvironmentValues 类型
 
 ```ts
 type EnvironmentValues = {
@@ -135,7 +135,7 @@ type EnvironmentValues = {
 类型：`'expanded' | 'inline'`
 说明：当前 TabView 的底部辅助栏的显示方式，同 SwiftUI 中的 `tabViewBottomAccessoryPlacement`。
 
-## EnvironmentValuesReader 组件
+##EnvironmentValuesReader 组件
 
 ```ts
 type EnvironmentValuesReaderProps = {
@@ -152,7 +152,7 @@ type EnvironmentValuesReaderProps = {
 
 ---
 
-## Props 说明
+##Props 说明
 
 ## keys
 
@@ -171,7 +171,7 @@ type EnvironmentValuesReaderProps = {
 
 ---
 
-## 组件定义
+##组件定义
 
 ```ts
 declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReaderProps>;
@@ -179,7 +179,7 @@ declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReader
 
 ---
 
-## 使用示例
+##使用示例
 
 ## 示例：读取 colorScheme 和 displayScale
 
@@ -229,7 +229,7 @@ function View() {
 
 ---
 
-## 使用注意事项
+##使用注意事项
 
 1. **必须显式指定 keys**，否则不会读取任何 environment 值。
 2. 每次所指定的 environment key 发生变化时，`children()` 会重新渲染。

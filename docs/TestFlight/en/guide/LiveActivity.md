@@ -18,7 +18,7 @@ The API wraps Apple’s ActivityKit and brings it into the Scripting environment
 
 ---
 
-## 1. Understanding Live Activities
+##1. Understanding Live Activities
 
 A Live Activity can appear in the following regions:
 
@@ -41,7 +41,7 @@ In Scripting, each Live Activity consists of:
 
 ---
 
-## 2. Live Activity State Types
+##2. Live Activity State Types
 
 ```ts
 type LiveActivityState = "active" | "dismissed" | "ended" | "stale";
@@ -56,7 +56,7 @@ type LiveActivityState = "active" | "dismissed" | "ended" | "stale";
 
 ---
 
-## 3. LiveActivityDetail Type
+##3. LiveActivityDetail Type
 
 ```ts
 type LiveActivityDetail = {
@@ -69,7 +69,7 @@ Represents a summary of each active Live Activity.
 
 ---
 
-## 4. Live Activity UI Types
+##4. Live Activity UI Types
 
 ## 4.1 LiveActivityUIProps
 
@@ -95,7 +95,7 @@ These regions correspond to ActivityKit’s UI areas:
 
 ---
 
-## 5. Registering a Live Activity UI
+##5. Registering a Live Activity UI
 
 Live Activities **must** be registered inside a standalone file such as `live_activity.tsx`.
 
@@ -139,7 +139,7 @@ export const MyLiveActivity = LiveActivity.register("MyLiveActivity", builder);
 
 ---
 
-## 6. Using a Live Activity in Your Script
+##6. Using a Live Activity in Your Script
 
 ```tsx
 import {
@@ -223,7 +223,7 @@ run();
 
 ---
 
-## 7. LiveActivity Class API Reference
+##7. LiveActivity Class API Reference
 
 ## 7.1 start(contentState, options?)
 
@@ -330,7 +330,7 @@ static endAllActivities(options?)
 
 ---
 
-## 8. UI Components for Expanded Layout
+##8. UI Components for Expanded Layout
 
 | Component                      | Description                       |
 | ------------------------------ | --------------------------------- |
@@ -344,7 +344,7 @@ These components help structure the expanded Dynamic Island.
 
 ---
 
-## 9. Best Practices
+##9. Best Practices
 
 ## 9.1 contentState must be JSON-serializable
 
@@ -369,7 +369,7 @@ BackgroundKeeper.keepAlive();
 
 ---
 
-## 10. Minimal Example
+##10. Minimal Example
 
 ```ts
 const activity = MyLiveActivity();
@@ -381,7 +381,7 @@ await activity.update({ mins: 5 });
 await activity.end({ mins: 0 }, { dismissTimeInterval: 0 });
 ```
 
-## 11. Notes
+##11. Notes
 
 - Live Activity starts asynchronously. You need to wait for `start` to return `true` before calling `update` and `end`.
 - Live Activity cannot access documents and iCloud directories. If you want to access files or render images, you must save them to `FileManager.appGroupDocumentsDirectory`. For example, to render an image, you save it to `FileManager.appGroupDocumentsDirectory`, then use `<Image filePath={Path.join(FileManager.appGroupDocumentsDirectory, 'example.png')} />` to render it.

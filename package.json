@@ -2,16 +2,19 @@
   "name": "test",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "build": "rspress build",
     "build:fun": "rspress build -c rspress.config.fun.ts",
     "dev": "rspress dev",
+    "deploy": "bun scripts/docs.js && bun scripts/docs-tf.js && rspress build",
     "preview": "rspress preview",
-    "generate:docs": "rm -rf docs/v*/*/guide && bun scripts/docs.js",
+    "generate:docs": "rm -rf docs/App\\ Store/*/guide && bun scripts/docs.js",
     "generate:docs:tf": "rm -rf docs/TestFlight/*/guide && bun scripts/docs-tf.js"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.0",
+    "@rspress/core": "^2.0.2",
+    "compressing": "^2.1.0",
     "rspress-plugin-gh-pages": "^1.0.0"
   },
   "devDependencies": {

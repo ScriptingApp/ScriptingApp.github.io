@@ -2,22 +2,22 @@ import * as path from "node:path";
 import { defineConfig } from "@rspress/core";
 import type { UserConfig } from "@rspress/shared";
 
-import ghPages from "rspress-plugin-gh-pages";
+// import ghPages from "rspress-plugin-gh-pages";
 
 export const config: UserConfig = {
   root: path.join(__dirname, "docs"),
-  plugins: [
-    ghPages({
-      repo: "https://github.com/ScriptingApp/ScriptingApp.github.io.git",
-      branch: "v2",
-      nojekyll: true,
-    }),
-  ],
+  // plugins: [
+  //   ghPages({
+  //     repo: "https://github.com/ScriptingApp/ScriptingApp.github.io.git",
+  //     branch: "v2",
+  //     nojekyll: true,
+  //   }),
+  // ],
   multiVersion: {
-    default: "v2.4.6",
-    versions: ["v2.4.6", "TestFlight"],
+    default: "App Store",
+    versions: ["App Store", "TestFlight"],
   },
-  base: "/doc_v2/",
+  // base: "/doc_v2/",
   title: "Scripting",
   icon: "/icon.png",
   logo: "/logo.png",

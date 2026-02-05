@@ -101,7 +101,7 @@ const sample = HealthQuantitySample.create({
 
 ---
 
-## Subclass: HealthCumulativeQuantitySample
+##Subclass: HealthCumulativeQuantitySample
 
 The `HealthCumulativeQuantitySample` class represents cumulative data (i.e., totals over time), such as energy burned or distance traveled.
 
@@ -130,7 +130,7 @@ Alias for `sumQuantity()` — retrieves the total value in the given unit.
 
 ---
 
-## Subclass: HealthDiscreteQuantitySample
+##Subclass: HealthDiscreteQuantitySample
 
 The `HealthDiscreteQuantitySample` class represents a series of discrete values sampled at specific times — such as heart rate measurements or step counts across a time window.
 

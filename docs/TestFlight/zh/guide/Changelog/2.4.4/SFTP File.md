@@ -34,7 +34,7 @@ const file = await sftp.openFile(path, flags);
 
 ---
 
-## `readAttributes(): Promise<FileAttributes>`
+##`readAttributes(): Promise<FileAttributes>`
 
 读取文件的元数据属性。
 
@@ -62,7 +62,7 @@ console.log(attrs.size);
 
 ---
 
-## `read(options?: { from?: number, length?: number }): Promise<Data>`
+##`read(options?: { from?: number, length?: number }): Promise<Data>`
 
 按指定范围读取文件内容。
 
@@ -83,7 +83,7 @@ const data = await file.read({ from: 100, length: 50 });
 
 ---
 
-## `readAll(): Promise<Data>`
+##`readAll(): Promise<Data>`
 
 读取文件的全部内容。
 
@@ -99,7 +99,7 @@ const data = await file.readAll();
 
 ---
 
-## `write(data: Data, at?: number): Promise<void>`
+##`write(data: Data, at?: number): Promise<void>`
 
 向文件写入数据。
 
@@ -123,7 +123,7 @@ await file.write(Data.fromRawString("Hello world"));
 
 ---
 
-## `close(): Promise<void>`
+##`close(): Promise<void>`
 
 关闭文件句柄。
 关闭后，`isActive` 将变为 `false`，无法继续读写。
@@ -136,7 +136,7 @@ await file.close();
 
 ---
 
-## 使用示例
+##使用示例
 
 ```ts
 // 打开文件（读取模式）

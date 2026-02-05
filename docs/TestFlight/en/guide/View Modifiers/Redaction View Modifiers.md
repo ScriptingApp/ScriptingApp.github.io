@@ -3,7 +3,7 @@ title: Redaction View Modifiers
 description: This view modifier apply redaction to a view hierarchy.
 ---
 
-## Redaction View Modifiers
+##Redaction View Modifiers
 
 The Scripting app supports view modifiers for applying redaction to a view hierarchy. Redaction allows views to display placeholder, obscured, or invalidated content, commonly used to indicate loading states, protect sensitive data, or mark content as outdated.
 

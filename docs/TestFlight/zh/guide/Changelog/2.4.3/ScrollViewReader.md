@@ -10,7 +10,7 @@ ScrollViewReader 与 SwiftUI 的行为保持一致：
 
 ---
 
-## ScrollViewProxy
+##ScrollViewProxy
 
 `ScrollViewProxy` 是提供滚动控制的代理对象，由 `ScrollViewReader` 在渲染期间自动注入。
 
@@ -55,7 +55,7 @@ type Point = {
 
 ---
 
-## ScrollViewReader
+##ScrollViewReader
 
 ScrollViewReader 用于包裹可滚动内容，并提供一个 `scrollViewProxy` 以控制内部滚动。
 
@@ -74,7 +74,7 @@ declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>;
 
 ---
 
-## 使用说明
+##使用说明
 
 1. **ScrollViewReader 必须包裹 List、ScrollView 等可滚动组件**。
 2. **回调中的 proxy 只在视图构建阶段提供一次**，开发者可利用 `useRef` 保存。
@@ -84,7 +84,7 @@ declare const ScrollViewReader: FunctionComponent<ScrollViewReaderProps>;
 
 ---
 
-## 基础示例
+##基础示例
 
 下面是一个完整的使用示例，包括滚动到指定元素以及使用动画的方式。
 
@@ -161,7 +161,7 @@ run();
 
 ---
 
-## 关于 ID（key）匹配的说明
+##关于 ID（key）匹配的说明
 
 `scrollTo(id)` 依赖于内部节点的 `key` 属性。
 以下配置都可作为滚动目标：
@@ -174,7 +174,7 @@ run();
 
 ---
 
-## 动画支持
+##动画支持
 
 ScrollViewReader 支持结合 `withAnimation` 来进行平滑滚动。例如：
 
@@ -188,7 +188,7 @@ withAnimation(() => {
 
 ---
 
-## 注意事项
+##注意事项
 
 1. **必须在 ScrollViewReader 回调中记录 proxy**，否则外部无法访问。
 2. **必须确保目标元素存在并有唯一 id**，否则无法滚到目标位置。

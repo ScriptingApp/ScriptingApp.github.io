@@ -51,7 +51,7 @@ Visit Apple: [click here](https://apple.com)`}
         <Section title={"Markdown"}>
           <Markdown
             content={`
-## Scripting App
+##Scripting App
 Run your *ideas* quickly **with** scripts.
       `}
           />

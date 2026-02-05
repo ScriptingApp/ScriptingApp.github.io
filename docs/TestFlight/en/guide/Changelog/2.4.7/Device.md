@@ -1,6 +1,6 @@
 ---
 title: Device
-description: Add proximityState、orientation and addProximityListener, etc.
+description: Add proximityState, orientation, supportedInterfaceOrientations and addProximityListener, etc.
 
 ---
 
@@ -34,6 +34,33 @@ type Orientation =
 * `faceUp`: Device is lying flat with the screen facing upward
 * `faceDown`: Device is lying flat with the screen facing downward
 * `unknown`: Orientation cannot be determined
+
+---
+
+## InterfaceOrientation
+
+Represents the supported interface orientations for the app.
+
+```ts
+type InterfaceOrientation =
+  | "portrait"
+  | "portraitUpsideDown"
+  | "landscape"
+  | "landscapeLeft"
+  | "landscapeRight"
+  | "all"
+  | "allButUpsideDown"
+```
+
+### Description
+
+* `portrait`: Portrait orientation, default upright position
+* `portraitUpsideDown`: Portrait orientation, upside down
+* `landscape`: Landscape orientation, either left or right
+* `landscapeLeft`: Landscape orientation rotated to the left
+* `landscapeRight`: Landscape orientation rotated to the right
+* `all`: All supported orientations
+* `allButUpsideDown`: All supported orientations except upside down
 
 ---
 
@@ -207,6 +234,29 @@ const orientation: Orientation
 ```
 
 The current physical orientation of the device.
+
+---
+
+### supportedInterfaceOrientations
+
+```ts
+var supportedInterfaceOrientations: InterfaceOrientation[]
+```
+
+The list of supported interface orientations. You can set this property to limit the orientations that your page supports.
+
+#### Example
+```tsx
+function Page() {
+  useEffect(() => {
+    Device.supportedInterfaceOrientations = ["all"]
+    return () => {
+      Device.supportedInterfaceOrientations = ["portrait"]
+    }
+  }, [])
+  return <VStack>...</VStack>
+}
+```
 
 ---
 

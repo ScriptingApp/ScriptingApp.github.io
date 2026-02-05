@@ -9,7 +9,7 @@ By default, all values are stored in the **private domain** of the current scrip
 
 ---
 
-## Supported Data Types
+##Supported Data Types
 
 The following types can be stored using the Storage API:
 
@@ -21,7 +21,7 @@ The following types can be stored using the Storage API:
 
 ---
 
-## Storage Domains
+##Storage Domains
 
 | Domain  | Default                       | Accessible By           | Use Case                                                        |
 | ------- | ----------------------------- | ----------------------- | --------------------------------------------------------------- |
@@ -30,7 +30,7 @@ The following types can be stored using the Storage API:
 
 ---
 
-## API Reference
+##API Reference
 
 ## 1. `Storage.set(key, value, options?)`
 
@@ -129,7 +129,7 @@ Returns an array of all keys stored in the current storage domain.
 
 ---
 
-## Usage Examples
+##Usage Examples
 
 ## Example 1: Store and retrieve simple values
 
@@ -197,7 +197,7 @@ console.log(Storage.keys()); // ["username", "profile", ...]
 
 ---
 
-## Notes and Best Practices
+##Notes and Best Practices
 
 1. All writes are persisted asynchronously, but the method returns immediately with a success flag.
 2. `Data` cannot be stored using `Storage.set()`. Use `setData()` / `getData()` instead.

@@ -1,6 +1,6 @@
 ---
 title: 设备
-description: 新增 proximityState、orientation 属性以及 addProximityListener 等监听方法。
+description: 新增 proximityState、orientation、supportedInterfaceOrientations 属性以及 addProximityListener 等监听方法。
 
 ---
 
@@ -34,6 +34,33 @@ type Orientation =
 * `faceUp`：设备平放，屏幕朝上
 * `faceDown`：设备平放，屏幕朝下
 * `unknown`：无法确定方向
+
+---
+
+## InterfaceOrientation
+
+表示App UI 的可旋转方向
+
+```ts
+type InterfaceOrientation =
+  | "portrait"
+  | "portraitUpsideDown"
+  | "landscape"
+  | "landscapeLeft"
+  | "landscapeRight"
+  | "all"
+  | "allButUpsideDown"
+```
+
+### 说明
+
+* `portrait`：竖屏，Home 键在下（或标准竖屏方向）
+* `portraitUpsideDown`：竖屏倒置
+* `landscape`：横屏，设备向左旋转
+* `landscapeLeft`：横屏，设备向左旋转
+* `landscapeRight`：横屏，设备向右旋转
+* `all`：所有可旋转方向
+* `allButUpsideDown`：除了竖屏，所有可旋转方向
 
 ---
 
@@ -208,6 +235,28 @@ const orientation: Orientation
 当前设备物理方向。
 
 ---
+
+### supportedInterfaceOrientations
+
+```ts
+var supportedInterfaceOrientations: InterfaceOrientation[]
+```
+
+获取和设置当前支持的旋转方向。
+
+#### 示例
+
+```tsx
+function Page() {
+  useEffect(() => {
+    Device.supportedInterfaceOrientations = ["all"]
+    return () => {
+      Device.supportedInterfaceOrientations = ["portrait"]
+    }
+  }, [])
+  return <VStack>...</VStack>
+}
+```
 
 ## Appearance & Environment
 

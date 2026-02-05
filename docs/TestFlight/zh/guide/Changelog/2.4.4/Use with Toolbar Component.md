@@ -9,7 +9,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ---
 
-## 基本概念
+##基本概念
 
 工具栏组件始终通过视图的 `toolbar` 属性使用：
 
@@ -26,7 +26,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ---
 
-## Toolbar
+##Toolbar
 
 `Toolbar` 组件是工具栏的容器，用于包含多个工具栏项。它本身不定义位置，内部的 `ToolbarItem` 或 `ToolbarItemGroup` 决定实际布局。
 
@@ -50,7 +50,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ---
 
-## ToolbarItem
+##ToolbarItem
 
 `ToolbarItem` 表示放置在工具栏指定位置的单个项目。
 
@@ -73,7 +73,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ---
 
-## ToolbarItemGroup
+##ToolbarItemGroup
 
 `ToolbarItemGroup` 用于在同一位置放置多个工具栏项目，所有子项目将作为一组呈现。
 
@@ -97,7 +97,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ---
 
-## ToolbarSpacer
+##ToolbarSpacer
 
 `ToolbarSpacer` 用于在工具栏项之间添加空白区域，适合需要自定义布局的场景。
 
@@ -129,7 +129,7 @@ Scripting 的工具栏系统不仅支持直接在 `toolbar` 属性中传入 `Too
 
 ---
 
-## DefaultToolbarItem
+##DefaultToolbarItem
 
 ```ts
 type ToolbarDefaultItemKind = "sidebarToggle" | "search" | "title";
@@ -161,7 +161,7 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ---
 
-## 综合示例：使用 Toolbar 构建复杂工具栏
+##综合示例：使用 Toolbar 构建复杂工具栏
 
 ```tsx
 <NavigationStack>
@@ -200,7 +200,7 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ---
 
-## 与 ToolBarProps 的关系
+##与 ToolBarProps 的关系
 
 在 API 层面：
 
@@ -213,7 +213,7 @@ declare const DefaultToolbarItem: FunctionComponent<DefaultToolbarItemProps>;
 
 ---
 
-## 总结
+##总结
 
 Toolbar 组件提供了高度灵活的工具栏布局能力，包括：
 

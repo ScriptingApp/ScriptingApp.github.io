@@ -21,7 +21,7 @@ Behavior:
 
 ---
 
-## API Definition
+##API Definition
 
 ```ts
 Intent.requestConfirmation(
@@ -36,7 +36,7 @@ Intent.requestConfirmation(
 
 ---
 
-## Parameter Details
+##Parameter Details
 
 ## actionName: ConfirmationActionName
 
@@ -124,7 +124,7 @@ Use this to clearly explain what the user is confirming.
 
 ---
 
-## Execution Flow
+##Execution Flow
 
 When the script executes:
 
@@ -149,7 +149,7 @@ There is no need to manually manage the UI lifecycle.
 
 ---
 
-## Usage Scenarios
+##Usage Scenarios
 
 Recommended for:
 
@@ -166,7 +166,7 @@ Not recommended for:
 
 ---
 
-## Complete Example
+##Complete Example
 
 Below is a full working example demonstrating how to request user confirmation using a SnippetIntent.
 
@@ -210,7 +210,7 @@ runIntent();
 
 ---
 
-## Notes & Best Practices
+##Notes & Best Practices
 
 - **Requires iOS 26+** — do not call this API on earlier versions.
 - Always include a clear **dialog** message to improve user understanding.

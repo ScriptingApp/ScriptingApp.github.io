@@ -12,7 +12,7 @@ description: 迭代动态数据
 
 ---
 
-## 1. 类型定义
+##1. 类型定义
 
 ## ForEachDeprecatedProps（已不推荐）
 
@@ -48,7 +48,7 @@ type ForEachDeprecatedProps = {
 
 ---
 
-## 2. ForEachProps（推荐使用）
+##2. ForEachProps（推荐使用）
 
 ```ts
 type ForEachProps<T extends { id: string }> =
@@ -94,7 +94,7 @@ type ForEachProps<T extends { id: string }> =
 
 ---
 
-## 3. ForEachComponent 接口
+##3. ForEachComponent 接口
 
 ```ts
 interface ForEachComponent {
@@ -106,7 +106,7 @@ interface ForEachComponent {
 
 ---
 
-## 4. 系统级删除交互示例
+##4. 系统级删除交互示例
 
 当 `ForEach` 放在 `List` 内部，并使用 `data + builder` 模式时，系统会自动启用 swipe-to-delete，只需正确提供 `id` 和编辑能力。
 
@@ -137,7 +137,7 @@ function View() {
 
 ---
 
-## 5. 使用建议与最佳实践
+##5. 使用建议与最佳实践
 
 ### 1. 推荐使用 `data: Observable<T[]>` 方案
 

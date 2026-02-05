@@ -9,7 +9,7 @@ IntentMemoryStorage 是一个用于 **在多个 AppIntent 执行之间保留临�
 
 ---
 
-## 概述
+##概述
 
 在 Scripting 中，每个 AppIntent 都运行在其所属脚本的 **脚本执行上下文（Script Execution Context）** 中。当 AppIntent 的 `perform()` 执行完成，或在 `intent.tsx` 中调用 `Script.exit()` 时，当前 AppIntent 的执行流程会结束。
 
@@ -37,7 +37,7 @@ MemoryStorage 的本质是：
 
 ---
 
-## 作用范围（Scopes）
+##作用范围（Scopes）
 
 IntentMemoryStorage 提供两类存储区域：
 
@@ -66,7 +66,7 @@ IntentMemoryStorage 提供两类存储区域：
 
 ---
 
-## Extension 生命周期与 JS Context 行为
+##Extension 生命周期与 JS Context 行为
 
 ## 情况一：在 Shortcuts 中运行 Intent
 
@@ -139,7 +139,7 @@ MemoryStorage 的生命周期与 **Extension 进程生命周期** 完全一致�
 
 ---
 
-## API 定义
+##API 定义
 
 ```ts
 namespace IntentMemoryStorage {
@@ -159,7 +159,7 @@ namespace IntentMemoryStorage {
 
 ---
 
-## API 详细说明
+##API 详细说明
 
 ## get
 
@@ -262,7 +262,7 @@ function keys(): string[];
 
 ---
 
-## 使用场景
+##使用场景
 
 ## 脚本级（默认）
 
@@ -296,7 +296,7 @@ IntentMemoryStorage.set("workflowID", "xyz", { shared: true });
 
 ---
 
-## 不适用用途
+##不适用用途
 
 - 不保证一定存在
 - 不保证一定被清理
@@ -311,7 +311,7 @@ IntentMemoryStorage.set("workflowID", "xyz", { shared: true });
 
 ---
 
-## 示例
+##示例
 
 ## 脚本级示例
 
@@ -339,7 +339,7 @@ const id = IntentMemoryStorage.get<string>("sessionID", { shared: true });
 
 ---
 
-## 存储结构示例
+##存储结构示例
 
 脚本级：
 
@@ -360,7 +360,7 @@ shared：
 
 ---
 
-## 最佳实践
+##最佳实践
 
 - 不保证 MemoryStorage 一定存在或一定被清理
 - 不要用于关键数据

@@ -147,7 +147,7 @@ await fetch(cloned);
 
 ---
 
-## RequestInit 类型
+##RequestInit 类型
 
 `RequestInit` 是一个用于配置请求参数的对象类型，常用于 `fetch()` 或 `Request` 构造函数中。
 它与浏览器的标准 Fetch API 相同，但 Scripting 扩展了若干字段。

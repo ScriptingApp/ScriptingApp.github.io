@@ -10,7 +10,7 @@ Scripting 提供了与最新 iOS TabView 体系一致的 API：
 
 ---
 
-## 一、基础结构：TabView + Tab
+##一、基础结构：TabView + Tab
 
 在最基本的形式中，`TabView` 作为容器，内部包含多个 `Tab`。
 每个 `Tab` 定义：
@@ -53,7 +53,7 @@ function RootView() {
 
 ---
 
-## 二、使用 TabSection 组织分组标签
+##二、使用 TabSection 组织分组标签
 
 当 Tab 数量较多、需要按功能分类、需要在侧边栏中显示复杂结构时，可以使用 `TabSection`。
 
@@ -116,7 +116,7 @@ TabView
 
 ---
 
-## 三、TabSection 的高级能力：布局、操作区、拖拽与可见性
+##三、TabSection 的高级能力：布局、操作区、拖拽与可见性
 
 `TabSection` 提供了丰富的分组级配置，让 Tab 分组的呈现方式更加灵活。
 
@@ -182,7 +182,7 @@ TabView
 
 ---
 
-## 四、TabView 级别的高级配置
+##四、TabView 级别的高级配置
 
 TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26）。
 
@@ -278,7 +278,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 
 ---
 
-## 五、TabViewCustomization：标签页可定制化体系（重点补充）
+##五、TabViewCustomization：标签页可定制化体系（重点补充）
 
 `TabViewCustomization` 是一个可序列化的状态对象，用于存储和恢复用户对 Tab 布局的自定义行为，包括：
 
@@ -408,7 +408,7 @@ resetVisibility(): void
 
 ---
 
-## 六、与旧的 tabItem 写法的关系
+##六、与旧的 tabItem 写法的关系
 
 此文档采用全新的结构化写法：
 

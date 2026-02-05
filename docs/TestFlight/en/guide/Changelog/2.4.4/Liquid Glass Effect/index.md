@@ -17,7 +17,7 @@ This document explains how the Liquid Glass APIs are used in Scripting, includin
 
 ---
 
-## 1. Overview of Liquid Glass
+##1. Overview of Liquid Glass
 
 Liquid Glass is a new material and animation system in iOS 26. Compared to earlier blur or material effects, Liquid Glass provides:
 
@@ -29,7 +29,7 @@ Liquid Glass is a new material and animation system in iOS 26. Compared to earli
 
 ---
 
-## 2. The `glassEffect` Modifier
+##2. The `glassEffect` Modifier
 
 Any view that adopts `GlassProps` can apply a Liquid Glass effect using the `glassEffect` property.
 
@@ -116,7 +116,7 @@ Acts the same as default Liquid Glass material.
 
 ---
 
-## 3. The `UIGlass` Class
+##3. The `UIGlass` Class
 
 `UIGlass` represents the Liquid Glass material configuration.
 
@@ -143,7 +143,7 @@ glassEffect={UIGlass.regular().interactive().tint("red")}
 
 ---
 
-## 4. Glass Effect Transitions
+##4. Glass Effect Transitions
 
 ```ts
 type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
@@ -169,7 +169,7 @@ type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
 
 ---
 
-## 5. glassEffectID and glassEffectUnion
+##5. glassEffectID and glassEffectUnion
 
 Liquid Glass can identify or group glass effects to create smooth geometry animations or unified material regions.
 
@@ -201,7 +201,7 @@ This merges material rendering across multiple views.
 
 ---
 
-## 6. GlassEffectContainer
+##6. GlassEffectContainer
 
 `GlassEffectContainer` is used to group and manage correlated glass effects. Views inside the container:
 
@@ -224,7 +224,7 @@ No configuration is required; the container acts as a shared environment.
 
 ---
 
-## 7. Glass Button Styles
+##7. Glass Button Styles
 
 Scripting supports additional iOS 26 button styles:
 
@@ -249,7 +249,7 @@ These styles use Liquid Glass materials and integrate with tint and interaction 
 
 ---
 
-## 8. Practical Example
+##8. Practical Example
 
 Below is a real example combining multiple features:
 
@@ -282,7 +282,7 @@ Below is a real example combining multiple features:
 
 ---
 
-## 9. Best Practices
+##9. Best Practices
 
 ### 1. Place related glass views inside a single GlassEffectContainer
 

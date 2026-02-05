@@ -100,7 +100,7 @@ import { Markdown } from "scripting";
 ```tsx
 <Markdown
   content={`
-## 欢迎使用 Scripting
+##欢迎使用 Scripting
 
 以下是一个简单的示例：
 

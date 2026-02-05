@@ -20,3 +20,8 @@ Scripting Documentation.zip
 doc_build.zip
 doc_build_fun/
 doc_build_fun.zip
+
+__MACOSX/
+
+docs/App Store/*/guide/
+docs/TestFlight/*/guide/

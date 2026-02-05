@@ -17,6 +17,17 @@
   },
   {
     "type": "file",
+    "name": "AssistantTool User-Initiated Cancellation",
+    "label": "AssistantTool User-Initiated Cancellation",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "AVPlayer",
+    "label": "AVPlayer"
+  },
+  {
+    "type": "file",
     "name": "Widget API",
     "label": "Widget API"
   },

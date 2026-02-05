@@ -3,7 +3,7 @@ title: RuleChart
 description: A chart that displays data as a series of rules, which can be used to represent thresholds or limits.
 ---
 
-## `RuleChart`
+##`RuleChart`
 
 The `RuleChart` component displays a range or duration for each labeled item as a horizontal or vertical rule. It is suitable for visualizing time spans, data ranges, or active periods across categories.
 

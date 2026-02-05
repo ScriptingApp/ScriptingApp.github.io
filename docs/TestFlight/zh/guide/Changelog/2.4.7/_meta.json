@@ -17,6 +17,17 @@
   },
   {
     "type": "file",
+    "name": "AssistantTool User-Initiated Cancellation",
+    "label": "处理用户主动取消智能助手工具",
+    "tag": "PRO"
+  },
+  {
+    "type": "file",
+    "name": "AVPlayer",
+    "label": "音视频播放器"
+  },
+  {
+    "type": "file",
     "name": "Widget API",
     "label": "小组件 API"
   },
