@@ -1,5 +1,3 @@
-# 实时活动（灵动岛）
-
 `LiveActivity` API 允许你的脚本在 iOS 的锁屏界面以及支持的设备上的动态岛中展示实时数据。通过该 API，你可以创建、更新并结束 Live Activity，同时监听其生命周期状态和系统支持情况。
 
 本文件详细介绍 Scripting app 中的 **LiveActivity API**，包括：
@@ -15,7 +13,7 @@
 
 ***
 
-## 1. Live Activity 概念理解
+# 1. Live Activity 概念理解
 
 Live Activity 展示在以下区域：
 
@@ -39,7 +37,7 @@ Live Activity 展示在以下区域：
 
 ***
 
-## 2. Live Activity 状态类型
+# 2. Live Activity 状态类型
 
 ```ts
 type LiveActivityState = "active" | "dismissed" | "ended" | "stale";
@@ -54,7 +52,7 @@ type LiveActivityState = "active" | "dismissed" | "ended" | "stale";
 
 ***
 
-## 3. LiveActivityDetail 类型
+# 3. LiveActivityDetail 类型
 
 ```ts
 type LiveActivityDetail = {
@@ -67,7 +65,7 @@ type LiveActivityDetail = {
 
 ***
 
-## 4. LiveActivity UI 构建类型
+# 4. LiveActivity UI 构建类型
 
 ## 4.1 LiveActivityUIProps
 
@@ -90,7 +88,7 @@ type LiveActivityUIProps = {
 
 ***
 
-## 5. 注册 Live Activity UI
+# 5. 注册 Live Activity UI
 
 Live Activity 必须放在单独的文件中，例如 `live_activity.tsx`：
 
@@ -134,7 +132,7 @@ export const MyLiveActivity = LiveActivity.register("MyLiveActivity", builder);
 
 ***
 
-## 6. 在脚本中使用 Live Activity
+# 6. 在脚本中使用 Live Activity
 
 下面展示如何启动、更新、监听状态并结束 Live Activity。
 
@@ -219,7 +217,7 @@ run();
 
 ***
 
-## 7. LiveActivity 类 API 说明
+# 7. LiveActivity 类 API 说明
 
 ## 7.1 start(contentState, options?)
 
@@ -327,7 +325,7 @@ static endAllActivities(options?)
 
 ***
 
-## 8. Live Activity UI 组件
+# 8. Live Activity UI 组件
 
 | 组件                             | 描述         |
 | ------------------------------ | ---------- |
@@ -341,7 +339,7 @@ static endAllActivities(options?)
 
 ***
 
-## 9. 注意事项与最佳实践
+# 9. 注意事项与最佳实践
 
 ## 9.1 必须 JSON 可序列化
 
@@ -374,7 +372,7 @@ BackgroundKeeper.keepAlive();
 
 ***
 
-## 10. 完整示例（简化版）
+# 10. 完整示例（简化版）
 
 ```tsx
 const activity = MyLiveActivity();
@@ -386,7 +384,7 @@ await activity.update({ mins: 5 });
 await activity.end({ mins: 0 }, { dismissTimeInterval: 0 });
 ```
 
-## 11. 注意事项
+# 11. 注意事项
 
 - Live Activity 的启动是异步的，需要等到 `start` 返回 `true` 时才能调用 `update` 和 `end`
 - Live Activity 不能访问 Documents 和 iCloud 目录，只能访问 app group 目录，如果你想要访问文件或者渲染图片，必须把文件或图片保存到 `FileManager.appGroupDocumentsDirectory` 目录中。 比如渲染图片，你保存到 `FileManager.appGroupDocumentsDirectory` 中， 再通过 `<Image filePath={Path.join(FileManager.appGroupDocumentsDirectory, 'example.png')} />` 渲染

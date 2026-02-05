@@ -1,6 +1,4 @@
-# New List View Modifiers
-
-## Overview of Properties
+# Overview of Properties
 
 | Property                     | Type                                                        | Availability | Description                                                        |   |   |
 | ---------------------------- | ----------------------------------------------------------- | ------------ | ------------------------------------------------------------------ | - | - |
@@ -11,7 +9,7 @@
 
 ***
 
-## 1. listSectionIndexVisibility
+# 1. listSectionIndexVisibility
 
 ```ts
 /**
@@ -37,11 +35,12 @@ Possible values:
 <List listSectionIndexVisibility="visible">
   <ForEach
     data={groups}
-    builder={(group) => (
-      <Section header={<Text>{group.title}</Text>} sectionIndexLabel={group.title}>
-        {group.items.map((item) => (
-          <Text key={item}>{item}</Text>
-        ))}
+    builder={group => (
+      <Section
+        header={<Text>{group.title}</Text>}
+        sectionIndexLabel={group.title}
+      >
+        {group.items.map(item => <Text key={item}>{item}</Text>)}
       </Section>
     )}
   />
@@ -50,7 +49,7 @@ Possible values:
 
 ***
 
-## 2. listSectionMargins
+# 2. listSectionMargins
 
 ```ts
 /**
@@ -108,9 +107,10 @@ Equivalent to SwiftUI:
 <Section
   header={<Text>Favorites</Text>}
   listSectionMargins={{
-    edges: "horizontal",
-    length: 20,
-  }}>
+  edges: "horizontal",
+  length: 20
+  }}
+>
   <Text>Item A</Text>
   <Text>Item B</Text>
 </Section>
@@ -118,7 +118,7 @@ Equivalent to SwiftUI:
 
 ***
 
-## 3. sectionIndexLabel
+# 3. sectionIndexLabel
 
 ```ts
 /**
@@ -135,7 +135,10 @@ Sets the character or text displayed in the right-side section index for this se
 ### Example
 
 ```tsx
-<Section header={<Text>A</Text>} sectionIndexLabel="A">
+<Section
+  header={<Text>A</Text>}
+  sectionIndexLabel="A"
+>
   <Text>Adam</Text>
   <Text>Ana</Text>
 </Section>
@@ -143,7 +146,7 @@ Sets the character or text displayed in the right-side section index for this se
 
 ***
 
-## 4. sectionActions
+# 4. sectionActions
 
 ```ts
 /**
@@ -162,7 +165,10 @@ Adds custom UI elements such as buttons or menus to the section header’s trail
 ```tsx
 <Section
   header={<Text>Downloads</Text>}
-  sectionActions={<Button title="Refresh" action={() => doRefresh()} />}>
+  sectionActions={
+    <Button title="Refresh" action={() => doRefresh()} />
+  }
+>
   <Text>File 1</Text>
   <Text>File 2</Text>
 </Section>
@@ -178,30 +184,30 @@ Adds custom UI elements such as buttons or menus to the section header’s trail
       <Button title="Upload All" action={() => uploadAll()} />
       <Button title="Delete All" action={() => deleteAll()} />
     </Menu>
-  }>
-  {photos.map((photo) => (
-    <Text key={photo.id}>{photo.name}</Text>
-  ))}
+  }
+>
+  {photos.map(photo => <Text key={photo.id}>{photo.name}</Text>)}
 </Section>
 ```
 
 ***
 
-## Full Example
+# Full Example
 
 ```tsx
 <List listSectionIndexVisibility="visible">
   <ForEach
     data={groups}
-    builder={(group) => (
+    builder={group => (
       <Section
         header={<Text>{group.title}</Text>}
         sectionIndexLabel={group.title}
         listSectionMargins={12}
-        sectionActions={<Button title="Refresh" action={() => refreshGroup(group)} />}>
-        {group.items.map((item) => (
-          <Text key={item}>{item}</Text>
-        ))}
+        sectionActions={
+          <Button title="Refresh" action={() => refreshGroup(group)} />
+        }
+      >
+        {group.items.map(item => <Text key={item}>{item}</Text>)}
       </Section>
     )}
   />

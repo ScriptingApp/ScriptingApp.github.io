@@ -1,12 +1,10 @@
-# SFTP 文件
-
 `SFTPFile` 表示一个已经通过 SFTP 打开的远程文件句柄。
 通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。
 
 实例通常通过：
 
 ```ts
-const file = await sftp.openFile(path, flags);
+const file = await sftp.openFile(path, flags)
 ```
 
 获得。
@@ -30,7 +28,7 @@ const file = await sftp.openFile(path, flags);
 
 ***
 
-## `readAttributes(): Promise<FileAttributes>`
+# `readAttributes(): Promise<FileAttributes>`
 
 读取文件的元数据属性。
 
@@ -52,13 +50,13 @@ const file = await sftp.openFile(path, flags);
 ### 示例：
 
 ```ts
-const attrs = await file.readAttributes();
-console.log(attrs.size);
+const attrs = await file.readAttributes()
+console.log(attrs.size)
 ```
 
 ***
 
-## `read(options?: { from?: number, length?: number }): Promise<Data>`
+# `read(options?: { from?: number, length?: number }): Promise<Data>`
 
 按指定范围读取文件内容。
 
@@ -74,12 +72,12 @@ console.log(attrs.size);
 ### 示例：
 
 ```ts
-const data = await file.read({ from: 100, length: 50 });
+const data = await file.read({ from: 100, length: 50 })
 ```
 
 ***
 
-## `readAll(): Promise<Data>`
+# `readAll(): Promise<Data>`
 
 读取文件的全部内容。
 
@@ -90,12 +88,12 @@ const data = await file.read({ from: 100, length: 50 });
 ### 示例：
 
 ```ts
-const data = await file.readAll();
+const data = await file.readAll()
 ```
 
 ***
 
-## `write(data: Data, at?: number): Promise<void>`
+# `write(data: Data, at?: number): Promise<void>`
 
 向文件写入数据。
 
@@ -103,7 +101,9 @@ const data = await file.readAll();
 
 - `data`：要写入的二进制数据
 - `at?`：写入的起始偏移（字节）。
+
   - 若未提供，则根据 flags 的模式决定：
+
     - 若使用 `"append"` 打开，则追加到文件末尾
     - 若使用 `"write"` 打开，则从当前偏移或默认 0 写入
 
@@ -114,12 +114,12 @@ const data = await file.readAll();
 ### 示例：
 
 ```ts
-await file.write(Data.fromRawString("Hello world"));
+await file.write(Data.fromRawString("Hello world"))
 ```
 
 ***
 
-## `close(): Promise<void>`
+# `close(): Promise<void>`
 
 关闭文件句柄。
 关闭后，`isActive` 将变为 `false`，无法继续读写。
@@ -127,26 +127,26 @@ await file.write(Data.fromRawString("Hello world"));
 ### 示例：
 
 ```ts
-await file.close();
+await file.close()
 ```
 
 ***
 
-## 使用示例
+# 使用示例
 
 ```ts
 // 打开文件（读取模式）
-const file = await sftp.openFile("/home/user/info.txt", ["read"]);
+const file = await sftp.openFile("/home/user/info.txt", ["read"])
 
 // 获取文件属性
-const attrs = await file.readAttributes();
+const attrs = await file.readAttributes()
 
 // 读取内容
-const allData = await file.readAll();
+const allData = await file.readAll()
 
 // 部分读取
-const partial = await file.read({ from: 50, length: 100 });
+const partial = await file.read({ from: 50, length: 100 })
 
 // 关闭文件
-await file.close();
+await file.close()
 ```

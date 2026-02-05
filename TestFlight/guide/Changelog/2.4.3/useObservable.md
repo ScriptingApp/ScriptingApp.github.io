@@ -1,11 +1,9 @@
-# useObservable
-
 Scripting provides a reactive state system formed by `Observable<T>` and the `useObservable<T>` hook.
 This system drives UI updates, interacts with the animation engine, and aligns closely with SwiftUI’s binding model—enabling future APIs such as `List(selection:)`, `NavigationStack(path:)`, `TextField(text:)`, and more.
 
 ***
 
-## 1. Observable\<T>
+# 1. Observable\<T>
 
 `Observable<T>` is a reactive container that holds a mutable value.
 Whenever the value changes, any UI components that read this value are automatically re-rendered.
@@ -53,7 +51,7 @@ Typically only needed when manually managing observables outside the component s
 
 ***
 
-## 2. useObservable\<T>
+# 2. useObservable\<T>
 
 `useObservable<T>` creates component-local reactive state and provides an `Observable<T>` instance whose value persists across re-renders.
 
@@ -93,7 +91,7 @@ const user = useObservable(() => createDefaultUser());
 
 ***
 
-## 3. Using Observable in UI Components
+# 3. Using Observable in UI Components
 
 Reading `.value` inside JSX automatically establishes dependency tracking.
 
@@ -111,7 +109,7 @@ This behavior is similar to React’s `useState`, but aligned with SwiftUI’s r
 
 ***
 
-## 4. Integration with Animation
+# 4. Integration with Animation
 
 Observable values participate directly in Scripting’s animation system.
 
@@ -163,7 +161,7 @@ Example:
 
 ***
 
-## 5. Forward Compatibility with SwiftUI-Style Binding APIs
+# 5. Forward Compatibility with SwiftUI-Style Binding APIs
 
 `Observable` is the foundation for future SwiftUI-style binding APIs.
 Upcoming components will accept `Observable<T>` directly, matching SwiftUI’s `$binding` behavior.
@@ -194,7 +192,7 @@ This allows fully type-safe and reactive navigation, mirroring SwiftUI’s nativ
 
 ***
 
-## 6. ForEach: Recommended Data Binding Pattern
+# 6. ForEach: Recommended Data Binding Pattern
 
 Scripting provides a SwiftUI-aligned ForEach API:
 
@@ -231,7 +229,7 @@ const items = useObservable([
 
 ***
 
-## 7. Complete Example
+# 7. Complete Example
 
 ```tsx
 export function Demo() {
@@ -279,7 +277,7 @@ export function Demo() {
 
 ***
 
-## 8. Summary
+# 8. Summary
 
 - `Observable<T>` is the core reactive state container in Scripting.
 - `useObservable` creates component-local observable state.

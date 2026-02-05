@@ -39,12 +39,13 @@ CustomKeyboard.present(<MyKeyboard />)
 
 ## 3. Text Input State
 
-| Property           | Type                      | Description                              |
-| ------------------ | ------------------------- | ---------------------------------------- |
-| `textBeforeCursor` | `Promise<string \| null>` | Text before the cursor                   |
-| `textAfterCursor`  | `Promise<string \| null>` | Text after the cursor                    |
-| `selectedText`     | `Promise<string \| null>` | Currently selected text                  |
-| `hasText`          | `Promise<boolean>`        | Whether the text input contains any text |
+| Property           | Type             | Description                              |
+| ------------------ | ---------------- | ---------------------------------------- |
+| `textBeforeCursor` | `string \| null` | Text before the cursor                   |
+| `textAfterCursor`  | `string \| null` | Text after the cursor                    |
+| `selectedText`     | `string \| null` | Currently selected text                  |
+| `allText`          | `string`         | Currently entered text                   |
+| `hasText`          | `boolean`        | Whether the text input contains any text |
 
 ***
 
@@ -70,23 +71,23 @@ A snapshot of the traits at the last change. Prefer `useTraits()` in JSX compone
 
 ## 5. Text Manipulation
 
-### `insertText(text: string): Promise<void>`
+### `insertText(text: string): void`
 
 Insert text at the current cursor position.
 
-### `deleteBackward(): Promise<void>`
+### `deleteBackward(): void`
 
 Delete one character before the cursor.
 
-### `moveCursor(offset: number): Promise<void>`
+### `moveCursor(offset: number): void`
 
 Move the cursor by a number of characters. Negative = left; Positive = right.
 
-### `setMarkedText(text, location, length): Promise<void>`
+### `setMarkedText(text, location, length): void`
 
 Mark a portion of inserted text (used in composition scenarios like Pinyin input).
 
-### `unmarkText(): Promise<void>`
+### `unmarkText(): void`
 
 Clear any currently marked text.
 
@@ -94,23 +95,23 @@ Clear any currently marked text.
 
 ## 6. Keyboard Behavior Control
 
-### `dismiss(): Promise<void>`
+### `dismiss(): void`
 
 Dismiss the keyboard view.
 
-### `nextKeyboard(): Promise<void>`
+### `nextKeyboard(): void`
 
 Switch to the next system keyboard.
 
-### `requestHeight(height: number): Promise<void>`
+### `requestHeight(height: number): void`
 
 Request a new keyboard height in points. Recommended range is **216–360pt**.
 
-### `setHasDictationKey(value: boolean): Promise<void>`
+### `setHasDictationKey(value: boolean): void`
 
 Control whether the dictation (microphone) key is shown.
 
-### `setToolbarVisible(visible: boolean): Promise<void>`
+### `setToolbarVisible(visible: boolean): void`
 
 Show or hide the custom keyboard toolbar. Useful for debugging.
 
@@ -118,12 +119,12 @@ Show or hide the custom keyboard toolbar. Useful for debugging.
 
 ## 7. Navigation
 
-### `dismissToHome(): Promise<void>`
+### `dismissToHome(): void`
 
 Dismisses the currently active keyboard script and returns to the **Scripting keyboard home screen** (script list). Useful for letting users choose another script.
 
 ```ts
-await CustomKeyboard.dismissToHome()
+CustomKeyboard.dismissToHome()
 ```
 
 ***
@@ -171,7 +172,7 @@ function MyKeyboard() {
 
   const insert = async (text: string) => {
     CustomKeyboard.playInputClick()
-    await CustomKeyboard.insertText(text)
+    CustomKeyboard.insertText(text)
   }
 
   return (

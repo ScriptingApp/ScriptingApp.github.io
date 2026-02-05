@@ -1,5 +1,3 @@
-# Set environment values (environments)
-
 The `environments` view modifier allows injecting specific environment values into the current view hierarchy.
 It serves a role similar to SwiftUI’s `.environment()`, but with a more explicit and controlled design tailored for Scripting.
 
@@ -12,7 +10,7 @@ These environment values affect all descendants within the modified view subtree
 
 ***
 
-## Modifier Definition
+# Modifier Definition
 
 ```ts
 environments?: {
@@ -23,7 +21,7 @@ environments?: {
 
 ***
 
-## 1. editMode Environment
+# 1. editMode Environment
 
 The `editMode` environment value controls the editing state of views that support editing behavior, such as `List` with row deletion or movement.
 
@@ -73,7 +71,7 @@ const editMode = useObservable(() => EditMode.active())
 
 ***
 
-## 2. openURL Environment
+# 2. openURL Environment
 
 The `openURL` environment value customizes how URLs are handled when interacted with inside the view tree.
 It overrides the default behavior of components such as `<Link>`.
@@ -92,7 +90,7 @@ openURL?: (url: string) => OpenURLActionResult;
 
 ***
 
-## OpenURLActionResult
+# OpenURLActionResult
 
 ```ts
 class OpenURLActionResult {
@@ -127,7 +125,7 @@ class OpenURLActionResult {
 
 ***
 
-## openURL Example
+# openURL Example
 
 ```tsx
 <Group
@@ -135,19 +133,20 @@ class OpenURLActionResult {
     openURL: (url) => {
       return OpenURLActionResult.systemAction({
         url,
-        prefersInApp: false, // Requires iOS 26.0+
-      });
-    },
-  }}>
-  {urls.map((url) => (
+        prefersInApp: false   // Requires iOS 26.0+
+      })
+    }
+  }}
+>
+  {urls.map(url =>
     <Link url={url}>{url}</Link>
-  ))}
+  )}
 </Group>
 ```
 
 ***
 
-## Combined Example (editMode + openURL)
+# Combined Example (editMode + openURL)
 
 ```tsx
 const editMode = useObservable(() => EditMode.inactive())
@@ -186,7 +185,7 @@ const editMode = useObservable(() => EditMode.inactive())
 
 ***
 
-## Notes & Behavior Summary
+# Notes & Behavior Summary
 
 1. The `environments` modifier applies only to the subtree where it is used.
 2. `editMode` must be an `Observable<EditMode>` for reactive updates.

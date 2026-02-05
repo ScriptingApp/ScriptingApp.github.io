@@ -1,5 +1,3 @@
-# IntentMemoryStorage
-
 IntentMemoryStorage is an in-memory storage mechanism used inside AppIntent execution environments.
 It allows multiple AppIntents—such as multi-step workflows involving SnippetIntents—to share temporary data.
 
@@ -10,7 +8,7 @@ This document describes its real behavior, its storage scopes, how the system ma
 
 ***
 
-## Overview
+# Overview
 
 Each AppIntent in Scripting runs inside its own **Script Execution Context** (JSContext).
 When:
@@ -46,7 +44,7 @@ IntentMemoryStorage is:
 
 ***
 
-## Storage Scopes
+# Storage Scopes
 
 IntentMemoryStorage provides two scopes.
 
@@ -76,7 +74,7 @@ Both scopes are **temporary** and tied to the system’s handling of the Extensi
 
 ***
 
-## System Lifecycle and JSContext Behavior
+# System Lifecycle and JSContext Behavior
 
 IntentMemoryStorage’s behavior is entirely dependent on how the OS manages the AppIntent/Widget Extension process.
 
@@ -151,16 +149,16 @@ Therefore:
 
 ***
 
-## API Definition
+# API Definition
 
 ```ts
 namespace IntentMemoryStorage {
-  function get<T>(key: string, options?: { shared?: boolean }): T | null;
-  function set(key: string, value: any, options?: { shared?: boolean }): void;
-  function remove(key: string, options?: { shared?: boolean }): void;
-  function contains(key: string, options?: { shared?: boolean }): boolean;
-  function clear(): void;
-  function keys(): string[];
+  function get<T>(key: string, options?: { shared?: boolean }): T | null
+  function set(key: string, value: any, options?: { shared?: boolean }): void
+  function remove(key: string, options?: { shared?: boolean }): void
+  function contains(key: string, options?: { shared?: boolean }): boolean
+  function clear(): void
+  function keys(): string[]
 }
 ```
 
@@ -171,12 +169,12 @@ Notes:
 
 ***
 
-## API Details
+# API Details
 
 ## get
 
 ```ts
-function get<T>(key: string, options?: { shared?: boolean }): T | null;
+function get<T>(key: string, options?: { shared?: boolean }): T | null
 ```
 
 Retrieves a value.
@@ -191,13 +189,13 @@ Examples:
 Script-scoped:
 
 ```ts
-const color = IntentMemoryStorage.get<string>("color");
+const color = IntentMemoryStorage.get<string>("color")
 ```
 
 Shared:
 
 ```ts
-const token = IntentMemoryStorage.get<string>("token", { shared: true });
+const token = IntentMemoryStorage.get<string>("token", { shared: true })
 ```
 
 ***
@@ -205,7 +203,7 @@ const token = IntentMemoryStorage.get<string>("token", { shared: true });
 ## set
 
 ```ts
-function set(key: string, value: any, options?: { shared?: boolean }): void;
+function set(key: string, value: any, options?: { shared?: boolean }): void
 ```
 
 Stores a value in the selected scope.
@@ -215,7 +213,7 @@ Stores a value in the selected scope.
 ## remove
 
 ```ts
-function remove(key: string, options?: { shared?: boolean }): void;
+function remove(key: string, options?: { shared?: boolean }): void
 ```
 
 Deletes the key in the selected scope.
@@ -225,7 +223,7 @@ Deletes the key in the selected scope.
 ## contains
 
 ```ts
-function contains(key: string, options?: { shared?: boolean }): boolean;
+function contains(key: string, options?: { shared?: boolean }): boolean
 ```
 
 Checks whether a key exists.
@@ -237,7 +235,7 @@ This depends on whether the Extension process has remained alive.
 ## clear
 
 ```ts
-function clear(): void;
+function clear(): void
 ```
 
 Clears **script-scoped** memory only.
@@ -249,7 +247,7 @@ To clear shared memory, remove keys manually.
 ## keys
 
 ```ts
-function keys(): string[];
+function keys(): string[]
 ```
 
 Returns keys in script-scoped storage.
@@ -258,7 +256,7 @@ Shared keys must be tracked manually by the developer.
 
 ***
 
-## Usage Scenarios
+# Usage Scenarios
 
 ## Script-scoped (default)
 
@@ -281,7 +279,7 @@ Good for:
 
 ***
 
-## Not Recommended For
+# Not Recommended For
 
 - Persistent data
 - Large objects (images, binary, long text)
@@ -296,14 +294,14 @@ Use instead:
 
 ***
 
-## Examples
+# Examples
 
 ## Script-scoped
 
 ```ts
-IntentMemoryStorage.set("color", "red");
+IntentMemoryStorage.set("color", "red")
 
-const color = IntentMemoryStorage.get<string>("color");
+const color = IntentMemoryStorage.get<string>("color")
 ```
 
 ***
@@ -313,25 +311,25 @@ const color = IntentMemoryStorage.get<string>("color");
 Script A:
 
 ```ts
-IntentMemoryStorage.set("sessionID", "12345", { shared: true });
+IntentMemoryStorage.set("sessionID", "12345", { shared: true })
 ```
 
 Script B:
 
 ```ts
-const id = IntentMemoryStorage.get<string>("sessionID", { shared: true });
+const id = IntentMemoryStorage.get<string>("sessionID", { shared: true })
 ```
 
 ***
 
-## Storage Structure Example
+# Storage Structure Example
 
 If you store:
 
 ```ts
-IntentMemoryStorage.set("color", "green");
-IntentMemoryStorage.set("step", 2);
-IntentMemoryStorage.set("token", "xyz", { shared: true });
+IntentMemoryStorage.set("color", "green")
+IntentMemoryStorage.set("step", 2)
+IntentMemoryStorage.set("token", "xyz", { shared: true })
 ```
 
 Then the extension process holds:
@@ -357,19 +355,15 @@ Both disappear once the system kills the Extension process.
 
 ***
 
-## Best Practices
+# Best Practices
 
 - Treat MemoryStorage as an in-memory _cache_, not a storage layer
-
 - Never assume the value will exist
-
 - Never assume the value will be cleared
-
 - Do not store large data
-
 - Use structured keys like:
+
   - `"workflow.step"`
   - `"ui.selectedColor"`
   - `"global.sessionID"`
-
 - For persistent or critical data, always use `Storage` or `FileManager`

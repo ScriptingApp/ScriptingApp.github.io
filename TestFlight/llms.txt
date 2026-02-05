@@ -9,6 +9,7 @@
 - [requestStructuredData](/TestFlight/guide/Assistant/requestStructuredData.md): Request structured JSON data.
 - [Assistant Tool With User Approval](/TestFlight/guide/AssistantTool/Assistant Tool With User Approval.md): Learn how to implement an Assistant Tool with user approval.
 - [Assistant Tool Without User Approval](/TestFlight/guide/AssistantTool/Assistant Tool Without User Approval.md): Learn how to implement an Assistant Tool without user approval.
+- [AssistantTool User-Initiated Cancellation](/TestFlight/guide/AssistantTool/AssistantTool User-Initiated Cancellation.md): To improve the user experience of long-running tools, AssistantTool introduces support for user-initiated cancellation.
 - [Overview and Workflow](/TestFlight/guide/AssistantTool/Overview and Workflow.md): Learn about the overview and workflow of AssistantTools.
 - [ScriptEditorProvider and Editor Types](/TestFlight/guide/AssistantTool/ScriptEditorProvider and Editor Types.md): Learn about ScriptEditorProvider and Editor Types.
 - [Animation and Transition](/TestFlight/guide/Changelog/2.4.3/Animation and Transition.md): These interfaces define how view transitions occur when their properties change.
@@ -74,15 +75,16 @@
 - [SharedAudioSession](/TestFlight/guide/Changelog/2.4.6/SharedAudioSession.md): New outputVolume property and addOutputVolumeChangedListener and removeOutputVolumeChangedListener methods.
 - [onDrag and onDrop View Modifiers](/TestFlight/guide/Changelog/2.4.6/onDrag and onDrop View Modifiers.md): These APIs enable views to act as drag sources, drop destinations, or both, supporting intra-app and cross-app drag-and-drop scenarios.
 - [onDropContent](/TestFlight/guide/Changelog/2.4.6/onDropContent.md): New Observable support, perform function has been adjusted, return an array of ItemProvider objects for deferred loading data.
-- [Device](/TestFlight/guide/Changelog/2.4.7/Device.md): Add proximityState、orientation and addProximityListener, etc.
+- [AVPlayer](/TestFlight/guide/Changelog/2.4.7/AVPlayer.md): Added defaultRate property, and added an optional rate parameter for play method.
+- [AssistantTool User-Initiated Cancellation](/TestFlight/guide/Changelog/2.4.7/AssistantTool User-Initiated Cancellation.md): To improve the user experience of long-running tools, AssistantTool introduces support for user-initiated cancellation.
+- [Device](/TestFlight/guide/Changelog/2.4.7/Device.md): Add proximityState, orientation, supportedInterfaceOrientations and addProximityListener, etc.
 - [Location](/TestFlight/guide/Changelog/2.4.7/Location.md): Add requestHeading、 addHeadingListener、removeHeadingListener, etc.
-- [Configuration](/TestFlight/guide/Changelog/2.4.7/SQLite/Configuration.md): The configuration parameters of the SQLite module.
-- [](/TestFlight/guide/Changelog/2.4.7/SQLite/Database.md)
-- [DatabaseMigrator](/TestFlight/guide/Changelog/2.4.7/SQLite/DatabaseMigrator.md): It is responsible for managing and executing database schema migrations.
-- [DatabaseQueue and DatabasePool](/TestFlight/guide/Changelog/2.4.7/SQLite/DatabaseQueue and DatabasePool.md): DatabaseQueue and DatabasePool are used to support concurrent database access.
-- [Quick Start](/TestFlight/guide/Changelog/2.4.7/SQLite/Quick Start.md): Quickly master the use of SQLite.
-- [Schema & Value Types](/TestFlight/guide/Changelog/2.4.7/SQLite/Schema & Value Types.md): The basic types of SQLite.
-- [Statement](/TestFlight/guide/Changelog/2.4.7/SQLite/Statement.md): It is designed to improve performance for repeated execution, ensure safe parameter binding, and provide explicit argument validation for complex workflows.
+- [Database and Connection](/TestFlight/guide/Changelog/2.4.7/SQLite/Database and Connection.md): Introduces SQLite database opening mode, connection configuration and behaviors related to connection lifecycle
+- [Executing SQL and Query](/TestFlight/guide/Changelog/2.4.7/SQLite/Executing SQL and Query.md): This section explains how to execute SQL statements, bind parameters, and query data using SQLite.
+- [Overview](/TestFlight/guide/Changelog/2.4.7/SQLite/Overview.md): Quickly master the use of SQLite.
+- [Schema Introspection](/TestFlight/guide/Changelog/2.4.7/SQLite/Schema Introspection.md): This section explains how to inspect and analyze database structures using SQLite’s schema introspection APIs.
+- [Schema Management](/TestFlight/guide/Changelog/2.4.7/SQLite/Schema Management.md): This section explains how to create, modify, and remove tables and indexes using SQLite’s structured schema APIs.
+- [Transcation](/TestFlight/guide/Changelog/2.4.7/SQLite/Transcation.md): This section describes the transaction model, transaction types.
 - [Quick Start](/TestFlight/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index.md): Learn how to use VideoRecorder.
 - [Example](/TestFlight/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index_example.md): Learn how to use VideoRecorder.
 - [VideoRecorderPreviewView](/TestFlight/guide/Changelog/2.4.7/VideoRecorder/VideoRecorderPreviewView.md): Learn how to use VideoRecorderPreviewView.
@@ -90,8 +92,8 @@
 - [Control Widget](/TestFlight/guide/Control Widget.md): Add custom Button or Toggle controls to the Control Center or Lock Screen
 - [Custom Keyboard](/TestFlight/guide/Custom Keyboard.md): Create custom keyboards with unique layouts and functionalities.
 - [AVMetadataItem](/TestFlight/guide/Device Capabilities/AVMetadataItem.md): AVMetadataItem is a class that represents a metadata item in an audio or video asset.
+- [AVPlayer](/TestFlight/guide/Device Capabilities/AVPlayer.md): The interface for playing audio or video resources, supporting playback control, rate control, loop playback, playback status listening, and media metadata reading.
 - [AppStore](/TestFlight/guide/Device Capabilities/AppStore.md): This API is used to display the details of an app in the App Store, without leaving the Scripting app.
-- [Audio Player](/TestFlight/guide/Device Capabilities/Audio Player.md): The interface allows for playback of both local and network audio sources, and offers controls such as play, pause, stop, volume, and more.
 - [AudioRecorder](/TestFlight/guide/Device Capabilities/AudioRecorder.md): The interface allows you to record audio data to a file. It provides functionalities to start, stop, pause, and manage audio recordings, with configurable settings for audio quality, sample rate, format, and more.
 - [BackgroundKeeper](/TestFlight/guide/Device Capabilities/BackgroundKeeper.md): This interface provides methods for keeping the Scripting app running in the background.
 - [BluetoothCentralManager](/TestFlight/guide/Device Capabilities/Bluetooth/BluetoothCentralManager.md): This interface allows you to scan for, connect to, and interact with nearby Bluetooth peripherals.
@@ -211,6 +213,12 @@
 - [Request & RequestInit](/TestFlight/guide/Utilities/Request/Request & RequestInit.md): The interface represents a complete configuration of an HTTP request.
 - [Response](/TestFlight/guide/Utilities/Request/Response.md): This class represents the result of an HTTP request made using the fetch() API
 - [fetch](/TestFlight/guide/Utilities/Request/fetch.md): Send network requests.
+- [Database and Connection](/TestFlight/guide/Utilities/SQLite/Database and Connection.md): Introduces SQLite database opening mode, connection configuration and behaviors related to connection lifecycle
+- [Executing SQL and Query](/TestFlight/guide/Utilities/SQLite/Executing SQL and Query.md): This section explains how to execute SQL statements, bind parameters, and query data using SQLite.
+- [Overview](/TestFlight/guide/Utilities/SQLite/Overview.md): Quickly master the use of SQLite.
+- [Schema Introspection](/TestFlight/guide/Utilities/SQLite/Schema Introspection.md): This section explains how to inspect and analyze database structures using SQLite’s schema introspection APIs.
+- [Schema Management](/TestFlight/guide/Utilities/SQLite/Schema Management.md): This section explains how to create, modify, and remove tables and indexes using SQLite’s structured schema APIs.
+- [Transcation](/TestFlight/guide/Utilities/SQLite/Transcation.md): This section describes the transaction model, transaction types.
 - [SFTP Client](/TestFlight/guide/Utilities/SSH/SFTP Client.md): This interface provides a simple way to transfer files securely over SSH using SFTP protocol.
 - [SFTP File](/TestFlight/guide/Utilities/SSH/SFTP File.md): This interface provides low-level operations such as reading, writing, retrieving attributes, and closing the file.
 - [SSH Authentication Method](/TestFlight/guide/Utilities/SSH/SSH Authentication Method.md): This interface provides a way to authenticate SSH connections using various methods such as password, public key, or private key.

@@ -1,5 +1,3 @@
-# 本地存储
-
 `Storage` 模块为脚本提供轻量级的持久化存储能力。
 开发者可以在脚本中保存与读取简单的数据类型（如字符串、数字、布尔值、JSON 对象）以及二进制数据（`Data`）。
 
@@ -10,7 +8,7 @@
 
 ***
 
-## 支持的数据类型
+# 支持的数据类型
 
 Storage 支持以下类型的数据：
 
@@ -24,7 +22,7 @@ Storage 支持以下类型的数据：
 
 ***
 
-## 存储域说明
+# 存储域说明
 
 | 类型          | 默认                    | 可访问性     | 适用场景                  |
 | ----------- | --------------------- | -------- | --------------------- |
@@ -33,12 +31,12 @@ Storage 支持以下类型的数据：
 
 ***
 
-## API 参考
+# API 参考
 
 ## 1. `Storage.set(key, value, options?)`
 
 ```ts
-function set<T>(key: string, value: T, options?: { shared: boolean }): boolean;
+function set<T>(key: string, value: T, options?: { shared: boolean }): boolean
 ```
 
 将值保存到持久化存储中。支持 `string`、`number`、`boolean` 和 `JSON` 类型。
@@ -60,7 +58,7 @@ function set<T>(key: string, value: T, options?: { shared: boolean }): boolean;
 ## 2. `Storage.get(key, options?)`
 
 ```ts
-function get<T>(key: string, options?: { shared: boolean }): T | null;
+function get<T>(key: string, options?: { shared: boolean }): T | null
 ```
 
 读取已保存的值。如果不存在，返回 `null`。
@@ -81,7 +79,7 @@ function get<T>(key: string, options?: { shared: boolean }): T | null;
 ## 3. `Storage.setData(key, data, options?)`
 
 ```ts
-function setData(key: string, data: Data, options?: { shared: boolean }): void;
+function setData(key: string, data: Data, options?: { shared: boolean }): void
 ```
 
 保存二进制数据 `Data` 到持久化存储。
@@ -95,7 +93,7 @@ function setData(key: string, data: Data, options?: { shared: boolean }): void;
 ## 4. `Storage.getData(key, options?)`
 
 ```ts
-function getData(key: string, options?: { shared: boolean }): Data | null;
+function getData(key: string, options?: { shared: boolean }): Data | null
 ```
 
 读取保存的二进制数据。不存在时返回 `null`。
@@ -105,7 +103,7 @@ function getData(key: string, options?: { shared: boolean }): Data | null;
 ## 5. `Storage.remove(key, options?)`
 
 ```ts
-function remove(key: string, options?: { shared: boolean }): void;
+function remove(key: string, options?: { shared: boolean }): void
 ```
 
 移除指定键的数据。
@@ -115,7 +113,7 @@ function remove(key: string, options?: { shared: boolean }): void;
 ## 6. `Storage.contains(key, options?)`
 
 ```ts
-function contains(key: string, options?: { shared: boolean }): boolean;
+function contains(key: string, options?: { shared: boolean }): boolean
 ```
 
 检测存储中是否包含某个键。
@@ -125,7 +123,7 @@ function contains(key: string, options?: { shared: boolean }): boolean;
 ## 7. `Storage.clear()`
 
 ```ts
-function clear(): void;
+function clear(): void
 ```
 
 清空所有存储的键值对。
@@ -136,21 +134,21 @@ function clear(): void;
 ## 8. `Storage.keys()`
 
 ```ts
-function keys(): string[];
+function keys(): string[]
 ```
 
 返回当前存储域中所有键名数组。
 
 ***
 
-## 使用示例
+# 使用示例
 
 ## 示例 1：保存与读取简单类型
 
 ```ts
-Storage.set("username", "Thom");
-const name = Storage.get<string>("username");
-console.log(name); // "Thom"
+Storage.set("username", "Thom")
+const name = Storage.get<string>("username")
+console.log(name) // "Thom"
 ```
 
 ***
@@ -160,11 +158,11 @@ console.log(name); // "Thom"
 ```ts
 Storage.set("profile", {
   name: "Alice",
-  age: 30,
-});
+  age: 30
+})
 
-const profile = Storage.get<{ name: string; age: number }>("profile");
-console.log(profile?.age); // 30
+const profile = Storage.get<{ name: string; age: number }>("profile")
+console.log(profile?.age) // 30
 ```
 
 ***
@@ -172,11 +170,11 @@ console.log(profile?.age); // 30
 ## 示例 3：保存与读取 Data
 
 ```ts
-const bytes = Data.fromUTF8("hello");
-Storage.setData("payload", bytes);
+const bytes = Data.fromUTF8("hello")
+Storage.setData("payload", bytes)
 
-const result = Storage.getData("payload");
-console.log(result?.toUTF8()); // "hello"
+const result = Storage.getData("payload")
+console.log(result?.toUTF8()) // "hello"
 ```
 
 ***
@@ -184,10 +182,10 @@ console.log(result?.toUTF8()); // "hello"
 ## 示例 4：使用 shared 共享数据
 
 ```ts
-Storage.set("theme", "dark", { shared: true });
+Storage.set("theme", "dark", { shared: true })
 
-const value = Storage.get<string>("theme", { shared: true });
-console.log(value); // "dark"
+const value = Storage.get<string>("theme", { shared: true })
+console.log(value) // "dark"
 ```
 
 ***
@@ -196,7 +194,7 @@ console.log(value); // "dark"
 
 ```ts
 if (Storage.contains("token")) {
-  Storage.remove("token");
+  Storage.remove("token")
 }
 ```
 
@@ -205,12 +203,12 @@ if (Storage.contains("token")) {
 ## 示例 6：获取所有键
 
 ```ts
-console.log(Storage.keys()); // ["username", "profile", ...]
+console.log(Storage.keys()) // ["username", "profile", ...]
 ```
 
 ***
 
-## 注意事项
+# 注意事项
 
 1. 所有写入操作异步持久化，但 API 会立即返回成功与否。
 2. `Data` 类型不能通过 `Storage.set()` 保存，必须使用 `setData()`。

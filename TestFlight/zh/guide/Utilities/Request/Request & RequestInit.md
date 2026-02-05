@@ -1,5 +1,3 @@
-# Request 和 RequestInit
-
 `Request` 类表示一次 HTTP 请求的完整配置。
 它可作为 `fetch()` 方法的参数使用，也可用于克隆、修改或重试请求。
 
@@ -16,20 +14,20 @@
 
 ```ts
 class Request {
-  url: string;
-  method: string;
-  headers: Headers;
-  body?: Data | FormData | string | ArrayBuffer;
-  allowInsecureRequest?: boolean;
-  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>;
-  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean>; // 已废弃
-  timeout?: DurationInSeconds;
-  signal?: AbortSignal;
-  cancelToken?: CancelToken; // 已废弃
-  debugLabel?: string;
+  url: string
+  method: string
+  headers: Headers
+  body?: Data | FormData | string | ArrayBuffer
+  allowInsecureRequest?: boolean
+  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>
+  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean> // 已废弃
+  timeout?: DurationInSeconds
+  signal?: AbortSignal
+  cancelToken?: CancelToken // 已废弃
+  debugLabel?: string
 
-  constructor(input: string | Request, init?: RequestInit);
-  clone(): Request;
+  constructor(input: string | Request, init?: RequestInit)
+  clone(): Request
 }
 ```
 
@@ -44,10 +42,10 @@ class Request {
 
 #### 参数
 
-\| 参数      | 类型          | 说明                                             |
-\| --------- | ------------- | ------------------------------------------------ | ------------------------------------------------- |
-\| **input** | `string`      | `Request`                                        | 要请求的 URL，或一个现有的 Request 对象用于克隆。 |
-\| **init**  | `RequestInit` | 可选的初始化参数，用于配置请求的行为（见下文）。 |
+| 参数        | 类型            | 说明                       |                                 |
+| --------- | ------------- | ------------------------ | ------------------------------- |
+| **input** | `string`      | `Request`                | 要请求的 URL，或一个现有的 Request 对象用于克隆。 |
+| **init**  | `RequestInit` | 可选的初始化参数，用于配置请求的行为（见下文）。 |                                 |
 
 ***
 
@@ -82,11 +80,11 @@ class Request {
 const req1 = new Request("https://api.example.com/user", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ name: "Alice" }),
-});
+  body: JSON.stringify({ name: "Alice" })
+})
 
-const req2 = req1.clone();
-console.log(req2.method); // "POST"
+const req2 = req1.clone()
+console.log(req2.method) // "POST"
 ```
 
 ***
@@ -99,14 +97,14 @@ console.log(req2.method); // "POST"
 const request = new Request("https://api.example.com/data", {
   method: "GET",
   headers: {
-    Accept: "application/json",
+    "Accept": "application/json",
   },
-  debugLabel: "Fetch User Data",
-});
+  debugLabel: "Fetch User Data"
+})
 
-const response = await fetch(request);
-const result = await response.json();
-console.log(result);
+const response = await fetch(request)
+const result = await response.json()
+console.log(result)
 ```
 
 ***
@@ -119,10 +117,10 @@ const request = new Request("https://api.example.com/upload", {
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ fileId: "abc123" }),
   timeout: 15,
-});
+})
 
-const response = await fetch(request);
-console.log(await response.text());
+const response = await fetch(request)
+console.log(await response.text())
 ```
 
 ***
@@ -133,18 +131,18 @@ console.log(await response.text());
 const base = new Request("https://api.example.com/posts", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-});
+})
 
-const cloned = base.clone();
-cloned.headers.set("Authorization", "Bearer token-123");
-cloned.debugLabel = "Authorized Upload";
+const cloned = base.clone()
+cloned.headers.set("Authorization", "Bearer token-123")
+cloned.debugLabel = "Authorized Upload"
 
-await fetch(cloned);
+await fetch(cloned)
 ```
 
 ***
 
-## RequestInit 类型
+# RequestInit 类型
 
 `RequestInit` 是一个用于配置请求参数的对象类型，常用于 `fetch()` 或 `Request` 构造函数中。
 它与浏览器的标准 Fetch API 相同，但 Scripting 扩展了若干字段。
@@ -155,17 +153,17 @@ await fetch(cloned);
 
 ```ts
 type RequestInit = {
-  method?: string;
-  headers?: HeadersInit;
-  body?: Data | FormData | string | ArrayBuffer;
-  allowInsecureRequest?: boolean;
-  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>;
-  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean>; // 已废弃
-  timeout?: DurationInSeconds;
-  signal?: AbortSignal;
-  cancelToken?: CancelToken; // 已废弃
-  debugLabel?: string;
-};
+  method?: string
+  headers?: HeadersInit
+  body?: Data | FormData | string | ArrayBuffer
+  allowInsecureRequest?: boolean
+  handleRedirect?: (newRequest: RedirectRequest) => Promise<RedirectRequest | null>
+  shouldAllowRedirect?: (newRequest: Request) => Promise<boolean> // 已废弃
+  timeout?: DurationInSeconds
+  signal?: AbortSignal
+  cancelToken?: CancelToken // 已废弃
+  debugLabel?: string
+}
 ```
 
 ***
@@ -198,7 +196,7 @@ const response = await fetch("https://example.com/data", {
   body: JSON.stringify({ id: 123 }),
   timeout: 10,
   debugLabel: "Upload JSON",
-});
+})
 ```
 
 ***
@@ -223,11 +221,11 @@ const response = await fetch("https://example.com/data", {
 ```tsx
 const response = await fetch("https://example.com/start", {
   handleRedirect: async (newRequest) => {
-    console.log("收到重定向:", newRequest.url);
-    if (newRequest.url.includes("blocked")) return null;
-    return newRequest;
+    console.log("收到重定向:", newRequest.url)
+    if (newRequest.url.includes("blocked")) return null
+    return newRequest
   },
-});
+})
 ```
 
 ***
@@ -237,8 +235,8 @@ const response = await fetch("https://example.com/start", {
 ```tsx
 const response = await fetch("http://insecure.example.com/data", {
   allowInsecureRequest: true,
-});
-console.log(await response.text());
+})
+console.log(await response.text())
 ```
 
 ***
@@ -248,7 +246,7 @@ console.log(await response.text());
 ```tsx
 await fetch("https://example.com/api/ping", {
   debugLabel: "Ping Request",
-});
+})
 // 调试面板中将显示标签 “Ping Request”
 ```
 
@@ -270,12 +268,12 @@ await fetch("https://example.com/api/ping", {
 
 ```ts
 interface RedirectRequest {
-  method: string;
-  url: string;
-  headers: Record<string, string>;
-  cookies: Cookie[];
-  body?: Data;
-  timeout?: number;
+  method: string
+  url: string
+  headers: Record<string, string>
+  cookies: Cookie[]
+  body?: Data
+  timeout?: number
 }
 ```
 
@@ -314,19 +312,19 @@ interface RedirectRequest {
 ```tsx
 const response = await fetch("https://example.com/start", {
   handleRedirect: async (redirect) => {
-    console.log("即将重定向至:", redirect.url);
+    console.log("即将重定向至:", redirect.url)
 
     // 如果跳转到外部域名，则阻止
     if (!redirect.url.startsWith("https://example.com")) {
-      console.warn("阻止外部重定向:", redirect.url);
-      return null;
+      console.warn("阻止外部重定向:", redirect.url)
+      return null
     }
 
     // 向重定向请求添加授权头
-    redirect.headers["Authorization"] = "Bearer my-token";
-    return redirect;
+    redirect.headers["Authorization"] = "Bearer my-token"
+    return redirect
   },
-});
+})
 ```
 
 ***
@@ -338,12 +336,12 @@ const response = await fetch("https://api.example.com/login", {
   handleRedirect: async (redirect) => {
     // 如果重定向目标为 POST 接口，则保持原始请求体
     if (redirect.url.includes("/finalize")) {
-      redirect.method = "POST";
-      redirect.body = Data.fromRawString("action=confirm", "utf-8");
+      redirect.method = "POST"
+      redirect.body = Data.fromRawString("action=confirm", "utf-8")
     }
-    return redirect;
+    return redirect
   },
-});
+})
 ```
 
 ***

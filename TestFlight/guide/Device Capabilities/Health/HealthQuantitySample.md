@@ -1,5 +1,3 @@
-# HealthQuantitySample
-
 The `HealthQuantitySample` class represents a single health quantity data point, such as a heart rate measurement, a recorded step count, or a logged calorie value. It provides information about the measurement’s type, time interval, unit, value, and optional metadata.
 
 This class is the base for more specialized subclasses: `HealthCumulativeQuantitySample` and `HealthDiscreteQuantitySample`.
@@ -53,8 +51,8 @@ Converts the sample's stored value to the specified unit.
 **Example:**
 
 ```ts
-const bpm = sample.quantityValue(HealthUnit.count().divided(HealthUnit.minute()));
-console.log(`Heart Rate: ${bpm} bpm`);
+const bpm = sample.quantityValue(HealthUnit.count().divided(HealthUnit.minute()))
+console.log(`Heart Rate: ${bpm} bpm`)
 ```
 
 ***
@@ -86,18 +84,18 @@ Creates a new quantity sample with the specified parameters.
 
 ```ts
 const sample = HealthQuantitySample.create({
-  type: "stepCount",
-  startDate: new Date("2025-07-01T09:00:00"),
-  endDate: new Date("2025-07-01T09:01:00"),
+  type: 'stepCount',
+  startDate: new Date('2025-07-01T09:00:00'),
+  endDate: new Date('2025-07-01T09:01:00'),
   value: 200,
   unit: HealthUnit.count(),
-  metadata: { source: "manualEntry" },
-});
+  metadata: { source: 'manualEntry' }
+})
 ```
 
 ***
 
-## Subclass: HealthCumulativeQuantitySample
+# Subclass: HealthCumulativeQuantitySample
 
 The `HealthCumulativeQuantitySample` class represents cumulative data (i.e., totals over time), such as energy burned or distance traveled.
 
@@ -116,8 +114,8 @@ Returns the total accumulated quantity in the specified unit.
 **Example:**
 
 ```ts
-const totalKcal = cumulativeSample.sumQuantity(HealthUnit.kilocalorie());
-console.log(`Total active energy: ${totalKcal} kcal`);
+const totalKcal = cumulativeSample.sumQuantity(HealthUnit.kilocalorie())
+console.log(`Total active energy: ${totalKcal} kcal`)
 ```
 
 ### `quantityValue(unit: HealthUnit): number`
@@ -126,7 +124,7 @@ Alias for `sumQuantity()` — retrieves the total value in the given unit.
 
 ***
 
-## Subclass: HealthDiscreteQuantitySample
+# Subclass: HealthDiscreteQuantitySample
 
 The `HealthDiscreteQuantitySample` class represents a series of discrete values sampled at specific times — such as heart rate measurements or step counts across a time window.
 
@@ -148,10 +146,10 @@ The `HealthDiscreteQuantitySample` class represents a series of discrete values 
 ### Example:
 
 ```ts
-const avg = discreteSample.averageQuantity(HealthUnit.count());
-const max = discreteSample.maximumQuantity(HealthUnit.count());
-const recent = discreteSample.mostRecentQuantity(HealthUnit.count());
-console.log(`Average: ${avg}, Max: ${max}, Recent: ${recent}`);
+const avg = discreteSample.averageQuantity(HealthUnit.count())
+const max = discreteSample.maximumQuantity(HealthUnit.count())
+const recent = discreteSample.mostRecentQuantity(HealthUnit.count())
+console.log(`Average: ${avg}, Max: ${max}, Recent: ${recent}`)
 ```
 
 ***

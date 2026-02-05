@@ -1,5 +1,3 @@
-# Liquid Glass Effect
-
 Scripting provides full support for the new **Liquid Glass** visual system introduced in iOS 26. This includes `glassEffect`, `GlassEffectContainer`, `UIGlass`, and related geometry-matching and transition APIs. These APIs allow scripts to create rich translucent materials, fluid glass shapes, matched geometry animations, and unioned glass regions directly within TSX.
 
 This document explains how the Liquid Glass APIs are used in Scripting, including:
@@ -14,7 +12,7 @@ This document explains how the Liquid Glass APIs are used in Scripting, includin
 
 ***
 
-## 1. Overview of Liquid Glass
+# 1. Overview of Liquid Glass
 
 Liquid Glass is a new material and animation system in iOS 26. Compared to earlier blur or material effects, Liquid Glass provides:
 
@@ -26,7 +24,7 @@ Liquid Glass is a new material and animation system in iOS 26. Compared to earli
 
 ***
 
-## 2. The `glassEffect` Modifier
+# 2. The `glassEffect` Modifier
 
 Any view that adopts `GlassProps` can apply a Liquid Glass effect using the `glassEffect` property.
 
@@ -34,27 +32,23 @@ Any view that adopts `GlassProps` can apply a Liquid Glass effect using the `gla
 
 ```ts
 type GlassProps = {
-  glassEffect?:
-    | boolean
-    | UIGlass
-    | Shape
-    | {
-        glass: UIGlass;
-        shape: Shape;
-      };
+  glassEffect?: boolean | UIGlass | Shape | {
+    glass: UIGlass
+    shape: Shape
+  }
 
-  glassEffectTransition?: GlassEffectTransition;
+  glassEffectTransition?: GlassEffectTransition
 
   glassEffectID?: {
-    id: string | number;
-    namespace: NamespaceID;
-  };
+    id: string | number
+    namespace: NamespaceID
+  }
 
   glassEffectUnion?: {
-    id: string | number;
-    namespace: NamespaceID;
-  };
-};
+    id: string | number
+    namespace: NamespaceID
+  }
+}
 ```
 
 ***
@@ -74,7 +68,9 @@ Equivalent to `UIGlass.regular()`.
 ### **2. Apply a specific UIGlass instance**
 
 ```tsx
-<Text glassEffect={UIGlass.regular().interactive(false)}>Foo</Text>
+<Text glassEffect={UIGlass.regular().interactive(false)}>
+  Foo
+</Text>
 ```
 
 You can chain configuration calls such as `interactive()` and `tint()`.
@@ -87,8 +83,9 @@ You can chain configuration calls such as `interactive()` and `tint()`.
 <Text
   glassEffect={{
     glass: UIGlass.regular(),
-    shape: { type: "rect", cornerRadius: 10 },
-  }}>
+    shape: { type: 'rect', cornerRadius: 10 }
+  }}
+>
   Foo
 </Text>
 ```
@@ -96,7 +93,9 @@ You can chain configuration calls such as `interactive()` and `tint()`.
 Or directly provide a Shape object:
 
 ```tsx
-<Text glassEffect={{ type: "rect", cornerRadius: 10 }}>Foo</Text>
+<Text glassEffect={{ type: 'rect', cornerRadius: 10 }}>
+  Foo
+</Text>
 ```
 
 The glass material will be clipped to the shape’s geometry.
@@ -113,7 +112,7 @@ Acts the same as default Liquid Glass material.
 
 ***
 
-## 3. The `UIGlass` Class
+# 3. The `UIGlass` Class
 
 `UIGlass` represents the Liquid Glass material configuration.
 
@@ -140,10 +139,10 @@ glassEffect={UIGlass.regular().interactive().tint("red")}
 
 ***
 
-## 4. Glass Effect Transitions
+# 4. Glass Effect Transitions
 
 ```ts
-type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
+type GlassEffectTransition = 'identity' | 'materialize' | 'matchedGeometry'
 ```
 
 ### Transition Types
@@ -157,7 +156,10 @@ type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
 ### Usage
 
 ```tsx
-<Text glassEffect glassEffectTransition="materialize">
+<Text
+  glassEffect
+  glassEffectTransition="materialize"
+>
   Foo
 </Text>
 ```
@@ -166,7 +168,7 @@ type GlassEffectTransition = "identity" | "materialize" | "matchedGeometry";
 
 ***
 
-## 5. glassEffectID and glassEffectUnion
+# 5. glassEffectID and glassEffectUnion
 
 Liquid Glass can identify or group glass effects to create smooth geometry animations or unified material regions.
 
@@ -177,7 +179,10 @@ Liquid Glass can identify or group glass effects to create smooth geometry anima
 Assigns a unique identity to a glass effect for matched geometry animations.
 
 ```tsx
-<Text glassEffect glassEffectID={{ id: "avatar", namespace }}>
+<Text
+  glassEffect
+  glassEffectID={{ id: "avatar", namespace }}
+>
   Foo
 </Text>
 ```
@@ -191,14 +196,17 @@ Views with the same `id + namespace` can participate in matched geometry transit
 Groups multiple glass effects into a single unioned glass region.
 
 ```tsx
-<Text glassEffect glassEffectUnion={{ id: 1, namespace }} />
+<Text
+  glassEffect
+  glassEffectUnion={{ id: 1, namespace }}
+/>
 ```
 
 This merges material rendering across multiple views.
 
 ***
 
-## 6. GlassEffectContainer
+# 6. GlassEffectContainer
 
 `GlassEffectContainer` is used to group and manage correlated glass effects. Views inside the container:
 
@@ -221,7 +229,7 @@ No configuration is required; the container acts as a shared environment.
 
 ***
 
-## 7. Glass Button Styles
+# 7. Glass Button Styles
 
 Scripting supports additional iOS 26 button styles:
 
@@ -246,7 +254,7 @@ These styles use Liquid Glass materials and integrate with tint and interaction 
 
 ***
 
-## 8. Practical Example
+# 8. Practical Example
 
 Below is a real example combining multiple features:
 
@@ -279,7 +287,7 @@ Below is a real example combining multiple features:
 
 ***
 
-## 9. Best Practices
+# 9. Best Practices
 
 ### 1. Place related glass views inside a single GlassEffectContainer
 

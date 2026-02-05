@@ -1,10 +1,8 @@
-# useObservable
-
 Scripting 提供一套响应式状态系统，由 `Observable<T>` 与 `useObservable<T>` 组成，用于驱动组件渲染、与动画系统协同工作，并与 SwiftUI 的双向绑定能力保持一致（例如 `List(selection:)`、`NavigationStack(path:)` 等未来扩展接口）。
 
 ***
 
-## 1. Observable\<T>
+# 1. Observable\<T>
 
 `Observable<T>` 是一个可观察的数据容器，当 `.value` 更新时，会触发依赖该值的 UI 自动重新渲染。
 
@@ -50,7 +48,7 @@ observable.setValue(newValue);
 
 ***
 
-## 2. useObservable\<T>
+# 2. useObservable\<T>
 
 `useObservable<T>` 是在组件内部创建本地状态的 Hook。
 返回值为 `Observable<T>`，用于驱动 UI 更新。
@@ -87,7 +85,7 @@ const user = useObservable(() => createDefaultUser());
 
 ***
 
-## 3. 在 UI 中使用 Observable
+# 3. 在 UI 中使用 Observable
 
 在组件中，只需读取 `.value`：
 
@@ -105,7 +103,7 @@ const user = useObservable(() => createDefaultUser());
 
 ***
 
-## 4. 与动画协同工作
+# 4. 与动画协同工作
 
 Observable 是动画触发源。
 支持以下场景：
@@ -152,7 +150,7 @@ animation={{
 
 ***
 
-## 5. 与 SwiftUI Binding 风格的 API 对接（扩展能力）
+# 5. 与 SwiftUI Binding 风格的 API 对接（扩展能力）
 
 Observable 将作为未来 Scripting 的标准双向绑定机制，用于支持 SwiftUI 风格的 API，例如：
 
@@ -180,7 +178,7 @@ const path = useObservable<string[]>([])
 
 ***
 
-## 6. ForEach：推荐使用 Observable 数据源
+# 6. ForEach：推荐使用 Observable 数据源
 
 为了获得更接近 SwiftUI 的体验，推荐使用：
 
@@ -216,7 +214,7 @@ const items = useObservable([
 
 ***
 
-## 7. 综合示例
+# 7. 综合示例
 
 ```tsx
 export function Demo() {
@@ -264,7 +262,7 @@ export function Demo() {
 
 ***
 
-## 8. 总结
+# 8. 总结
 
 - `Observable<T>` 是 Scripting 中的核心响应式数据结构
 - `useObservable` 在组件内创建状态，支持任意类型 T

@@ -1,11 +1,9 @@
-# CalendarEvent
-
 The `CalendarEvent` API enables creating, reading, editing, and managing events in the iOS calendar.
 Developers can configure event details such as title, time, location, participants, recurrence rules, alarms, availability, and structured locations, and can display system-provided interfaces for creating or editing events.
 
 ***
 
-## 1. Types
+# 1. Types
 
 ## EventParticipant
 
@@ -78,7 +76,7 @@ Describes how a location alarm triggers:
 
 ***
 
-## 2. EventAlarm
+# 2. EventAlarm
 
 `CalendarEvent` supports attaching one or more `EventAlarm` instances.
 Alarms may be:
@@ -91,7 +89,7 @@ See the EventAlarm documentation for detailed information.
 
 ***
 
-## 3. CalendarEvent Class
+# 3. CalendarEvent Class
 
 ## Constructor
 
@@ -104,7 +102,7 @@ Call `save()` to persist it into the calendar.
 
 ***
 
-## 4. Properties
+# 4. Properties
 
 ## General Information
 
@@ -235,7 +233,7 @@ Indicates whether the event or any nested objects contain unsaved changes.
 
 ***
 
-## 5. Instance Methods
+# 5. Instance Methods
 
 ## Alarm Management
 
@@ -286,7 +284,7 @@ Displays the system event-editing interface and resolves with:
 
 ***
 
-## 6. Static Methods
+# 6. Static Methods
 
 ### `CalendarEvent.getAll(startDate: Date, endDate: Date, calendars?: Calendar[]): Promise<CalendarEvent[]>`
 
@@ -306,20 +304,20 @@ Displays the system interface for creating a new event.
 
 ***
 
-## 7. Usage Examples
+# 7. Usage Examples
 
 ## Creating and Saving an Event
 
 ```ts
-const defaultCalendar = await Calendar.defaultForEvents();
-const event = new CalendarEvent();
-event.title = "Team Meeting";
-event.calendar = defaultCalendar!;
-event.startDate = new Date("2024-01-15T09:00:00");
-event.endDate = new Date("2024-01-15T10:00:00");
-event.location = "Conference Room";
+const defaultCalendar = await Calendar.defaultForEvents()
+const event = new CalendarEvent()
+event.title = "Team Meeting"
+event.calendar = defaultCalendar!
+event.startDate = new Date("2024-01-15T09:00:00")
+event.endDate = new Date("2024-01-15T10:00:00")
+event.location = "Conference Room"
 
-await event.save();
+await event.save()
 ```
 
 ***
@@ -332,10 +330,10 @@ const rule = RecurrenceRule.create({
   interval: 1,
   daysOfTheWeek: ["monday", "wednesday", "friday"],
   end: RecurrenceEnd.fromDate(new Date("2024-12-31")),
-});
+})
 
-event.addRecurrenceRule(rule);
-await event.save();
+event.addRecurrenceRule(rule)
+await event.save()
 ```
 
 ***
@@ -343,9 +341,9 @@ await event.save();
 ## Adding an Alarm
 
 ```ts
-const alarm = EventAlarm.fromRelativeOffset(-600);
-event.addAlarm(alarm);
-await event.save();
+const alarm = EventAlarm.fromRelativeOffset(-600)
+event.addAlarm(alarm)
+await event.save()
 ```
 
 ***
@@ -353,10 +351,13 @@ await event.save();
 ## Fetching Events
 
 ```ts
-const events = await CalendarEvent.getAll(new Date("2024-01-01"), new Date("2024-01-31"));
+const events = await CalendarEvent.getAll(
+  new Date("2024-01-01"),
+   new Date("2024-01-31")
+ )
 
 for (const e of events) {
-  console.log(`Event: ${e.title}, Starts: ${e.startDate}`);
+  console.log(`Event: ${e.title}, Starts: ${e.startDate}`)
 }
 ```
 
@@ -365,9 +366,9 @@ for (const e of events) {
 ## Presenting the Create View
 
 ```ts
-const created = await CalendarEvent.presentCreateView();
+const created = await CalendarEvent.presentCreateView()
 if (created) {
-  console.log("Created event:", created.title);
+  console.log("Created event:", created.title)
 }
 ```
 
@@ -376,8 +377,8 @@ if (created) {
 ## Editing an Existing Event
 
 ```ts
-const result = await event.presentEditView();
-console.log("Edit action:", result);
+const result = await event.presentEditView()
+console.log("Edit action:", result)
 ```
 
 ***
@@ -385,13 +386,13 @@ console.log("Edit action:", result);
 ## Removing an Event
 
 ```ts
-await event.remove();
-console.log("Event removed");
+await event.remove()
+console.log("Event removed")
 ```
 
 ***
 
-## 8. Additional Notes
+# 8. Additional Notes
 
 ### Time Zone Considerations
 

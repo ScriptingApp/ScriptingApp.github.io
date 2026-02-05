@@ -1,18 +1,16 @@
-# Reminder
-
 The `Reminder` API provides the ability to create, edit, and manage reminders in the iOS calendar system.
 It supports configuring due dates through `DateComponents`, assigning priorities, adding notes, managing recurrence rules, working with alarms, and tracking completion state.
 This API is suitable for a wide range of task and schedule reminder scenarios.
 
 ***
 
-## 1. Class: `Reminder`
+# 1. Class: `Reminder`
 
 The `Reminder` class represents an individual reminder item and provides properties and methods to read and modify its data.
 
 ***
 
-## 2. Properties
+# 2. Properties
 
 ### identifier: string
 
@@ -140,7 +138,7 @@ Indicates whether the reminder or any of its nested objects contains unsaved cha
 
 ***
 
-## 3. Instance Methods
+# 3. Instance Methods
 
 ### addAlarm(alarm: EventAlarm): void
 
@@ -174,7 +172,7 @@ Deletes the reminder from the calendar.
 
 ***
 
-## 4. Static Methods
+# 4. Static Methods
 
 ### `Reminder.getAll(calendars?: Calendar[]): Promise<Reminder[]>`
 
@@ -218,14 +216,14 @@ Options:
 
 ***
 
-## 5. Usage Examples
+# 5. Usage Examples
 
 ## Creating a Reminder with DateComponents
 
 ```ts
-const reminder = new Reminder();
-reminder.title = "Prepare meeting materials";
-reminder.notes = "Finish before Monday’s team meeting";
+const reminder = new Reminder()
+reminder.title = "Prepare meeting materials"
+reminder.notes = "Finish before Monday’s team meeting"
 
 reminder.dueDateComponents = new DateComponents({
   year: 2025,
@@ -233,10 +231,10 @@ reminder.dueDateComponents = new DateComponents({
   day: 6,
   hour: 9,
   minute: 30,
-});
+})
 
-reminder.priority = 2;
-await reminder.save();
+reminder.priority = 2
+await reminder.save()
 ```
 
 ***
@@ -248,7 +246,7 @@ reminder.dueDateComponents = new DateComponents({
   year: 2025,
   month: 10,
   day: 6,
-});
+})
 ```
 
 ***
@@ -256,8 +254,8 @@ reminder.dueDateComponents = new DateComponents({
 ## Creating DateComponents from a Date
 
 ```ts
-const now = new Date();
-reminder.dueDateComponents = DateComponents.fromDate(now);
+const now = new Date()
+reminder.dueDateComponents = DateComponents.fromDate(now)
 ```
 
 ***
@@ -265,9 +263,9 @@ reminder.dueDateComponents = DateComponents.fromDate(now);
 ## Fetching All Reminders
 
 ```ts
-const reminders = await Reminder.getAll();
+const reminders = await Reminder.getAll()
 for (const r of reminders) {
-  console.log(`Reminder: ${r.title}`);
+  console.log(`Reminder: ${r.title}`)
 }
 ```
 
@@ -279,7 +277,7 @@ for (const r of reminders) {
 const incompletes = await Reminder.getIncompletes({
   startDate: new Date("2025-01-01"),
   endDate: new Date("2025-01-31"),
-});
+})
 ```
 
 ***
@@ -287,8 +285,8 @@ const incompletes = await Reminder.getIncompletes({
 ## Marking a Reminder as Completed
 
 ```ts
-reminder.isCompleted = true;
-await reminder.save();
+reminder.isCompleted = true
+await reminder.save()
 ```
 
 ***
@@ -296,12 +294,12 @@ await reminder.save();
 ## Deleting a Reminder
 
 ```ts
-await reminder.remove();
+await reminder.remove()
 ```
 
 ***
 
-## 6. Additional Notes
+# 6. Additional Notes
 
 ### Date Management
 

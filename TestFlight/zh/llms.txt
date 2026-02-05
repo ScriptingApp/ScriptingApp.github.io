@@ -9,6 +9,7 @@
 - [请求结构化数据](/TestFlight/zh/guide/Assistant/requestStructuredData.md): 请求结构化的 JSON 数据。
 - [需要用户批准的 Assistant Tool](/TestFlight/zh/guide/AssistantTool/Assistant Tool With User Approval.md): 掌握如何实现需要用户批准的智能助手工具。
 - [无需用户批准的 Assistant Tool](/TestFlight/zh/guide/AssistantTool/Assistant Tool Without User Approval.md): 掌握如何实现无需用户批准的智能助手工具。
+- [处理用户主动取消智能助手工具](/TestFlight/zh/guide/AssistantTool/AssistantTool User-Initiated Cancellation.md): 为了提高用户使用长时间运行的工具的体验，智能助手工具引入了用户主动取消的支持。
 - [AssistantTool 总览与工作流](/TestFlight/zh/guide/AssistantTool/Overview and Workflow.md): 了解智能助手工具的概述和工作流程。
 - [ScriptEditorProvider 及编辑器相关类型详解](/TestFlight/zh/guide/AssistantTool/ScriptEditorProvider and Editor Types.md): 了解 ScriptEditorProvider 及编辑器相关类型。
 - [动画和过渡](/TestFlight/zh/guide/Changelog/2.4.3/Animation and Transition.md): 这些接口用于定义视图在属性发生变化时的过渡效果。
@@ -74,15 +75,16 @@
 - [SharedAudioSession](/TestFlight/zh/guide/Changelog/2.4.6/SharedAudioSession.md): 新增 outputVolume 属性，以及 addOutputVolumeChangedListener 和 removeOutputVolumeChangedListener 方法。
 - [onDrag 和 onDrop 修饰符](/TestFlight/zh/guide/Changelog/2.4.6/onDrag and onDrop View Modifiers.md): 这些 API 允许视图作为拖动源、拖放目标或者同时，支持内部应用和跨应用拖拽。
 - [接收外部拖拽内容](/TestFlight/zh/guide/Changelog/2.4.6/onDropContent.md): 新增Observable支持，perform 函数有调整，返回一个 ItemProvider 对象的数组，用于延迟加载数据。
-- [设备](/TestFlight/zh/guide/Changelog/2.4.7/Device.md): 新增 proximityState、orientation 属性以及 addProximityListener 等监听方法。
+- [音视频播放器](/TestFlight/zh/guide/Changelog/2.4.7/AVPlayer.md): 新增 defaultRate 属性，以及 play 方法新增可选的 rate 参数。
+- [处理用户主动取消智能助手工具](/TestFlight/zh/guide/Changelog/2.4.7/AssistantTool User-Initiated Cancellation.md): 为了提高用户使用长时间运行的工具的体验，智能助手工具引入了用户主动取消的支持。
+- [设备](/TestFlight/zh/guide/Changelog/2.4.7/Device.md): 新增 proximityState、orientation、supportedInterfaceOrientations 属性以及 addProximityListener 等监听方法。
 - [定位（Location）](/TestFlight/zh/guide/Changelog/2.4.7/Location.md): 新增 requestHeading、 addHeadingListener、removeHeadingListener 等方法。
-- [配置](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Configuration.md): SQLite 模块的配置参数。
-- [数据库（Database）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Database.md): SQLite API 的核心对象：所有 SQL 执行、查询、模式检查、事务处理以及保存点管理都通过 Database 进行。
-- [数据库迁移（DatabaseMigrator）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/DatabaseMigrator.md): 它负责管理和执行数据库模式迁移。
-- [DatabaseQueue 和 DatabasePool](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/DatabaseQueue and DatabasePool.md): DatabaseQueue 和 DatabasePool 用于支持并发数据库访问。
-- [快速开始](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Quick Start.md): 快速掌握SQLite的使用
-- [基础类型（Schema & Value Types）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Schema & Value Types.md): SQLite 基础类型。
-- [语句（Statement）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Statement.md): 它设计用于提高重复执行的性能，确保参数绑定安全，为复杂的工作流提供明确的参数验证。
+- [数据库和连接](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Database and Connection.md): 介绍 SQLite 数据库的打开方式、连接配置以及与连接生命周期相关的行为说明
+- [执行 SQL 和查询](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Executing SQL and Query.md): 介绍如何使用 SQLite 执行 SQL 语句、绑定参数以及查询数据。
+- [概述](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Overview.md): 快速掌握SQLite的使用
+- [模式探测（Schema Introspection）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Schema Introspection.md): 介绍如何使用 SQLite 的模式探测 API 查询和分析数据库结构。
+- [模式管理（Schema Management）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Schema Management.md): 介绍如何使用 SQLite 的结构化模式 API 创建、修改和删除表和索引。
+- [事务（Transcation）](/TestFlight/zh/guide/Changelog/2.4.7/SQLite/Transcation.md): 介绍了 SQLite 的事务模型以及事务类型。
 - [快速掌握视频录制](/TestFlight/zh/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index.md): 了解VideoRecorder的API
 - [示例](/TestFlight/zh/guide/Changelog/2.4.7/VideoRecorder/Quick Start/index_example.md): 了解VideoRecorder的API
 - [视频预览](/TestFlight/zh/guide/Changelog/2.4.7/VideoRecorder/VideoRecorderPreviewView.md): 使用 VideoRecorderPreviewView UI组件进行视频预览
@@ -90,8 +92,8 @@
 - [控制中心的小组件](/TestFlight/zh/guide/Control Widget.md): 在控制中心或锁屏界面添加按钮（Button）或开关（Toggle）控件。
 - [自定义键盘](/TestFlight/zh/guide/Custom Keyboard.md): 创建具有独特布局和功能的自定义键盘。
 - [AVMetadataItem](/TestFlight/zh/guide/Device Capabilities/AVMetadataItem.md): AVMetadataItem 是一个类，表示音频或视频资源中的元数据项。
+- [音视频播放器](/TestFlight/zh/guide/Device Capabilities/AVPlayer.md): 该接口用于播放音频或视频资源，支持播放控制、速率控制、循环播放、播放状态监听以及媒体元数据读取等能力。
 - [AppStore](/TestFlight/zh/guide/Device Capabilities/AppStore.md): 用于在不离开 Scripting 应用的情况下，展示 App Store 中某个应用的详情页面。
-- [音频播放器](/TestFlight/zh/guide/Device Capabilities/Audio Player.md): 该接口允许播放本地和网络音源，并提供播放、暂停、停止、音量控制等功能。
 - [录音](/TestFlight/zh/guide/Device Capabilities/AudioRecorder.md): 该接口允许您将音频数据录制到文件中，提供开始、停止、暂停和管理音频录制的功能，并可配置音频质量、采样率、格式等设置。
 - [后台保活](/TestFlight/zh/guide/Device Capabilities/BackgroundKeeper.md): 该接口提供了用于保持 Scripting 应用在后台运行的方法。
 - [蓝牙中央设备管理器](/TestFlight/zh/guide/Device Capabilities/Bluetooth/BluetoothCentralManager.md): 该接口允许你扫描、连接和与附近的蓝牙外设进行交互。
@@ -211,6 +213,12 @@
 - [Request 和 RequestInit](/TestFlight/zh/guide/Utilities/Request/Request & RequestInit.md): 这些接口表示一个 HTTP 请求的完整配置。
 - [响应 （Response）](/TestFlight/zh/guide/Utilities/Request/Response.md): 该类表示使用 fetch() API 发送的 HTTP 请求的结果。
 - [fetch 函数](/TestFlight/zh/guide/Utilities/Request/fetch.md): 发送网络请求
+- [数据库和连接](/TestFlight/zh/guide/Utilities/SQLite/Database and Connection.md): 介绍 SQLite 数据库的打开方式、连接配置以及与连接生命周期相关的行为说明
+- [执行 SQL 和查询](/TestFlight/zh/guide/Utilities/SQLite/Executing SQL and Query.md): 介绍如何使用 SQLite 执行 SQL 语句、绑定参数以及查询数据。
+- [概述](/TestFlight/zh/guide/Utilities/SQLite/Overview.md): 快速掌握SQLite的使用
+- [模式探测（Schema Introspection）](/TestFlight/zh/guide/Utilities/SQLite/Schema Introspection.md): 介绍如何使用 SQLite 的模式探测 API 查询和分析数据库结构。
+- [模式管理（Schema Management）](/TestFlight/zh/guide/Utilities/SQLite/Schema Management.md): 介绍如何使用 SQLite 的结构化模式 API 创建、修改和删除表和索引。
+- [事务（Transcation）](/TestFlight/zh/guide/Utilities/SQLite/Transcation.md): 介绍了 SQLite 的事务模型以及事务类型。
 - [SFTP 客户端](/TestFlight/zh/guide/Utilities/SSH/SFTP Client.md): 该接口提供了一种简单的方法来使用 SFTP 协议通过 SSH 安全地传输文件。
 - [SFTP 文件](/TestFlight/zh/guide/Utilities/SSH/SFTP File.md): 通过该类，你可以对文件执行读取、写入、获取属性、关闭等底层操作。
 - [SSH 认证方法](/TestFlight/zh/guide/Utilities/SSH/SSH Authentication Method.md): 该接口提供了一种使用各种方法（如密码、公钥或私钥）进行 SSH 连接认证的方法。

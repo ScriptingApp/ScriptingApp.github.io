@@ -1,12 +1,10 @@
-# IntentMemoryStorage
-
 IntentMemoryStorage 是一个用于 **在多个 AppIntent 执行之间保留临时数据** 的内存存储系统。然而，它的生命周期并不严格绑定在单次 AppIntent 或 Script.exit 以上，而是由系统对 Extension 环境（Intent Extension / Widget Extension）的运行状态决定，因此具有一定的非确定性。
 
 以下文档基于你之前确认的完整版结构，并加入系统行为的解释。
 
 ***
 
-## 概述
+# 概述
 
 在 Scripting 中，每个 AppIntent 都运行在其所属脚本的 **脚本执行上下文（Script Execution Context）** 中。当 AppIntent 的 `perform()` 执行完成，或在 `intent.tsx` 中调用 `Script.exit()` 时，当前 AppIntent 的执行流程会结束。
 
@@ -34,7 +32,7 @@ MemoryStorage 的本质是：
 
 ***
 
-## 作用范围（Scopes）
+# 作用范围（Scopes）
 
 IntentMemoryStorage 提供两类存储区域：
 
@@ -63,14 +61,14 @@ IntentMemoryStorage 提供两类存储区域：
 
 ***
 
-## Extension 生命周期与 JS Context 行为
+# Extension 生命周期与 JS Context 行为
 
 ## 情况一：在 Shortcuts 中运行 Intent
 
 - Shortcuts 执行完成后：
+
   - 当前 JS Context 会被销毁
   - 当前 AppIntent 执行结束
-
 - 但：**IntentMemoryStorage 不一定被销毁**
   因为系统未必会立即销毁 Intent Extension
 
@@ -81,13 +79,13 @@ IntentMemoryStorage 提供两类存储区域：
 例：
 
 ```ts
-IntentMemoryStorage.set("color", "red");
+IntentMemoryStorage.set("color", "red")
 ```
 
 下一次 Shortcut 再运行时：
 
 ```ts
-const c = IntentMemoryStorage.get("color");
+const c = IntentMemoryStorage.get("color")
 ```
 
 可能仍然得到 `"red"`。
@@ -136,16 +134,16 @@ MemoryStorage 的生命周期与 **Extension 进程生命周期** 完全一致�
 
 ***
 
-## API 定义
+# API 定义
 
 ```ts
 namespace IntentMemoryStorage {
-  function get<T>(key: string, options?: { shared?: boolean }): T | null;
-  function set(key: string, value: any, options?: { shared?: boolean }): void;
-  function remove(key: string, options?: { shared?: boolean }): void;
-  function contains(key: string, options?: { shared?: boolean }): boolean;
-  function clear(): void;
-  function keys(): string[];
+  function get<T>(key: string, options?: { shared?: boolean }): T | null
+  function set(key: string, value: any, options?: { shared?: boolean }): void
+  function remove(key: string, options?: { shared?: boolean }): void
+  function contains(key: string, options?: { shared?: boolean }): boolean
+  function clear(): void
+  function keys(): string[]
 }
 ```
 
@@ -156,12 +154,12 @@ namespace IntentMemoryStorage {
 
 ***
 
-## API 详细说明
+# API 详细说明
 
 ## get
 
 ```ts
-function get<T>(key: string, options?: { shared?: boolean }): T | null;
+function get<T>(key: string, options?: { shared?: boolean }): T | null
 ```
 
 读取键值。注意：
@@ -172,13 +170,13 @@ function get<T>(key: string, options?: { shared?: boolean }): T | null;
 脚本级：
 
 ```ts
-const color = IntentMemoryStorage.get<string>("color");
+const color = IntentMemoryStorage.get<string>("color")
 ```
 
 shared：
 
 ```ts
-const token = IntentMemoryStorage.get<string>("token", { shared: true });
+const token = IntentMemoryStorage.get<string>("token", { shared: true })
 ```
 
 ***
@@ -186,7 +184,7 @@ const token = IntentMemoryStorage.get<string>("token", { shared: true });
 ## set
 
 ```ts
-function set(key: string, value: any, options?: { shared?: boolean }): void;
+function set(key: string, value: any, options?: { shared?: boolean }): void
 ```
 
 写入存储区域。
@@ -194,13 +192,13 @@ function set(key: string, value: any, options?: { shared?: boolean }): void;
 脚本级：
 
 ```ts
-IntentMemoryStorage.set("color", "systemBlue");
+IntentMemoryStorage.set("color", "systemBlue")
 ```
 
 shared：
 
 ```ts
-IntentMemoryStorage.set("sessionID", "abc123", { shared: true });
+IntentMemoryStorage.set("sessionID", "abc123", { shared: true })
 ```
 
 ***
@@ -208,7 +206,7 @@ IntentMemoryStorage.set("sessionID", "abc123", { shared: true });
 ## remove
 
 ```ts
-function remove(key: string, options?: { shared?: boolean }): void;
+function remove(key: string, options?: { shared?: boolean }): void
 ```
 
 删除键值。
@@ -216,13 +214,13 @@ function remove(key: string, options?: { shared?: boolean }): void;
 脚本级：
 
 ```ts
-IntentMemoryStorage.remove("color");
+IntentMemoryStorage.remove("color")
 ```
 
 shared：
 
 ```ts
-IntentMemoryStorage.remove("sessionID", { shared: true });
+IntentMemoryStorage.remove("sessionID", { shared: true })
 ```
 
 ***
@@ -230,7 +228,7 @@ IntentMemoryStorage.remove("sessionID", { shared: true });
 ## contains
 
 ```ts
-function contains(key: string, options?: { shared?: boolean }): boolean;
+function contains(key: string, options?: { shared?: boolean }): boolean
 ```
 
 检查键是否存在。
@@ -241,7 +239,7 @@ function contains(key: string, options?: { shared?: boolean }): boolean;
 ## clear
 
 ```ts
-function clear(): void;
+function clear(): void
 ```
 
 清空脚本级存储。
@@ -252,14 +250,14 @@ shared 区域不会被清空。
 ## keys
 
 ```ts
-function keys(): string[];
+function keys(): string[]
 ```
 
 返回脚本级存储的 key 列表。
 
 ***
 
-## 使用场景
+# 使用场景
 
 ## 脚本级（默认）
 
@@ -272,7 +270,7 @@ function keys(): string[];
 示例：
 
 ```ts
-IntentMemoryStorage.set("step", 2);
+IntentMemoryStorage.set("step", 2)
 ```
 
 ***
@@ -288,12 +286,12 @@ IntentMemoryStorage.set("step", 2);
 示例：
 
 ```ts
-IntentMemoryStorage.set("workflowID", "xyz", { shared: true });
+IntentMemoryStorage.set("workflowID", "xyz", { shared: true })
 ```
 
 ***
 
-## 不适用用途
+# 不适用用途
 
 - 不保证一定存在
 - 不保证一定被清理
@@ -308,14 +306,14 @@ IntentMemoryStorage.set("workflowID", "xyz", { shared: true });
 
 ***
 
-## 示例
+# 示例
 
 ## 脚本级示例
 
 ```ts
-IntentMemoryStorage.set("color", "red");
+IntentMemoryStorage.set("color", "red")
 
-const color = IntentMemoryStorage.get<string>("color");
+const color = IntentMemoryStorage.get<string>("color")
 ```
 
 ***
@@ -325,18 +323,18 @@ const color = IntentMemoryStorage.get<string>("color");
 Script A：
 
 ```ts
-IntentMemoryStorage.set("sessionID", "12345", { shared: true });
+IntentMemoryStorage.set("sessionID", "12345", { shared: true })
 ```
 
 Script B：
 
 ```ts
-const id = IntentMemoryStorage.get<string>("sessionID", { shared: true });
+const id = IntentMemoryStorage.get<string>("sessionID", { shared: true })
 ```
 
 ***
 
-## 存储结构示例
+# 存储结构示例
 
 脚本级：
 
@@ -357,16 +355,13 @@ shared：
 
 ***
 
-## 最佳实践
+# 最佳实践
 
 - 不保证 MemoryStorage 一定存在或一定被清理
-
 - 不要用于关键数据
-
 - 不要用于大数据存储
-
 - 对 shared 使用清晰命名，例如：
+
   - `"global.sessionID"`
   - `"workflow.status"`
-
 - 在依赖该存储前考虑数据可能不存在

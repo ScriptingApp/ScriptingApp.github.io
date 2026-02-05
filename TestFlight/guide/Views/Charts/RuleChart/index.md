@@ -1,6 +1,4 @@
-# RuleChart
-
-## `RuleChart`
+# `RuleChart`
 
 The `RuleChart` component displays a range or duration for each labeled item as a horizontal or vertical rule. It is suitable for visualizing time spans, data ranges, or active periods across categories.
 
@@ -37,16 +35,13 @@ The `RuleChart` component displays a range or duration for each labeled item as 
 - **Type:**
 
   ```ts
-  Array<
-    {
-      label: string | Date;
-      start: number;
-      end: number;
-      unit?: CalendarComponent;
-    } & ChartMarkProps
-  >;
+  Array<{
+    label: string | Date;
+    start: number;
+    end: number;
+    unit?: CalendarComponent;
+  } & ChartMarkProps>
   ```
-
 - **Description:**
   Defines the rules (lines or spans) to be drawn on the chart.
 

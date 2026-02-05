@@ -1,5 +1,3 @@
-# EnvironmentValuesReader
-
 `EnvironmentValuesReader` is a Scripting component that allows you to read environment values from the current view hierarchy.
 It serves a similar role to SwiftUI’s `@Environment`, but with a more explicit and controlled design:
 **You must specify which environment keys you want to read**, and the component will inject only those values into the `children` callback.
@@ -8,24 +6,24 @@ This makes environment access predictable, explicit, and optimized.
 
 ***
 
-## EnvironmentValues Type
+# EnvironmentValues Type
 
 ```ts
 type EnvironmentValues = {
-  colorScheme: ColorScheme;
-  colorSchemeContrast: ColorSchemeContrast;
-  displayScale: number;
-  horizontalSizeClass: UserInterfaceSizeClass | null;
-  verticalSizeClass: UserInterfaceSizeClass | null;
-  dismiss: () => void;
-  dismissSearch: () => void;
-  editMode: EditMode | null;
-  widgetRenderingMode: WidgetRenderingMode;
-  showsWidgetContainerBackground: boolean;
-  isSearching: boolean;
-  isPresented: boolean;
-  activityFamily: "small" | "medium";
-  tabViewBottomAccessoryPlacement: "expanded" | "inline";
+    colorScheme: ColorScheme;
+    colorSchemeContrast: ColorSchemeContrast;
+    displayScale: number;
+    horizontalSizeClass: UserInterfaceSizeClass | null;
+    verticalSizeClass: UserInterfaceSizeClass | null;
+    dismiss: () => void;
+    dismissSearch: () => void;
+    editMode: EditMode | null;
+    widgetRenderingMode: WidgetRenderingMode;
+    showsWidgetContainerBackground: boolean;
+    isSearching: boolean;
+    isPresented: boolean;
+    activityFamily: "small" | "medium";
+    tabViewBottomAccessoryPlacement: 'expanded' | 'inline';
 };
 ```
 
@@ -33,7 +31,7 @@ Below are the descriptions of each field.
 
 ***
 
-## Field Descriptions
+# Field Descriptions
 
 ### 1. colorScheme
 
@@ -133,24 +131,24 @@ The current TabView bottom accessory placement, similar to SwiftUI's `tabViewBot
 
 ***
 
-## EnvironmentValuesReader Component
+# EnvironmentValuesReader Component
 
 ```ts
 type EnvironmentValuesReaderProps = {
-  /**
-   * The keys to read from the environment values.
-   */
-  keys: Array<keyof EnvironmentValues>;
-  /**
-   * The callback function that receives the environment values.
-   */
-  children: (values: EnvironmentValues) => VirtualNode;
+    /**
+     * The keys to read from the environment values.
+     */
+    keys: Array<keyof EnvironmentValues>;
+    /**
+     * The callback function that receives the environment values.
+     */
+    children: (values: EnvironmentValues) => VirtualNode;
 };
 ```
 
 ***
 
-## Props Description
+# Props Description
 
 ### keys
 
@@ -167,7 +165,7 @@ A rendering callback that receives the requested environment values and returns 
 
 ***
 
-## Component Definition
+# Component Definition
 
 ```ts
 declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReaderProps>;
@@ -175,26 +173,22 @@ declare const EnvironmentValuesReader: FunctionComponent<EnvironmentValuesReader
 
 ***
 
-## Usage Examples
+# Usage Examples
 
 ## Example 1 — Reading colorScheme and displayScale
 
 ```tsx
-import { EnvironmentValuesReader, Text, VStack } from "scripting";
+import { EnvironmentValuesReader, Text, VStack } from "scripting"
 
 function View() {
-  return (
-    <EnvironmentValuesReader keys={["colorScheme", "displayScale"]}>
-      {(env) => {
-        return (
-          <VStack>
-            <Text>Color Scheme: {env.colorScheme}</Text>
-            <Text>Scale: {env.displayScale}</Text>
-          </VStack>
-        );
-      }}
-    </EnvironmentValuesReader>
-  );
+  return <EnvironmentValuesReader keys={["colorScheme", "displayScale"]}>
+    {(env) => {
+      return <VStack>
+        <Text>Color Scheme: {env.colorScheme}</Text>
+        <Text>Scale: {env.displayScale}</Text>
+      </VStack>
+    }}
+  </EnvironmentValuesReader>
 }
 ```
 
@@ -205,7 +199,10 @@ function View() {
 ```tsx
 <EnvironmentValuesReader keys={["dismiss"]}>
   {(env) => {
-    return <Button title="Close" action={() => env.dismiss()} />;
+    return <Button
+      title="Close"
+      action={() => env.dismiss()}
+    />
   }}
 </EnvironmentValuesReader>
 ```
@@ -217,15 +214,17 @@ function View() {
 ```tsx
 <EnvironmentValuesReader keys={["horizontalSizeClass"]}>
   {(env) => {
-    const compact = env.horizontalSizeClass === "compact";
-    return compact ? <Text>Compact Layout</Text> : <Text>Regular Layout</Text>;
+    const compact = env.horizontalSizeClass === "compact"
+    return compact
+      ? <Text>Compact Layout</Text>
+      : <Text>Regular Layout</Text>
   }}
 </EnvironmentValuesReader>
 ```
 
 ***
 
-## Behavior Notes
+# Behavior Notes
 
 1. **Only the explicitly listed keys are read**. All other environment values will not be included in the callback.
 2. When any of the requested environment values change, the `children()` callback re-renders automatically.

@@ -1,5 +1,3 @@
-# ForEach
-
 `ForEach` 是 Scripting 中用于渲染可变数量子视图的组件，用于构建动态列表、可编辑列表，以及支持系统级的删除与移动行为。其设计参考 SwiftUI 的 `ForEach`，并与 Scripting 的 `Observable` 状态管理系统深度集成。
 
 组件支持两种模式：
@@ -9,7 +7,7 @@
 
 ***
 
-## 1. 类型定义
+# 1. 类型定义
 
 ## ForEachDeprecatedProps（已不推荐）
 
@@ -45,7 +43,7 @@ type ForEachDeprecatedProps = {
 
 ***
 
-## 2. ForEachProps（推荐使用）
+# 2. ForEachProps（推荐使用）
 
 ```ts
 type ForEachProps<T extends { id: string }> =
@@ -91,7 +89,7 @@ type ForEachProps<T extends { id: string }> =
 
 ***
 
-## 3. ForEachComponent 接口
+# 3. ForEachComponent 接口
 
 ```ts
 interface ForEachComponent {
@@ -103,7 +101,7 @@ interface ForEachComponent {
 
 ***
 
-## 4. 系统级删除交互示例
+# 4. 系统级删除交互示例
 
 当 `ForEach` 放在 `List` 内部，并使用 `data + builder` 模式时，系统会自动启用 swipe-to-delete，只需正确提供 `id` 和编辑能力。
 
@@ -115,7 +113,7 @@ function View() {
     ["Apple", "Bananer", "Papaya", "Mango"].map((name, index) => ({
       id: index.toString(),
       name,
-    })),
+    }))
   );
 
   return (
@@ -134,7 +132,7 @@ function View() {
 
 ***
 
-## 5. 使用建议与最佳实践
+# 5. 使用建议与最佳实践
 
 ### 1. 推荐使用 `data: Observable<T[]>` 方案
 

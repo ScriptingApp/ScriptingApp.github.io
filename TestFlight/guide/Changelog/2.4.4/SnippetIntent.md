@@ -1,5 +1,3 @@
-# SnippetIntent
-
 SnippetIntent is a special kind of AppIntent whose purpose is to render **interactive Snippet UI cards** inside the Shortcuts app (iOS 26+).
 
 Key characteristics:
@@ -15,7 +13,7 @@ It is not a data-returning Intent; it is exclusively for UI rendering in Shortcu
 
 ***
 
-## 2. System Requirements
+# 2. System Requirements
 
 **SnippetIntent requires iOS 26 or later.**
 
@@ -28,7 +26,7 @@ On iOS versions earlier than 26:
 
 ***
 
-## 3. Registering a SnippetIntent (app\_intents.tsx)
+# 3. Registering a SnippetIntent (app\_intents.tsx)
 
 Example:
 
@@ -37,9 +35,9 @@ export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />;
-  },
-});
+    return <PickColorView />
+  }
+})
 ```
 
 Another SnippetIntent:
@@ -49,9 +47,9 @@ export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    return <ResultView content={content} />;
-  },
-});
+    return <ResultView content={content} />
+  }
+})
 ```
 
 Requirements:
@@ -62,35 +60,33 @@ Requirements:
 
 ***
 
-## 4. Wrapping SnippetIntent Return Values — `Intent.snippetIntent`
+# 4. Wrapping SnippetIntent Return Values — `Intent.snippetIntent`
 
 A SnippetIntent cannot be passed directly to `Script.exit()`.
 It must be wrapped in a `IntentSnippetIntentValue`.
 
 ```tsx
-const snippetValue = Intent.snippetIntent(ShowResultIntent({ content: "Example Text" }));
+const snippetValue = Intent.snippetIntent(
+  ShowResultIntent({ content: "Example Text" })
+)
 
-Script.exit(snippetValue);
+Script.exit(snippetValue)
 ```
 
 ### Type Definition
 
 ```ts
 type SnippetIntentValue = {
-  value?:
-    | IntentAttributedTextValue
-    | IntentFileURLValue
-    | IntentJsonValue
-    | IntentTextValue
-    | IntentURLValue
-    | IntentFileValue
-    | null;
-  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>;
-};
+  value?: IntentAttributedTextValue | IntentFileURLValue | IntentJsonValue | IntentTextValue | IntentURLValue | IntentFileValue | null
+  snippetIntent: AppIntent<any, VirtualNode, AppIntentProtocol.SnippetIntent>
+}
 
-declare class IntentSnippetIntentValue extends IntentValue<"SnippetIntent", SnippetIntentValue> {
-  value: SnippetIntentValue;
-  type: "SnippetIntent";
+declare class IntentSnippetIntentValue extends IntentValue<
+  'SnippetIntent',
+  SnippetIntentValue
+> {
+  value: SnippetIntentValue
+  type: 'SnippetIntent'
 }
 ```
 
@@ -98,7 +94,7 @@ This wrapper makes the return value compatible with the Shortcuts “Show Snippe
 
 ***
 
-## 5. Snippet Confirmation UI — `Intent.requestConfirmation`
+# 5. Snippet Confirmation UI — `Intent.requestConfirmation`
 
 iOS 26 Snippet Framework provides built-in confirmation UI driven by SnippetIntent.
 
@@ -132,7 +128,10 @@ A predefined list of semantic action names used by system UI:
 ### Example
 
 ```tsx
-await Intent.requestConfirmation("set", PickColorIntent());
+await Intent.requestConfirmation(
+  "set",
+  PickColorIntent()
+)
 ```
 
 Execution behavior:
@@ -143,7 +142,7 @@ Execution behavior:
 
 ***
 
-## 6. The “Show Snippet Intent” Action in Shortcuts (iOS 26+)
+# 6. The “Show Snippet Intent” Action in Shortcuts (iOS 26+)
 
 iOS 26 adds a new Shortcuts action:
 
@@ -168,7 +167,7 @@ This action is the only correct way to display SnippetIntent UI.
 
 ***
 
-## 7. IntentMemoryStorage — Cross-Intent State Store
+# 7. IntentMemoryStorage — Cross-Intent State Store
 
 ## Why It Exists
 
@@ -190,12 +189,12 @@ Therefore a cross-Intent state mechanism is required.
 
 ```ts
 namespace IntentMemoryStorage {
-  function get<T>(key: string): T | null;
-  function set(key: string, value: any): void;
-  function remove(key: string): void;
-  function contains(key: string): boolean;
-  function clear(): void;
-  function keys(): string[];
+  function get<T>(key: string): T | null
+  function set(key: string, value: any): void
+  function remove(key: string): void
+  function contains(key: string): boolean
+  function clear(): void
+  function keys(): string[]
 }
 ```
 
@@ -208,9 +207,9 @@ namespace IntentMemoryStorage {
 ### Example
 
 ```ts
-IntentMemoryStorage.set("color", "systemBlue");
+IntentMemoryStorage.set("color", "systemBlue")
 
-const color = IntentMemoryStorage.get<Color>("color");
+const color = IntentMemoryStorage.get<Color>("color")
 ```
 
 ### Guidelines
@@ -225,7 +224,7 @@ IntentMemoryStorage should be treated as **temporary, lightweight state**.
 
 ***
 
-## 8. Full Example Combining All Features (iOS 26+)
+# 8. Full Example Combining All Features (iOS 26+)
 
 ## app\_intents.tsx
 
@@ -234,50 +233,54 @@ export const SetColorIntent = AppIntentManager.register({
   name: "SetColorIntent",
   protocol: AppIntentProtocol.AppIntent,
   perform: async (color: Color) => {
-    IntentMemoryStorage.set("color", color);
-  },
-});
+    IntentMemoryStorage.set("color", color)
+  }
+})
 
 export const PickColorIntent = AppIntentManager.register<void>({
   name: "PickColorIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async () => {
-    return <PickColorView />;
-  },
-});
+    return <PickColorView />
+  }
+})
 
 export const ShowResultIntent = AppIntentManager.register({
   name: "ShowResultIntent",
   protocol: AppIntentProtocol.SnippetIntent,
   perform: async ({ content }: { content: string }) => {
-    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue";
-    return <ResultView content={content} color={color} />;
-  },
-});
+    const color = IntentMemoryStorage.get<Color>("color") ?? "systemBlue"
+    return <ResultView content={content} color={color} />
+  }
+})
 ```
 
 ## intent.tsx
 
 ```tsx
 async function runIntent() {
+
   // 1. Ask the user to confirm setting the color via Snippet
-  await Intent.requestConfirmation("set", PickColorIntent());
+  await Intent.requestConfirmation(
+    "set",
+    PickColorIntent()
+  )
 
   // 2. Read Shortcuts input
   const textContent =
     Intent.shortcutParameter?.type === "text"
       ? Intent.shortcutParameter.value
-      : "No text parameter from Shortcuts";
+      : "No text parameter from Shortcuts"
 
   // 3. Create final SnippetIntent UI
   const snippetIntentValue = Intent.snippetIntent({
-    snippetIntent: ShowResultIntent({ content: textContent }),
-  });
+    snippetIntent: ShowResultIntent({ content: textContent })
+  })
 
-  Script.exit(snippetIntentValue);
+  Script.exit(snippetIntentValue)
 }
 
-runIntent();
+runIntent()
 ```
 
 ## Shortcuts Flow
@@ -290,26 +293,31 @@ runIntent();
 
 ***
 
-## 9. Summary
+# 9. Summary
 
 This document introduces all **new** Scripting features added for iOS 26+:
 
 1. **SnippetIntent**
+
    - Registered using `AppIntentManager`
    - Returns TSX UI
    - Requires iOS 26+
 
 2. **Intent.snippetIntent**
+
    - Wraps a SnippetIntent for Script.exit
 
 3. **Intent.requestConfirmation**
+
    - Presents a confirmation Snippet UI
    - Requires SnippetIntent
 
 4. **“Show Snippet Intent” action in Shortcuts**
+
    - Required to display SnippetIntent UI
 
 5. **IntentMemoryStorage**
+
    - Lightweight cross-AppIntent storage
    - Not suitable for large binary/content data
    - Complements multi-step Snippet flows

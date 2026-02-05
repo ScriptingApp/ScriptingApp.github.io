@@ -1,5 +1,3 @@
-# TabView
-
 Scripting 提供了与最新 iOS TabView 体系一致的 API：
 通过 `TabView`、`Tab`、`TabSection` 组织界面结构，使应用能够在 iOS 18+ 环境下完整支持多标签视图、侧边栏标签、可定制布局等。
 
@@ -7,7 +5,7 @@ Scripting 提供了与最新 iOS TabView 体系一致的 API：
 
 ***
 
-## 一、基础结构：TabView + Tab
+# 一、基础结构：TabView + Tab
 
 在最基本的形式中，`TabView` 作为容器，内部包含多个 `Tab`。
 每个 `Tab` 定义：
@@ -22,23 +20,36 @@ Scripting 提供了与最新 iOS TabView 体系一致的 API：
 
 ```tsx
 function RootView() {
-  const selection = useObservable<number>(0);
+  const selection = useObservable<number>(0)
 
   return (
     <TabView selection={selection}>
-      <Tab title="首页" systemImage="house.fill" value={0}>
+      <Tab
+        title="首页"
+        systemImage="house.fill"
+        value={0}
+      >
         <HomeView />
       </Tab>
 
-      <Tab title="搜索" systemImage="magnifyingglass" value={1} role="search">
+      <Tab
+        title="搜索"
+        systemImage="magnifyingglass"
+        value={1}
+        role="search"
+      >
         <SearchView />
       </Tab>
 
-      <Tab title="设置" systemImage="gearshape.fill" value={2}>
+      <Tab
+        title="设置"
+        systemImage="gearshape.fill"
+        value={2}
+      >
         <SettingsView />
       </Tab>
     </TabView>
-  );
+  )
 }
 ```
 
@@ -50,7 +61,7 @@ function RootView() {
 
 ***
 
-## 二、使用 TabSection 组织分组标签
+# 二、使用 TabSection 组织分组标签
 
 当 Tab 数量较多、需要按功能分类、需要在侧边栏中显示复杂结构时，可以使用 `TabSection`。
 
@@ -104,7 +115,8 @@ TabView
         </Text>
       </VStack>
     </HStack>
-  }>
+  }
+>
   <Tab title="项目 A" systemImage="doc.fill" value="projectA">
     <ProjectAView />
   </Tab>
@@ -113,7 +125,7 @@ TabView
 
 ***
 
-## 三、TabSection 的高级能力：布局、操作区、拖拽与可见性
+# 三、TabSection 的高级能力：布局、操作区、拖拽与可见性
 
 `TabSection` 提供了丰富的分组级配置，让 Tab 分组的呈现方式更加灵活。
 
@@ -142,7 +154,10 @@ TabView
 ```tsx
 <TabSection
   title="列表"
-  sectionActions={<Button title="添加" systemImage="plus" action={addItem} />}>
+  sectionActions={
+    <Button title="添加" systemImage="plus" action={addItem} />
+  }
+>
   ...
 </TabSection>
 ```
@@ -172,14 +187,15 @@ TabView
   customizationID="file-section"
   customizationBehavior="reorderable"
   draggable="file-section"
-  dropDestination={(items) => handleDrop(items)}>
+  dropDestination={items => handleDrop(items)}
+>
   ...
 </TabSection>
 ```
 
 ***
 
-## 四、TabView 级别的高级配置
+# 四、TabView 级别的高级配置
 
 TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26）。
 
@@ -209,7 +225,10 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 示例：
 
 ```tsx
-<TabView selection={selection} tabBarMinimizeBehavior="onScrollDown">
+<TabView
+  selection={selection}
+  tabBarMinimizeBehavior="onScrollDown"
+>
   ...
 </TabView>
 ```
@@ -229,7 +248,8 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
       <Spacer />
       <Button title="知道了" action={dismiss} />
     </HStack>
-  }>
+  }
+>
   ...
 </TabView>
 ```
@@ -246,7 +266,10 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 与 `role="search"` 搭配使用：
 
 ```tsx
-<TabView selection={selection} tabViewSearchActivation="searchTabSelection">
+<TabView
+  selection={selection}
+  tabViewSearchActivation="searchTabSelection"
+>
   ...
 </TabView>
 ```
@@ -268,14 +291,15 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
   selection={selection}
   tabViewSidebarHeader={<UserHeader />}
   tabViewSidebarFooter={<SettingsButton />}
-  tabViewSidebarBottomBar={<UpgradeButton />}>
+  tabViewSidebarBottomBar={<UpgradeButton />}
+>
   ...
 </TabView>
 ```
 
 ***
 
-## 五、TabViewCustomization：标签页可定制化体系（重点补充）
+# 五、TabViewCustomization：标签页可定制化体系（重点补充）
 
 `TabViewCustomization` 是一个可序列化的状态对象，用于存储和恢复用户对 Tab 布局的自定义行为，包括：
 
@@ -288,7 +312,7 @@ TabView 本身提供了一系列属性，可用于构建高级 UI（iOS 18～26�
 它通常放在 TabView 根视图中，通过：
 
 ```tsx
-tabViewCustomization = { customizationState };
+tabViewCustomization={customizationState}
 ```
 
 来注入。
@@ -298,32 +322,32 @@ tabViewCustomization = { customizationState };
 创建方式通常是：
 
 ```tsx
-const customization = useObservable<TabViewCustomization>(() => {
-  const data = Storage.get("tab_customization");
+const customization = useObservable<TabViewCustomization >(() => {
+  const data = Storage.get('tab_customization')
   if (data) {
-    return TabViewCustomization.fromData(data) ?? new TabViewCustomization();
+    return TabViewCustomization.fromData(data) ?? new TabViewCustomization()
   }
-  return new TabViewCustomization();
-});
+  return new TabViewCustomization()
+})
 
 useEffect(() => {
   const listener = (newValue: TabViewCustomization) => {
-    const data = newValue.toData();
+    const data = newValue.toData()
     if (data) {
-      Storage.set("tab_customization", data);
+      Storage.set('tab_customization', data)
     }
-  };
-  customization.subscribe(listener);
+  }
+  customization.subscribe(listener)
   return () => {
-    customization.unsubscribe(listener);
-  };
-}, []);
+    customization.unsubscribe(listener)
+  }
+}, [])
 ```
 
 如需创建一个新的空自定义对象，可使用：
 
 ```tsx
-const customizationState = useObservable(() => new TabViewCustomization());
+const customizationState = useObservable(() => new TabViewCustomization())
 ```
 
 ## 2. 保存自定义内容
@@ -331,8 +355,8 @@ const customizationState = useObservable(() => new TabViewCustomization());
 你可以将用户调整后的 Tab 布局序列化保存：
 
 ```tsx
-const data = customization.value?.toData();
-Storage.set("tab_customization", data);
+const data = customization.value?.toData()
+Storage.set('tab_customization', data)
 ```
 
 `toData()` 会将内部状态转换为可存储的 `Data` 对象。
@@ -346,10 +370,10 @@ getSection(id: string): TabViewCustomizationSection | null
 `TabSection` 通常带有 `customizationID`，这样就可以获取特定分组并操作它：
 
 ```tsx
-const section = customization.value?.getSection("file-section");
+const section = customization.value?.getSection('file-section')
 
-section?.tabOrder; // 一个包含 tab ID 顺序的数组，或 null
-section?.resetTabOrder(); // 重置排序
+section?.tabOrder        // 一个包含 tab ID 顺序的数组，或 null
+section?.resetTabOrder() // 重置排序
 ```
 
 场景示例：
@@ -367,10 +391,10 @@ getTab(id: string): TabViewCustomizationTab | null
 可通过 Tab 的 `customizationID` 获取并调整其可见性：
 
 ```tsx
-const tab = customization.value?.getTab("important-tab");
+const tab = customization.value?.getTab('important-tab')
 
-tab?.tabBarVisibility; // Visibility 类型
-tab.sidebarVisibility = "hidden";
+tab?.tabBarVisibility         // Visibility 类型
+tab.sidebarVisibility = 'hidden'
 ```
 
 适用场景：
@@ -397,15 +421,15 @@ resetVisibility(): void
 <Button
   title="恢复默认"
   action={() => {
-    customization.value?.resetSectionOrder();
-    customization.value?.resetVisibility();
+    customization.value?.resetSectionOrder()
+    customization.value?.resetVisibility()
   }}
 />
 ```
 
 ***
 
-## 六、与旧的 tabItem 写法的关系
+# 六、与旧的 tabItem 写法的关系
 
 此文档采用全新的结构化写法：
 

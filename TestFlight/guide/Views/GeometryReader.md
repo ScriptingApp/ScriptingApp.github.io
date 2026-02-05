@@ -1,12 +1,10 @@
-# GeometryReader
-
 `GeometryReader` in Scripting is the equivalent of SwiftUI’s GeometryReader. It provides layout information about the container in which its content is placed, including size, safe-area insets, and (on supported systems) container corner insets.
 
 This component is essential for building responsive layouts that depend on the parent container’s geometry.
 
 ***
 
-## GeometryProxy
+# GeometryProxy
 
 When `GeometryReader` constructs its child content, it injects a `GeometryProxy` instance into the `children` callback. This proxy exposes real-time layout information about the container.
 
@@ -33,7 +31,7 @@ interface GeometryProxy {
 
 ***
 
-## GeometryProxy Properties
+# GeometryProxy Properties
 
 ## 1. size
 
@@ -47,9 +45,9 @@ The actual size of the container during layout.
 
 ```ts
 type Size = {
-  width: number;
-  height: number;
-};
+  width: number
+  height: number
+}
 ```
 
 Use this property when calculating adaptive layout behavior, such as scaling, alignment, or proportional spacing.
@@ -102,7 +100,7 @@ If the platform does not support it, the value will be `null`.
 
 ***
 
-## GeometryReader Component
+# GeometryReader Component
 
 ```ts
 type GeometryReaderProps = {
@@ -119,7 +117,7 @@ declare const GeometryReader: FunctionComponent<GeometryReaderProps>;
 
 ***
 
-## Behavior
+# Behavior
 
 1. GeometryReader occupies the available space in its parent.
 2. During layout, it computes size, safe-area insets, and corner insets.
@@ -130,75 +128,74 @@ This behavior matches SwiftUI’s GeometryReader model.
 
 ***
 
-## Example: Centered Content
+# Example: Centered Content
 
 ```tsx
-import { GeometryReader, Text, VStack } from "scripting";
+import { GeometryReader, Text, VStack } from "scripting"
 
 function View() {
-  return (
-    <GeometryReader>
-      {(proxy) => {
-        return (
-          <VStack
-            frame={{
-              width: proxy.size.width,
-              height: proxy.size.height,
-              alignment: "center",
-            }}>
-            <Text>Hello Geometry</Text>
-            <Text>width: {proxy.size.width}</Text>
-            <Text>height: {proxy.size.height}</Text>
-          </VStack>
-        );
-      }}
-    </GeometryReader>
-  );
+  return <GeometryReader>
+    {(proxy) => {
+      return <VStack
+        frame={{
+          width: proxy.size.width,
+          height: proxy.size.height,
+          alignment: "center"
+        }}
+      >
+        <Text>Hello Geometry</Text>
+        <Text>
+          width: {proxy.size.width}
+        </Text>
+        <Text>
+          height: {proxy.size.height}
+        </Text>
+      </VStack>
+    }}
+  </GeometryReader>
 }
 ```
 
 ***
 
-## Example: Adjusting Layout by Safe Area
+# Example: Adjusting Layout by Safe Area
 
 ```tsx
 <GeometryReader>
   {(proxy) => {
-    return (
-      <VStack
-        padding={{
-          top: proxy.safeAreaInsets.top,
-          bottom: proxy.safeAreaInsets.bottom,
-        }}>
-        <Text>Content inside safe area.</Text>
-      </VStack>
-    );
+    return <VStack
+      padding={{
+        top: proxy.safeAreaInsets.top,
+        bottom: proxy.safeAreaInsets.bottom
+      }}
+    >
+      <Text>Content inside safe area.</Text>
+    </VStack>
   }}
 </GeometryReader>
 ```
 
 ***
 
-## Example (iOS 26+): Using containerCornerInsets
+# Example (iOS 26+): Using containerCornerInsets
 
 ```tsx
 <GeometryReader>
   {(proxy) => {
-    const corners = proxy.containerCornerInsets;
-    return (
-      <Text>
-        {corners == null
-          ? "Corner insets not available"
-          : `Top Leading Corner: ${corners.topLeading.width}, ${corners.topLeading.height}`}
-      </Text>
-    );
+    const corners = proxy.containerCornerInsets
+    return <Text>
+      {corners == null
+        ? "Corner insets not available"
+        : `Top Leading Corner: ${corners.topLeading.width}, ${corners.topLeading.height}`
+      }
+    </Text>
   }}
 </GeometryReader>
 ```
 
 ***
 
-## Best Practices
+# Best Practices
 
 - Use GeometryReader only when needed, as it creates a flexible layout container.
 - Prefer using it for adaptive, responsive layouts where container size matters.

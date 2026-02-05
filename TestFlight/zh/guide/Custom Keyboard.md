@@ -37,12 +37,13 @@ CustomKeyboard.present(<MyKeyboard />)
 
 ## 三、输入状态查询
 
-| 属性名                | 类型                        | 说明          |
-| ------------------ | ------------------------- | ----------- |
-| `textBeforeCursor` | `Promise<string \| null>` | 光标前的文本      |
-| `textAfterCursor`  | `Promise<string \| null>` | 光标后的文本      |
-| `selectedText`     | `Promise<string \| null>` | 当前选中的文本（如有） |
-| `hasText`          | `Promise<boolean>`        | 输入框是否包含文本内容 |
+| 属性名                | 类型               | 说明          |
+| ------------------ | ---------------- | ----------- |
+| `textBeforeCursor` | `string \| null` | 光标前的文本      |
+| `textAfterCursor`  | `string \| null` | 光标后的文本      |
+| `selectedText`     | `string \| null` | 当前选中的文本（如有） |
+| `allText`          | `string`         | 当前输入的文本     |
+| `hasText`          | `boolean`        | 输入框是否包含文本内容 |
 
 ***
 
@@ -67,23 +68,23 @@ CustomKeyboard.present(<MyKeyboard />)
 
 ## 五、文本操作
 
-### `insertText(text: string): Promise<void>`
+### `insertText(text: string): void`
 
 在光标处插入文本。
 
-### `deleteBackward(): Promise<void>`
+### `deleteBackward(): void`
 
 删除光标前的一个字符。
 
-### `moveCursor(offset: number): Promise<void>`
+### `moveCursor(offset: number): void`
 
 移动光标位置。负数为向左，正数为向右。
 
-### `setMarkedText(text, location, length): Promise<void>`
+### `setMarkedText(text, location, length): void`
 
 设置标记文本（用于拼音输入等组合输入）。
 
-### `unmarkText(): Promise<void>`
+### `unmarkText(): void`
 
 取消当前标记文本。
 
@@ -91,23 +92,23 @@ CustomKeyboard.present(<MyKeyboard />)
 
 ## 六、键盘行为控制
 
-### `dismiss(): Promise<void>`
+### `dismiss(): void`
 
 关闭键盘。
 
-### `nextKeyboard(): Promise<void>`
+### `nextKeyboard(): void`
 
 切换至系统中的下一个键盘。
 
-### `requestHeight(height: number): Promise<void>`
+### `requestHeight(height: number): void`
 
 请求调整键盘高度（单位为 pt）。推荐范围为 **216\~360pt**，超出范围可能被系统忽略。
 
-### `setHasDictationKey(value: boolean): Promise<void>`
+### `setHasDictationKey(value: boolean): void`
 
 设置是否显示语音输入按钮（麦克风图标）。
 
-### `setToolbarVisible(visible: boolean): Promise<void>`
+### `setToolbarVisible(visible: boolean): void`
 
 控制顶部工具栏的显示/隐藏。默认显示，适用于调试等场景。
 
@@ -115,12 +116,12 @@ CustomKeyboard.present(<MyKeyboard />)
 
 ## 七、导航控制
 
-### `dismissToHome(): Promise<void>`
+### `dismissToHome(): void`
 
 关闭当前键盘脚本，返回 Scripting 键盘首页（脚本列表）。适用于用户在多个脚本之间自由切换的场景。
 
 ```ts
-await CustomKeyboard.dismissToHome()
+CustomKeyboard.dismissToHome()
 ```
 
 ***
@@ -168,7 +169,7 @@ function MyKeyboard() {
 
   const insert = async (text: string) => {
     CustomKeyboard.playInputClick()
-    await CustomKeyboard.insertText(text)
+    CustomKeyboard.insertText(text)
   }
 
   return (

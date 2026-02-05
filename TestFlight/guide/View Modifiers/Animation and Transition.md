@@ -1,8 +1,6 @@
-# Animation and Transition
-
 Scripting Animation & Transition System
 
-## Animation Class
+# Animation Class
 
 The `Animation` class describes how values animate in time.
 
@@ -158,7 +156,7 @@ repeatForever(autoreverses?: boolean): Animation
 
 ***
 
-## Transition Class
+# Transition Class
 
 `Transition` describes how a view enters or leaves the hierarchy.
 
@@ -187,7 +185,7 @@ combined(other: Transition): Transition
 ### Identity
 
 ```ts
-Transition.identity();
+Transition.identity()
 ```
 
 ### Move
@@ -211,7 +209,7 @@ Transition.pushFrom(edge: Edge)
 ### Opacity
 
 ```ts
-Transition.opacity();
+Transition.opacity()
 ```
 
 ### Scale
@@ -223,7 +221,7 @@ Transition.scale(scale?: number, anchor?: Point | KeywordPoint)
 ### Slide
 
 ```ts
-Transition.slide();
+Transition.slide()
 ```
 
 ### Fade
@@ -249,16 +247,16 @@ Transition.asymmetric(insertion: Transition, removal: Transition)
 
 ***
 
-## withAnimation
+# withAnimation
 
 ```ts
-function withAnimation(body: () => void): Promise<void>;
-function withAnimation(animation: Animation, body: () => void): Promise<void>;
+function withAnimation(body: () => void): Promise<void>
+function withAnimation(animation: Animation, body: () => void): Promise<void>
 function withAnimation(
   animation: Animation,
   completionCriteria: "logicallyComplete" | "removed",
-  body: () => void,
-): Promise<void>;
+  body: () => void
+): Promise<void>
 ```
 
 Wraps a state update and animates any affected values.
@@ -267,20 +265,20 @@ Example:
 
 ```ts
 withAnimation(Animation.easeOut(0.3), () => {
-  visible.setValue(false);
-});
+  visible.setValue(false)
+})
 ```
 
 ***
 
-## Correct Usage of the animation View Modifier
+# Correct Usage of the animation View Modifier
 
 ### (Important Correction)
 
 In Scripting, the `animation` prop is **not**:
 
 ```tsx
-animation = { anim }; // incorrect
+animation={anim}     // incorrect
 ```
 
 The correct format is:
@@ -356,7 +354,7 @@ const expanded = useObservable(false)
 
 ***
 
-## Transition Usage Examples
+# Transition Usage Examples
 
 ### Simple visibility toggle with transition
 
@@ -388,7 +386,7 @@ const visible = useObservable(true)
 
 ***
 
-## Combined Example: Animation + Transition
+# Combined Example: Animation + Transition
 
 ```tsx
 const visible = useObservable(true)
@@ -420,7 +418,7 @@ const anim = Animation.spring({ duration: 0.4, bounce: 0.25 })
 
 ***
 
-## Summary
+# Summary
 
 ### Key Points
 

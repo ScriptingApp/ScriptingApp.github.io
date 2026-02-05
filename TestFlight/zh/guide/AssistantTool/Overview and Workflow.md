@@ -170,7 +170,7 @@ testFn 的价值：
 
 ## report(message) 的定位
 
-`AssistantTool.report(message: string)` 用于在工具执行期间上报过程信息（例如“正在读取文件…/正在生成 diff…/正在请求定位…”）。
+`AssistantTool.report(message: string, id?: string)` 用于在工具执行期间上报过程信息（例如“正在读取文件…/正在生成 diff…/正在请求定位…”）。`id`参数用于更新已有的报告，如果你的报告是流式生成的，这个参数很有用。
 
 建议用法：
 
