@@ -13,15 +13,10 @@ doc_build/
 !.vscode/extensions.json
 .idea
 
-Scripting Documentation
-Scripting Documentation-tf
-Scripting Documentation.zip
-
-doc_build.zip
+doc_build/
 doc_build_fun/
-doc_build_fun.zip
 
-__MACOSX/
+Scripting Documentation/
 
-docs/App Store/*/guide/
 docs/TestFlight/*/guide/
+docs/App Store/*/guide/
