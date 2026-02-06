@@ -23,6 +23,9 @@ export const config: UserConfig = {
   logo: "/logo.png",
   logoText: "Scripting",
   llms: true,
+  route: {
+    cleanUrls: true,
+  },
   themeConfig: {
     socialLinks: [
       {
