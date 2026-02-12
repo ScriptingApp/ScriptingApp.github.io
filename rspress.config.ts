@@ -17,6 +17,9 @@ export const config: UserConfig = {
     default: "App Store",
     versions: ["App Store", "TestFlight"],
   },
+  search: {
+    versioned: true,
+  },
   // base: "/doc_v2/",
   title: "Scripting",
   icon: "/icon.png",
@@ -26,6 +29,7 @@ export const config: UserConfig = {
   route: {
     cleanUrls: true,
   },
+
   themeConfig: {
     socialLinks: [
       {
