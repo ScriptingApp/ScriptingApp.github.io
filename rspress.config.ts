@@ -19,6 +19,7 @@ export const config: UserConfig = {
   },
   search: {
     versioned: true,
+    codeBlocks: true,
   },
   // base: "/doc_v2/",
   title: "Scripting",
@@ -29,7 +30,6 @@ export const config: UserConfig = {
   route: {
     cleanUrls: true,
   },
-
   themeConfig: {
     socialLinks: [
       {
