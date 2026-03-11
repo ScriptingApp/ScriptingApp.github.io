@@ -9,8 +9,8 @@
     "dev": "rspress dev",
     "deploy": "bun scripts/docs.js && bun scripts/docs-tf.js && rspress build",
     "preview": "rspress preview",
-    "generate:docs": "rm -rf docs/App\\ Store/*/guide && bun scripts/docs.js",
-    "generate:docs:tf": "rm -rf docs/TestFlight/*/guide && bun scripts/docs-tf.js"
+    "generate:docs": "rm -rf scripting/App\\ Store/Scripting\\ Documentation && rm -rf docs/App\\ Store/*/guide && bun scripts/docs.js",
+    "generate:docs:tf": "rm -rf scripting/TestFlight/Scripting\\ Documentation && rm -rf docs/TestFlight/*/guide && bun scripts/docs-tf.js"
   },
   "dependencies": {
     "@rspress/core": "^2.0.4",
