@@ -13,7 +13,7 @@
     "generate:docs:tf": "rm -rf docs/TestFlight/*/guide && bun scripts/docs-tf.js"
   },
   "dependencies": {
-    "@rspress/core": "^2.0.2",
+    "@rspress/core": "^2.0.4",
     "compressing": "^2.1.0",
     "rspress-plugin-gh-pages": "^1.0.0"
   },
