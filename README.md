@@ -1,160 +1,160 @@
-# Scripting 官方文档项目
+# Scripting Official Documentation Project
 
-## 项目简介
+## Project Overview
 
-通过 `Scripting Documentation` (Scripting App 默认脚本) 生成网页文档，使用 [Rspress](https://rspress.dev/) 构建静态网站。
+Generate web documentation through `Scripting Documentation` (Scripting App's default script), built with [Rspress](https://rspress.dev/) as a static site.
 
-## 目录结构
+## Directory Structure
 
 ```
 .
-├── .github/workflows    # GitHub Actions 部署配置
-├── docs/                # 生成的文档目录
-│   ├── App Store/       # App Store 版本文档
-│   │   ├── en/          # 英文文档
-│   │   └── zh/          # 中文文档
-│   └── TestFlight/      # TestFlight 版本文档
-├── scripting/           # Scripting App 脚本资源
-│   ├── App Store/       # App Store 版本脚本
-│   └── TestFlight/      # TestFlight 版本脚本
-├── scripts/             # 文档生成脚本
-│   ├── docs.js          # App Store 文档生成脚本
-│   └── docs-tf.js       # TestFlight 文档生成脚本
-├── package.json         # 项目依赖和脚本
-├── rspress.config.ts    # Rspress 配置文件
-└── README.md            # 项目说明文档
+├── .github/workflows    # GitHub Actions deployment configuration
+├── docs/                # Generated documentation directory
+│   ├── App Store/       # App Store version documentation
+│   │   ├── en/          # English documentation
+│   │   └── zh/          # Chinese documentation
+│   └── TestFlight/      # TestFlight version documentation
+├── scripting/           # Scripting App script resources
+│   ├── App Store/       # App Store version scripts
+│   └── TestFlight/      # TestFlight version scripts
+├── scripts/             # Documentation generation scripts
+│   ├── docs.js          # App Store documentation generation script
+│   └── docs-tf.js       # TestFlight documentation generation script
+├── package.json         # Project dependencies and scripts
+├── rspress.config.ts    # Rspress configuration file
+└── README.md            # Project documentation
 ```
 
-## 快速开始
+## Quick Start
 
-### 前置要求
+### Prerequisites
 
-- [Bun](https://bun.sh/) (推荐) 或 Node.js
-- Scripting App 默认脚本 "Scripting Documentation"
+- [Bun](https://bun.sh/) (recommended) or Node.js
+- Scripting App's default script "Scripting Documentation"
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
 bun install
 ```
 
-### 生成文档
+### Generate Documentation
 
-1. 将 `Scripting Documentation` (Scripting App 默认脚本) 放入项目根目录并解压
+1. Place `Scripting Documentation` (Scripting App's default script) in the project root directory and extract it
 
-2. 运行文档生成命令：
+2. Run the documentation generation command:
 
 ```bash
 bun run generate:docs
 ```
 
-3. 运行构建命令：
+3. Run the build command:
 
 ```bash
 bun run build
 ```
 
-### 本地预览
+### Local Preview
 
 ```bash
 bun run dev
 ```
 
-访问 http://localhost:5173 预览文档。
+Visit http://localhost:5173 to preview the documentation.
 
-## 文档生成流程
+## Documentation Generation Process
 
-1. **解压脚本**: 从 `scripting/App Store/Scripting Documentation.scripting` 解压脚本文件
-2. **读取配置**: 从解压后的 `doc.json` 文件读取文档结构配置
-3. **生成 Markdown**: 根据配置生成多语言 (en/zh) 的 Markdown 文档
-4. **构建网站**: 使用 Rspress 将 Markdown 文件构建为静态网站
+1. **Extract Script**: Extract script files from `scripting/App Store/Scripting Documentation.scripting`
+2. **Read Configuration**: Read document structure configuration from the extracted `doc.json` file
+3. **Generate Markdown**: Generate multilingual (en/zh) Markdown documents based on configuration
+4. **Build Website**: Build Markdown files into a static website using Rspress
 
-## 版本文档
+## Version Documentation
 
-项目支持两个版本的文档：
+The project supports two versions of documentation:
 
-- **App Store**: 正式版文档 (默认)
-- **TestFlight**: 测试版文档 (包含最新功能)
+- **App Store**: Official version documentation (default)
+- **TestFlight**: Test version documentation (includes latest features)
 
-### 生成 TestFlight 文档
+### Generate TestFlight Documentation
 
 ```bash
 bun run generate:docs:tf
 ```
 
-### 构建 TestFlight 文档
+### Build TestFlight Documentation
 
 ```bash
 bun run build:fun
 ```
 
-## 部署
+## Deployment
 
-文档通过 GitHub Actions 自动部署到 GitHub Pages。部署配置位于 `.github/workflows/` 目录。
+Documentation is automatically deployed to GitHub Pages via GitHub Actions. Deployment configuration is located in the `.github/workflows/` directory.
 
-### 手动部署
+### Manual Deployment
 
 ```bash
 bun run deploy
 ```
 
-## 技能系统 (Skills)
+## Skills System
 
-Scripting App 支持技能系统，允许扩展应用功能。技能是独立的脚本包，可以：
+Scripting App supports a skills system that allows extending application functionality. Skills are independent script packages that can:
 
-- 提供原生 API 封装
-- 创建自定义 UI 组件
-- 集成第三方服务
-- 扩展自动化能力
+- Provide native API wrappers
+- Create custom UI components
+- Integrate third-party services
+- Extend automation capabilities
 
-### 技能目录结构
+### Skills Directory Structure
 
 ```
 /var/mobile/Library/Mobile Documents/iCloud~com~thomfang~Scripting/Documents/scripting-skills/
-├── ios-calendar/        # 日历管理技能
-├── ios-health/          # 健康数据技能
-├── ios-location/        # 定位服务技能
-├── ios-notifications/   # 通知管理技能
-├── ios-reminders/       # 提醒事项技能
-├── isomorphic-git/      # Git 版本控制技能
-└── ...                  # 其他技能
+├── ios-calendar/        # Calendar management skill
+├── ios-health/          # Health data skill
+├── ios-location/        # Location services skill
+├── ios-notifications/   # Notification management skill
+├── ios-reminders/       # Reminders skill
+├── isomorphic-git/      # Git version control skill
+└── ...                  # Other skills
 ```
 
-### 使用技能
+### Using Skills
 
-在 Scripting App 中，技能可以通过以下方式使用：
+In Scripting App, skills can be used in the following ways:
 
-1. **直接调用**: 在脚本中导入并使用技能提供的 API
-2. **AI 集成**: AI 助手可以自动调用技能完成复杂任务
-3. **自动化流程**: 在快捷指令中集成技能功能
+1. **Direct Call**: Import and use APIs provided by skills in scripts
+2. **AI Integration**: AI assistants can automatically call skills to complete complex tasks
+3. **Automation Workflows**: Integrate skill functions in Shortcuts
 
-## 贡献指南
+## Contributing Guidelines
 
-### 添加新文档
+### Adding New Documentation
 
-1. 在 `scripting/App Store/Scripting Documentation/` 目录下添加新的文档文件
-2. 更新 `doc.json` 配置文件，添加新文档的入口
-3. 运行 `bun run generate:docs` 重新生成文档
-4. 提交 Pull Request
+1. Add new documentation files in the `scripting/App Store/Scripting Documentation/` directory
+2. Update the `doc.json` configuration file to add new documentation entries
+3. Run `bun run generate:docs` to regenerate documentation
+4. Submit a Pull Request
 
-### 修改现有文档
+### Modifying Existing Documentation
 
-1. 编辑 `docs/` 目录下的 Markdown 文件
-2. 运行 `bun run build` 验证修改
-3. 提交 Pull Request
+1. Edit Markdown files in the `docs/` directory
+2. Run `bun run build` to verify changes
+3. Submit a Pull Request
 
-### 添加新技能
+### Adding New Skills
 
-1. 在 Scripting App 中创建新的技能项目
-2. 编写 `SKILL.md` 文件，定义技能的使用方法
-3. 提交到 [ScriptingApp/Community-Scripts](https://github.com/ScriptingApp/Community-Scripts) 仓库
+1. Create a new skill project in Scripting App
+2. Write a `SKILL.md` file defining how to use the skill
+3. Submit to the [ScriptingApp/Community-Scripts](https://github.com/ScriptingApp/Community-Scripts) repository
 
-## 相关项目
+## Related Projects
 
-- [ScriptingApp/Community-Scripts](https://github.com/ScriptingApp/Community-Scripts) - 社区脚本分享
-- [ScriptingApp/scripting-app-lib](https://github.com/ScriptingApp/scripting-app-lib) - Scripting App 库模块
-- [ScriptingApp/Package-Manager](https://github.com/ScriptingApp/Package-Manager) - 包管理器
+- [ScriptingApp/Community-Scripts](https://github.com/ScriptingApp/Community-Scripts) - Community script sharing
+- [ScriptingApp/scripting-app-lib](https://github.com/ScriptingApp/scripting-app-lib) - Scripting App library modules
+- [ScriptingApp/Package-Manager](https://github.com/ScriptingApp/Package-Manager) - Package manager
 
-## 许可证
+## License
 
 MIT License
