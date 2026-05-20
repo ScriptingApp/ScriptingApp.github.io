@@ -107,18 +107,9 @@ Scripting App supports a skills system that allows extending application functio
 - Integrate third-party services
 - Extend automation capabilities
 
-### Skills Directory Structure
+### Skills Repository
 
-```
-/var/mobile/Library/Mobile Documents/iCloud~com~thomfang~Scripting/Documents/scripting-skills/
-├── ios-calendar/        # Calendar management skill
-├── ios-health/          # Health data skill
-├── ios-location/        # Location services skill
-├── ios-notifications/   # Notification management skill
-├── ios-reminders/       # Reminders skill
-├── isomorphic-git/      # Git version control skill
-└── ...                  # Other skills
-```
+Official skills are maintained in the [ScriptingApp/skills](https://github.com/ScriptingApp/skills) repository. This repository contains a collection of ready-to-use skills that extend Scripting App's functionality.
 
 ### Using Skills
 
@@ -128,26 +119,13 @@ In Scripting App, skills can be used in the following ways:
 2. **AI Integration**: AI assistants can automatically call skills to complete complex tasks
 3. **Automation Workflows**: Integrate skill functions in Shortcuts
 
-## Contributing Guidelines
+## Project Maintenance
 
-### Adding New Documentation
+This documentation project is maintained by the Scripting App developer. For bug reports or feature requests related to the documentation, please open an issue in this repository.
 
-1. Add new documentation files in the `scripting/App Store/Scripting Documentation/` directory
-2. Update the `doc.json` configuration file to add new documentation entries
-3. Run `bun run generate:docs` to regenerate documentation
-4. Submit a Pull Request
+### Contributing to Skills
 
-### Modifying Existing Documentation
-
-1. Edit Markdown files in the `docs/` directory
-2. Run `bun run build` to verify changes
-3. Submit a Pull Request
-
-### Adding New Skills
-
-1. Create a new skill project in Scripting App
-2. Write a `SKILL.md` file defining how to use the skill
-3. Submit to the [ScriptingApp/Community-Scripts](https://github.com/ScriptingApp/Community-Scripts) repository
+If you'd like to contribute new skills or improve existing ones, please visit the [ScriptingApp/skills](https://github.com/ScriptingApp/skills) repository and follow the contribution guidelines there.
 
 ## Related Projects
 

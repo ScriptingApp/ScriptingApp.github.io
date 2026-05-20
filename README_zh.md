@@ -107,18 +107,9 @@ Scripting App 支持技能系统，允许扩展应用功能。技能是独立的
 - 集成第三方服务
 - 扩展自动化能力
 
-### 技能目录结构
+### 技能仓库
 
-```
-/var/mobile/Library/Mobile Documents/iCloud~com~thomfang~Scripting/Documents/scripting-skills/
-├── ios-calendar/        # 日历管理技能
-├── ios-health/          # 健康数据技能
-├── ios-location/        # 定位服务技能
-├── ios-notifications/   # 通知管理技能
-├── ios-reminders/       # 提醒事项技能
-├── isomorphic-git/      # Git 版本控制技能
-└── ...                  # 其他技能
-```
+官方技能维护在 [ScriptingApp/skills](https://github.com/ScriptingApp/skills) 仓库中。该仓库包含一系列即用型技能，用于扩展 Scripting App 的功能。
 
 ### 使用技能
 
@@ -128,26 +119,13 @@ Scripting App 支持技能系统，允许扩展应用功能。技能是独立的
 2. **AI 集成**: AI 助手可以自动调用技能完成复杂任务
 3. **自动化流程**: 在快捷指令中集成技能功能
 
-## 贡献指南
+## 项目维护
 
-### 添加新文档
+此文档项目由 Scripting App 开发者维护。如有文档相关的错误报告或功能请求，请在此仓库中提交 issue。
 
-1. 在 `scripting/App Store/Scripting Documentation/` 目录下添加新的文档文件
-2. 更新 `doc.json` 配置文件，添加新文档的入口
-3. 运行 `bun run generate:docs` 重新生成文档
-4. 提交 Pull Request
+### 技能贡献
 
-### 修改现有文档
-
-1. 编辑 `docs/` 目录下的 Markdown 文件
-2. 运行 `bun run build` 验证修改
-3. 提交 Pull Request
-
-### 添加新技能
-
-1. 在 Scripting App 中创建新的技能项目
-2. 编写 `SKILL.md` 文件，定义技能的使用方法
-3. 提交到 [ScriptingApp/Community-Scripts](https://github.com/ScriptingApp/Community-Scripts) 仓库
+如果您想贡献新技能或改进现有技能，请访问 [ScriptingApp/skills](https://github.com/ScriptingApp/skills) 仓库，并按照该仓库的贡献指南进行操作。
 
 ## 相关项目
 
