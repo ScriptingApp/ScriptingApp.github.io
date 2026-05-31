@@ -148,7 +148,7 @@ const processLanguages = (docItem) => {
 
 (async () => {
   await zip.uncompress(
-    path.join(__dirname, "..", "scripting", version, "Scripting Documentation.scripting"),
+    path.join(__dirname, "..", "scripting", version, "Scripting Documentation.zip"),
     path.join(__dirname, "..", "scripting", version, "Scripting Documentation"),
   );
 
