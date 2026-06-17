@@ -29,8 +29,6 @@ jobs:
       - name: Install dependencies
         run: bun install
       - name: Build with Rspress
-        env:
-          NODE_OPTIONS: --max-old-space-size=8192
         run: |
           bun run deploy
       - name: Upload artifact
