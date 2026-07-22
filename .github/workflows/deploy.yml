@@ -51,7 +51,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
       - name: Notify Telegram on successful deployment
-        if: success()
+        if: ${{ success() && secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_CHAT_ID != '' }}
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
