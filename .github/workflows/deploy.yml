@@ -51,14 +51,19 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
       - name: Notify Telegram on successful deployment
+        if: success()
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           PAGE_URL: ${{ steps.deployment.outputs.page_url }}
         run: |
+          message="$(cat <<EOF
+          ✅ Scripting 文档已部署成功
+          ${PAGE_URL}
+          提交：${GITHUB_SHA::7}
+          EOF
+          )"
           curl --fail --silent --show-error \
             --request POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
-            --data-urlencode "text=✅ Scripting 文档已部署成功
-          ${PAGE_URL}
-          提交：${GITHUB_SHA::7}"
+            --data-urlencode "text=${message}"
