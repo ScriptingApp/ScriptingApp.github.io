@@ -30,7 +30,8 @@ jobs:
         run: bun install
       - name: Build with Rspress
         env:
-          NODE_OPTIONS: --max-old-space-size=8192
+          NODE_OPTIONS: --max-old-space-size=4096
+          RSPRESS_SSG_CONCURRENCY: 2
         run: |
           bun run deploy
       - name: Upload artifact

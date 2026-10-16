@@ -7,7 +7,7 @@
     "build": "NODE_OPTIONS=--max-old-space-size=8192 rspress build",
     "build:fun": "NODE_OPTIONS=--max-old-space-size=8192 rspress build -c rspress.config.fun.ts",
     "dev": "rspress dev",
-    "deploy": "bun scripts/docs.js && bun scripts/docs-tf.js && NODE_OPTIONS=--max-old-space-size=8192 rspress build",
+    "deploy": "bun scripts/docs.js && bun scripts/docs-tf.js && rspress build",
     "preview": "rspress preview",
     "generate:docs": "rm -rf scripting/App\\ Store/Scripting\\ Documentation && rm -rf docs/App\\ Store/*/guide && bun scripts/docs.js",
     "generate:docs:tf": "rm -rf scripting/TestFlight/Scripting\\ Documentation && rm -rf docs/TestFlight/*/guide && bun scripts/docs-tf.js"
