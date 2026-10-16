@@ -33,7 +33,7 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=4096
           RSPRESS_SSG_CONCURRENCY: 2
         run: |
-          bun run deploy
+          bun --bun run deploy
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
