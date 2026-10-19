@@ -13,6 +13,7 @@ const base = "guide";
 // A resource can appear in several places, so prefer its main API page
 // over a copy in Changelog when resolving cross-references.
 const readmePages = new Map();
+const titlePages = new Map();
 function indexReadmePages(items, parentPath = "") {
   for (const item of items) {
     const pagePath = path.posix.join(parentPath, item.title.en);
@@ -24,17 +25,35 @@ function indexReadmePages(items, parentPath = "") {
       if (!previous || previous.startsWith("Changelog/")) {
         readmePages.set(resource, pagePath + (item.example ? "/index.md" : ".md"));
       }
+      for (const title of Object.values(item.title)) {
+        const previousTitlePage = titlePages.get(title);
+        if (!previousTitlePage || previousTitlePage.startsWith("Changelog/")) {
+          titlePages.set(title, pagePath + (item.example ? "/index.md" : ".md"));
+        }
+      }
     }
   }
 }
 
 function websiteReadme(content, readme, language, outputPath) {
+  const pageLink = (page, hash) => {
+    const destination = path.join(docsPath, version, language, base, page);
+    let relative = path.relative(path.dirname(outputPath), destination).split(path.sep).join("/");
+    if (!relative.startsWith(".")) relative = "./" + relative;
+    return relative.split("/").map(encodeURIComponent).join("/") + hash;
+  };
   // Leave fenced examples untouched; only convert Markdown destinations.
   return content.split(/(^[ \t]*(`{3,}|~{3,})[^\n]*\n[\s\S]*?^[ \t]*\2[ \t]*$)/gm)
     .filter((_, index) => index % 3 !== 2)
     .map((section, index) => index % 2 ? section : section.replace(
-      /(\]\(<?)([^\s<>)]*\.md)(#[^\s<>)]*)?(>?\))/g,
+      /(\]\(<?)(scripting:\/\/doc\?[^\s<>)#]+|[^\s<>)#]*\.md)(#[^\s<>)]*)?(>?\))/g,
       (match, open, target, hash = "", close) => {
+        if (target.startsWith("scripting://doc?")) {
+          const title = new URL(target).searchParams.get("title");
+          const page = titlePages.get(title);
+          if (!page) throw new Error(`Unknown documentation title in ${readme}: ${title}`);
+          return open + pageLink(page, hash) + close;
+        }
         if (/^(?:[a-z]+:|\/)/i.test(target)) return match;
         const source = path.posix.join(readme, language + ".md");
         const candidates = [
@@ -45,10 +64,7 @@ function websiteReadme(content, readme, language, outputPath) {
           if (!candidate.endsWith("/" + language + ".md")) continue;
           const page = readmePages.get(path.posix.dirname(candidate));
           if (!page) continue;
-          const destination = path.join(docsPath, version, language, base, page);
-          let relative = path.relative(path.dirname(outputPath), destination).split(path.sep).join("/");
-          if (!relative.startsWith(".")) relative = "./" + relative;
-          return open + relative.split("/").map(encodeURIComponent).join("/") + hash + close;
+          return open + pageLink(page, hash) + close;
         }
         return match;
       },
