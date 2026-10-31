@@ -14,6 +14,7 @@ const base = "guide";
 // over a copy in Changelog when resolving cross-references.
 const readmePages = new Map();
 const titlePages = new Map();
+const examplePages = new Map();
 function indexReadmePages(items, parentPath = "") {
   for (const item of items) {
     const pagePath = path.posix.join(parentPath, item.title.en);
@@ -32,6 +33,15 @@ function indexReadmePages(items, parentPath = "") {
         }
       }
     }
+    if (!item.children?.length && item.example) {
+      const name = path.posix.basename(item.example);
+      const exampleName = name + (name === "index" ? "_example" : "") + ".md";
+      const page = item.readme ? path.posix.join(pagePath, exampleName) : pagePath + ".md";
+      const previous = examplePages.get(item.example + ".tsx");
+      if (!previous || previous.startsWith("Changelog/")) {
+        examplePages.set(item.example + ".tsx", page);
+      }
+    }
   }
 }
 
@@ -46,7 +56,7 @@ function websiteReadme(content, readme, language, outputPath) {
   return content.split(/(^[ \t]*(`{3,}|~{3,})[^\n]*\n[\s\S]*?^[ \t]*\2[ \t]*$)/gm)
     .filter((_, index) => index % 3 !== 2)
     .map((section, index) => index % 2 ? section : section.replace(
-      /(\]\(<?)(scripting:\/\/doc\?[^\s<>)#]+|[^\s<>)#]*\.md)(#[^\s<>)]*)?(>?\))/g,
+      /(\]\(<?)(scripting:\/\/doc\?[^\s<>)#]+|[^\s<>)#]*(?:\.(?:md|tsx)|\/))(#[^\s<>)]*)?(>?\))/g,
       (match, open, target, hash = "", close) => {
         if (target.startsWith("scripting://doc?")) {
           const title = new URL(target).searchParams.get("title");
@@ -61,8 +71,17 @@ function websiteReadme(content, readme, language, outputPath) {
           path.posix.normalize(target), // Legacy app-root references.
         ];
         for (const candidate of candidates) {
-          if (!candidate.endsWith("/" + language + ".md")) continue;
-          const page = readmePages.get(path.posix.dirname(candidate));
+          if (target.endsWith(".tsx")) {
+            const page = examplePages.get(candidate);
+            if (page) return open + pageLink(page, hash) + close;
+            continue;
+          }
+          const resource = target.endsWith("/")
+            ? candidate.replace(/\/$/, "")
+            : candidate.endsWith("/" + language + ".md")
+              ? path.posix.dirname(candidate)
+              : undefined;
+          const page = readmePages.get(resource);
           if (!page) continue;
           return open + pageLink(page, hash) + close;
         }
