@@ -9,6 +9,68 @@ const resourcePath = path.join(__dirname, "..", "scripting", version, "Scripting
 const docsPath = path.join(__dirname, "..", "docs");
 const base = "guide";
 
+// The app uses resource paths; the website uses titles from doc.json.
+// A resource can appear in several places, so prefer its main API page
+// over a copy in Changelog when resolving cross-references.
+const readmePages = new Map();
+const titlePages = new Map();
+function indexReadmePages(items, parentPath = "") {
+  for (const item of items) {
+    const pagePath = path.posix.join(parentPath, item.title.en);
+    if (item.children?.length) {
+      indexReadmePages(item.children, pagePath);
+    } else if (item.readme) {
+      const resource = path.posix.normalize(item.readme).replace(/\/$/, "");
+      const previous = readmePages.get(resource);
+      if (!previous || previous.startsWith("Changelog/")) {
+        readmePages.set(resource, pagePath + (item.example ? "/index.md" : ".md"));
+      }
+      for (const title of Object.values(item.title)) {
+        const previousTitlePage = titlePages.get(title);
+        if (!previousTitlePage || previousTitlePage.startsWith("Changelog/")) {
+          titlePages.set(title, pagePath + (item.example ? "/index.md" : ".md"));
+        }
+      }
+    }
+  }
+}
+
+function websiteReadme(content, readme, language, outputPath) {
+  const pageLink = (page, hash) => {
+    const destination = path.join(docsPath, version, language, base, page);
+    let relative = path.relative(path.dirname(outputPath), destination).split(path.sep).join("/");
+    if (!relative.startsWith(".")) relative = "./" + relative;
+    return relative.split("/").map(encodeURIComponent).join("/") + hash;
+  };
+  // Leave fenced examples untouched; only convert Markdown destinations.
+  return content.split(/(^[ \t]*(`{3,}|~{3,})[^\n]*\n[\s\S]*?^[ \t]*\2[ \t]*$)/gm)
+    .filter((_, index) => index % 3 !== 2)
+    .map((section, index) => index % 2 ? section : section.replace(
+      /(\]\(<?)(scripting:\/\/doc\?[^\s<>)#]+|[^\s<>)#]*\.md)(#[^\s<>)]*)?(>?\))/g,
+      (match, open, target, hash = "", close) => {
+        if (target.startsWith("scripting://doc?")) {
+          const title = new URL(target).searchParams.get("title");
+          const page = titlePages.get(title);
+          if (!page) throw new Error(`Unknown documentation title in ${readme}: ${title}`);
+          return open + pageLink(page, hash) + close;
+        }
+        if (/^(?:[a-z]+:|\/)/i.test(target)) return match;
+        const source = path.posix.join(readme, language + ".md");
+        const candidates = [
+          path.posix.normalize(path.posix.join(path.posix.dirname(source), target)),
+          path.posix.normalize(target), // Legacy app-root references.
+        ];
+        for (const candidate of candidates) {
+          if (!candidate.endsWith("/" + language + ".md")) continue;
+          const page = readmePages.get(path.posix.dirname(candidate));
+          if (!page) continue;
+          return open + pageLink(page, hash) + close;
+        }
+        return match;
+      },
+    )).join("");
+}
+
 function readFile(filePath) {
   try {
     return fs.readFileSync(filePath, "utf-8");
@@ -78,7 +140,7 @@ ${subtitle ? `description: ${subtitle[language]}` : ""}
 ${pro ? "tag: PRO" : ""}
 ---
 
-${readmeContent}`;
+${websiteReadme(readmeContent, readme, language, basePath + ".md")}`;
         const cleanBasePath = basePath.endsWith(path.sep) ? basePath.slice(0, -1) : basePath;
         writeFile(cleanBasePath + ".md", readmeMd);
       } else {
@@ -93,7 +155,7 @@ ${subtitle ? `description: ${subtitle[language]}` : ""}
 ${pro ? "tag: PRO" : ""}
 ---
         
-${readmeContent}`;
+${websiteReadme(readmeContent, readme, language, path.join(basePath, "index.md"))}`;
 
         writeFile(path.join(basePath, "index.md"), readmeMd);
       }
@@ -153,5 +215,12 @@ const processLanguages = (docItem) => {
   );
 
   const docJson = JSON.parse(readFile(path.join(resourcePath, "doc.json")));
+  indexReadmePages(docJson);
+  for (const language of ["en", "zh"]) {
+    fs.rmSync(path.join(docsPath, version, language, base), { recursive: true, force: true });
+  }
   docJson.forEach((item) => processLanguages(item));
-})().catch((e) => console.error(e));
+})().catch((e) => {
+  console.error(e);
+  process.exitCode = 1;
+});
