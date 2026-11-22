@@ -42,7 +42,30 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=4096
           RSPRESS_SSG_CONCURRENCY: 2
         run: |
-          bun --bun run deploy
+          sample_resources() {
+            date -u +'%FT%TZ'
+            free -m
+            df -m .
+            grep '^oom_kill ' /proc/vmstat
+            cgroup="/sys/fs/cgroup$(awk -F: '$1 == "0" {print $3}' /proc/self/cgroup)"
+            for metric in memory.current memory.peak memory.max memory.swap.current memory.events; do
+              if [ -r "$cgroup/$metric" ]; then
+                echo "$metric:"
+                cat "$cgroup/$metric"
+              fi
+            done
+            ps -eo pid,ppid,rss,comm --sort=-rss | head -n 7
+          }
+          while true; do
+            sample_resources
+            sleep 15
+          done &
+          sampler_pid=$!
+          trap 'kill "$sampler_pid" 2>/dev/null || true' EXIT
+          build_status=0
+          bun --bun run deploy || build_status=$?
+          sample_resources
+          exit "$build_status"
       - name: Report build memory
         if: always()
         run: |
