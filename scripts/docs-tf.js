@@ -59,7 +59,7 @@ function websiteReadme(content, readme, language, outputPath) {
   // Leave fenced examples untouched; only convert Markdown destinations.
   return content.split(/(^[ \t]*(`{3,}|~{3,})[^\n]*\n[\s\S]*?^[ \t]*\2[ \t]*$)/gm)
     .filter((_, index) => index % 3 !== 2)
-    .map((section, index) => index % 2 ? section : section.replace(
+    .map((section, index) => index % 2 ? section.replace(/^([ \t]*(?:`{3,}|~{3,}))metal(?=[ \t]*(?:\r?\n|$))/, "$1cpp") : section.replace(
       /(\]\(<?)(scripting:\/\/doc\?[^\s<>)#]+|[^\s<>)#]*(?:\.(?:md|tsx)|\/))(#[^\s<>)]*)?(>?\))/g,
       (match, open, target, hash = "", close) => {
         if (target.startsWith("scripting://doc?")) {
