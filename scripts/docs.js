@@ -18,18 +18,22 @@ const examplePages = new Map();
 function indexReadmePages(items, parentPath = "") {
   for (const item of items) {
     const pagePath = path.posix.join(parentPath, item.title.en);
-    if (item.children?.length) {
+    const hasChildren = Boolean(item.children?.length);
+    if (hasChildren) {
       indexReadmePages(item.children, pagePath);
-    } else if (item.readme) {
+    }
+    // A resource that has children can still own a readme; it renders as <dir>/index.md.
+    if (item.readme) {
       const resource = path.posix.normalize(item.readme).replace(/\/$/, "");
+      const target = pagePath + (hasChildren || item.example ? "/index.md" : ".md");
       const previous = readmePages.get(resource);
       if (!previous || previous.startsWith("Changelog/")) {
-        readmePages.set(resource, pagePath + (item.example ? "/index.md" : ".md"));
+        readmePages.set(resource, target);
       }
       for (const title of Object.values(item.title)) {
         const previousTitlePage = titlePages.get(title);
         if (!previousTitlePage || previousTitlePage.startsWith("Changelog/")) {
-          titlePages.set(title, pagePath + (item.example ? "/index.md" : ".md"));
+          titlePages.set(title, target);
         }
       }
     }
@@ -145,6 +149,20 @@ const processDocItem = (item, parentPath = "", language = "en") => {
 
   // 生成文档
   if (children && children.length > 0) {
+    if (readme) {
+      const parentReadmePath = path.join(resourcePath, readme, language + ".md");
+      const parentReadmeContent = readFile(parentReadmePath);
+      if (parentReadmeContent) {
+        const parentReadmeMd = `---
+title: ${title[language]}
+${subtitle ? `description: ${subtitle[language]}` : ""}
+${pro ? "tag: PRO" : ""}
+---
+
+${websiteReadme(parentReadmeContent, readme, language, path.join(basePath, "index.md"))}`;
+        writeFile(path.join(basePath, "index.md"), parentReadmeMd);
+      }
+    }
     children.forEach((child) => processDocItem(child, path.join(parentPath, folderName), language));
   } else {
     if (readme) {
