@@ -1,6 +1,5 @@
 import * as path from "node:path";
-import { defineConfig } from "@rspress/core";
-import type { UserConfig } from "@rspress/shared";
+import { defineConfig, type UserConfig } from "@rspress/core";
 
 // import ghPages from "rspress-plugin-gh-pages";
 
@@ -26,7 +25,21 @@ export const config: UserConfig = {
   icon: "/icon.png",
   logo: "/logo.png",
   logoText: "Scripting",
+  ssg: false,
   llms: true,
+  // Correct the chart links in the current App Store and TestFlight ZIPs.
+  replaceRules: [
+    { search: "[`LineChart`](#折线图)", replace: "[`LineChart`](#折线图linechart)" },
+    { search: "[`AreaChart`](#面积图)", replace: "[`AreaChart`](#面积图areachart)" },
+    {
+      search: "[`RuleLineForLabelChart`](#标签参考线图)",
+      replace: "[`RuleLineForLabelChart`](#标签参考线图rulelineforlabelchart)",
+    },
+    {
+      search: "[`RuleLineForLabelChart`](#rulelineforlabelchart)",
+      replace: "[`RuleLineForLabelChart`](#rulelineforlabelchart-dynamic-annotation)",
+    },
+  ],
   route: {
     cleanUrls: true,
   },
